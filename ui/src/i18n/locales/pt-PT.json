@@ -393,6 +393,34 @@
       "subTask": "Sub-task",
       "filterByWorkspace": "Filter by workspace",
       "userFallback": "User"
+    },
+    "filters": {
+      "button": "Filter",
+      "withCount": "Filters: {{count}}",
+      "title": "Filters",
+      "clear": "Clear",
+      "quick": "Quick filters",
+      "presets": {
+        "all": "All",
+        "active": "Active",
+        "backlog": "Backlog",
+        "done": "Done"
+      },
+      "status": "Status",
+      "priority": "Priority",
+      "assignee": "Assignee",
+      "noAssignee": "No assignee",
+      "me": "Me",
+      "creator": "Creator",
+      "removeCreator": "Remove creator {{name}}",
+      "searchCreators": "Search creators...",
+      "noCreators": "No creators match.",
+      "project": "Project",
+      "labels": "Labels",
+      "workspace": "Workspace",
+      "visibility": "Visibility",
+      "liveOnly": "Live runs only",
+      "hideRoutine": "Hide routine runs"
     }
   }
 }
