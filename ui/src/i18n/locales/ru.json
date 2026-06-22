@@ -222,5 +222,116 @@
       "noMatch": "No skills match your filters.",
       "noneInTab": "No skills in this tab yet."
     }
+  },
+  "nav": {
+    "newTask": "New Task",
+    "openSearch": "Open search",
+    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Collapse sidebar",
+    "keepExpanded": "Keep sidebar expanded",
+    "unread": "unread",
+    "sections": {
+      "work": "Work",
+      "company": "Company"
+    },
+    "items": {
+      "dashboard": "Dashboard",
+      "inbox": "Inbox",
+      "conferenceRoom": "Conference Room",
+      "tasks": "Tasks",
+      "routines": "Routines",
+      "goals": "Goals",
+      "artifacts": "Artifacts",
+      "workspaces": "Workspaces",
+      "projects": "Projects",
+      "org": "Org",
+      "skills": "Skills",
+      "costs": "Costs",
+      "activity": "Activity",
+      "settings": "Settings"
+    },
+    "mobile": {
+      "label": "Mobile navigation",
+      "home": "Home",
+      "create": "Create"
+    },
+    "agents": {
+      "section": "Agents",
+      "newAgent": "New agent",
+      "sectionActions": "Agents section actions",
+      "browse": "Browse agents",
+      "sort": "Agent sort",
+      "sortTop": "Top",
+      "sortAlphabetical": "Alphabetical",
+      "sortRecent": "Recent",
+      "seeAll": "See all agents",
+      "openActions": "Open actions for {{name}}",
+      "edit": "Edit agent",
+      "pause": "Pause agent",
+      "resume": "Resume agent",
+      "updating": "Updating...",
+      "leave": "Leave agent",
+      "leaving": "Leaving...",
+      "budgetPaused": "Budget paused",
+      "invalidOrgChain": "Invalid org chain",
+      "invalidReportingChain": "Invalid reporting chain",
+      "liveCount": "{{count}} live",
+      "pausedByBudget": "Agent paused by budget",
+      "pausedByBudgetLimits": "Agent was paused by budget limits",
+      "toastPaused": "Agent paused",
+      "toastResumed": "Agent resumed",
+      "toastPauseFailed": "Could not pause agent",
+      "toastResumeFailed": "Could not resume agent"
+    },
+    "projects": {
+      "section": "Projects",
+      "newProject": "New project",
+      "sectionActions": "Projects section actions",
+      "browse": "Browse projects",
+      "sort": "Project sort",
+      "sortTop": "Top",
+      "sortAlphabetical": "Alphabetical",
+      "sortRecent": "Recent",
+      "openActions": "Open actions for {{name}}",
+      "leave": "Leave project",
+      "leaving": "Leaving...",
+      "pausedByBudget": "Project paused by budget"
+    },
+    "company": {
+      "openSwitcher": "Open workspace switcher",
+      "openSwitcherNamed": "Open {{name}} workspace switcher",
+      "selectWorkspace": "Select workspace",
+      "switchWorkspace": "Switch workspace",
+      "edit": "Edit",
+      "done": "Done",
+      "noWorkspaces": "No workspaces",
+      "reorder": "Reorder {{name}}",
+      "addCompany": "Add company...",
+      "createTeam": "Create new team...",
+      "invitePeople": "Invite people",
+      "invitePeopleNamed": "Invite people to {{name}}",
+      "companySettings": "Company settings",
+      "signOut": "Sign out",
+      "signingOut": "Signing out..."
+    }
+  },
+  "commandPalette": {
+    "placeholder": "Search tasks, agents, projects...",
+    "noResults": "No results found.",
+    "emptyHint": "No quick task matches. Press <0>↵</0> to <1>search all</1> or keep typing to refine.",
+    "searchAllFor": "Search all for <0>“{{query}}”</0>",
+    "openFullSearch": "open full search",
+    "createTask": "Create new task",
+    "openFileInIssue": "Open file in this issue...",
+    "createAgent": "Create new agent",
+    "createProject": "Create new project",
+    "groups": {
+      "search": "Search",
+      "actions": "Actions",
+      "pages": "Pages",
+      "tasks": "Tasks",
+      "agents": "Agents",
+      "projects": "Projects"
+    }
   }
 }
