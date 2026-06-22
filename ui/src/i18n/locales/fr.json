@@ -501,6 +501,112 @@
       "runtime": "{{duration}} runtime",
       "runsAcross": "{{runs}} runs across {{issues}} sub-tasks",
       "aria": "Sub-tasks completion progress"
+    },
+    "create": {
+      "newTask": "New task",
+      "newSubTask": "New sub-task",
+      "titlePlaceholder": "Task title",
+      "descriptionPlaceholder": "Add description...",
+      "for": "For",
+      "in": "in",
+      "lowTrustReview": "Low-trust review agent",
+      "assignee": {
+        "placeholder": "Assignee",
+        "none": "No assignee",
+        "search": "Search assignees...",
+        "empty": "No assignees found."
+      },
+      "project": {
+        "placeholder": "Project",
+        "none": "No project",
+        "search": "Search projects...",
+        "empty": "No projects found."
+      },
+      "reviewer": {
+        "placeholder": "Reviewer",
+        "none": "No reviewer",
+        "search": "Search reviewers...",
+        "empty": "No reviewers found."
+      },
+      "approver": {
+        "placeholder": "Approver",
+        "none": "No approver",
+        "search": "Search approvers...",
+        "empty": "No approvers found."
+      },
+      "addParticipantsWatchdog": "Add reviewer, approver, or watchdog",
+      "addParticipants": "Add reviewer or approver",
+      "watchdog": {
+        "set": "Set watchdog",
+        "configure": "Configure watchdog",
+        "agent": "Watchdog agent",
+        "selectAgent": "Select agent",
+        "none": "No watchdog agent",
+        "search": "Search agents...",
+        "empty": "No agents found.",
+        "instructions": "Instructions",
+        "optional": "(optional)",
+        "instructionsPlaceholder": "What should the watchdog watch for and how should it keep work moving?"
+      },
+      "executionWorkspace": "Execution workspace",
+      "executionWorkspaceDesc": "Control whether this task runs in the shared workspace, a new isolated workspace, or an existing one.",
+      "chooseWorkspace": "Choose an existing workspace",
+      "reusing": "Reusing {{name}} from {{source}}.",
+      "reusingFallback": "existing execution workspace",
+      "workspaceModes": {
+        "shared_workspace": "Project default",
+        "isolated_workspace": "New isolated workspace",
+        "reuse_existing": "Reuse existing workspace"
+      },
+      "modelLane": "Model lane",
+      "lanes": {
+        "primary": "Primary",
+        "cheap": "Cheap",
+        "custom": "Custom"
+      },
+      "primaryModelNote": "Runs on the agent's primary model.",
+      "overrideModel": "Override the model and effort for this task only.",
+      "model": "Model",
+      "defaultModel": "Default model",
+      "searchModels": "Search models...",
+      "noModels": "No models found.",
+      "thinkingEffort": "Thinking effort",
+      "enableChrome": "Enable Chrome (--chrome)",
+      "documents": "Documents",
+      "attachments": "Attachments",
+      "removeDocument": "Remove document",
+      "removeAttachment": "Remove attachment",
+      "upload": "Upload",
+      "priority": "Priority",
+      "startDate": "Start date",
+      "dueDate": "Due date",
+      "adapterOptions": {
+        "claude": "Claude options",
+        "codex": "Codex options",
+        "opencode": "OpenCode options",
+        "agent": "Agent options"
+      },
+      "effort": {
+        "default": "Default",
+        "minimal": "Minimal",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "xhigh": "X-High",
+        "max": "Max"
+      },
+      "statusDesc": {
+        "backlog": "Parked — assignee will not be woken",
+        "todo": "Executable — assignee will be woken"
+      },
+      "backlogNote": "Assigning implies executable intent — leave status as <0>{{backlog}}</0> only to deliberately park this. The assignee will not be woken until status moves to <1>{{todo}}</1> or <2>{{inProgress}}</2>.",
+      "lowTrustNote": "Low-trust review agent. It can only act inside its assigned review boundary; issue, project, or run policy defines the concrete scope.",
+      "discardDraft": "Discard Draft",
+      "creatingIssue": "Creating issue...",
+      "creating": "Creating...",
+      "createTask": "Create Task",
+      "createSubTask": "Create Sub-Task",
+      "createError": "Failed to create task. Try again."
     }
   }
 }
