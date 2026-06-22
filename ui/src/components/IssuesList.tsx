@@ -97,15 +97,6 @@ function findIssuesScrollContainer(element: HTMLElement | null): HTMLElement | n
   return null;
 }
 const boardIssueStatuses = ISSUE_STATUSES;
-const issueStatusLabels: Record<IssueStatus, string> = {
-  backlog: "Backlog",
-  todo: "Todo",
-  in_progress: "In progress",
-  in_review: "In review",
-  done: "Done",
-  blocked: "Blocked",
-  cancelled: "Cancelled",
-};
 const progressSegmentClasses: Record<IssueStatus, string> = {
   backlog: "bg-muted-foreground/40",
   todo: "bg-blue-500",
@@ -491,6 +482,7 @@ function SubIssueProgressSummaryStrip({
   issueLinkState?: unknown;
   parentIssueIdForCostSummary?: string;
 }) {
+  const { t } = useTranslation();
   const target = summary.target;
   const targetIssue = target?.issue ?? null;
   const targetPathId = targetIssue?.identifier ?? targetIssue?.id ?? "";
@@ -520,35 +512,31 @@ function SubIssueProgressSummaryStrip({
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="font-medium text-foreground">
-              {summary.doneCount}/{summary.totalCount} done
+              {t("issues.progress.done", { done: summary.doneCount, total: summary.totalCount })}
             </span>
             <span className="text-muted-foreground">
-              {summary.inProgressCount} in progress
+              {t("issues.progress.inProgress", { count: summary.inProgressCount })}
             </span>
             <span className="text-muted-foreground">
-              {summary.blockedCount} blocked
+              {t("issues.progress.blocked", { count: summary.blockedCount })}
             </span>
             {showCostSummary && (
               <>
                 <span
                   className="text-muted-foreground tabular-nums"
-                  title={`${costSummary.runCount.toLocaleString()} run${
-                    costSummary.runCount === 1 ? "" : "s"
-                  } across ${costSummary.issueCount} sub-task${
-                    costSummary.issueCount === 1 ? "" : "s"
-                  }`}
+                  title={t("issues.progress.runsAcross", { runs: costSummary.runCount.toLocaleString(), issues: costSummary.issueCount })}
                 >
-                  {formatTokens(totalTokens)} tokens
+                  {t("issues.progress.tokens", { tokens: formatTokens(totalTokens) })}
                 </span>
                 <span className="text-muted-foreground tabular-nums">
-                  {formatDurationMs(costSummary.runtimeMs)} runtime
+                  {t("issues.progress.runtime", { duration: formatDurationMs(costSummary.runtimeMs) })}
                 </span>
               </>
             )}
           </div>
           <div
             role="progressbar"
-            aria-label="Sub-tasks completion progress"
+            aria-label={t("issues.progress.aria")}
             aria-valuemin={0}
             aria-valuenow={summary.doneCount}
             aria-valuemax={summary.totalCount}
@@ -559,7 +547,7 @@ function SubIssueProgressSummaryStrip({
                 key={status}
                 className={cn("h-full", progressSegmentClasses[status])}
                 style={{ width: `${(count / summary.totalCount) * 100}%` }}
-                title={`${issueStatusLabels[status]}: ${count}`}
+                title={`${issueStatusLabel(t, status)}: ${count}`}
                 aria-hidden="true"
               />
             ))}
@@ -865,7 +853,7 @@ export function IssuesList({
     if (currentUserId) {
       options.set(`user:${currentUserId}`, {
         id: `user:${currentUserId}`,
-        label: currentUserId === "local-board" ? "Board" : "Me",
+        label: currentUserId === "local-board" ? t("issues.assignee.board") : t("issues.assignee.me"),
         kind: "user",
         searchText: currentUserId === "local-board" ? "board me human local-board" : `me board human ${currentUserId}`,
       });
@@ -916,7 +904,7 @@ export function IssuesList({
       if (a.kind !== b.kind) return a.kind === "user" ? -1 : 1;
       return a.label.localeCompare(b.label);
     });
-  }, [agents, currentUserId, issues]);
+  }, [t, agents, currentUserId, issues]);
 
   const visibleIssueColumnSet = useMemo(() => new Set(visibleIssueColumns), [visibleIssueColumns]);
   const availableIssueColumns = useMemo(
@@ -1677,14 +1665,14 @@ export function IssuesList({
                       if (!blockerIssue) return null;
                       const label = blockerIssue.identifier ?? blockerIssue.id.slice(0, 8);
                       const blockerStep = checklistMeta?.stepNumberByIssueId.get(blockerId);
-                      const blockerStepSuffix = blockerStep ? ` \u00b7 step ${blockerStep}` : "";
-                      return { blockerId, chipLabel: `blocked by ${label}${blockerStepSuffix}` };
+                      const blockerStepSuffix = blockerStep ? t("issues.row.stepSuffix", { step: blockerStep }) : "";
+                      return { blockerId, chipLabel: `${t("issues.row.blockedBy", { id: label })}${blockerStepSuffix}` };
                     })
                     .filter((chip): chip is { blockerId: string; chipLabel: string } => chip !== null);
                   const firstVisibleBlockerChip = visibleBlockerChips[0] ?? null;
                   const additionalVisibleBlockerCount = Math.max(visibleBlockerChips.length - 1, 0);
                   const additionalVisibleBlockerLabel = additionalVisibleBlockerCount > 0
-                    ? ` ... and ${additionalVisibleBlockerCount} more`
+                    ? t("issues.row.andMore", { count: additionalVisibleBlockerCount })
                     : "";
                   const firstVisibleBlockerDisplayLabel = firstVisibleBlockerChip
                     ? `${firstVisibleBlockerChip.chipLabel}${additionalVisibleBlockerLabel}`
@@ -1749,8 +1737,8 @@ export function IssuesList({
                               issueBadge === "Paused" ? (
                                 <span
                                   className={cn("ml-1.5 inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] font-medium", statusBadge.paused)}
-                                  aria-label="Paused"
-                                  title="Paused"
+                                  aria-label={t("issues.row.paused")}
+                                  title={t("issues.row.paused")}
                                 >
                                   <CircleSlash2 className="h-3 w-3" />
                                   Paused
@@ -1764,8 +1752,8 @@ export function IssuesList({
                             {isSuccessfulRunHandoffRequired(issue) ? (
                               <span
                                 className="ml-1.5 inline-flex items-center gap-1 rounded-full border border-amber-400/45 bg-amber-50/60 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 dark:border-amber-300/35 dark:bg-amber-400/10 dark:text-amber-300"
-                                aria-label="Needs next step"
-                                title="This task needs a next step"
+                                aria-label={t("issues.board.needsNextStep")}
+                                title={t("issues.board.needsNextStepTitle")}
                               >
                                 <CircleDot className="h-3 w-3" />
                                 Needs next step
@@ -1852,7 +1840,7 @@ export function IssuesList({
                                         <Identity name={agentName(issue.assigneeAgentId)!} size="sm" className="min-w-0" />
                                       ) : issue.assigneeUserId ? (
                                         <Identity
-                                          name={assigneeUserLabel ?? "User"}
+                                          name={assigneeUserLabel ?? t("issues.columns.userFallback")}
                                           avatarUrl={assigneeUserProfile?.image ?? null}
                                           size="sm"
                                           className="min-w-0"
@@ -1862,7 +1850,7 @@ export function IssuesList({
                                           <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/35 bg-muted/30">
                                             <User className="h-3.5 w-3.5" />
                                           </span>
-                                          Assignee
+                                          {t("issues.assignee.placeholder")}
                                         </span>
                                       )}
                                     </button>
@@ -1875,7 +1863,7 @@ export function IssuesList({
                                   >
                                     <input
                                       className="mb-1 w-full border-b border-border bg-transparent px-2 py-1.5 text-xs outline-none placeholder:text-muted-foreground/50"
-                                      placeholder="Search assignees..."
+                                      placeholder={t("issues.assignee.search")}
                                       value={assigneeSearch}
                                       onChange={(e) => setAssigneeSearch(e.target.value)}
                                       autoFocus
@@ -1892,7 +1880,7 @@ export function IssuesList({
                                           assignIssue(issue.id, null, null);
                                         }}
                                       >
-                                        No assignee
+                                        {t("issues.assignee.none")}
                                       </button>
                                       {currentUserId && (
                                         <button
@@ -1907,7 +1895,7 @@ export function IssuesList({
                                           }}
                                         >
                                           <User className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                                          <span>Me</span>
+                                          <span>{t("issues.assignee.me")}</span>
                                         </button>
                                       )}
                                       {(agents ?? [])

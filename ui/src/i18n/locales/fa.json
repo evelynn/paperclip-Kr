@@ -472,6 +472,35 @@
       "loadingMore": "Loading more tasks...",
       "rendering": "Rendering {{shown}} of {{total}} tasks",
       "scrollToLoad": "Scroll to load more tasks"
+    },
+    "row": {
+      "markAsRead": "Mark as read",
+      "dismiss": "Dismiss from inbox",
+      "parkedBlocker": "Blocked by parked work",
+      "parkedBlockerTitle": "Blocked by parked work — at least one assigned blocker is in backlog and will not wake its assignee.",
+      "productivityReview": "Productivity review open",
+      "productivityReviewTitle": "Productivity review: {{label}}",
+      "recoveryTitle": "{{label}} — open the source task to act.",
+      "paused": "Paused",
+      "blockedBy": "blocked by {{id}}",
+      "stepSuffix": " · step {{step}}",
+      "andMore": " ... and {{count}} more"
+    },
+    "assignee": {
+      "placeholder": "Assignee",
+      "search": "Search assignees...",
+      "none": "No assignee",
+      "me": "Me",
+      "board": "Board"
+    },
+    "progress": {
+      "done": "{{done}}/{{total}} done",
+      "inProgress": "{{count}} in progress",
+      "blocked": "{{count}} blocked",
+      "tokens": "{{tokens}} tokens",
+      "runtime": "{{duration}} runtime",
+      "runsAcross": "{{runs}} runs across {{issues}} sub-tasks",
+      "aria": "Sub-tasks completion progress"
     }
   }
 }
