@@ -43,5 +43,154 @@
       "switchToEnglish": "Switch to English",
       "description": "Change the display language."
     }
+  },
+  "onboarding": {
+    "close": "Close",
+    "stepAria": "Step {{n}}",
+    "backToStart": "Back to start",
+    "frontDoor": {
+      "welcome": "Welcome to Paperclip",
+      "prompt": "How would you like to get started?",
+      "create": {
+        "title": "Build a new team",
+        "description": "Begin with a mission, bring on a lead agent, and grow a team of agents to do the work."
+      },
+      "grow": {
+        "title": "Add agents to your org",
+        "description": "Bring AI agents into your existing team or workflows."
+      }
+    },
+    "name": {
+      "title": "Name your team",
+      "description": "What should we call your team?",
+      "label": "Team name",
+      "placeholder": "Acme Corp"
+    },
+    "mission": {
+      "title": "Define your mission",
+      "description": "Your mission guides everything — your lead agent, who you bring on, and the work {{companyName}} takes on.",
+      "howLabel": "How would you like to define your mission?",
+      "directTitle": "I know my mission",
+      "directSubtitle": "Type it directly",
+      "questionnaireTitle": "Help me figure it out",
+      "questionnaireSubtitle": "Answer a few questions",
+      "directLabel": "Mission",
+      "directPlaceholder": "What is your team trying to achieve?",
+      "q1": "What does your team work on?",
+      "q1Placeholder": "e.g. We create educational YouTube content about AI",
+      "q2": "Who do you serve?",
+      "q2Placeholder": "e.g. Non-technical professionals curious about AI tools",
+      "q3": "What's your biggest bottleneck right now?",
+      "q3Placeholder": "e.g. Can't produce content fast enough across multiple channels",
+      "q4": "What would success look like in 6 months?",
+      "q4Placeholder": "e.g. Publishing daily content across 4 platforms with a team of AI agents",
+      "generate": "Generate my mission",
+      "draftLabel": "Here's your draft mission — edit it however you like:",
+      "backToQuestions": "Back to questions",
+      "changeLater": "You can always change your mission later in settings.",
+      "changeTeamName": "Change team name",
+      "chips": {
+        "saas": "Build a SaaS product",
+        "content": "Scale a content business",
+        "marketplace": "Launch a marketplace"
+      },
+      "template": {
+        "serve": "We serve {{who}}.",
+        "challenge": "Our biggest challenge is {{challenge}}.",
+        "success": "Success looks like {{success}}."
+      }
+    },
+    "grow": {
+      "title": "Tell us about your team",
+      "description": "We'll use this to set up your lead agent and plan which agents to add.",
+      "work": "What does your team work on?",
+      "workPlaceholder": "e.g. We create educational YouTube content about AI",
+      "workflows": "What are your current workflows?",
+      "workflowsPlaceholder": "e.g. Manual content creation, spreadsheet tracking, email outreach",
+      "painPoints": "What pain points would you solve with AI?",
+      "painPointsPlaceholder": "e.g. Can't produce content fast enough, no time for social media",
+      "automate": "What would you automate first?",
+      "automatePlaceholder": "e.g. Social media scheduling and content repurposing",
+      "generateMission": "Generate mission from answers",
+      "generatedMissionLabel": "Generated mission — edit however you like:",
+      "keyChallenge": "Key challenge: {{challenge}}",
+      "firstPriority": "First priority: automate {{task}}"
+    },
+    "lead": {
+      "title": "Create your team lead",
+      "defaultName": "Chief of staff",
+      "description": "Name your lead. They'll help drive {{companyName}} toward its mission. We default to {{defaultName}} — rename it to anything you like.",
+      "capsuleSlot": "an empty slot for an agent",
+      "nameLabel": "Name"
+    },
+    "connectModel": {
+      "title": "Connect a model",
+      "description": "Pick the adapter and model your lead will run on, then check the environment.",
+      "capsuleConfigured": "your team lead, taking shape",
+      "adapterTypeLabel": "Adapter type",
+      "recommendedBadge": "Recommended",
+      "moreAdapters": "More Agent Adapter Types",
+      "comingSoon": "Coming soon",
+      "modelLabel": "Model",
+      "modelSelectRequired": "Select model (required)",
+      "modelDefault": "Default",
+      "modelSearchPlaceholder": "Search models...",
+      "noModels": "No models discovered.",
+      "gatewayUrl": "Gateway URL",
+      "webhookUrl": "Webhook URL",
+      "envCheck": {
+        "title": "Adapter environment check",
+        "description": "Runs a live probe that asks the adapter CLI to respond with hello.",
+        "test": "Test now",
+        "testing": "Testing...",
+        "passed": "Passed",
+        "failed": "Failed",
+        "warnings": "Warnings",
+        "hintLabel": "Hint:"
+      },
+      "anthropic": {
+        "warning": "Claude failed while ANTHROPIC_API_KEY is set. You can clear it in this adapter config and retry the probe.",
+        "unset": "Unset ANTHROPIC_API_KEY",
+        "retrying": "Retrying..."
+      },
+      "debug": {
+        "title": "Manual debug",
+        "promptLabel": "Prompt:",
+        "authHint": "If auth fails, set {{envVar}} in env or run {{loginCmd}}.",
+        "loginHint": "If login is required, run claude login and retry."
+      }
+    },
+    "review": {
+      "title": "Review",
+      "description": "Everything's set up — your team lead is online and ready to work.",
+      "capsuleOnline": "{{agentName}} is online and ready to work!",
+      "teamName": "Team name",
+      "mission": "Mission",
+      "agentCreated": "Agent created",
+      "modelConnected": "Model connected",
+      "startConversation": "Start a conversation with {{agentName}} to discuss strategy and plan who to bring on."
+    },
+    "nav": {
+      "back": "Back",
+      "next": "Next",
+      "creating": "Creating...",
+      "confirmMission": "Confirm mission",
+      "bringingToLife": "Bringing to life...",
+      "giveHeartbeat": "Give it a heartbeat",
+      "getStarted": "Get started"
+    },
+    "errors": {
+      "createCompany": "Failed to create company",
+      "createAgent": "Failed to create agent",
+      "selectCompanyFirst": "Create or select a company before testing adapter environment.",
+      "envTestFailed": "Adapter environment test failed",
+      "opencodeModelFormat": "OpenCode requires an explicit model in provider/model format.",
+      "opencodeModelsLoadFailed": "Failed to load OpenCode models.",
+      "opencodeModelsLoading": "OpenCode models are still loading. Please wait and try again.",
+      "opencodeNoModels": "No OpenCode models discovered. Run `opencode models` and authenticate providers.",
+      "opencodeModelUnavailable": "Configured OpenCode model is unavailable: {{modelId}}",
+      "unsetAnthropicStillFailing": "Retried with ANTHROPIC_API_KEY unset in adapter config, but the environment test is still failing.",
+      "unsetAnthropicFailed": "Failed to unset ANTHROPIC_API_KEY and retry."
+    }
   }
 }
