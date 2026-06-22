@@ -5,5 +5,43 @@
       "description": "회사를 만들어 시작하세요.",
       "newCompany": "새 회사"
     }
+  },
+  "account": {
+    "openMenu": "계정 메뉴 열기",
+    "version": "Paperclip v{{version}}",
+    "badge": {
+      "account": "계정",
+      "local": "내 PC"
+    },
+    "secondary": {
+      "signedIn": "로그인됨",
+      "localBoard": "내 PC 작업 공간"
+    },
+    "viewProfile": {
+      "label": "프로필 보기",
+      "description": "내 활동·작업·사용 내역을 봅니다."
+    },
+    "editProfile": {
+      "label": "프로필 수정",
+      "description": "표시 이름과 사진을 바꿉니다."
+    },
+    "documentation": {
+      "label": "도움말 문서",
+      "description": "Paperclip 문서를 새 탭에서 엽니다."
+    },
+    "feedback": {
+      "label": "의견 보내기",
+      "description": "의견을 보내거나 문제를 알립니다."
+    },
+    "signOut": {
+      "label": "로그아웃",
+      "labelPending": "로그아웃 중...",
+      "description": "이 브라우저 세션을 종료합니다."
+    },
+    "language": {
+      "switchToKorean": "한국어로 전환",
+      "switchToEnglish": "English로 전환",
+      "description": "표시 언어를 바꿉니다."
+    }
   }
 }
