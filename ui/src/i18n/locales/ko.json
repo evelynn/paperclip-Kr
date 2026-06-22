@@ -333,5 +333,35 @@
       "agents": "에이전트",
       "projects": "프로젝트"
     }
+  },
+  "issues": {
+    "breadcrumb": "Tasks",
+    "selectCompany": "Select a company to view tasks.",
+    "status": {
+      "backlog": "Backlog",
+      "todo": "Todo",
+      "inProgress": "In Progress",
+      "inReview": "In Review",
+      "done": "Done",
+      "blocked": "Blocked",
+      "cancelled": "Cancelled"
+    },
+    "priority": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "board": {
+      "nextStep": "Next step",
+      "needsNextStep": "Needs next step",
+      "needsNextStepTitle": "This task needs a next step",
+      "live": "Live",
+      "liveBelow": "{{count}} live below",
+      "runningBelowOne": "{{count}} sub-task running below",
+      "runningBelowOther": "{{count}} sub-tasks running below",
+      "showMore": "Show {{count}} more",
+      "showingOf": "Showing {{shown}} of {{total}}"
+    }
   }
 }
