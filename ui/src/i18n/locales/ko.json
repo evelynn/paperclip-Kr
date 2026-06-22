@@ -192,5 +192,35 @@
       "unsetAnthropicStillFailing": "연결 설정에서 ANTHROPIC_API_KEY를 지우고 다시 시도했지만 여전히 확인에 실패합니다.",
       "unsetAnthropicFailed": "ANTHROPIC_API_KEY를 지우고 다시 시도하지 못했습니다."
     }
+  },
+  "skillsStore": {
+    "title": "스킬 스토어",
+    "subtitle": "찾기·설치·복제·공유",
+    "categories": "분류",
+    "allCategories": "전체 분류",
+    "allWithCount": "전체 ({{count}})",
+    "searchPlaceholder": "스킬·작성자·분류 검색…",
+    "sort": "정렬",
+    "source": "출처",
+    "sourceAll": "전체",
+    "allSources": "모든 출처",
+    "scanTitle": "프로젝트 작업 공간에서 스킬 찾기",
+    "new": "새로 만들기",
+    "createNew": "새 스킬 만들기",
+    "browseCatalog": "카탈로그 둘러보기",
+    "importFromPathUrl": "경로 또는 URL에서 가져오기",
+    "createSkill": "스킬 만들기",
+    "clearFilters": "필터 지우기",
+    "tabs": {
+      "all": "전체",
+      "installed": "설치됨",
+      "catalog": "카탈로그",
+      "bundled": "기본 포함"
+    },
+    "empty": {
+      "none": "아직 스킬이 없습니다. 새로 만들거나 카탈로그에서 설치하세요.",
+      "noMatch": "필터에 맞는 스킬이 없습니다.",
+      "noneInTab": "이 탭에는 아직 스킬이 없습니다."
+    }
   }
 }
