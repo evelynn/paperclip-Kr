@@ -474,33 +474,33 @@
       "scrollToLoad": "스크롤하여 작업 더 보기"
     },
     "row": {
-      "markAsRead": "Mark as read",
-      "dismiss": "Dismiss from inbox",
-      "parkedBlocker": "Blocked by parked work",
-      "parkedBlockerTitle": "Blocked by parked work — at least one assigned blocker is in backlog and will not wake its assignee.",
-      "productivityReview": "Productivity review open",
-      "productivityReviewTitle": "Productivity review: {{label}}",
-      "recoveryTitle": "{{label}} — open the source task to act.",
-      "paused": "Paused",
-      "blockedBy": "blocked by {{id}}",
-      "stepSuffix": " · step {{step}}",
-      "andMore": " ... and {{count}} more"
+      "markAsRead": "읽음으로 표시",
+      "dismiss": "수신함에서 지우기",
+      "parkedBlocker": "보류된 작업에 의해 차단됨",
+      "parkedBlockerTitle": "보류된 작업에 의해 차단됨 — 배정된 차단 요소 중 하나 이상이 백로그에 있어 담당자를 깨우지 않습니다.",
+      "productivityReview": "생산성 검토 진행 중",
+      "productivityReviewTitle": "생산성 검토: {{label}}",
+      "recoveryTitle": "{{label}} — 원본 작업을 열어 조치하세요.",
+      "paused": "일시중지됨",
+      "blockedBy": "{{id}}에 의해 차단됨",
+      "stepSuffix": " · {{step}}단계",
+      "andMore": " ... 외 {{count}}개"
     },
     "assignee": {
-      "placeholder": "Assignee",
-      "search": "Search assignees...",
-      "none": "No assignee",
-      "me": "Me",
-      "board": "Board"
+      "placeholder": "담당자",
+      "search": "담당자 검색...",
+      "none": "담당자 없음",
+      "me": "나",
+      "board": "보드"
     },
     "progress": {
-      "done": "{{done}}/{{total}} done",
-      "inProgress": "{{count}} in progress",
-      "blocked": "{{count}} blocked",
-      "tokens": "{{tokens}} tokens",
-      "runtime": "{{duration}} runtime",
-      "runsAcross": "{{runs}} runs across {{issues}} sub-tasks",
-      "aria": "Sub-tasks completion progress"
+      "done": "{{done}}/{{total}} 완료",
+      "inProgress": "{{count}}개 진행 중",
+      "blocked": "{{count}}개 차단됨",
+      "tokens": "토큰 {{tokens}}개",
+      "runtime": "런타임 {{duration}}",
+      "runsAcross": "하위 작업 {{issues}}개에서 실행 {{runs}}건",
+      "aria": "하위 작업 완료 진행률"
     }
   }
 }
