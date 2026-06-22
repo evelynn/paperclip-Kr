@@ -421,6 +421,57 @@
       "visibility": "표시",
       "liveOnly": "실행 중인 작업만",
       "hideRoutine": "루틴 실행 숨기기"
+    },
+    "list": {
+      "newTask": "New Task",
+      "createTask": "Create Task",
+      "newNamed": "New {{name}}",
+      "createNamed": "Create {{name}}",
+      "searchPlaceholder": "Search tasks...",
+      "searchAria": "Search tasks",
+      "listView": "List view",
+      "boardView": "Board view",
+      "enableNesting": "Enable parent-child nesting",
+      "disableNesting": "Disable parent-child nesting",
+      "comfortableCards": "Use comfortable cards",
+      "compactCards": "Use compact cards",
+      "expandColdLanes": "Expand cold lanes",
+      "collapseColdLanes": "Collapse cold lanes",
+      "cardsPerColumn": "Cards per column",
+      "perColumn": "{{count}} per column",
+      "resetBoardDensity": "Reset board density",
+      "chooseColumns": "Choose which task columns stay visible",
+      "sort": "Sort",
+      "group": "Group",
+      "sortFields": {
+        "workflow": "Workflow",
+        "status": "Status",
+        "priority": "Priority",
+        "title": "Title",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "groupBy": {
+        "status": "Status",
+        "priority": "Priority",
+        "assignee": "Assignee",
+        "project": "Project",
+        "workspace": "Workspace",
+        "parent": "Parent Task",
+        "none": "None"
+      },
+      "groupNames": {
+        "noWorkspace": "No Workspace",
+        "noProject": "No Project",
+        "noParent": "No Parent"
+      },
+      "searchLimit": "Showing up to {{count}} matches. Refine the search to narrow further.",
+      "boardColumnLimit": "Some board columns are showing up to {{count}} tasks. Refine filters or search to reveal the rest.",
+      "empty": "No tasks match the current filters or search.",
+      "newInGroup": "New task in {{group}}",
+      "loadingMore": "Loading more tasks...",
+      "rendering": "Rendering {{shown}} of {{total}} tasks",
+      "scrollToLoad": "Scroll to load more tasks"
     }
   }
 }
