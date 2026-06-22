@@ -91,6 +91,14 @@ describe("Korean localization (E2E)", () => {
     ["issues.row.markAsRead", "읽음으로 표시"],
     ["issues.assignee.me", "나"],
     ["issues.progress.blocked", "5개 차단됨", { count: 5 }],
+    // Milestone B — new-task dialog
+    ["issues.create.createTask", "작업 만들기"],
+    ["issues.create.titlePlaceholder", "작업 제목"],
+    ["issues.create.assignee.placeholder", "담당자"],
+    ["issues.create.watchdog.set", "워치독 설정"],
+    ["issues.create.lanes.cheap", "저비용"],
+    ["issues.create.effort.high", "높음"],
+    ["issues.create.workspaceModes.reuse_existing", "기존 워크스페이스 재사용"],
   ];
 
   it("resolves every migrated surface to Korean under ko", async () => {
