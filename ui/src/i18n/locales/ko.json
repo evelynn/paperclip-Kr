@@ -335,33 +335,33 @@
     }
   },
   "issues": {
-    "breadcrumb": "Tasks",
-    "selectCompany": "Select a company to view tasks.",
+    "breadcrumb": "작업",
+    "selectCompany": "작업을 보려면 회사를 선택하세요.",
     "status": {
-      "backlog": "Backlog",
-      "todo": "Todo",
-      "inProgress": "In Progress",
-      "inReview": "In Review",
-      "done": "Done",
-      "blocked": "Blocked",
-      "cancelled": "Cancelled"
+      "backlog": "백로그",
+      "todo": "할 일",
+      "inProgress": "진행 중",
+      "inReview": "검토 중",
+      "done": "완료",
+      "blocked": "차단됨",
+      "cancelled": "취소됨"
     },
     "priority": {
-      "critical": "Critical",
-      "high": "High",
-      "medium": "Medium",
-      "low": "Low"
+      "critical": "긴급",
+      "high": "높음",
+      "medium": "보통",
+      "low": "낮음"
     },
     "board": {
-      "nextStep": "Next step",
-      "needsNextStep": "Needs next step",
-      "needsNextStepTitle": "This task needs a next step",
-      "live": "Live",
-      "liveBelow": "{{count}} live below",
-      "runningBelowOne": "{{count}} sub-task running below",
-      "runningBelowOther": "{{count}} sub-tasks running below",
-      "showMore": "Show {{count}} more",
-      "showingOf": "Showing {{shown}} of {{total}}"
+      "nextStep": "다음 단계",
+      "needsNextStep": "다음 단계 필요",
+      "needsNextStepTitle": "이 작업에는 다음 단계가 필요합니다",
+      "live": "실행 중",
+      "liveBelow": "하위 {{count}}건 실행 중",
+      "runningBelowOne": "하위 작업 {{count}}개 실행 중",
+      "runningBelowOther": "하위 작업 {{count}}개 실행 중",
+      "showMore": "{{count}}개 더 보기",
+      "showingOf": "{{total}}개 중 {{shown}}개 표시"
     }
   }
 }
