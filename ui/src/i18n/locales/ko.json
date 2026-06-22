@@ -365,34 +365,34 @@
     },
     "columns": {
       "title": {
-        "status": "Status",
+        "status": "상태",
         "id": "ID",
-        "assignee": "Assignee",
-        "project": "Project",
-        "workspace": "Workspace",
-        "parent": "Parent task",
-        "labels": "Tags",
-        "updated": "Last updated"
+        "assignee": "담당자",
+        "project": "프로젝트",
+        "workspace": "워크스페이스",
+        "parent": "상위 작업",
+        "labels": "태그",
+        "updated": "마지막 업데이트"
       },
       "description": {
-        "status": "Task state chip on the left edge.",
-        "id": "Ticket identifier like PAP-1009.",
-        "assignee": "Assigned agent or board user.",
-        "project": "Linked project pill with its color.",
-        "workspace": "Execution or project workspace used for the task.",
-        "parent": "Parent task identifier and title.",
-        "labels": "Task labels and tags.",
-        "updated": "Latest visible activity time."
+        "status": "왼쪽 가장자리의 작업 상태 칩.",
+        "id": "PAP-1009 같은 티켓 식별자.",
+        "assignee": "배정된 에이전트 또는 보드 사용자.",
+        "project": "색상이 있는 연결된 프로젝트 표시.",
+        "workspace": "작업에 사용된 실행 또는 프로젝트 워크스페이스.",
+        "parent": "상위 작업 식별자와 제목.",
+        "labels": "작업 라벨과 태그.",
+        "updated": "최근 표시된 활동 시각."
       },
-      "picker": "Columns",
-      "desktopRows": "Desktop task rows",
-      "resetDefaults": "Reset defaults",
-      "resetHint": "status, id, updated",
-      "unassigned": "Unassigned",
-      "noProject": "No project",
-      "subTask": "Sub-task",
-      "filterByWorkspace": "Filter by workspace",
-      "userFallback": "User"
+      "picker": "열",
+      "desktopRows": "데스크톱 작업 행",
+      "resetDefaults": "기본값으로 재설정",
+      "resetHint": "상태, ID, 업데이트",
+      "unassigned": "미배정",
+      "noProject": "프로젝트 없음",
+      "subTask": "하위 작업",
+      "filterByWorkspace": "워크스페이스로 필터",
+      "userFallback": "사용자"
     }
   }
 }
