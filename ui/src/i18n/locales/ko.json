@@ -395,32 +395,32 @@
       "userFallback": "사용자"
     },
     "filters": {
-      "button": "Filter",
-      "withCount": "Filters: {{count}}",
-      "title": "Filters",
-      "clear": "Clear",
-      "quick": "Quick filters",
+      "button": "필터",
+      "withCount": "필터: {{count}}",
+      "title": "필터",
+      "clear": "지우기",
+      "quick": "빠른 필터",
       "presets": {
-        "all": "All",
-        "active": "Active",
-        "backlog": "Backlog",
-        "done": "Done"
+        "all": "전체",
+        "active": "활성",
+        "backlog": "백로그",
+        "done": "완료"
       },
-      "status": "Status",
-      "priority": "Priority",
-      "assignee": "Assignee",
-      "noAssignee": "No assignee",
-      "me": "Me",
-      "creator": "Creator",
-      "removeCreator": "Remove creator {{name}}",
-      "searchCreators": "Search creators...",
-      "noCreators": "No creators match.",
-      "project": "Project",
-      "labels": "Labels",
-      "workspace": "Workspace",
-      "visibility": "Visibility",
-      "liveOnly": "Live runs only",
-      "hideRoutine": "Hide routine runs"
+      "status": "상태",
+      "priority": "우선순위",
+      "assignee": "담당자",
+      "noAssignee": "담당자 없음",
+      "me": "나",
+      "creator": "생성자",
+      "removeCreator": "생성자 {{name}} 제거",
+      "searchCreators": "생성자 검색...",
+      "noCreators": "일치하는 생성자가 없습니다.",
+      "project": "프로젝트",
+      "labels": "라벨",
+      "workspace": "워크스페이스",
+      "visibility": "표시",
+      "liveOnly": "실행 중인 작업만",
+      "hideRoutine": "루틴 실행 숨기기"
     }
   }
 }
