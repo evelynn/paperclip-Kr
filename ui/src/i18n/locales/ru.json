@@ -192,5 +192,35 @@
       "unsetAnthropicStillFailing": "Retried with ANTHROPIC_API_KEY unset in adapter config, but the environment test is still failing.",
       "unsetAnthropicFailed": "Failed to unset ANTHROPIC_API_KEY and retry."
     }
+  },
+  "skillsStore": {
+    "title": "Skills Store",
+    "subtitle": "Discover, install, fork, share",
+    "categories": "Categories",
+    "allCategories": "All categories",
+    "allWithCount": "All ({{count}})",
+    "searchPlaceholder": "Search skills, authors, categories…",
+    "sort": "Sort",
+    "source": "Source",
+    "sourceAll": "All",
+    "allSources": "All sources",
+    "scanTitle": "Scan project workspaces for skills",
+    "new": "New",
+    "createNew": "Create new skill",
+    "browseCatalog": "Browse catalog",
+    "importFromPathUrl": "Import from path or URL",
+    "createSkill": "Create a skill",
+    "clearFilters": "Clear filters",
+    "tabs": {
+      "all": "All",
+      "installed": "Installed",
+      "catalog": "Catalog",
+      "bundled": "Bundled"
+    },
+    "empty": {
+      "none": "No skills yet. Create one or install from the catalog.",
+      "noMatch": "No skills match your filters.",
+      "noneInTab": "No skills in this tab yet."
+    }
   }
 }
