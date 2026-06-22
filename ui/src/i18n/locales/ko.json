@@ -43,5 +43,154 @@
       "switchToEnglish": "English로 전환",
       "description": "표시 언어를 바꿉니다."
     }
+  },
+  "onboarding": {
+    "close": "닫기",
+    "stepAria": "{{n}}단계",
+    "backToStart": "처음으로",
+    "frontDoor": {
+      "welcome": "Paperclip에 오신 것을 환영합니다",
+      "prompt": "어떻게 시작할까요?",
+      "create": {
+        "title": "새 팀 만들기",
+        "description": "목표를 정하고 대표 에이전트를 들인 뒤, 일할 에이전트 팀을 키웁니다."
+      },
+      "grow": {
+        "title": "조직에 에이전트 추가",
+        "description": "기존 팀이나 업무 흐름에 AI 에이전트를 들입니다."
+      }
+    },
+    "name": {
+      "title": "팀 이름 정하기",
+      "description": "팀을 뭐라고 부를까요?",
+      "label": "팀 이름",
+      "placeholder": "예: 우리 회사"
+    },
+    "mission": {
+      "title": "목표 정하기",
+      "description": "목표는 모든 것을 이끕니다 — 대표 에이전트, 함께할 팀원, 그리고 {{companyName}}이(가) 맡을 일까지.",
+      "howLabel": "목표를 어떻게 정할까요?",
+      "directTitle": "목표가 분명해요",
+      "directSubtitle": "직접 입력하기",
+      "questionnaireTitle": "같이 정리해 주세요",
+      "questionnaireSubtitle": "몇 가지 질문에 답하기",
+      "directLabel": "목표",
+      "directPlaceholder": "팀이 이루려는 것은 무엇인가요?",
+      "q1": "팀은 어떤 일을 하나요?",
+      "q1Placeholder": "예: AI에 대한 교육용 유튜브 콘텐츠를 만듭니다",
+      "q2": "누구를 위해 일하나요?",
+      "q2Placeholder": "예: AI 도구가 궁금한 비전공 직장인",
+      "q3": "지금 가장 큰 병목은 무엇인가요?",
+      "q3Placeholder": "예: 여러 채널에 콘텐츠를 빠르게 만들어내기 어렵습니다",
+      "q4": "6개월 뒤 성공한 모습은 어떤가요?",
+      "q4Placeholder": "예: AI 에이전트 팀과 함께 4개 플랫폼에 매일 콘텐츠 발행",
+      "generate": "내 목표 만들기",
+      "draftLabel": "초안 목표입니다 — 원하는 대로 수정하세요:",
+      "backToQuestions": "질문으로 돌아가기",
+      "changeLater": "목표는 나중에 설정에서 언제든 바꿀 수 있습니다.",
+      "changeTeamName": "팀 이름 바꾸기",
+      "chips": {
+        "saas": "SaaS 제품 만들기",
+        "content": "콘텐츠 사업 키우기",
+        "marketplace": "마켓플레이스 출시하기"
+      },
+      "template": {
+        "serve": "{{who}} 대상으로 일합니다.",
+        "challenge": "가장 큰 어려움은 {{challenge}}입니다.",
+        "success": "성공한 모습은 {{success}}입니다."
+      }
+    },
+    "grow": {
+      "title": "팀에 대해 알려 주세요",
+      "description": "이 내용으로 대표 에이전트를 설정하고 어떤 에이전트를 더할지 계획합니다.",
+      "work": "팀은 어떤 일을 하나요?",
+      "workPlaceholder": "예: AI에 대한 교육용 유튜브 콘텐츠를 만듭니다",
+      "workflows": "지금의 업무 흐름은 어떤가요?",
+      "workflowsPlaceholder": "예: 수작업 콘텐츠 제작, 스프레드시트 관리, 이메일 영업",
+      "painPoints": "AI로 어떤 어려움을 해결하고 싶나요?",
+      "painPointsPlaceholder": "예: 콘텐츠를 빠르게 못 만듦, SNS 운영할 시간이 없음",
+      "automate": "가장 먼저 자동화하고 싶은 일은?",
+      "automatePlaceholder": "예: SNS 예약 발행과 콘텐츠 재가공",
+      "generateMission": "답변으로 목표 만들기",
+      "generatedMissionLabel": "만들어진 목표 — 원하는 대로 수정하세요:",
+      "keyChallenge": "핵심 과제: {{challenge}}",
+      "firstPriority": "최우선 과제: {{task}} 자동화"
+    },
+    "lead": {
+      "title": "대표 에이전트 만들기",
+      "defaultName": "비서실장",
+      "description": "대표의 이름을 지어 주세요. {{companyName}}의 목표를 이끄는 역할을 합니다. 기본값은 {{defaultName}}이며, 원하는 이름으로 바꿀 수 있습니다.",
+      "capsuleSlot": "에이전트를 위한 빈 자리",
+      "nameLabel": "이름"
+    },
+    "connectModel": {
+      "title": "AI 연결",
+      "description": "대표가 사용할 AI 연결 방식과 모델을 고른 뒤 연결 상태를 확인하세요.",
+      "capsuleConfigured": "모습을 갖춰 가는 대표 에이전트",
+      "adapterTypeLabel": "AI 연결 방식",
+      "recommendedBadge": "추천",
+      "moreAdapters": "다른 연결 방식 더 보기",
+      "comingSoon": "준비 중",
+      "modelLabel": "모델",
+      "modelSelectRequired": "모델 선택 (필수)",
+      "modelDefault": "기본값",
+      "modelSearchPlaceholder": "모델 검색...",
+      "noModels": "찾은 모델이 없습니다.",
+      "gatewayUrl": "게이트웨이 URL",
+      "webhookUrl": "웹훅 URL",
+      "envCheck": {
+        "title": "연결 상태 점검",
+        "description": "AI 도구에 직접 인사를 요청해 정상 작동하는지 확인합니다.",
+        "test": "지금 확인",
+        "testing": "확인 중...",
+        "passed": "정상",
+        "failed": "실패",
+        "warnings": "경고",
+        "hintLabel": "힌트:"
+      },
+      "anthropic": {
+        "warning": "ANTHROPIC_API_KEY가 설정된 상태에서 Claude가 실패했습니다. 이 연결 설정에서 키를 지우고 다시 확인할 수 있습니다.",
+        "unset": "ANTHROPIC_API_KEY 지우기",
+        "retrying": "다시 시도 중..."
+      },
+      "debug": {
+        "title": "수동 디버그",
+        "promptLabel": "프롬프트:",
+        "authHint": "인증이 안 되면 환경변수 {{envVar}}를 설정하거나 {{loginCmd}}를 실행하세요.",
+        "loginHint": "로그인이 필요하면 claude login을 실행한 뒤 다시 시도하세요."
+      }
+    },
+    "review": {
+      "title": "확인",
+      "description": "모든 준비가 끝났습니다 — 대표 에이전트가 작동 중이며 일할 준비가 됐습니다.",
+      "capsuleOnline": "{{agentName}}이(가) 작동 중이며 일할 준비가 됐습니다!",
+      "teamName": "팀 이름",
+      "mission": "목표",
+      "agentCreated": "에이전트 생성됨",
+      "modelConnected": "AI 연결됨",
+      "startConversation": "{{agentName}}과(와) 대화를 시작해 전략을 논의하고 누구를 더할지 계획하세요."
+    },
+    "nav": {
+      "back": "뒤로",
+      "next": "다음",
+      "creating": "만드는 중...",
+      "confirmMission": "목표 확정",
+      "bringingToLife": "작동 준비 중...",
+      "giveHeartbeat": "작동 시작하기",
+      "getStarted": "시작하기"
+    },
+    "errors": {
+      "createCompany": "회사 생성에 실패했습니다",
+      "createAgent": "에이전트 생성에 실패했습니다",
+      "selectCompanyFirst": "연결 상태를 확인하기 전에 회사를 먼저 만들거나 선택하세요.",
+      "envTestFailed": "연결 상태 확인에 실패했습니다",
+      "opencodeModelFormat": "OpenCode는 provider/model 형식의 명시적 모델이 필요합니다.",
+      "opencodeModelsLoadFailed": "OpenCode 모델을 불러오지 못했습니다.",
+      "opencodeModelsLoading": "OpenCode 모델을 아직 불러오는 중입니다. 잠시 후 다시 시도하세요.",
+      "opencodeNoModels": "찾은 OpenCode 모델이 없습니다. `opencode models`를 실행하고 제공자 인증을 완료하세요.",
+      "opencodeModelUnavailable": "설정된 OpenCode 모델을 사용할 수 없습니다: {{modelId}}",
+      "unsetAnthropicStillFailing": "연결 설정에서 ANTHROPIC_API_KEY를 지우고 다시 시도했지만 여전히 확인에 실패합니다.",
+      "unsetAnthropicFailed": "ANTHROPIC_API_KEY를 지우고 다시 시도하지 못했습니다."
+    }
   }
 }
