@@ -7287,5 +7287,37 @@
       "on": "on",
       "onDay": "on day"
     }
+  },
+  "trust": {
+    "presetLabel": {
+      "standard": "Standard",
+      "low_trust_review": "Low-trust review"
+    },
+    "presetDesc": {
+      "standard": "Company-visible collaboration. This is the default for normal work.",
+      "low_trust_review": "Contained for hostile or untrusted input. Narrow Paperclip API, quarantined output. Use for PR review and external-content triage."
+    },
+    "source": {
+      "promoted": "Promoted from low-trust",
+      "lowTrust": "Low-trust source"
+    },
+    "boundary": {
+      "project": "Project {{id}}",
+      "rootIssue": "Root issue {{id}}",
+      "issue": "Issue {{id}}",
+      "none": "No boundary selected",
+      "count": "{{n}} boundaries"
+    },
+    "badge": {
+      "promoted": "Promoted from low-trust.",
+      "promotedOn": "Promoted from low-trust on {{date}}.",
+      "lowTrust": "Authored by a low-trust review agent. Raw {{artifact}} is not auto-shared with higher-trust agents."
+    },
+    "artifact": {
+      "comment": "comment",
+      "document": "document",
+      "work product": "work product",
+      "content": "content"
+    }
   }
 }

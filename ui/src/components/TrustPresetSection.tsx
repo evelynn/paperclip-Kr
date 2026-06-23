@@ -13,8 +13,8 @@ import {
   lowTrustBoundaryHasScope,
   setSingleLowTrustBoundaryTarget,
   summarizeLowTrustBoundaryTarget,
-  TRUST_PRESET_DESCRIPTIONS,
-  TRUST_PRESET_LABELS,
+  trustPresetDescription,
+  trustPresetLabel,
   type LowTrustBoundaryTarget,
 } from "../lib/trust-policy-ui";
 import { cn } from "../lib/utils";
@@ -121,11 +121,11 @@ export function TrustPresetSection({
             onChange={(event) => handlePresetChange(event.target.value)}
             disabled={disabled}
           >
-            <option value="standard">{TRUST_PRESET_LABELS.standard}</option>
-            <option value="low_trust_review">{TRUST_PRESET_LABELS.low_trust_review}</option>
+            <option value="standard">{trustPresetLabel("standard", t)}</option>
+            <option value="low_trust_review">{trustPresetLabel("low_trust_review", t)}</option>
           </select>
         </Field>
-        <p className="text-xs text-muted-foreground">{TRUST_PRESET_DESCRIPTIONS[preset]}</p>
+        <p className="text-xs text-muted-foreground">{trustPresetDescription(preset, t)}</p>
 
         {lowTrust ? (
           <div
@@ -215,7 +215,7 @@ export function TrustPresetSection({
                 <div className="rounded-md border border-border/70 bg-background/70 p-3 text-foreground">
                   <p className="text-sm font-medium">{t("agentConfig.trust.managedByEe")}</p>
                   <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                    {t("agentConfig.trust.managedByEeDescription", { summary: summarizeLowTrustBoundaryTarget(boundary).toLowerCase() })}
+                    {t("agentConfig.trust.managedByEeDescription", { summary: summarizeLowTrustBoundaryTarget(boundary, t).toLowerCase() })}
                   </p>
                 </div>
               )}

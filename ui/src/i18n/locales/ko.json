@@ -7287,5 +7287,37 @@
       "on": "요일",
       "onDay": "날짜"
     }
+  },
+  "trust": {
+    "presetLabel": {
+      "standard": "표준",
+      "low_trust_review": "저신뢰 검토"
+    },
+    "presetDesc": {
+      "standard": "회사에 공개되는 협업입니다. 일반 작업의 기본값입니다.",
+      "low_trust_review": "적대적이거나 신뢰할 수 없는 입력을 격리합니다. 제한된 Paperclip API, 격리된 출력. PR 검토 및 외부 콘텐츠 분류에 사용하세요."
+    },
+    "source": {
+      "promoted": "저신뢰에서 승격됨",
+      "lowTrust": "저신뢰 출처"
+    },
+    "boundary": {
+      "project": "프로젝트 {{id}}",
+      "rootIssue": "루트 작업 {{id}}",
+      "issue": "작업 {{id}}",
+      "none": "선택된 경계 없음",
+      "count": "경계 {{n}}개"
+    },
+    "badge": {
+      "promoted": "저신뢰에서 승격됨.",
+      "promotedOn": "{{date}}에 저신뢰에서 승격됨.",
+      "lowTrust": "저신뢰 검토 에이전트가 작성했습니다. 원본 {{artifact}}은(는) 더 높은 신뢰 등급의 에이전트와 자동으로 공유되지 않습니다."
+    },
+    "artifact": {
+      "comment": "댓글",
+      "document": "문서",
+      "work product": "작업 산출물",
+      "content": "콘텐츠"
+    }
   }
 }
