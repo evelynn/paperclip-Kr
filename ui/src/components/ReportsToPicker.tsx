@@ -9,6 +9,7 @@ import { User } from "lucide-react";
 import { cn } from "../lib/utils";
 import { roleLabels } from "./agent-config-primitives";
 import { AgentIcon } from "./AgentIconPicker";
+import { useTranslation } from "@/i18n";
 
 export function ReportsToPicker({
   agents,
@@ -16,8 +17,8 @@ export function ReportsToPicker({
   onChange,
   disabled = false,
   excludeAgentIds = [],
-  disabledEmptyLabel = "Reports to: N/A (CEO)",
-  chooseLabel = "Reports to...",
+  disabledEmptyLabel,
+  chooseLabel,
 }: {
   agents: Agent[];
   value: string | null;
@@ -27,6 +28,9 @@ export function ReportsToPicker({
   disabledEmptyLabel?: string;
   chooseLabel?: string;
 }) {
+  const { t } = useTranslation();
+  const resolvedDisabledEmptyLabel = disabledEmptyLabel ?? t("agentConfig.reportsToPicker.disabledEmptyLabel");
+  const resolvedChooseLabel = chooseLabel ?? t("agentConfig.reportsToPicker.chooseLabel");
   const [open, setOpen] = useState(false);
   const exclude = new Set(excludeAgentIds);
   const rows = agents.filter(
@@ -51,7 +55,7 @@ export function ReportsToPicker({
           {unknownManager ? (
             <>
               <User className="h-3 w-3 shrink-0 text-muted-foreground" />
-              <span className="min-w-0 truncate text-muted-foreground">Unknown manager (stale ID)</span>
+              <span className="min-w-0 truncate text-muted-foreground">{t("agentConfig.reportsToPicker.unknownManager")}</span>
             </>
           ) : current ? (
             <>
@@ -62,14 +66,14 @@ export function ReportsToPicker({
                   terminatedManager && "text-amber-900 dark:text-amber-200",
                 )}
               >
-                {`Reports to ${current.name}${terminatedManager ? " (terminated)" : ""}`}
+                {`${t("agentConfig.reportsToPicker.reportsTo", { name: current.name })}${terminatedManager ? t("agentConfig.reportsToPicker.terminatedSuffix") : ""}`}
               </span>
             </>
           ) : (
             <>
               <User className="h-3 w-3 shrink-0 text-muted-foreground" />
               <span className="min-w-0 truncate">
-                {disabled ? disabledEmptyLabel : chooseLabel}
+                {disabled ? resolvedDisabledEmptyLabel : resolvedChooseLabel}
               </span>
             </>
           )}
@@ -87,19 +91,19 @@ export function ReportsToPicker({
             setOpen(false);
           }}
         >
-          No manager
+          {t("agentConfig.reportsToPicker.noManager")}
         </button>
         {terminatedManager && (
           <div className="flex min-w-0 items-center gap-2 overflow-hidden px-2 py-1.5 text-xs text-muted-foreground border-b border-border mb-0.5">
             <AgentIcon icon={current.icon} className="shrink-0 h-3 w-3" />
             <span className="min-w-0 truncate">
-              Current: {current.name} (terminated)
+              {t("agentConfig.reportsToPicker.current", { name: current.name })}
             </span>
           </div>
         )}
         {unknownManager && (
           <div className="px-2 py-1.5 text-xs text-muted-foreground border-b border-border mb-0.5">
-            Saved manager is missing from this company. Choose a new manager or clear.
+            {t("agentConfig.reportsToPicker.staleManagerNotice")}
           </div>
         )}
         {rows.map((a) => (

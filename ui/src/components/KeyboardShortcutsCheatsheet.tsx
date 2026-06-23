@@ -1,8 +1,11 @@
+import { Trans } from "@/i18n";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useTranslation } from "@/i18n";
 
 interface ShortcutEntry {
   keys: string[];
-  label: string;
+  /** Translation key (under `chromeComp.shortcuts`) for the shortcut label. */
+  labelKey: string;
   /** Render keys as a simultaneous chord (joined with "+") rather than a
    *  "then" sequence. */
   combo?: boolean;
@@ -20,44 +23,45 @@ function getPlatformLabel() {
 const META_KEY = /Mac|iPhone|iPad|iPod/.test(getPlatformLabel()) ? "⌘" : "Ctrl";
 
 interface ShortcutSection {
-  title: string;
+  /** Translation key (under `chromeComp.shortcuts`) for the section title. */
+  titleKey: string;
   shortcuts: ShortcutEntry[];
 }
 
 const sections: ShortcutSection[] = [
   {
-    title: "Inbox",
+    titleKey: "chromeComp.shortcuts.sectionInbox",
     shortcuts: [
-      { keys: ["j"], label: "Move down" },
-      { keys: ["↓"], label: "Move down" },
-      { keys: ["k"], label: "Move up" },
-      { keys: ["↑"], label: "Move up" },
-      { keys: ["←"], label: "Collapse selected group" },
-      { keys: ["→"], label: "Expand selected group" },
-      { keys: ["Enter"], label: "Open selected item" },
-      { keys: ["a"], label: "Archive item" },
-      { keys: ["y"], label: "Archive item" },
-      { keys: ["r"], label: "Mark as read" },
-      { keys: ["U"], label: "Mark as unread" },
+      { keys: ["j"], labelKey: "chromeComp.shortcuts.moveDown" },
+      { keys: ["↓"], labelKey: "chromeComp.shortcuts.moveDown" },
+      { keys: ["k"], labelKey: "chromeComp.shortcuts.moveUp" },
+      { keys: ["↑"], labelKey: "chromeComp.shortcuts.moveUp" },
+      { keys: ["←"], labelKey: "chromeComp.shortcuts.collapseSelectedGroup" },
+      { keys: ["→"], labelKey: "chromeComp.shortcuts.expandSelectedGroup" },
+      { keys: ["Enter"], labelKey: "chromeComp.shortcuts.openSelectedItem" },
+      { keys: ["a"], labelKey: "chromeComp.shortcuts.archiveItem" },
+      { keys: ["y"], labelKey: "chromeComp.shortcuts.archiveItem" },
+      { keys: ["r"], labelKey: "chromeComp.shortcuts.markAsRead" },
+      { keys: ["U"], labelKey: "chromeComp.shortcuts.markAsUnread" },
     ],
   },
   {
-    title: "Task detail",
+    titleKey: "chromeComp.shortcuts.sectionTaskDetail",
     shortcuts: [
-      { keys: ["y"], label: "Quick-archive back to inbox" },
-      { keys: ["g", "i"], label: "Go to inbox" },
-      { keys: ["g", "c"], label: "Focus comment composer" },
+      { keys: ["y"], labelKey: "chromeComp.shortcuts.quickArchiveBackToInbox" },
+      { keys: ["g", "i"], labelKey: "chromeComp.shortcuts.goToInbox" },
+      { keys: ["g", "c"], labelKey: "chromeComp.shortcuts.focusCommentComposer" },
     ],
   },
   {
-    title: "Global",
+    titleKey: "chromeComp.shortcuts.sectionGlobal",
     shortcuts: [
-      { keys: ["/"], label: "Search current page or quick search" },
-      { keys: ["c"], label: "New task" },
-      { keys: ["["], label: "Toggle sidebar" },
-      { keys: [META_KEY, "B"], label: "Collapse or expand sidebar", combo: true },
-      { keys: ["]"], label: "Toggle panel" },
-      { keys: ["?"], label: "Show keyboard shortcuts" },
+      { keys: ["/"], labelKey: "chromeComp.shortcuts.searchCurrentPageOrQuickSearch" },
+      { keys: ["c"], labelKey: "chromeComp.shortcuts.newTask" },
+      { keys: ["["], labelKey: "chromeComp.shortcuts.toggleSidebar" },
+      { keys: [META_KEY, "B"], labelKey: "chromeComp.shortcuts.collapseOrExpandSidebar", combo: true },
+      { keys: ["]"], labelKey: "chromeComp.shortcuts.togglePanel" },
+      { keys: ["?"], labelKey: "chromeComp.shortcuts.showKeyboardShortcuts" },
     ],
   },
 ];
@@ -71,27 +75,28 @@ function KeyCap({ children }: { children: string }) {
 }
 
 export function KeyboardShortcutsCheatsheetContent() {
+  const { t } = useTranslation();
   return (
     <>
       <div className="divide-y divide-border border-t border-border">
         {sections.map((section) => (
-          <div key={section.title} className="px-5 py-3">
+          <div key={section.titleKey} className="px-5 py-3">
             <h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-              {section.title}
+              {t(section.titleKey)}
             </h3>
             <div className="space-y-1.5">
               {section.shortcuts.map((shortcut) => (
                 <div
-                  key={shortcut.label + shortcut.keys.join()}
+                  key={shortcut.labelKey + shortcut.keys.join()}
                   className="flex items-center justify-between gap-4"
                 >
-                  <span className="text-sm text-foreground/90">{shortcut.label}</span>
+                  <span className="text-sm text-foreground/90">{t(shortcut.labelKey)}</span>
                   <div className="flex items-center gap-1">
                     {shortcut.keys.map((key, i) => (
                       <span key={key} className="flex items-center gap-1">
                         {i > 0 && (
                           <span className="text-xs text-muted-foreground">
-                            {shortcut.combo ? "+" : "then"}
+                            {shortcut.combo ? "+" : t("chromeComp.shortcuts.separatorThen")}
                           </span>
                         )}
                         <KeyCap>{key}</KeyCap>
@@ -106,7 +111,7 @@ export function KeyboardShortcutsCheatsheetContent() {
       </div>
       <div className="border-t border-border px-5 py-3">
         <p className="text-xs text-muted-foreground">
-          Press <KeyCap>Esc</KeyCap> to close &middot; Shortcuts are disabled in text fields
+          <Trans i18nKey="chromeComp.shortcuts.footer" components={[<KeyCap key="esc">Esc</KeyCap>]} />
         </p>
       </div>
     </>
@@ -120,11 +125,12 @@ export function KeyboardShortcutsCheatsheet({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md gap-0 p-0 overflow-hidden" showCloseButton={false}>
         <DialogHeader className="px-5 pt-5 pb-3">
-          <DialogTitle className="text-base">Keyboard shortcuts</DialogTitle>
+          <DialogTitle className="text-base">{t("chromeComp.shortcuts.dialogTitle")}</DialogTitle>
         </DialogHeader>
         <KeyboardShortcutsCheatsheetContent />
       </DialogContent>

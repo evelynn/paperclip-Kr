@@ -1,3 +1,4 @@
+import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 export type MatchSourceChipKind = "title" | "identifier" | "comment" | "document";
@@ -13,11 +14,11 @@ const chipStyles: Record<MatchSourceChipKind, string> = {
     "bg-[var(--chip-match-document-bg)] text-[var(--chip-match-document-fg)] border-[var(--chip-match-document-border)]",
 };
 
-const chipLabels: Record<MatchSourceChipKind, string> = {
-  title: "Title",
-  identifier: "Identifier",
-  comment: "Comment",
-  document: "Doc",
+const chipLabelKeys: Record<MatchSourceChipKind, string> = {
+  title: "tailComp.matchSourceChip.title",
+  identifier: "tailComp.matchSourceChip.identifier",
+  comment: "tailComp.matchSourceChip.comment",
+  document: "tailComp.matchSourceChip.doc",
 };
 
 export interface MatchSourceChipProps {
@@ -28,7 +29,8 @@ export interface MatchSourceChipProps {
 }
 
 export function MatchSourceChip({ kind, count, label, className }: MatchSourceChipProps) {
-  const text = label ?? chipLabels[kind];
+  const { t } = useTranslation();
+  const text = label ?? t(chipLabelKeys[kind]);
   const showCount = typeof count === "number" && count > 1;
   return (
     <span

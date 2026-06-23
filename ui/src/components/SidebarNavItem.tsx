@@ -1,5 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
 import { NavLink } from "@/lib/router";
+import { useTranslation } from "@/i18n";
 import { SIDEBAR_SCROLL_RESET_STATE } from "../lib/navigation-scroll";
 import { cn, SIDEBAR_RAIL_HIDDEN_LABEL } from "../lib/utils";
 import { useSidebar } from "../context/SidebarContext";
@@ -64,6 +65,7 @@ export function SidebarNavItem({
   alert = false,
   liveCount,
 }: SidebarNavItemProps) {
+  const { t } = useTranslation();
   const { isMobile, setSidebarOpen, collapsed, peeking } = useSidebar();
   // A fixed-width contextual pane (SecondarySidebar) forces full labels even
   // when the global app sidebar is collapsed to its rail (PAP-10700).
@@ -81,11 +83,13 @@ export function SidebarNavItem({
   const railAriaLabel = !rail
     ? undefined
     : hasLive
-      ? `${label}, ${liveCount} live`
+      ? t("tailComp.sidebarNavItem.ariaLive", { label, count: liveCount })
       : hasBadge
-        ? `${label}, ${badge}${badgeLabel ? ` ${badgeLabel}` : ""}`
+        ? badgeLabel
+          ? t("tailComp.sidebarNavItem.ariaBadgeLabeled", { label, badge, badgeLabel })
+          : t("tailComp.sidebarNavItem.ariaBadge", { label, badge })
         : alert
-          ? `${label}, attention needed`
+          ? t("tailComp.sidebarNavItem.ariaAttention", { label })
           : undefined;
 
   const link = (
@@ -147,7 +151,7 @@ export function SidebarNavItem({
             <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
           </span>
-          <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">{liveCount} live</span>
+          <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">{t("tailComp.sidebarNavItem.liveCount", { count: liveCount })}</span>
         </span>
       )}
       {!rail && hasBadge && (

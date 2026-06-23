@@ -3,14 +3,17 @@ import { renderToStaticMarkup } from "react-dom/server";
 import type { WorkspaceFileContent } from "@paperclipai/shared";
 import type { FileViewerUrlState } from "@/context/FileViewerContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { i18n } from "@/i18n";
 import { describeDenial, FileContentViewer, FileViewerMetadataRow } from "./FileViewerSheet";
+
+const t = i18n.t.bind(i18n);
 
 describe("describeDenial", () => {
   it("returns the curated body for too_large regardless of fallback", () => {
-    expect(describeDenial("too_large", "").body).toBe(
+    expect(describeDenial("too_large", "", t).body).toBe(
       "This file exceeds the supported preview size.",
     );
-    expect(describeDenial("too_large", "ignored fallback").body).toBe(
+    expect(describeDenial("too_large", "ignored fallback", t).body).toBe(
       "This file exceeds the supported preview size.",
     );
   });
@@ -23,26 +26,26 @@ describe("describeDenial", () => {
       "binary_unsupported",
       "remote_preview_unsupported",
     ]) {
-      const { body } = describeDenial(code, "");
+      const { body } = describeDenial(code, "", t);
       expect(body).not.toBe(code);
       expect(body).not.toMatch(/^[a-z_]+$/);
     }
   });
 
   it("describes unsupported previews in terms of text, image, and video", () => {
-    expect(describeDenial("unsupported_content", "").body).toBe(
+    expect(describeDenial("unsupported_content", "", t).body).toBe(
       "This file does not have a text, image, or video preview available.",
     );
   });
 
   it("falls back to the generic message for unknown codes with empty fallback", () => {
-    const { body, title } = describeDenial("", "");
+    const { body, title } = describeDenial("", "", t);
     expect(title).toBe("Can't preview this file");
     expect(body).toBe("The viewer was unable to load this file.");
   });
 
   it("prefers a human-readable server message for unknown codes", () => {
-    const { body } = describeDenial("unknown_code", "Server refused the request.");
+    const { body } = describeDenial("unknown_code", "Server refused the request.", t);
     expect(body).toBe("Server refused the request.");
   });
 });

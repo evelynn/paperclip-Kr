@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 /**
@@ -44,10 +45,10 @@ const SIZE_PRESETS: Record<AgentCapsuleSizePreset, { width: number; height: numb
   lg: { width: 46, height: 116 },
 };
 
-const STATE_ARIA: Record<AgentCapsuleState, string> = {
-  slot: "empty agent slot",
-  configured: "agent configured, offline",
-  online: "agent online",
+const STATE_ARIA_KEYS: Record<AgentCapsuleState, string> = {
+  slot: "tailComp.agentCapsule.stateSlot",
+  configured: "tailComp.agentCapsule.stateConfigured",
+  online: "tailComp.agentCapsule.stateOnline",
 };
 
 export interface AgentCapsuleProps
@@ -80,6 +81,7 @@ export function AgentCapsule({
   "aria-label": ariaLabel,
   ...rest
 }: AgentCapsuleProps) {
+  const { t } = useTranslation();
   const dims = typeof size === "string" ? SIZE_PRESETS[size] : size;
   const idx = normalizeGradient(gradient);
   const fill = `linear-gradient(to bottom, var(--agent-${idx}a), var(--agent-${idx}b))`;
@@ -87,7 +89,7 @@ export function AgentCapsule({
   return (
     <div
       role="img"
-      aria-label={ariaLabel ?? STATE_ARIA[state]}
+      aria-label={ariaLabel ?? t(STATE_ARIA_KEYS[state])}
       data-state={state}
       data-gradient={idx}
       data-glow={glow}
