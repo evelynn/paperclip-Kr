@@ -99,6 +99,10 @@ describe("Korean localization (E2E)", () => {
     ["issues.create.lanes.cheap", "저비용"],
     ["issues.create.effort.high", "높음"],
     ["issues.create.workspaceModes.reuse_existing", "기존 워크스페이스 재사용"],
+    // Task detail view
+    ["issueDetail.header.live", "실시간"],
+    ["issueDetail.tabs.chat", "채팅"],
+    ["issueDetail.actions.pauseWork", "작업 일시 중지..."],
   ];
 
   it("resolves every migrated surface to Korean under ko", async () => {
