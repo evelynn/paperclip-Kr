@@ -26,32 +26,23 @@ import { PageTabBar, type PageTabItem } from "../components/PageTabBar";
 import { IssueGroupHeader } from "../components/IssueGroupHeader";
 import { SearchResultRow } from "../components/search/SearchResultRow";
 import type { Agent } from "@paperclipai/shared";
+import { useTranslation, Trans } from "@/i18n";
+import type { TFunction } from "i18next";
 
 const SEARCH_DEBOUNCE_MS = 250;
 const IDENTIFIER_PATTERN = /^[A-Z]+-\d+$/;
 
-const SCOPE_LABELS: Record<CompanySearchScope, string> = {
-  all: "All",
-  issues: "Tasks",
-  comments: "Comments",
-  documents: "Documents",
-  artifacts: "Artifacts",
-  agents: "Agents",
-  projects: "Projects",
-};
+function scopeLabel(t: TFunction, scope: CompanySearchScope): string {
+  return t(`search.scopes.${scope}`);
+}
 
 type SubGroupKey = "issues" | "comments" | "documents" | "artifacts" | "agents" | "projects";
 
 const SUBGROUP_ORDER: SubGroupKey[] = ["issues", "comments", "documents", "artifacts", "agents", "projects"];
 
-const SUBGROUP_LABELS: Record<SubGroupKey, string> = {
-  issues: "Tasks",
-  comments: "Comments",
-  documents: "Documents",
-  artifacts: "Artifacts",
-  agents: "Agents",
-  projects: "Projects",
-};
+function subgroupLabel(t: TFunction, key: SubGroupKey): string {
+  return t(`search.scopes.${key}`);
+}
 
 function classifyResult(result: CompanySearchResult): SubGroupKey {
   if (result.type === "artifact") return "artifacts";
@@ -82,9 +73,9 @@ function isCompanySearchScope(value: string | null): value is CompanySearchScope
   return Boolean(value) && (COMPANY_SEARCH_SCOPES as readonly string[]).includes(value as string);
 }
 
-function describeScope(scope: CompanySearchScope) {
-  if (scope === "all") return "All scopes";
-  return SCOPE_LABELS[scope];
+function describeScope(t: TFunction, scope: CompanySearchScope) {
+  if (scope === "all") return t("search.allScopes");
+  return scopeLabel(t, scope);
 }
 
 export function buildSearchUrl(href: string, query: string, scope: CompanySearchScope): string {
@@ -102,8 +93,8 @@ export function buildSearchUrl(href: string, query: string, scope: CompanySearch
   return `${url.pathname}${url.search}${url.hash}`;
 }
 
-function shapeError(error: unknown): { message: string; status?: number } {
-  if (!error) return { message: "Unknown error" };
+function shapeError(t: TFunction, error: unknown): { message: string; status?: number } {
+  if (!error) return { message: t("search.error.unknown") };
   if (error instanceof Error) {
     const status = (error as Error & { status?: number }).status;
     return { message: error.message, status: typeof status === "number" ? status : undefined };
@@ -112,6 +103,7 @@ function shapeError(error: unknown): { message: string; status?: number } {
 }
 
 export function Search() {
+  const { t } = useTranslation();
   const { selectedCompanyId } = useCompany();
   const { setBreadcrumbs } = useBreadcrumbs();
   const { openNewIssue } = useDialogActions();
@@ -131,8 +123,8 @@ export function Search() {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Search" }]);
-  }, [setBreadcrumbs]);
+    setBreadcrumbs([{ label: t("search.breadcrumb") }]);
+  }, [setBreadcrumbs, t]);
 
   useEffect(() => {
     if (!selectedCompanyId) return;
@@ -288,13 +280,13 @@ export function Search() {
         value,
         label: (
           <span className="flex items-center">
-            {SCOPE_LABELS[value as CompanySearchScope]}
+            {scopeLabel(t, value as CompanySearchScope)}
             {count !== null ? pill(count) : null}
           </span>
         ),
       } satisfies PageTabItem;
     });
-  }, [counts, data]);
+  }, [counts, data, t]);
 
   const subgroups = useMemo(() => buildSubgroups(data?.results ?? []), [data?.results]);
 
@@ -303,7 +295,7 @@ export function Search() {
   const hasResults = !!data && totalResults > 0;
   const isEmpty = !!data && !isFetching && totalResults === 0;
   const hasError = !!error && !isLoading;
-  const apiError = hasError ? shapeError(error) : null;
+  const apiError = hasError ? shapeError(t, error) : null;
   const apiMessage = data?.results === undefined && data ? null : null;
   void apiMessage;
 
@@ -328,7 +320,7 @@ export function Search() {
   return (
     <div className="flex h-full min-h-0 flex-col" data-page="search">
       <div className="border-b border-border px-4 py-3 sm:px-6">
-        <h1 className="sr-only">Search</h1>
+        <h1 className="sr-only">{t("search.title")}</h1>
         <div className="relative">
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -346,15 +338,15 @@ export function Search() {
                 }
               }
             }}
-            placeholder="Search tasks, comments, documents, artifacts, agents, projects…"
-            aria-label="Search query"
+            placeholder={t("search.input.placeholder")}
+            aria-label={t("search.input.label")}
             className="h-10 pl-9 pr-20 text-sm"
           />
           {draftQuery.length > 0 ? (
             <button
               type="button"
               onClick={handleClear}
-              aria-label="Clear search"
+              aria-label={t("search.input.clear")}
               className="absolute right-12 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-accent/50"
             >
               <X className="h-3.5 w-3.5" />
@@ -450,19 +442,20 @@ function SearchTabContent({
   isFetching,
   agentsById,
 }: SearchTabContentProps) {
+  const { t } = useTranslation();
   if (showInitialState) {
     return (
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-10 sm:px-6">
         <div>
-          <h2 className="text-lg font-semibold">Type to search company memory.</h2>
+          <h2 className="text-lg font-semibold">{t("search.initial.title")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Tasks, comments, plan documents, artifacts, agents, projects — same surface, ranked by relevance.
+            {t("search.initial.subtitle")}
           </p>
         </div>
         {recentSearches.length > 0 ? (
           <div>
             <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              Recent searches
+              {t("search.initial.recentSearches")}
             </div>
             <ul className="flex flex-col divide-y divide-border rounded-md border border-border">
               {recentSearches.map((entry) => (
@@ -482,16 +475,25 @@ function SearchTabContent({
         ) : null}
         <ul className="space-y-1 text-xs text-muted-foreground">
           <li>
-            <span className="font-medium text-foreground">Identifier lookup:</span> type{" "}
-            <code className="rounded bg-muted px-1 py-0.5 text-[11px]">PAP-123</code> to jump straight to a task.
+            <Trans
+              i18nKey="search.initial.identifierTip"
+              components={[
+                <span className="font-medium text-foreground" />,
+                <code className="rounded bg-muted px-1 py-0.5 text-[11px]" />,
+              ]}
+            />
           </li>
           <li>
-            <span className="font-medium text-foreground">Quoted phrases:</span> wrap a phrase in quotes to match the
-            exact sequence.
+            <Trans
+              i18nKey="search.initial.quotedTip"
+              components={[<span className="font-medium text-foreground" />]}
+            />
           </li>
           <li>
-            <span className="font-medium text-foreground">⌘K:</span> reopens the command palette pre-seeded with your
-            current query.
+            <Trans
+              i18nKey="search.initial.commandTip"
+              components={[<span className="font-medium text-foreground" />]}
+            />
           </li>
         </ul>
       </div>
@@ -503,17 +505,16 @@ function SearchTabContent({
     return (
       <div className="mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-3 px-4 py-12 text-center">
         <AlertTriangle className="h-10 w-10 text-destructive" aria-hidden />
-        <div className="text-base font-semibold">Couldn’t run that search</div>
+        <div className="text-base font-semibold">{t("search.error.title")}</div>
         <p className="text-sm text-muted-foreground">
-          {status ? `The server returned ${status}.` : "The request failed."} Your input and filters are still here, so
-          you can retry or fall back to the Tasks filter.
+          {status ? t("search.error.serverStatus", { status }) : t("search.error.requestFailed")} {t("search.error.hint")}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button onClick={refetch} variant="default" size="sm">
-            Retry
+            {t("search.error.retry")}
           </Button>
           <Button onClick={navigateIssuesFallback} variant="outline" size="sm">
-            Open Tasks filter view
+            {t("search.error.openTasksFilter")}
           </Button>
         </div>
       </div>
@@ -524,7 +525,7 @@ function SearchTabContent({
     return (
       <div className="flex flex-col gap-2 px-2 py-3 sm:px-4">
         <div className="px-3 text-xs text-muted-foreground" data-testid="search-loading">
-          Searching for &ldquo;{trimmedQuery}&rdquo;…
+          {t("search.loading", { query: trimmedQuery })}
         </div>
         <div className="flex flex-col">
           <div className="px-3 py-2">
@@ -548,31 +549,33 @@ function SearchTabContent({
     return (
       <div className="mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-3 px-4 py-12 text-center">
         <FileQuestion className="h-10 w-10 text-muted-foreground" aria-hidden />
-        <div className="text-base font-semibold">No results for &ldquo;{trimmedQuery}&rdquo;</div>
+        <div className="text-base font-semibold">{t("search.empty.title", { query: trimmedQuery })}</div>
         <p className="text-sm text-muted-foreground">
-          We couldn’t find a match in {describeScope(scope).toLowerCase()}. Try widening the scope or rephrasing your
-          query.
+          {t("search.empty.description", { scope: describeScope(t, scope).toLowerCase() })}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {scope !== "all" ? (
             <Button onClick={showAllScope} size="sm" variant="outline">
-              Search all scopes
+              {t("search.empty.searchAllScopes")}
             </Button>
           ) : null}
           <Button onClick={openNewIssue} size="sm" variant="default">
             <Plus className="mr-1.5 h-4 w-4" />
-            Create task from this query
+            {t("search.empty.createTask")}
           </Button>
           <Button onClick={navigateIssuesFallback} size="sm" variant="ghost">
-            Open Tasks filter view
+            {t("search.empty.openTasksFilter")}
           </Button>
         </div>
         <ul className="mt-2 space-y-0.5 text-xs text-muted-foreground">
-          <li>Try fewer tokens or a single distinctive term.</li>
+          <li>{t("search.empty.tipFewerTokens")}</li>
           <li>
-            Use an identifier shortcut like <code className="rounded bg-muted px-1 py-0.5">PAP-123</code>.
+            <Trans
+              i18nKey="search.empty.tipIdentifier"
+              components={[<code className="rounded bg-muted px-1 py-0.5" />]}
+            />
           </li>
-          <li>Wrap multi-word phrases in quotes.</li>
+          <li>{t("search.empty.tipQuotes")}</li>
         </ul>
       </div>
     );
@@ -584,20 +587,20 @@ function SearchTabContent({
     <div className="flex w-full max-w-[960px] flex-col px-2 sm:px-4" data-testid="search-results">
       <div className="flex items-center justify-between py-2 text-[11px] uppercase tracking-wide text-muted-foreground">
         <span>
-          {totalResults === 1 ? "1 result" : `${totalResults} results`} · sorted by relevance
+          {totalResults === 1 ? t("search.results.countOne") : t("search.results.countOther", { count: totalResults })} · {t("search.results.sortedByRelevance")}
         </span>
-        {isFetching ? <span aria-live="polite" className="normal-case tracking-normal">Updating…</span> : null}
+        {isFetching ? <span aria-live="polite" className="normal-case tracking-normal">{t("search.results.updating")}</span> : null}
       </div>
       <div className="flex flex-col pb-10">
         {scope === "all" ? (
           subgroups.map((group, groupIndex) => (
             <section
               key={group.key}
-              aria-label={SUBGROUP_LABELS[group.key]}
+              aria-label={subgroupLabel(t, group.key)}
               className={cn("flex flex-col", groupIndex > 0 && "mt-6")}
             >
               <IssueGroupHeader
-                label={SUBGROUP_LABELS[group.key]}
+                label={subgroupLabel(t, group.key)}
                 trailing={
                   <span className="text-xs font-normal tabular-nums text-muted-foreground">
                     {group.results.length}

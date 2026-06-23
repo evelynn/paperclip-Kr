@@ -2147,5 +2147,199 @@
       "fitToScreen": "화면에 맞추기",
       "fitChartToScreen": "차트를 화면에 맞추기"
     }
+  },
+  "dashboard": {
+    "breadcrumb": "대시보드",
+    "welcome": "Paperclip에 오신 것을 환영합니다. 첫 회사와 에이전트를 설정하여 시작하세요.",
+    "getStarted": "시작하기",
+    "selectCompany": "대시보드를 보려면 회사를 만들거나 선택하세요.",
+    "noAgents": "에이전트가 없습니다.",
+    "createAgentHere": "여기서 만들기",
+    "budget": {
+      "incidentsOne": "활성 예산 사고 {{count}}건",
+      "incidentsOther": "활성 예산 사고 {{count}}건",
+      "incidentDetail": "에이전트 {{pausedAgents}}개 일시 중지 · 프로젝트 {{pausedProjects}}개 일시 중지 · 예산 승인 대기 {{pendingApprovals}}건",
+      "openBudgets": "예산 열기"
+    },
+    "metrics": {
+      "agentsEnabled": "활성화된 에이전트",
+      "agentsEnabledDescription": "{{running}}개 실행 중, {{paused}}개 일시 중지, {{error}}개 오류",
+      "tasksInProgress": "진행 중인 작업",
+      "tasksInProgressDescription": "{{open}}개 열림, {{blocked}}개 차단됨",
+      "monthSpend": "이번 달 지출",
+      "monthSpendBudget": "{{budget}} 예산의 {{percent}}%",
+      "monthSpendUnlimited": "무제한 예산",
+      "pendingApprovals": "승인 대기",
+      "pendingApprovalsBudget": "이사회 검토 대기 중인 예산 재정의 {{count}}건",
+      "pendingApprovalsAwaiting": "이사회 검토 대기 중"
+    },
+    "charts": {
+      "runActivity": "실행 활동",
+      "tasksByPriority": "우선순위별 작업",
+      "tasksByStatus": "상태별 작업",
+      "successRate": "성공률",
+      "last14Days": "지난 14일"
+    },
+    "recentActivity": "최근 활동",
+    "recentTasks": "최근 작업",
+    "noTasks": "아직 작업이 없습니다.",
+    "live": {
+      "breadcrumb": "실시간 실행",
+      "dashboard": "대시보드",
+      "createCompany": "실시간 실행을 보려면 회사를 만드세요.",
+      "selectCompany": "실시간 실행을 보려면 회사를 선택하세요.",
+      "title": "실시간 에이전트 실행",
+      "subtitle": "활성 실행을 먼저 표시하고, 그 다음 가장 최근에 완료된 실행을 표시합니다.",
+      "showingUpTo": "최대 {{count}}개 표시",
+      "panelTitle": "활성 / 최근",
+      "empty": "활성 또는 최근 에이전트 실행이 없습니다."
+    }
+  },
+  "approvals": {
+    "breadcrumb": "승인",
+    "selectCompany": "먼저 회사를 선택하세요.",
+    "tabs": {
+      "pending": "대기 중",
+      "all": "전체"
+    },
+    "errors": {
+      "approveFailed": "승인하지 못했습니다",
+      "rejectFailed": "거부하지 못했습니다"
+    },
+    "empty": {
+      "pending": "대기 중인 승인이 없습니다.",
+      "all": "아직 승인이 없습니다."
+    },
+    "detail": {
+      "notFound": "승인을 찾을 수 없습니다.",
+      "breadcrumbFallback": "승인",
+      "errors": {
+        "approveFailed": "승인하지 못했습니다",
+        "rejectFailed": "거부하지 못했습니다",
+        "revisionFailed": "수정 요청에 실패했습니다",
+        "resubmitFailed": "재제출에 실패했습니다",
+        "commentFailed": "댓글 작성에 실패했습니다",
+        "deleteFailed": "삭제에 실패했습니다"
+      },
+      "banner": {
+        "confirmed": "승인이 확인되었습니다",
+        "confirmedDescription": "요청한 에이전트에게 이 승인과 연결된 작업을 검토하도록 알렸습니다."
+      },
+      "cta": {
+        "reviewLinkedTasks": "연결된 작업 검토",
+        "reviewLinkedTask": "연결된 작업 검토",
+        "openHiredAgent": "고용된 에이전트 열기",
+        "backToApprovals": "승인으로 돌아가기"
+      },
+      "requestedBy": "요청자",
+      "seeFullRequest": "전체 요청 보기",
+      "decisionNote": "결정 메모: {{note}}",
+      "linkedTasks": "연결된 작업",
+      "linkedTasksNote": "연결된 작업은 요청한 에이전트가 후속 조치를 취하고 닫을 때까지 열려 있습니다.",
+      "approve": "승인",
+      "reject": "거부",
+      "budgetStop": "이 예산 중지는 <0>/costs</0>의 예산 컨트롤에서 해결하세요.",
+      "requestRevision": "수정 요청",
+      "markResubmitted": "재제출됨으로 표시",
+      "deleteDisapprovedAgent": "거부된 에이전트 삭제",
+      "deleteConfirm": "이 거부된 에이전트를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+      "comments": "댓글 ({{count}})",
+      "board": "이사회",
+      "addComment": "댓글 추가...",
+      "posting": "게시 중…",
+      "postComment": "댓글 게시"
+    }
+  },
+  "artifacts": {
+    "breadcrumb": "아티팩트",
+    "selectCompany": "아티팩트를 보려면 회사를 선택하세요.",
+    "kinds": {
+      "all": "전체",
+      "image": "이미지",
+      "video": "동영상",
+      "document": "문서",
+      "text": "텍스트",
+      "file": "파일"
+    },
+    "groups": {
+      "none": "없음",
+      "task": "작업",
+      "parentTask": "상위 작업"
+    },
+    "search": {
+      "placeholder": "아티팩트 검색...",
+      "label": "아티팩트 검색",
+      "clear": "아티팩트 검색 지우기"
+    },
+    "groupControl": {
+      "label": "아티팩트 그룹화 (현재 {{group}})",
+      "title": "아티팩트 그룹화",
+      "groupBy": "그룹화 기준"
+    },
+    "filterByType": "유형으로 아티팩트 필터링",
+    "backToStacks": "모든 스택",
+    "empty": {
+      "stacksSearch": "이 검색과 일치하는 아티팩트 스택이 없습니다.",
+      "stacks": "아직 아티팩트 스택이 없습니다.",
+      "artifactsSearch": "이 검색과 일치하는 아티팩트가 없습니다.",
+      "stackFiltered": "이 스택에 현재 필터와 일치하는 아티팩트가 없습니다.",
+      "allKinds": "아직 아티팩트가 없습니다. 작업에 첨부된 출력물이 여기에 표시됩니다.",
+      "kind": "아직 이 유형의 아티팩트가 없습니다."
+    },
+    "loadingMore": "아티팩트 더 불러오는 중...",
+    "updating": "아티팩트 업데이트 중..."
+  },
+  "search": {
+    "breadcrumb": "검색",
+    "title": "검색",
+    "scopes": {
+      "all": "전체",
+      "issues": "작업",
+      "comments": "댓글",
+      "documents": "문서",
+      "artifacts": "아티팩트",
+      "agents": "에이전트",
+      "projects": "프로젝트"
+    },
+    "allScopes": "모든 범위",
+    "input": {
+      "placeholder": "작업, 댓글, 문서, 아티팩트, 에이전트, 프로젝트 검색…",
+      "label": "검색어",
+      "clear": "검색 지우기"
+    },
+    "initial": {
+      "title": "회사 메모리를 검색하려면 입력하세요.",
+      "subtitle": "작업, 댓글, 계획 문서, 아티팩트, 에이전트, 프로젝트 — 동일한 화면에서 관련성순으로 정렬됩니다.",
+      "recentSearches": "최근 검색",
+      "identifierTip": "<0>식별자 조회:</0> <1>PAP-123</1>을(를) 입력하면 작업으로 바로 이동합니다.",
+      "quotedTip": "<0>따옴표로 묶은 구문:</0> 정확한 순서로 일치시키려면 구문을 따옴표로 묶으세요.",
+      "commandTip": "<0>⌘K:</0> 현재 검색어가 미리 입력된 명령 팔레트를 다시 엽니다."
+    },
+    "error": {
+      "title": "검색을 실행할 수 없습니다",
+      "serverStatus": "서버가 {{status}}을(를) 반환했습니다.",
+      "requestFailed": "요청이 실패했습니다.",
+      "hint": "입력과 필터가 그대로 남아 있으므로 다시 시도하거나 작업 필터로 돌아갈 수 있습니다.",
+      "retry": "다시 시도",
+      "openTasksFilter": "작업 필터 보기 열기",
+      "unknown": "알 수 없는 오류"
+    },
+    "loading": "“{{query}}” 검색 중…",
+    "empty": {
+      "title": "“{{query}}”에 대한 결과가 없습니다",
+      "description": "{{scope}}에서 일치하는 항목을 찾을 수 없습니다. 범위를 넓히거나 검색어를 바꿔 보세요.",
+      "searchAllScopes": "모든 범위 검색",
+      "createTask": "이 검색어로 작업 만들기",
+      "openTasksFilter": "작업 필터 보기 열기",
+      "tipFewerTokens": "토큰을 줄이거나 하나의 독특한 용어를 사용해 보세요.",
+      "tipIdentifier": "<0>PAP-123</0>과(와) 같은 식별자 단축어를 사용하세요.",
+      "tipQuotes": "여러 단어로 된 구문을 따옴표로 묶으세요."
+    },
+    "results": {
+      "countOne": "결과 1개",
+      "countOther": "결과 {{count}}개",
+      "sortedByRelevance": "관련성순 정렬",
+      "updating": "업데이트 중…"
+    }
   }
 }
