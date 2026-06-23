@@ -6436,5 +6436,236 @@
       "expandStdout": "Expand stdout",
       "noTranscript": "No transcript yet."
     }
+  },
+  "onboardComp": {
+    "wizard": {
+      "defaultTaskDescription": "You are the CEO. You set the direction for the company.\n\n- hire a founding engineer\n- write a hiring plan\n- break the roadmap into concrete tasks and start delegating work",
+      "defaultTaskTitle": "Hire your first engineer and create a hiring plan",
+      "steps": {
+        "company": "Company",
+        "agent": "Agent",
+        "task": "Task",
+        "launch": "Launch"
+      },
+      "close": "Close",
+      "step1": {
+        "heading": "Name your company",
+        "subtitle": "This is the organization your agents will work for.",
+        "companyNameLabel": "Company name",
+        "companyNamePlaceholder": "Acme Corp",
+        "missionLabel": "Mission / goal (optional)",
+        "missionPlaceholder": "What is this company trying to achieve?"
+      },
+      "step2": {
+        "heading": "Create your first agent",
+        "subtitle": "Choose how this agent will run tasks.",
+        "agentNameLabel": "Agent name",
+        "agentNamePlaceholder": "CEO",
+        "adapterTypeLabel": "Adapter type",
+        "recommendedBadge": "Recommended",
+        "moreAdapterTypes": "More Agent Adapter Types",
+        "comingSoon": "Coming soon",
+        "modelLabel": "Model",
+        "modelSelectRequired": "Select model (required)",
+        "modelDefault": "Default",
+        "searchModelsPlaceholder": "Search models...",
+        "noModelsDiscovered": "No models discovered.",
+        "envCheckTitle": "Adapter environment check",
+        "envCheckDescription": "Runs a live probe that asks the adapter CLI to respond with hello.",
+        "testNow": "Test now",
+        "testing": "Testing...",
+        "passed": "Passed",
+        "anthropicKeyWarning": "Claude failed while <0>ANTHROPIC_API_KEY</0> is set. You can clear it in this CEO adapter config and retry the probe.",
+        "retrying": "Retrying...",
+        "unsetAnthropicKey": "Unset ANTHROPIC_API_KEY",
+        "manualDebug": "Manual debug",
+        "promptLabel": "Prompt:",
+        "promptValue": "Respond with hello.",
+        "authHintOther": "If auth fails, set <0>{{envVar}}</0> in env or run <1>{{loginCommand}}</1>.",
+        "authHintClaude": "If login is required, run <0>claude login</0> and retry.",
+        "gatewayUrlLabel": "Gateway URL",
+        "webhookUrlLabel": "Webhook URL"
+      },
+      "step3": {
+        "heading": "Give it something to do",
+        "subtitle": "Give your agent a small task to start with — a bug fix, a research question, writing a script.",
+        "taskTitleLabel": "Task title",
+        "taskTitlePlaceholder": "e.g. Research competitor pricing",
+        "descriptionLabel": "Description (optional)",
+        "descriptionPlaceholder": "Add more detail about what the agent should do..."
+      },
+      "step4": {
+        "heading": "Ready to launch",
+        "subtitle": "Everything is set up. Launching now will create the starter task, wake the agent, and open the task.",
+        "companyRowLabel": "Company",
+        "taskRowLabel": "Task"
+      },
+      "footer": {
+        "back": "Back",
+        "next": "Next",
+        "creating": "Creating...",
+        "createAndOpenTask": "Create & Open Task"
+      },
+      "errors": {
+        "createCompanyBeforeTest": "Create or select a company before testing adapter environment.",
+        "adapterEnvTestFailed": "Adapter environment test failed",
+        "openCodeRequiresModel": "OpenCode requires an explicit model in provider/model format.",
+        "createCompanyFailed": "Failed to create company",
+        "createAgentFailed": "Failed to create agent",
+        "anthropicRetryStillFailing": "Retried with ANTHROPIC_API_KEY unset in adapter config, but the environment test is still failing.",
+        "unsetAnthropicFailed": "Failed to unset ANTHROPIC_API_KEY and retry.",
+        "createTaskFailed": "Failed to create task"
+      },
+      "approval": {
+        "onboardingApproved": "Approved during onboarding first-agent setup."
+      },
+      "envResult": {
+        "passed": "Passed",
+        "warnings": "Warnings",
+        "failed": "Failed",
+        "hintPrefix": "Hint: {{hint}}"
+      }
+    },
+    "chat": {
+      "queued": {
+        "heartbeatTriggered": "Heartbeat triggered, waking up...",
+        "initializing": "Initializing...",
+        "gettingReady": "Getting ready..."
+      },
+      "running": {
+        "workingOnResponse": "Working on a response...",
+        "readingConversation": "Reading the conversation...",
+        "thinkingThroughPlan": "Thinking through the plan...",
+        "draftingResponse": "Drafting a response...",
+        "stillWorking": "Still working...",
+        "almostThere": "Almost there..."
+      },
+      "waiting": {
+        "waitingToWakeUp": "Waiting to wake up...",
+        "heartbeatPending": "Heartbeat pending...",
+        "shouldWakeUpSoon": "Should wake up soon..."
+      },
+      "cyclingMessage": "{{agentName}} · {{message}}",
+      "status": {
+        "finished": "{{agentName}} finished",
+        "encounteredError": "{{agentName}} encountered an error",
+        "runCancelled": "{{agentName}}'s run was cancelled",
+        "runTimedOut": "{{agentName}}'s run timed out",
+        "thinking": "{{agentName}} is thinking..."
+      },
+      "loadingConversation": "Loading conversation...",
+      "elapsedMinutesSeconds": "{{minutes}}m {{seconds}}s",
+      "elapsedSeconds": "{{seconds}}s",
+      "you": "You",
+      "hiringPlanDetected": "Hiring plan detected",
+      "discussPrompt": "I want to discuss the plan before you get started.",
+      "startPrompt": "Yes, get started on the hiring plan!",
+      "planPreparedTitle": "{{agentName}} has prepared a hiring plan",
+      "planPreparedSubtitle": "Review it, make edits, then approve.",
+      "reviewPlan": "Review plan",
+      "revisePlaceholder": "Ask {{agentName}} to revise the plan...",
+      "messagePlaceholder": "Message {{agentName}}...",
+      "welcome": {
+        "greeting": "Hi! Thanks for bringing me on to lead <0>{{companyName}}</0>.",
+        "mission": "Our mission is: <0>{{companyGoal}}</0>",
+        "readyPrompt": "I'm ready to put together a plan for who we should bring on. Want me to get started?",
+        "discussChip": "Let's discuss first",
+        "startChip": "Yes, get started!",
+        "waking": "{{agentName}} is waking up...",
+        "composing": "{{agentName}} is composing a message..."
+      }
+    },
+    "claudeSubscription": {
+      "title": "Anthropic subscription",
+      "subtitle": "Live Claude quota windows.",
+      "percentUsed": "{{percent}}% used"
+    },
+    "codexSubscription": {
+      "title": "Codex subscription",
+      "subtitle": "Live Codex quota windows.",
+      "accountWindows": "Account windows",
+      "modelWindows": "Model windows",
+      "percentUsed": "{{percent}}% used"
+    },
+    "quota": {
+      "resets": "Resets {{date}}"
+    },
+    "bootstrap": {
+      "cliFallback": {
+        "preferHost": "Prefer to finish setup from the host?",
+        "activeInvite": "A bootstrap invite is already active. Check your Paperclip startup logs for the first-admin URL, or run this command on the host to rotate it:",
+        "runOnHost": "Run this command on the host that runs Paperclip to print a one-time first-admin invite URL:"
+      },
+      "claimError": {
+        "conflictTitle": "Someone else has already claimed this instance.",
+        "conflictBody": "Refresh to sign in, or ask the existing admin to invite you from Instance settings -> Access.",
+        "expiredTitle": "Your session expired. Sign in again to claim this instance.",
+        "unreachableTitle": "We couldn't reach the server. Try again in a moment."
+      },
+      "unavailable": {
+        "title": "This Paperclip is waiting on its first admin",
+        "description": "This instance runs in invite-only mode. The operator must generate a one-time first-admin invite URL from the host. Once you have the link, open it from this browser to finish setup.",
+        "publicModeNote": "Browser-based claim is intentionally disabled in public mode so anyone on the network can't promote themselves."
+      },
+      "success": {
+        "title": "You're the instance admin",
+        "description": "Setup is complete. Taking you to onboarding to create your first company...",
+        "redirecting": "Redirecting...",
+        "continueToDashboard": "Continue to dashboard"
+      },
+      "signedOut": {
+        "title": "Finish setting up this Paperclip",
+        "description": "No admin has claimed this instance yet. Sign in or create your Paperclip account to become the first admin from this browser.",
+        "signInCreate": "Sign in / Create account"
+      },
+      "claim": {
+        "title": "Finish setting up this Paperclip",
+        "description": "No admin has claimed this instance yet. Claim it now to become the first admin and start onboarding.",
+        "claiming": "Claiming...",
+        "claimInstance": "Claim this instance",
+        "signedInAs": "Signed in as",
+        "wrongAccount": "Wrong account?",
+        "switchAccount": "Switch account"
+      }
+    },
+    "jsonSchemaForm": {
+      "validation": {
+        "required": "This field is required",
+        "minLength": "Must be at least {{min}} characters",
+        "maxLength": "Must be at most {{max}} characters",
+        "pattern": "Must match pattern: {{pattern}}",
+        "validNumber": "Must be a valid number",
+        "minimum": "Must be at least {{min}}",
+        "maximum": "Must be at most {{max}}",
+        "exclusiveMinimum": "Must be greater than {{min}}",
+        "exclusiveMaximum": "Must be less than {{max}}",
+        "wholeNumber": "Must be a whole number",
+        "multipleOf": "Must be a multiple of {{multiple}}",
+        "minItems": "Must have at least {{min}} items",
+        "maxItems": "Must have at most {{max}} items"
+      },
+      "selectOption": "Select an option",
+      "none": "None",
+      "secret": {
+        "defaultDescription": "Pick an existing company secret, or paste a raw value (Paperclip will store it as a secret on save).",
+        "pickerPlaceholder": "Select an existing secret",
+        "emptyHint": "No active secrets yet. Create one or paste a raw value below.",
+        "hiddenSummary": "Sensitive — {{count}} characters hidden. Click the eye to reveal.",
+        "hide": "Hide secret",
+        "show": "Show secret",
+        "hideRawInput": "Hide raw value input",
+        "pasteRawValue": "Or paste a raw value"
+      },
+      "array": {
+        "addItem": "Add item",
+        "add": "Add",
+        "item": "Item {{index}}",
+        "removeItem": "Remove item",
+        "noItems": "No items added yet."
+      },
+      "noOptions": "No configuration options available.",
+      "advancedOptions": "Advanced options",
+      "moreOptionsGroup": "More options"
+    }
   }
 }

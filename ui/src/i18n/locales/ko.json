@@ -6436,5 +6436,236 @@
       "expandStdout": "stdout 펼치기",
       "noTranscript": "아직 기록이 없습니다."
     }
+  },
+  "onboardComp": {
+    "wizard": {
+      "defaultTaskDescription": "당신은 CEO입니다. 회사의 방향을 정합니다.\n\n- 창립 엔지니어를 채용하세요\n- 채용 계획을 작성하세요\n- 로드맵을 구체적인 작업으로 나누고 업무를 분배하기 시작하세요",
+      "defaultTaskTitle": "첫 엔지니어를 채용하고 채용 계획을 만드세요",
+      "steps": {
+        "company": "회사",
+        "agent": "에이전트",
+        "task": "작업",
+        "launch": "시작"
+      },
+      "close": "닫기",
+      "step1": {
+        "heading": "회사 이름을 정하세요",
+        "subtitle": "에이전트가 일하게 될 조직입니다.",
+        "companyNameLabel": "회사 이름",
+        "companyNamePlaceholder": "Acme Corp",
+        "missionLabel": "미션 / 목표 (선택 사항)",
+        "missionPlaceholder": "이 회사가 이루고자 하는 것은 무엇인가요?"
+      },
+      "step2": {
+        "heading": "첫 에이전트를 만드세요",
+        "subtitle": "이 에이전트가 작업을 실행하는 방식을 선택하세요.",
+        "agentNameLabel": "에이전트 이름",
+        "agentNamePlaceholder": "CEO",
+        "adapterTypeLabel": "AI 연결 방식",
+        "recommendedBadge": "추천",
+        "moreAdapterTypes": "더 많은 AI 연결 방식",
+        "comingSoon": "곧 제공 예정",
+        "modelLabel": "모델",
+        "modelSelectRequired": "모델 선택 (필수)",
+        "modelDefault": "기본값",
+        "searchModelsPlaceholder": "모델 검색...",
+        "noModelsDiscovered": "발견된 모델이 없습니다.",
+        "envCheckTitle": "AI 연결 환경 점검",
+        "envCheckDescription": "AI 연결 CLI에 인사를 요청하는 실시간 점검을 실행합니다.",
+        "testNow": "지금 점검",
+        "testing": "점검 중...",
+        "passed": "통과",
+        "anthropicKeyWarning": "<0>ANTHROPIC_API_KEY</0>가 설정된 상태에서 Claude가 실패했습니다. 이 CEO 연결 설정에서 키를 지우고 점검을 다시 시도할 수 있습니다.",
+        "retrying": "다시 시도하는 중...",
+        "unsetAnthropicKey": "ANTHROPIC_API_KEY 해제",
+        "manualDebug": "수동 디버그",
+        "promptLabel": "프롬프트:",
+        "promptValue": "Respond with hello.",
+        "authHintOther": "인증에 실패하면 <0>{{envVar}}</0>을(를) 환경 변수로 설정하거나 <1>{{loginCommand}}</1>을(를) 실행하세요.",
+        "authHintClaude": "로그인이 필요하면 <0>claude login</0>을 실행하고 다시 시도하세요.",
+        "gatewayUrlLabel": "게이트웨이 URL",
+        "webhookUrlLabel": "웹훅 URL"
+      },
+      "step3": {
+        "heading": "할 일을 정해 주세요",
+        "subtitle": "버그 수정, 조사할 질문, 스크립트 작성처럼 작은 작업부터 에이전트에게 맡겨 보세요.",
+        "taskTitleLabel": "작업 제목",
+        "taskTitlePlaceholder": "예: 경쟁사 가격 조사",
+        "descriptionLabel": "설명 (선택 사항)",
+        "descriptionPlaceholder": "에이전트가 해야 할 일에 대해 더 자세히 적어 주세요..."
+      },
+      "step4": {
+        "heading": "시작할 준비가 되었습니다",
+        "subtitle": "모든 설정이 끝났습니다. 지금 시작하면 첫 작업이 생성되고, 에이전트가 깨어나며, 작업이 열립니다.",
+        "companyRowLabel": "회사",
+        "taskRowLabel": "작업"
+      },
+      "footer": {
+        "back": "뒤로",
+        "next": "다음",
+        "creating": "만드는 중...",
+        "createAndOpenTask": "작업 만들고 열기"
+      },
+      "errors": {
+        "createCompanyBeforeTest": "AI 연결 환경을 점검하기 전에 회사를 만들거나 선택하세요.",
+        "adapterEnvTestFailed": "AI 연결 환경 점검에 실패했습니다",
+        "openCodeRequiresModel": "OpenCode는 provider/model 형식의 명시적인 모델이 필요합니다.",
+        "createCompanyFailed": "회사를 만들지 못했습니다",
+        "createAgentFailed": "에이전트를 만들지 못했습니다",
+        "anthropicRetryStillFailing": "연결 설정에서 ANTHROPIC_API_KEY를 해제하고 다시 시도했지만 환경 점검이 여전히 실패합니다.",
+        "unsetAnthropicFailed": "ANTHROPIC_API_KEY를 해제하고 다시 시도하지 못했습니다.",
+        "createTaskFailed": "작업을 만들지 못했습니다"
+      },
+      "approval": {
+        "onboardingApproved": "온보딩 첫 에이전트 설정 중에 승인되었습니다."
+      },
+      "envResult": {
+        "passed": "통과",
+        "warnings": "경고",
+        "failed": "실패",
+        "hintPrefix": "힌트: {{hint}}"
+      }
+    },
+    "chat": {
+      "queued": {
+        "heartbeatTriggered": "하트비트가 시작되어 깨어나는 중...",
+        "initializing": "초기화하는 중...",
+        "gettingReady": "준비하는 중..."
+      },
+      "running": {
+        "workingOnResponse": "답변을 작성하는 중...",
+        "readingConversation": "대화를 읽는 중...",
+        "thinkingThroughPlan": "계획을 검토하는 중...",
+        "draftingResponse": "답변 초안을 작성하는 중...",
+        "stillWorking": "아직 작업 중...",
+        "almostThere": "거의 다 됐어요..."
+      },
+      "waiting": {
+        "waitingToWakeUp": "깨어나기를 기다리는 중...",
+        "heartbeatPending": "하트비트 대기 중...",
+        "shouldWakeUpSoon": "곧 깨어날 거예요..."
+      },
+      "cyclingMessage": "{{agentName}} · {{message}}",
+      "status": {
+        "finished": "{{agentName}}이(가) 완료했습니다",
+        "encounteredError": "{{agentName}}에게 오류가 발생했습니다",
+        "runCancelled": "{{agentName}}의 실행이 취소되었습니다",
+        "runTimedOut": "{{agentName}}의 실행이 시간 초과되었습니다",
+        "thinking": "{{agentName}}이(가) 생각하는 중..."
+      },
+      "loadingConversation": "대화를 불러오는 중...",
+      "elapsedMinutesSeconds": "{{minutes}}분 {{seconds}}초",
+      "elapsedSeconds": "{{seconds}}초",
+      "you": "나",
+      "hiringPlanDetected": "채용 계획 감지됨",
+      "discussPrompt": "시작하기 전에 계획에 대해 먼저 이야기하고 싶어요.",
+      "startPrompt": "네, 채용 계획부터 시작해 주세요!",
+      "planPreparedTitle": "{{agentName}}이(가) 채용 계획을 준비했습니다",
+      "planPreparedSubtitle": "검토하고 수정한 뒤 승인하세요.",
+      "reviewPlan": "계획 검토",
+      "revisePlaceholder": "{{agentName}}에게 계획 수정을 요청하세요...",
+      "messagePlaceholder": "{{agentName}}에게 메시지 보내기...",
+      "welcome": {
+        "greeting": "안녕하세요! <0>{{companyName}}</0>을(를) 이끌도록 맡겨 주셔서 감사합니다.",
+        "mission": "우리의 미션은: <0>{{companyGoal}}</0>",
+        "readyPrompt": "어떤 분들을 함께해야 할지 계획을 세울 준비가 되었어요. 시작할까요?",
+        "discussChip": "먼저 이야기해요",
+        "startChip": "네, 시작하세요!",
+        "waking": "{{agentName}}이(가) 깨어나는 중...",
+        "composing": "{{agentName}}이(가) 메시지를 작성하는 중..."
+      }
+    },
+    "claudeSubscription": {
+      "title": "Anthropic 구독",
+      "subtitle": "실시간 Claude 사용량 구간입니다.",
+      "percentUsed": "{{percent}}% 사용"
+    },
+    "codexSubscription": {
+      "title": "Codex 구독",
+      "subtitle": "실시간 Codex 사용량 구간입니다.",
+      "accountWindows": "계정 구간",
+      "modelWindows": "모델 구간",
+      "percentUsed": "{{percent}}% 사용"
+    },
+    "quota": {
+      "resets": "{{date}}에 초기화"
+    },
+    "bootstrap": {
+      "cliFallback": {
+        "preferHost": "호스트에서 설정을 마무리하시겠어요?",
+        "activeInvite": "부트스트랩 초대가 이미 활성화되어 있습니다. Paperclip 시작 로그에서 첫 관리자 URL을 확인하거나, 호스트에서 이 명령을 실행해 새 URL을 발급하세요:",
+        "runOnHost": "Paperclip을 실행하는 호스트에서 이 명령을 실행하면 일회용 첫 관리자 초대 URL이 출력됩니다:"
+      },
+      "claimError": {
+        "conflictTitle": "다른 사람이 이미 이 인스턴스를 등록했습니다.",
+        "conflictBody": "새로고침하여 로그인하거나, 기존 관리자에게 인스턴스 설정 -> 액세스에서 초대를 요청하세요.",
+        "expiredTitle": "세션이 만료되었습니다. 다시 로그인하여 이 인스턴스를 등록하세요.",
+        "unreachableTitle": "서버에 연결할 수 없습니다. 잠시 후 다시 시도하세요."
+      },
+      "unavailable": {
+        "title": "이 Paperclip은 첫 관리자를 기다리고 있습니다",
+        "description": "이 인스턴스는 초대 전용 모드로 실행됩니다. 운영자가 호스트에서 일회용 첫 관리자 초대 URL을 생성해야 합니다. 링크를 받으면 이 브라우저에서 열어 설정을 마치세요.",
+        "publicModeNote": "공개 모드에서는 네트워크상의 누구도 스스로 권한을 올릴 수 없도록 브라우저 기반 등록이 의도적으로 비활성화되어 있습니다."
+      },
+      "success": {
+        "title": "이제 인스턴스 관리자입니다",
+        "description": "설정이 완료되었습니다. 첫 회사를 만들도록 온보딩으로 이동합니다...",
+        "redirecting": "이동하는 중...",
+        "continueToDashboard": "대시보드로 계속"
+      },
+      "signedOut": {
+        "title": "이 Paperclip 설정을 마치세요",
+        "description": "아직 이 인스턴스를 등록한 관리자가 없습니다. 로그인하거나 Paperclip 계정을 만들어 이 브라우저에서 첫 관리자가 되세요.",
+        "signInCreate": "로그인 / 계정 만들기"
+      },
+      "claim": {
+        "title": "이 Paperclip 설정을 마치세요",
+        "description": "아직 이 인스턴스를 등록한 관리자가 없습니다. 지금 등록하여 첫 관리자가 되고 온보딩을 시작하세요.",
+        "claiming": "등록하는 중...",
+        "claimInstance": "이 인스턴스 등록",
+        "signedInAs": "로그인 계정",
+        "wrongAccount": "다른 계정인가요?",
+        "switchAccount": "계정 전환"
+      }
+    },
+    "jsonSchemaForm": {
+      "validation": {
+        "required": "필수 항목입니다",
+        "minLength": "{{min}}자 이상이어야 합니다",
+        "maxLength": "{{max}}자 이하여야 합니다",
+        "pattern": "다음 패턴과 일치해야 합니다: {{pattern}}",
+        "validNumber": "유효한 숫자여야 합니다",
+        "minimum": "{{min}} 이상이어야 합니다",
+        "maximum": "{{max}} 이하여야 합니다",
+        "exclusiveMinimum": "{{min}}보다 커야 합니다",
+        "exclusiveMaximum": "{{max}}보다 작아야 합니다",
+        "wholeNumber": "정수여야 합니다",
+        "multipleOf": "{{multiple}}의 배수여야 합니다",
+        "minItems": "항목이 최소 {{min}}개 있어야 합니다",
+        "maxItems": "항목이 최대 {{max}}개 있어야 합니다"
+      },
+      "selectOption": "옵션 선택",
+      "none": "없음",
+      "secret": {
+        "defaultDescription": "기존 회사 시크릿을 선택하거나, 원본 값을 붙여넣으세요(저장 시 Paperclip이 시크릿으로 보관합니다).",
+        "pickerPlaceholder": "기존 시크릿 선택",
+        "emptyHint": "아직 활성 시크릿이 없습니다. 하나 만들거나 아래에 원본 값을 붙여넣으세요.",
+        "hiddenSummary": "민감 정보 — {{count}}자가 숨겨져 있습니다. 눈 아이콘을 클릭하면 표시됩니다.",
+        "hide": "시크릿 숨기기",
+        "show": "시크릿 표시",
+        "hideRawInput": "원본 값 입력 숨기기",
+        "pasteRawValue": "또는 원본 값 붙여넣기"
+      },
+      "array": {
+        "addItem": "항목 추가",
+        "add": "추가",
+        "item": "{{index}}번 항목",
+        "removeItem": "항목 제거",
+        "noItems": "아직 추가된 항목이 없습니다."
+      },
+      "noOptions": "사용할 수 있는 설정 옵션이 없습니다.",
+      "advancedOptions": "고급 옵션",
+      "moreOptionsGroup": "기타 옵션"
+    }
   }
 }
