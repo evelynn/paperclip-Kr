@@ -4579,5 +4579,333 @@
     "failedToDuplicateAgent": "에이전트 복제에 실패했습니다",
     "failedToResetSession": "세션 재설정에 실패했습니다",
     "confirmDuplicateAgent": "{{name}}을(를) {{nextName}}(으)로 복제할까요?"
+  },
+  "issueNotices": {
+    "blocked": {
+      "recoveryIndicatorTitle": "{{label}} — 작업하려면 원본 작업을 여세요.",
+      "target": {
+        "linkedTask": "연결된 작업",
+        "linkedTasks": "연결된 작업들"
+      },
+      "successfulRunRetry": {
+        "scheduleDueNow": "지금 예정됨",
+        "scheduleRelative": "{{relative}} 예약됨",
+        "schedulePending": "예약됨",
+        "body": "복구 깨우기가 {{schedule}}. 지금 재시도하면 동일한 복구 경로가 즉시 시작됩니다."
+      },
+      "retry": {
+        "retrying": "재시도 중...",
+        "alreadyPromoted": "이미 승격됨",
+        "promoted": "승격됨",
+        "retryNow": "지금 재시도"
+      },
+      "handoff": {
+        "title": "이 작업에는 아직 다음 단계가 필요합니다.",
+        "body": "실행이 성공적으로 끝났지만, 이 작업은 다음 동작의 담당자가 명확하지 않은 채 여전히 <0>in_progress</0> 상태로 열려 있습니다.",
+        "optionMarkDoneCancelled": "완료 또는 취소로 표시하세요.",
+        "optionSendReview": "검토로 보내거나 의견을 요청하세요.",
+        "optionMarkBlocked": "차단 담당자를 지정해 차단됨으로 표시하세요.",
+        "optionDelegate": "후속 작업을 위임하거나 연속 작업을 대기열에 추가하세요.",
+        "runLabel": "실행 {{id}}",
+        "correctiveWakeQueued": "{{name}}에 대한 복구 깨우기가 대기열에 추가됨",
+        "assigneeFallback": "담당자",
+        "detectedProgress": "감지된 진행 상황: {{summary}}"
+      },
+      "stalledMultiple": "이 작업은 {{target}}에 의해 차단되어 있지만, 검토 단계에서 명확한 다음 단계 없이 정체되어 있습니다. 아래의 정체된 검토를 해결하거나 차단 요인에서 제거하세요.",
+      "stalledSingle": "이 작업은 {{target}}에 의해 차단되어 있지만, 검토 단계에서 명확한 다음 단계 없이 정체되어 있습니다. 아래의 정체된 검토를 해결하거나 차단 요인에서 제거하세요.",
+      "untilCompleteMany": "이 작업은 {{target}}이(가) 완료될 때까지 차단됩니다. 댓글은 여전히 담당자를 깨워 질문하거나 분류할 수 있습니다.",
+      "untilCompleteOne": "이 작업은 {{target}}이(가) 완료될 때까지 차단됩니다. 댓글은 여전히 담당자를 깨워 질문하거나 분류할 수 있습니다.",
+      "untilTodo": "이 작업은 다시 할 일로 옮겨질 때까지 차단됩니다. 댓글은 여전히 담당자를 깨워 질문하거나 분류할 수 있습니다.",
+      "stalledInReview": "검토 단계에서 정체됨",
+      "ultimatelyWaitingOn": "최종적으로 대기 중인 대상",
+      "blockedByParkedWork": "보류된 작업에 의해 차단됨"
+    },
+    "assignedBacklog": {
+      "body": "<0>보류됨</0> — 상태가 <2>todo</2> 또는 <3>in_progress</3>로 바뀔 때까지 <1>{{name}}</1>은(는) 깨어나지 않습니다.",
+      "commentsHint": "댓글은 여전히 담당자를 깨워 질문하거나 분류할 수 있습니다. 의도적으로 보류 중인 경우에만 이 상태로 두세요.",
+      "assigneeFallback": "담당자",
+      "resuming": "재개 중…",
+      "resumeNow": "지금 재개"
+    },
+    "continuationHandoff": {
+      "defaultTitle": "연속 작업 인계",
+      "collapseAria": "연속 작업 인계 접기",
+      "expandAria": "연속 작업 인계 펼치기",
+      "badge": "인계",
+      "updated": "{{time}} 업데이트됨",
+      "revisionSuffix": " - 개정 {{revision}}",
+      "copied": "복사됨",
+      "copy": "복사"
+    },
+    "recovery": {
+      "kind": {
+        "missingDisposition": "처리 누락",
+        "strandedAssignedIssue": "방치된 작업",
+        "workspaceValidation": "워크스페이스 검증",
+        "configurationValidation": "구성 검증",
+        "activeRunWatchdog": "활성 감시기",
+        "issueGraphLiveness": "그래프 활성도"
+      },
+      "headline": {
+        "missingDisposition": "이 작업의 실행이 끝났지만, 다음 단계가 선택되지 않았습니다.",
+        "strandedAssignedIssue": "Paperclip이 이 작업의 마지막 실행을 재시도했지만 여전히 활성 실행 경로가 없습니다.",
+        "workspaceValidation": "작업의 git 워크스페이스를 검증할 수 없어 Paperclip이 이 실행을 중지했습니다.",
+        "configurationValidation": "필요한 시크릿/환경 변수 바인딩이 없어 Paperclip이 이 실행을 디스패치하기 전에 중지했습니다.",
+        "activeRunWatchdog": "활성 실행이 응답이 없습니다. 복구가 실행을 중단하지 않고 관찰하고 있습니다.",
+        "issueGraphLiveness": "Paperclip이 이 작업의 활성 동작 경로가 끊긴 것을 감지했습니다. 복구 담당자가 조치해야 합니다.",
+        "resolvedAs": "복구가 {{outcome}}(으)로 해결되었습니다."
+      },
+      "state": {
+        "needed": "복구 필요",
+        "inProgress": "복구 진행 중",
+        "observeOnly": "활성 실행 관찰 중",
+        "escalated": "복구 에스컬레이션됨",
+        "resolved": "복구 해결됨"
+      },
+      "outcome": {
+        "restored": "복원됨",
+        "delegated": "후속 작업으로 위임됨",
+        "falsePositive": "오탐",
+        "blocked": "차단됨",
+        "escalated": "에스컬레이션됨",
+        "cancelled": "취소됨"
+      },
+      "wake": {
+        "correctiveWakeQueued": "복구 깨우기가 대기열에 추가됨",
+        "boardEscalation": "보드로 에스컬레이션됨",
+        "manual": "수동",
+        "manualRepairRequired": "수동 복구 필요",
+        "monitorScheduledWithInterval": "모니터 예약됨 · {{interval}}",
+        "monitorScheduled": "모니터 예약됨"
+      },
+      "time": {
+        "inMinutes": "{{minutes}}분 후",
+        "minutesAgo": "{{minutes}}분 전"
+      },
+      "aria": {
+        "needed": "필요함",
+        "inProgress": "진행 중",
+        "observeOnly": "활성 실행 관찰 중",
+        "escalated": "에스컬레이션됨",
+        "resolved": "해결됨",
+        "cardLabel": "복구 동작: {{state}}"
+      },
+      "meta": {
+        "owner": "담당자",
+        "sourceRun": "원본 실행",
+        "correctiveRun": "복구 실행",
+        "evidence": "근거",
+        "nextAction": "다음 동작",
+        "wake": "깨우기",
+        "resolution": "해결"
+      },
+      "owner": {
+        "recovery": "복구:",
+        "board": "보드",
+        "user": "사용자 {{id}}",
+        "system": "시스템",
+        "unassigned": "미배정 — 깨우려면 담당자를 선택하세요",
+        "returnsTo": "→ 반환 대상:"
+      },
+      "runLabel": "실행 {{id}}",
+      "agentFallback": "에이전트 {{id}}",
+      "attemptOf": "{{max}}회 중 {{count}}번째 시도",
+      "timesOut": "{{time}} 시간 초과",
+      "timesOutSoon": "곧",
+      "resolvedAsLabel": "{{outcome}}(으)로 해결됨",
+      "resolve": {
+        "todoLabel": "다시 시도",
+        "todoDescription": "복구를 해제하고 원본 작업을 할 일로 되돌립니다.",
+        "doneLabel": "작업 완료로 표시",
+        "doneDescription": "요청된 작업을 완료로 기록하여 복원합니다.",
+        "inReviewLabel": "검토로 보내기",
+        "inReviewDescription": "실제 검토 경로를 갖춘 검토자에게 인계합니다.",
+        "falsePositiveDoneLabel": "오탐, 완료",
+        "falsePositiveDoneDescription": "복구를 해제하고 원본 작업을 완료로 표시합니다.",
+        "falsePositiveInReviewLabel": "오탐, 검토",
+        "falsePositiveInReviewDescription": "복구를 해제하고 원본 작업을 검토로 보냅니다.",
+        "trigger": "해결…",
+        "triggerAria": "복구 해결",
+        "heading": "복구 해결",
+        "observeOnlyHint": "복구가 활성 실행을 중단하지 않고 관찰하고 있습니다.",
+        "openUntilDecision": "명시적인 결정이 기록될 때까지 카드는 열려 있습니다."
+      }
+    },
+    "scheduledRetry": {
+      "badgeContinuation": "연속 작업 예약됨",
+      "badgeRetry": "재시도 예약됨",
+      "actionContinuation": "자동 연속 작업",
+      "actionRetry": "자동 재시도",
+      "suffixDueNow": "지금 예정됨",
+      "suffixPending": "예약 대기 중",
+      "title": "{{action}} {{suffix}}",
+      "helperContinuation": "연속 작업을 즉시 앞당깁니다",
+      "helperRetry": "재시도를 즉시 앞당깁니다",
+      "attempt": "{{count}}번째 시도",
+      "replacesRun": "실행 <0>{{id}}</0> 대체",
+      "lastAttemptFailed": "마지막 시도 실패: {{error}}. Paperclip이 자동으로 재시도합니다.",
+      "retrying": "재시도 중…",
+      "alreadyPromoted": "이미 승격됨",
+      "promoted": "승격됨",
+      "retryNow": "지금 재시도",
+      "promotingScheduledRetry": "예약된 재시도 승격 중",
+      "alreadyPromotedStarting": "이미 승격됨 — 실행 시작 중",
+      "promotedStarting": "승격됨 — 실행 시작 중",
+      "errorBandTitle": "지금 재시도할 수 없습니다",
+      "errorBandTryAgain": "다시 시도"
+    },
+    "monitor": {
+      "scheduled": "모니터 예약됨",
+      "nextCheck": "다음 확인 {{absolute}} ({{relative}})",
+      "attempt": "{{count}}번째 시도",
+      "checking": "확인 중...",
+      "checkNow": "지금 확인"
+    },
+    "runLedger": {
+      "liveness": {
+        "completedLabel": "완료됨",
+        "completedDescription": "작업이 종료 상태에 도달했습니다.",
+        "advancedLabel": "진전됨",
+        "advancedDescription": "실행이 진행에 대한 구체적인 근거를 만들었습니다.",
+        "planOnlyLabel": "계획만",
+        "planOnlyDescription": "실행이 구체적인 동작 근거 없이 향후 작업만 설명했습니다.",
+        "emptyResponseLabel": "빈 응답",
+        "emptyResponseDescription": "실행이 유용한 출력 없이 끝났습니다.",
+        "blockedLabel": "차단됨",
+        "blockedDescription": "실행 또는 작업이 차단 요인을 선언했습니다.",
+        "failedLabel": "실패함",
+        "failedDescription": "실행이 실패로 끝났습니다.",
+        "needsFollowupLabel": "후속 조치 필요",
+        "needsFollowupDescription": "실행이 유용한 출력을 만들었지만 구체적인 진행을 입증하지 못했습니다.",
+        "pendingLabel": "완료 후 확인",
+        "pendingDescription": "활성도는 실행이 끝난 후에 평가됩니다.",
+        "retryPendingLabel": "재시도 대기 중",
+        "retryPendingDescription": "Paperclip이 아직 시작되지 않은 자동 재시도를 대기열에 추가했습니다.",
+        "missingLabel": "활성도 데이터 없음",
+        "missingDescription": "이 실행에는 저장된 활성도 분류가 없습니다."
+      },
+      "silence": {
+        "suspicious": "응답 없음 감시",
+        "critical": "정체된 실행",
+        "snoozed": "응답 없음 알림 보류"
+      },
+      "summary": {
+        "runningNow": "{{name}}이(가) 지금 실행 중",
+        "queued": "{{name}}을(를) 위해 대기 중",
+        "scheduledRetry": "{{name}}을(를) 위해 자동 재시도 예약됨",
+        "statusBy": "{{name}}의 {{status}}"
+      },
+      "stop": {
+        "retryPending": "재시도 대기 중",
+        "waitingToStart": "시작 대기 중",
+        "stillRunning": "아직 실행 중",
+        "unavailable": "사용 불가",
+        "noStopReason": "중지 사유 없음"
+      },
+      "stopReason": {
+        "timeoutWith": "시간 초과 ({{timeout}})",
+        "timeout": "시간 초과",
+        "maxTurns": "최대 턴 소진",
+        "budgetPaused": "예산 일시 중지",
+        "cancelled": "취소됨",
+        "pausedByBoard": "보드에 의해 일시 중지됨",
+        "processLost": "프로세스 손실",
+        "adapterFailed": "어댑터 실패",
+        "completedWith": "완료됨 ({{timeout}})",
+        "completed": "완료됨",
+        "timeoutSeconds": "{{seconds}}초 시간 초과"
+      },
+      "action": {
+        "waitingNext": "다음 시도 대기 중",
+        "noneYet": "아직 기록된 동작 없음",
+        "noConcrete": "구체적인 동작 없음",
+        "noUseful": "유용한 출력 없음",
+        "unavailable": "사용 불가",
+        "noneRecorded": "기록 없음"
+      },
+      "continuationAttempt": "{{count}}번째 연속 작업 시도",
+      "ledgerAria": "작업 실행 기록",
+      "title": "실행 기록",
+      "waitingFirstRun": "첫 실행 기록을 기다리는 중입니다.",
+      "noRunsLinked": "아직 연결된 실행이 없습니다.",
+      "latestRun": "최근 실행",
+      "childWork": "하위 작업",
+      "childActive": "활성 {{active}}개, 완료 {{done}}개, 취소 {{cancelled}}개",
+      "childAllTerminal": "전체 {{total}}개 종료 (완료 {{done}}개, 취소 {{cancelled}}개)",
+      "childMore": "+{{count}}개 더",
+      "staleRunAlert": "정체된 실행 감시기 경고",
+      "silenceWarning": "출력 응답 없음 감시기 경고",
+      "silentForPrefix": "최근 활성 실행이 {{age}} 동안 응답이 없습니다.",
+      "reviewContext": " 복구 맥락은 <0>{{id}}</0>을(를) 검토하세요.",
+      "silenceAge": {
+        "under1": "1분 미만",
+        "minutesOne": "{{count}}분",
+        "minutesOther": "{{count}}분",
+        "hoursOne": "{{count}}시간",
+        "hoursOther": "{{count}}시간",
+        "hoursMinutes": "{{hours}}시간 {{minutes}}분",
+        "fallback": "장시간"
+      },
+      "continueMonitoring": "계속 모니터링",
+      "snooze1h": "1시간 보류",
+      "markFalsePositive": "오탐으로 표시",
+      "watchdogForbidden": "보드 또는 배정된 복구 담당자만 감시기 결정을 기록할 수 있습니다",
+      "watchdogFailed": "Paperclip이 감시기 결정을 기록할 수 없습니다.",
+      "toastNotRecordedTitle": "감시기 결정이 기록되지 않음",
+      "emptyWithActivity": "이 작업에 이력이 생기면 실행과 활동이 여기에 표시됩니다.",
+      "emptyRunsOnly": "활성도 메타데이터가 없는 과거 실행은 이 작업에 연결되면 여기에 표시됩니다.",
+      "runLabel": "실행",
+      "runBy": "담당: {{name}}",
+      "live": "실행 중",
+      "exhausted": "소진됨",
+      "elapsed": "경과 시간",
+      "elapsedUnknown": "알 수 없음",
+      "lastUsefulAction": "마지막 유용한 동작",
+      "stopHeading": "중지",
+      "retryOf": "<0>{{id}}</0>의 재시도",
+      "profileApplied": "프로필: {{requested}}",
+      "profileChanged": "프로필: {{requested}} → {{applied}}",
+      "profileUnavailable": "프로필: {{requested}} (사용 불가)",
+      "profileFallbackCheap": "저가 프로필이 기본 프로필로 대체됨",
+      "profileFallbackOther": "{{requested}} 프로필 사용 불가",
+      "nextAction": "다음 동작: ",
+      "olderItems": "표시되지 않은 이전 항목 {{count}}개"
+    },
+    "workspace": {
+      "option": {
+        "sharedWorkspace": "프로젝트 기본값",
+        "isolatedWorkspace": "새 격리 워크스페이스",
+        "reuseExisting": "기존 워크스페이스 재사용"
+      },
+      "mode": {
+        "isolatedWorkspace": "격리 워크스페이스",
+        "operatorBranch": "운영자 브랜치",
+        "cloudSandbox": "클라우드 샌드박스",
+        "adapterManaged": "어댑터 관리",
+        "default": "워크스페이스"
+      },
+      "configured": {
+        "isolatedWorkspace": "새 격리 워크스페이스",
+        "existingIsolated": "기존 격리 워크스페이스",
+        "reuseExisting": "기존 워크스페이스 재사용",
+        "projectDefault": "프로젝트 기본값"
+      },
+      "cancel": "취소",
+      "save": "저장",
+      "edit": "편집",
+      "repoLabel": "저장소:",
+      "environmentLabel": "환경:",
+      "environmentReused": " · 재사용된 워크스페이스",
+      "environmentProjectDefault": " · 프로젝트 기본값",
+      "willCreateIsolated": "이 작업이 실행될 때 새 격리 워크스페이스가 생성됩니다.",
+      "willReuse": "이 작업은 실행될 때 기존 워크스페이스를 재사용합니다.",
+      "willUseProjectDefault": "이 작업은 실행될 때 프로젝트 기본 워크스페이스 구성을 사용합니다.",
+      "reusingLabel": "재사용 중: ",
+      "viewDetails": "워크스페이스 세부 정보 보기 →",
+      "chooseExisting": "기존 워크스페이스 선택",
+      "currentLabel": "현재: ",
+      "browseFiles": "파일 탐색…",
+      "openFileByPath": "경로로 파일 열기…"
+    }
   }
 }

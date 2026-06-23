@@ -4579,5 +4579,333 @@
     "failedToDuplicateAgent": "Failed to duplicate agent",
     "failedToResetSession": "Failed to reset session",
     "confirmDuplicateAgent": "Duplicate {{name}} as {{nextName}}?"
+  },
+  "issueNotices": {
+    "blocked": {
+      "recoveryIndicatorTitle": "{{label}} — open the source task to act.",
+      "target": {
+        "linkedTask": "the linked task",
+        "linkedTasks": "the linked tasks"
+      },
+      "successfulRunRetry": {
+        "scheduleDueNow": "due now",
+        "scheduleRelative": "scheduled {{relative}}",
+        "schedulePending": "scheduled",
+        "body": "Corrective wake {{schedule}}. Retry now starts the same recovery path immediately."
+      },
+      "retry": {
+        "retrying": "Retrying...",
+        "alreadyPromoted": "Already promoted",
+        "promoted": "Promoted",
+        "retryNow": "Retry now"
+      },
+      "handoff": {
+        "title": "This task still needs a next step.",
+        "body": "A run finished successfully, but this task is still open in <0>in_progress</0> with no clear owner for the next action.",
+        "optionMarkDoneCancelled": "Mark it done or cancelled.",
+        "optionSendReview": "Send it for review or ask for input.",
+        "optionMarkBlocked": "Mark it blocked with a blocker owner.",
+        "optionDelegate": "Delegate follow-up work or queue a continuation.",
+        "runLabel": "run {{id}}",
+        "correctiveWakeQueued": "Corrective wake queued for {{name}}",
+        "assigneeFallback": "the assignee",
+        "detectedProgress": "Detected progress: {{summary}}"
+      },
+      "stalledMultiple": "Work on this task is blocked by {{target}}, but the chain is stalled in review without a clear next step. Resolve the stalled reviews below or remove them as blockers.",
+      "stalledSingle": "Work on this task is blocked by {{target}}, but the chain is stalled in review without a clear next step. Resolve the stalled review below or remove it as a blocker.",
+      "untilCompleteMany": "Work on this task is blocked by {{target}} until they are complete. Comments still wake the assignee for questions or triage.",
+      "untilCompleteOne": "Work on this task is blocked by {{target}} until it is complete. Comments still wake the assignee for questions or triage.",
+      "untilTodo": "Work on this task is blocked until it is moved back to todo. Comments still wake the assignee for questions or triage.",
+      "stalledInReview": "Stalled in review",
+      "ultimatelyWaitingOn": "Ultimately waiting on",
+      "blockedByParkedWork": "Blocked by parked work"
+    },
+    "assignedBacklog": {
+      "body": "<0>Parked</0> — <1>{{name}}</1> will not be woken until status changes to <2>todo</2> or <3>in_progress</3>.",
+      "commentsHint": "Comments still wake the assignee for questions or triage. Leave this parked only if the work is intentionally on hold.",
+      "assigneeFallback": "the assignee",
+      "resuming": "Resuming…",
+      "resumeNow": "Resume now"
+    },
+    "continuationHandoff": {
+      "defaultTitle": "Continuation handoff",
+      "collapseAria": "Collapse continuation handoff",
+      "expandAria": "Expand continuation handoff",
+      "badge": "handoff",
+      "updated": "Updated {{time}}",
+      "revisionSuffix": " - revision {{revision}}",
+      "copied": "Copied",
+      "copy": "Copy"
+    },
+    "recovery": {
+      "kind": {
+        "missingDisposition": "Missing Disposition",
+        "strandedAssignedIssue": "Stranded Task",
+        "workspaceValidation": "Workspace Validation",
+        "configurationValidation": "Configuration Validation",
+        "activeRunWatchdog": "Active Watchdog",
+        "issueGraphLiveness": "Graph Liveness"
+      },
+      "headline": {
+        "missingDisposition": "This task's run finished, but no next step was chosen.",
+        "strandedAssignedIssue": "Paperclip retried this task's last run and it still has no live execution path.",
+        "workspaceValidation": "Paperclip stopped this run because the task's git workspace could not be validated.",
+        "configurationValidation": "Paperclip stopped before dispatching this run because required secret/env bindings are missing.",
+        "activeRunWatchdog": "The active run has been silent. Recovery is observing without interrupting it.",
+        "issueGraphLiveness": "Paperclip detected this task lost a live action path. A recovery owner needs to act.",
+        "resolvedAs": "Recovery resolved as {{outcome}}."
+      },
+      "state": {
+        "needed": "RECOVERY NEEDED",
+        "inProgress": "RECOVERY IN PROGRESS",
+        "observeOnly": "OBSERVING ACTIVE RUN",
+        "escalated": "RECOVERY ESCALATED",
+        "resolved": "RECOVERY RESOLVED"
+      },
+      "outcome": {
+        "restored": "restored",
+        "delegated": "delegated to follow-up",
+        "falsePositive": "false positive",
+        "blocked": "blocked",
+        "escalated": "escalated",
+        "cancelled": "cancelled"
+      },
+      "wake": {
+        "correctiveWakeQueued": "Corrective wake queued",
+        "boardEscalation": "Escalated to board",
+        "manual": "Manual",
+        "manualRepairRequired": "Manual repair required",
+        "monitorScheduledWithInterval": "Monitor scheduled · {{interval}}",
+        "monitorScheduled": "Monitor scheduled"
+      },
+      "time": {
+        "inMinutes": "in {{minutes}}m",
+        "minutesAgo": "{{minutes}}m ago"
+      },
+      "aria": {
+        "needed": "needed",
+        "inProgress": "in progress",
+        "observeOnly": "observing active run",
+        "escalated": "escalated",
+        "resolved": "resolved",
+        "cardLabel": "Recovery action: {{state}}"
+      },
+      "meta": {
+        "owner": "Owner",
+        "sourceRun": "Source run",
+        "correctiveRun": "Corrective run",
+        "evidence": "Evidence",
+        "nextAction": "Next action",
+        "wake": "Wake",
+        "resolution": "Resolution"
+      },
+      "owner": {
+        "recovery": "Recovery:",
+        "board": "Board",
+        "user": "user {{id}}",
+        "system": "System",
+        "unassigned": "unassigned — pick one to wake them",
+        "returnsTo": "→ Returns to:"
+      },
+      "runLabel": "run {{id}}",
+      "agentFallback": "agent {{id}}",
+      "attemptOf": "attempt {{count}} of {{max}}",
+      "timesOut": "Times out {{time}}",
+      "timesOutSoon": "soon",
+      "resolvedAsLabel": "Resolved as {{outcome}}",
+      "resolve": {
+        "todoLabel": "Try again",
+        "todoDescription": "Dismiss recovery and return the source task to todo.",
+        "doneLabel": "Mark task done",
+        "doneDescription": "Restore by recording the requested work as complete.",
+        "inReviewLabel": "Send for review",
+        "inReviewDescription": "Hand off to a reviewer with a real review path.",
+        "falsePositiveDoneLabel": "False positive, done",
+        "falsePositiveDoneDescription": "Dismiss recovery and mark the source task complete.",
+        "falsePositiveInReviewLabel": "False positive, review",
+        "falsePositiveInReviewDescription": "Dismiss recovery and send the source task for review.",
+        "trigger": "Resolve…",
+        "triggerAria": "Resolve recovery",
+        "heading": "Resolve recovery",
+        "observeOnlyHint": "Recovery is observing without interrupting the live run.",
+        "openUntilDecision": "The card stays open until an explicit decision is recorded."
+      }
+    },
+    "scheduledRetry": {
+      "badgeContinuation": "Continuation scheduled",
+      "badgeRetry": "Retry scheduled",
+      "actionContinuation": "Automatic continuation",
+      "actionRetry": "Automatic retry",
+      "suffixDueNow": "due now",
+      "suffixPending": "pending schedule",
+      "title": "{{action}} {{suffix}}",
+      "helperContinuation": "Pulls continuation forward immediately",
+      "helperRetry": "Pulls retry forward immediately",
+      "attempt": "Attempt {{count}}",
+      "replacesRun": "Replaces run <0>{{id}}</0>",
+      "lastAttemptFailed": "Last attempt failed: {{error}}. Paperclip will retry automatically.",
+      "retrying": "Retrying…",
+      "alreadyPromoted": "Already promoted",
+      "promoted": "Promoted",
+      "retryNow": "Retry now",
+      "promotingScheduledRetry": "Promoting scheduled retry",
+      "alreadyPromotedStarting": "Already promoted — run starting",
+      "promotedStarting": "Promoted — run starting",
+      "errorBandTitle": "Couldn't retry now",
+      "errorBandTryAgain": "Try again"
+    },
+    "monitor": {
+      "scheduled": "Monitor scheduled",
+      "nextCheck": "Next check {{absolute}} ({{relative}})",
+      "attempt": "Attempt {{count}}",
+      "checking": "Checking...",
+      "checkNow": "Check now"
+    },
+    "runLedger": {
+      "liveness": {
+        "completedLabel": "Completed",
+        "completedDescription": "Task reached a terminal state.",
+        "advancedLabel": "Advanced",
+        "advancedDescription": "Run produced concrete evidence of progress.",
+        "planOnlyLabel": "Plan only",
+        "planOnlyDescription": "Run described future work without concrete action evidence.",
+        "emptyResponseLabel": "Empty response",
+        "emptyResponseDescription": "Run finished without useful output.",
+        "blockedLabel": "Blocked",
+        "blockedDescription": "Run or task declared a blocker.",
+        "failedLabel": "Failed",
+        "failedDescription": "Run ended unsuccessfully.",
+        "needsFollowupLabel": "Needs follow-up",
+        "needsFollowupDescription": "Run produced useful output but did not prove concrete progress.",
+        "pendingLabel": "Checks after finish",
+        "pendingDescription": "Liveness is evaluated after the run finishes.",
+        "retryPendingLabel": "Retry pending",
+        "retryPendingDescription": "Paperclip queued an automatic retry that has not started yet.",
+        "missingLabel": "No liveness data",
+        "missingDescription": "This run has no persisted liveness classification."
+      },
+      "silence": {
+        "suspicious": "Silence watch",
+        "critical": "Stale run",
+        "snoozed": "Silence snoozed"
+      },
+      "summary": {
+        "runningNow": "Running now by {{name}}",
+        "queued": "Queued for {{name}}",
+        "scheduledRetry": "Automatic retry scheduled for {{name}}",
+        "statusBy": "{{status}} by {{name}}"
+      },
+      "stop": {
+        "retryPending": "Retry pending",
+        "waitingToStart": "Waiting to start",
+        "stillRunning": "Still running",
+        "unavailable": "Unavailable",
+        "noStopReason": "No stop reason"
+      },
+      "stopReason": {
+        "timeoutWith": "timeout ({{timeout}})",
+        "timeout": "timeout",
+        "maxTurns": "max turns exhausted",
+        "budgetPaused": "budget paused",
+        "cancelled": "cancelled",
+        "pausedByBoard": "paused by board",
+        "processLost": "process lost",
+        "adapterFailed": "adapter failed",
+        "completedWith": "completed ({{timeout}})",
+        "completed": "completed",
+        "timeoutSeconds": "{{seconds}}s timeout"
+      },
+      "action": {
+        "waitingNext": "Waiting for next attempt",
+        "noneYet": "No action recorded yet",
+        "noConcrete": "No concrete action",
+        "noUseful": "No useful output",
+        "unavailable": "Unavailable",
+        "noneRecorded": "None recorded"
+      },
+      "continuationAttempt": "Continuation attempt {{count}}",
+      "ledgerAria": "Task run ledger",
+      "title": "Run ledger",
+      "waitingFirstRun": "Waiting for the first run record.",
+      "noRunsLinked": "No runs linked yet.",
+      "latestRun": "Latest run",
+      "childWork": "Child work",
+      "childActive": "{{active}} active, {{done}} done, {{cancelled}} cancelled",
+      "childAllTerminal": "all {{total}} terminal ({{done}} done, {{cancelled}} cancelled)",
+      "childMore": "+{{count}} more",
+      "staleRunAlert": "Stale-run watchdog alert",
+      "silenceWarning": "Output silence watchdog warning",
+      "silentForPrefix": "Latest active run has been silent for {{age}}.",
+      "reviewContext": " Review <0>{{id}}</0> for recovery context.",
+      "silenceAge": {
+        "under1": "under 1 minute",
+        "minutesOne": "{{count}} minute",
+        "minutesOther": "{{count}} minutes",
+        "hoursOne": "{{count}} hour",
+        "hoursOther": "{{count}} hours",
+        "hoursMinutes": "{{hours}}h {{minutes}}m",
+        "fallback": "an extended period"
+      },
+      "continueMonitoring": "Continue monitoring",
+      "snooze1h": "Snooze 1h",
+      "markFalsePositive": "Mark false positive",
+      "watchdogForbidden": "Only the board or the assigned recovery owner can record watchdog decisions",
+      "watchdogFailed": "Paperclip could not record the watchdog decision.",
+      "toastNotRecordedTitle": "Watchdog decision not recorded",
+      "emptyWithActivity": "Runs and activity will appear here once this task has history.",
+      "emptyRunsOnly": "Historical runs without liveness metadata will appear here once linked to this task.",
+      "runLabel": "Run",
+      "runBy": "by {{name}}",
+      "live": "live",
+      "exhausted": "Exhausted",
+      "elapsed": "Elapsed",
+      "elapsedUnknown": "unknown",
+      "lastUsefulAction": "Last useful action",
+      "stopHeading": "Stop",
+      "retryOf": "Retry of <0>{{id}}</0>",
+      "profileApplied": "Profile: {{requested}}",
+      "profileChanged": "Profile: {{requested}} → {{applied}}",
+      "profileUnavailable": "Profile: {{requested}} (unavailable)",
+      "profileFallbackCheap": "Cheap profile fell back to primary",
+      "profileFallbackOther": "{{requested}} profile unavailable",
+      "nextAction": "Next action: ",
+      "olderItems": "{{count}} older items not shown"
+    },
+    "workspace": {
+      "option": {
+        "sharedWorkspace": "Project default",
+        "isolatedWorkspace": "New isolated workspace",
+        "reuseExisting": "Reuse existing workspace"
+      },
+      "mode": {
+        "isolatedWorkspace": "Isolated workspace",
+        "operatorBranch": "Operator branch",
+        "cloudSandbox": "Cloud sandbox",
+        "adapterManaged": "Adapter managed",
+        "default": "Workspace"
+      },
+      "configured": {
+        "isolatedWorkspace": "New isolated workspace",
+        "existingIsolated": "Existing isolated workspace",
+        "reuseExisting": "Reuse existing workspace",
+        "projectDefault": "Project default"
+      },
+      "cancel": "Cancel",
+      "save": "Save",
+      "edit": "Edit",
+      "repoLabel": "Repo:",
+      "environmentLabel": "Environment:",
+      "environmentReused": " · reused workspace",
+      "environmentProjectDefault": " · project default",
+      "willCreateIsolated": "A fresh isolated workspace will be created when this task runs.",
+      "willReuse": "This task will reuse an existing workspace when it runs.",
+      "willUseProjectDefault": "This task will use the project default workspace configuration when it runs.",
+      "reusingLabel": "Reusing: ",
+      "viewDetails": "View workspace details →",
+      "chooseExisting": "Choose an existing workspace",
+      "currentLabel": "Current: ",
+      "browseFiles": "Browse files…",
+      "openFileByPath": "Open file by path…"
+    }
   }
 }

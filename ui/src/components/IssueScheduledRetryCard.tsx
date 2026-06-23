@@ -1,6 +1,8 @@
 import { Clock, RotateCcw, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
+import { Trans } from "@/i18n";
 import { Link } from "@/lib/router";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/i18n";
 import { cn, formatDateTime } from "@/lib/utils";
 import { formatMonitorOffset } from "@/lib/issue-monitor";
 import { formatRetryReason } from "@/lib/runRetryState";
@@ -26,6 +28,7 @@ export function IssueScheduledRetryCard({
   issueId,
   scheduledRetry,
 }: IssueScheduledRetryCardProps) {
+  const { t } = useTranslation();
   const retryNow = useRetryNowMutation(issueId);
 
   if (!scheduledRetry || !issueId) return null;
@@ -47,21 +50,25 @@ export function IssueScheduledRetryCard({
       ? scheduledRetry.scheduledRetryAttempt
       : null;
 
-  const badgeLabel = continuation ? "Continuation scheduled" : "Retry scheduled";
-  const titleAction = continuation ? "Automatic continuation" : "Automatic retry";
+  const badgeLabel = continuation
+    ? t("issueNotices.scheduledRetry.badgeContinuation")
+    : t("issueNotices.scheduledRetry.badgeRetry");
+  const titleAction = continuation
+    ? t("issueNotices.scheduledRetry.actionContinuation")
+    : t("issueNotices.scheduledRetry.actionRetry");
   let titleSuffix: string;
   if (relative === "now") {
-    titleSuffix = "due now";
+    titleSuffix = t("issueNotices.scheduledRetry.suffixDueNow");
   } else if (relative) {
     titleSuffix = relative;
   } else {
-    titleSuffix = "pending schedule";
+    titleSuffix = t("issueNotices.scheduledRetry.suffixPending");
   }
-  const title = `${titleAction} ${titleSuffix}`;
+  const title = t("issueNotices.scheduledRetry.title", { action: titleAction, suffix: titleSuffix });
 
   const helperIdle = continuation
-    ? "Pulls continuation forward immediately"
-    : "Pulls retry forward immediately";
+    ? t("issueNotices.scheduledRetry.helperContinuation")
+    : t("issueNotices.scheduledRetry.helperRetry");
   const isError = retryNow.isError || retryNow.lastError !== null;
   const isSuccessTransient = retryNow.isSuccess
     && (retryNow.data?.outcome === "promoted" || retryNow.data?.outcome === "already_promoted");
@@ -79,7 +86,7 @@ export function IssueScheduledRetryCard({
               {badgeLabel}
             </span>
             {attempt !== null ? (
-              <span className="text-muted-foreground">Attempt {attempt}</span>
+              <span className="text-muted-foreground">{t("issueNotices.scheduledRetry.attempt", { count: attempt })}</span>
             ) : null}
             {reason ? (
               <span className="text-muted-foreground">{reason}</span>
@@ -92,20 +99,24 @@ export function IssueScheduledRetryCard({
               {absolute && scheduledRetry.retryOfRunId ? <span>{" · "}</span> : null}
               {scheduledRetry.retryOfRunId ? (
                 <span>
-                  Replaces run{" "}
-                  <Link
-                    to={`/agents/${scheduledRetry.agentId}/runs/${scheduledRetry.retryOfRunId}`}
-                    className="font-mono text-foreground hover:underline"
-                  >
-                    {shortRunId(scheduledRetry.retryOfRunId)}
-                  </Link>
+                  <Trans
+                    i18nKey="issueNotices.scheduledRetry.replacesRun"
+                    values={{ id: shortRunId(scheduledRetry.retryOfRunId) }}
+                    components={[
+                      <Link
+                        key="0"
+                        to={`/agents/${scheduledRetry.agentId}/runs/${scheduledRetry.retryOfRunId}`}
+                        className="font-mono text-foreground hover:underline"
+                      />,
+                    ]}
+                  />
                 </span>
               ) : null}
             </div>
           ) : null}
           {scheduledRetry.error ? (
             <div className="mt-1 text-xs text-muted-foreground">
-              Last attempt failed: {scheduledRetry.error}. Paperclip will retry automatically.
+              {t("issueNotices.scheduledRetry.lastAttemptFailed", { error: scheduledRetry.error })}
             </div>
           ) : null}
           {isError ? (
@@ -131,27 +142,29 @@ export function IssueScheduledRetryCard({
             {retryNow.isPending ? (
               <span className="inline-flex items-center gap-1.5">
                 <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
-                Retrying…
+                {t("issueNotices.scheduledRetry.retrying")}
               </span>
             ) : isSuccessTransient ? (
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-                {retryNow.data?.outcome === "already_promoted" ? "Already promoted" : "Promoted"}
+                {retryNow.data?.outcome === "already_promoted"
+                  ? t("issueNotices.scheduledRetry.alreadyPromoted")
+                  : t("issueNotices.scheduledRetry.promoted")}
               </span>
             ) : (
               <span className="inline-flex items-center gap-1.5">
                 <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-                Retry now
+                {t("issueNotices.scheduledRetry.retryNow")}
               </span>
             )}
           </Button>
           <span className="text-right text-xs text-muted-foreground sm:max-w-[12rem]">
             {retryNow.isPending
-              ? "Promoting scheduled retry"
+              ? t("issueNotices.scheduledRetry.promotingScheduledRetry")
               : isSuccessTransient
                 ? retryNow.data?.outcome === "already_promoted"
-                  ? "Already promoted — run starting"
-                  : "Promoted — run starting"
+                  ? t("issueNotices.scheduledRetry.alreadyPromotedStarting")
+                  : t("issueNotices.scheduledRetry.promotedStarting")
                 : helperIdle}
           </span>
         </div>
@@ -167,6 +180,7 @@ interface RetryErrorBandProps {
 }
 
 export function RetryErrorBand({ error, onRetry, className }: RetryErrorBandProps) {
+  const { t } = useTranslation();
   if (!error) return null;
   return (
     <div
@@ -179,7 +193,7 @@ export function RetryErrorBand({ error, onRetry, className }: RetryErrorBandProp
     >
       <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
       <div className="min-w-0 flex-1">
-        <div className="font-medium">Couldn't retry now</div>
+        <div className="font-medium">{t("issueNotices.scheduledRetry.errorBandTitle")}</div>
         <div className="mt-0.5 text-muted-foreground">{error.message}</div>
       </div>
       <button
@@ -187,7 +201,7 @@ export function RetryErrorBand({ error, onRetry, className }: RetryErrorBandProp
         onClick={onRetry}
         className="shrink-0 font-medium text-rose-700 hover:underline dark:text-rose-300"
       >
-        Try again
+        {t("issueNotices.scheduledRetry.errorBandTryAgain")}
       </button>
     </div>
   );
