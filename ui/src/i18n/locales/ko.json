@@ -2933,5 +2933,1125 @@
       "extensionsUnavailable": "플러그인 확장을 사용할 수 없습니다: {{message}}",
       "duplicateRoute": "여러 플러그인이 <0>{{routePath}}</0> 회사 설정 경로를 선언합니다. 플러그인 하나를 비활성화하거나 경로를 변경하세요."
     }
+  },
+  "authAccess": {
+    "auth": {
+      "loading": "불러오는 중…",
+      "brand": "Paperclip",
+      "signInTitle": "Paperclip에 로그인",
+      "signUpTitle": "Paperclip 계정 만들기",
+      "signInSubtitle": "이메일과 비밀번호로 이 인스턴스에 접속하세요.",
+      "signUpSubtitle": "이 인스턴스의 계정을 만드세요. v1에서는 이메일 확인이 필요하지 않습니다.",
+      "nameLabel": "이름",
+      "emailLabel": "이메일",
+      "passwordLabel": "비밀번호",
+      "fillRequiredFields": "필수 항목을 모두 입력하세요.",
+      "submitWorking": "처리 중…",
+      "submitSignIn": "로그인",
+      "submitSignUp": "계정 만들기",
+      "needAccount": "계정이 필요하신가요?",
+      "haveAccount": "이미 계정이 있으신가요?",
+      "createOne": "계정 만들기",
+      "signIn": "로그인",
+      "authenticationFailed": "인증에 실패했습니다"
+    },
+    "cli": {
+      "invalidUrl": "잘못된 CLI 인증 URL입니다.",
+      "loadingChallenge": "CLI 인증 챌린지를 불러오는 중...",
+      "challengeUnavailableTitle": "CLI 인증 챌린지를 사용할 수 없음",
+      "challengeInvalidOrExpired": "챌린지가 유효하지 않거나 만료되었습니다.",
+      "challengeUnavailable": "CLI 인증 챌린지를 사용할 수 없습니다.",
+      "approvedTitle": "CLI 접근이 승인됨",
+      "approvedDescription": "이제 Paperclip CLI가 요청한 컴퓨터에서 인증을 완료할 수 있습니다.",
+      "command": "명령:",
+      "expiredTitle": "CLI 인증 챌린지 만료됨",
+      "cancelledTitle": "CLI 인증 챌린지 취소됨",
+      "expiredCancelledDescription": "터미널에서 CLI 인증 흐름을 다시 시작하여 새 승인 요청을 생성하세요.",
+      "signInRequiredTitle": "로그인 필요",
+      "signInRequiredDescription": "로그인하거나 계정을 만든 다음, 이 페이지로 돌아와 CLI 접근 요청을 승인하세요.",
+      "signInCreateAccount": "로그인 / 계정 만들기",
+      "approveTitle": "Paperclip CLI 접근 승인",
+      "approveDescription": "로컬 Paperclip CLI 프로세스가 이 인스턴스에 대한 보드 접근을 요청하고 있습니다.",
+      "fieldCommand": "명령",
+      "fieldClient": "클라이언트",
+      "defaultClientName": "paperclipai cli",
+      "fieldRequestedAccess": "요청한 접근 권한",
+      "requestedAccessInstanceAdmin": "인스턴스 관리자",
+      "requestedAccessBoard": "보드",
+      "fieldRequestedCompany": "요청한 회사",
+      "updateError": "CLI 인증 챌린지를 업데이트하지 못했습니다",
+      "instanceAdminRequired": "이 챌린지에는 인스턴스 관리자 접근 권한이 필요합니다. 인스턴스 관리자 계정으로 로그인하여 승인하세요.",
+      "approving": "승인 중...",
+      "approveButton": "CLI 접근 승인",
+      "cancelling": "취소 중...",
+      "cancel": "취소"
+    },
+    "instance": {
+      "breadcrumbSettings": "설정",
+      "breadcrumbInstanceSettings": "인스턴스 설정",
+      "breadcrumbAccess": "접근 권한",
+      "companyAccessUpdated": "회사 접근 권한이 업데이트됨",
+      "noUserSelected": "선택된 사용자가 없습니다",
+      "instanceRoleUpdated": "인스턴스 역할이 업데이트됨",
+      "loadingUsers": "인스턴스 사용자를 불러오는 중…",
+      "adminRequired": "사용자를 관리하려면 인스턴스 관리자 접근 권한이 필요합니다.",
+      "loadUsersFailed": "사용자를 불러오지 못했습니다.",
+      "title": "인스턴스 접근 권한",
+      "description": "사용자를 검색하고, 인스턴스 관리자 상태를 관리하며, 접근할 수 있는 회사를 제어하세요.",
+      "searchUsers": "사용자 검색",
+      "searchPlaceholder": "이름 또는 이메일로 검색",
+      "activeMembershipsOne": "활성 회사 멤버십 {{count}}개",
+      "activeMembershipsOther": "활성 회사 멤버십 {{count}}개",
+      "selectUser": "인스턴스 접근 권한을 확인할 사용자를 선택하세요.",
+      "loadingUserAccess": "사용자 접근 권한을 불러오는 중…",
+      "loadUserAccessFailed": "사용자 접근 권한을 불러오지 못했습니다.",
+      "removeInstanceAdmin": "인스턴스 관리자 해제",
+      "promoteInstanceAdmin": "인스턴스 관리자로 승격",
+      "companyAccessHeading": "회사 접근 권한",
+      "companyAccessDescription": "이 사용자의 회사 멤버십을 전환하세요. 새 접근 권한은 기본적으로 활성 운영자 멤버십으로 설정됩니다.",
+      "saving": "저장 중…",
+      "saveCompanyAccess": "회사 접근 권한 저장",
+      "currentMemberships": "현재 멤버십",
+      "roleUnset": "미설정",
+      "membershipMeta": "{{role}} • {{status}}"
+    },
+    "invite": {
+      "requestToJoin": "{{company}} 가입 요청",
+      "stillAwaitingApproval": "요청이 아직 승인을 기다리고 있습니다. {{approver}}이(가) 가입 요청을 승인해야 합니다.",
+      "defaultApprover": "회사 관리자",
+      "approvalPage": "승인 페이지",
+      "membersLink": "회사 설정 → 멤버",
+      "askThemToVisit": "<0>회사 설정 → 멤버</0>를 방문하여 요청을 승인하도록 요청하세요.",
+      "refreshAfterApproval": "승인된 후 이 페이지를 새로 고치세요 — 자동으로 리디렉션됩니다.",
+      "claimSecret": "클레임 시크릿",
+      "claimApiKey": "POST {{path}}",
+      "onboarding": "온보딩:",
+      "invalidToken": "잘못된 초대 토큰입니다.",
+      "loadingInvite": "초대를 불러오는 중...",
+      "checkingAccess": "접근 권한을 확인하는 중...",
+      "inviteNotAvailableTitle": "초대를 사용할 수 없음",
+      "inviteNotAvailableDescription": "이 초대는 만료되었거나, 취소되었거나, 이미 사용되었을 수 있습니다.",
+      "openingCompany": "회사를 여는 중...",
+      "joinRequestRejected": "이 가입 요청은 승인되지 않았습니다.",
+      "inviteAlreadyUsed": "이 초대는 이미 사용되었습니다.",
+      "bootstrapCompleteTitle": "부트스트랩 완료",
+      "openBoard": "보드 열기",
+      "youJoinedTitle": "회사에 가입했습니다",
+      "defaultCompanyName": "이 Paperclip 회사",
+      "inviteNotFound": "초대를 찾을 수 없습니다",
+      "checkingMembership": "회사 접근 권한을 확인하는 중입니다. 잠시 후 다시 시도하세요.",
+      "alreadyMember": "이 계정은 이미 회사에 속해 있습니다.",
+      "failedToAccept": "초대를 수락하지 못했습니다",
+      "userAlreadyExists": "{{email}}에 대한 계정이 이미 존재합니다. 아래에서 로그인하여 이 초대를 계속 진행하세요.",
+      "invalidEmailOrPassword": "이메일과 비밀번호가 기존 Paperclip 계정과 일치하지 않습니다. 두 항목을 모두 확인하거나, 처음 사용하는 경우 먼저 계정을 만드세요.",
+      "userMayAlreadyExist": "{{email}}에 대한 계정이 이미 존재할 수 있습니다. 대신 로그인해 보세요.",
+      "authenticationFailed": "인증에 실패했습니다",
+      "defaultEmailLabel": "해당 이메일",
+      "buttonContinue": "계속",
+      "buttonOpenCompany": "회사 열기",
+      "buttonAcceptInvite": "초대 수락",
+      "buttonSubmitRequest": "요청 제출",
+      "invitedHeader": "Paperclip 가입에 초대되었습니다",
+      "setUpPaperclip": "Paperclip 설정",
+      "joinCompany": "{{company}} 가입",
+      "introAgent": "초대 세부 정보를 검토한 다음, 아래 에이전트 정보를 제출하여 가입 요청을 시작하세요.",
+      "introRequiresAccount": "먼저 Paperclip 계정을 만드세요. 이미 계정이 있다면 로그인으로 전환하고 같은 이메일로 초대를 계속 진행하세요.",
+      "introReady": "계정이 준비되었습니다. 초대 세부 정보를 검토한 다음 수락하여 계속 진행하세요.",
+      "fieldCompany": "회사",
+      "fieldInvitedBy": "초대한 사람",
+      "defaultInvitedBy": "Paperclip 보드",
+      "fieldRequestedAccess": "요청한 접근 권한",
+      "requestedAccessAgent": "에이전트 가입 요청",
+      "requestedAccessCompany": "회사 접근 권한",
+      "fieldInviteExpires": "초대 만료",
+      "messageFromInviter": "초대자의 메시지",
+      "signedInAs": "<0>{{label}}</0>(으)로 로그인됨.",
+      "defaultSessionLabel": "이 계정",
+      "submitAgentDetailsTitle": "에이전트 세부 정보 제출",
+      "submitAgentDetailsDescription": "이 초대는 {{company}}에 새 에이전트에 대한 승인 요청을 생성합니다.",
+      "agentName": "에이전트 이름",
+      "adapterType": "어댑터 유형",
+      "comingSoon": " (출시 예정)",
+      "capabilities": "기능",
+      "working": "처리 중...",
+      "createAccountTitle": "계정 만들기",
+      "signInToContinueTitle": "계속하려면 로그인",
+      "createAccountDescription": "Paperclip 계정으로 시작하세요. 그 후 바로 이곳으로 돌아와 {{company}}에 대한 초대를 수락하게 됩니다.",
+      "signInDescription": "이 초대와 이미 일치하는 Paperclip 계정을 사용하세요. 아직 계정이 없다면 계정 만들기로 다시 전환하세요.",
+      "modeCreateAccount": "계정 만들기",
+      "modeExistingAccount": "이미 계정이 있습니다",
+      "fillRequiredFields": "필수 항목을 모두 입력하세요.",
+      "nameLabel": "이름",
+      "emailLabel": "이메일",
+      "passwordLabel": "비밀번호",
+      "submitSignInContinue": "로그인하고 계속",
+      "submitCreateAccountContinue": "계정 만들고 계속",
+      "footerSignUp": "이전에 이미 가입하셨나요? 초대가 올바른 Paperclip 사용자에게 전달되도록 기존 계정 옵션을 대신 사용하세요.",
+      "footerSignIn": "아직 계정이 없으신가요? 새 로그인으로 초대를 수락할 수 있도록 계정 만들기로 다시 전환하세요.",
+      "alreadyInCompany": "이미 이 회사에 속해 있습니다",
+      "completingAccess": "회사 접근 권한 완료 중",
+      "acceptBootstrapInvite": "부트스트랩 초대 수락",
+      "acceptCompanyInvite": "회사 초대 수락",
+      "grantingAccess": "{{company}}에 대한 접근 권한을 부여하는 중입니다.",
+      "alreadyBelongs": "이 계정은 이미 {{company}}에 속해 있습니다.",
+      "willFinishBootstrap": "Paperclip 설정을 완료",
+      "willGrantAccess": "{{company}}에 대한 접근 권한을 부여하거나 완료",
+      "willPrefix": "이 작업은 {{action}}합니다.",
+      "submittingRequest": "요청을 제출하는 중...",
+      "finishingSignIn": "로그인을 완료하는 중..."
+    },
+    "joinQueue": {
+      "breadcrumbCompany": "회사",
+      "breadcrumbInbox": "수신함",
+      "breadcrumbJoinRequests": "가입 요청",
+      "approved": "가입 요청이 승인됨",
+      "rejected": "가입 요청이 거부됨",
+      "selectCompany": "가입 요청을 검토할 회사를 선택하세요.",
+      "loading": "가입 요청을 불러오는 중…",
+      "noPermission": "이 회사의 가입 요청을 검토할 권한이 없습니다.",
+      "loadFailed": "가입 요청을 불러오지 못했습니다.",
+      "title": "가입 요청 대기열",
+      "description": "혼합 수신함 피드와 별도로 사람 및 에이전트 가입 요청을 검토하세요. 이 대기열은 인라인 수신함 카드와 동일한 승인 뮤테이션을 사용합니다.",
+      "statusLabel": "상태",
+      "statusPendingApproval": "승인 대기 중",
+      "statusApproved": "승인됨",
+      "statusRejected": "거부됨",
+      "requestTypeLabel": "요청 유형",
+      "requestTypeAll": "전체",
+      "requestTypeHuman": "사람",
+      "requestTypeAgent": "에이전트",
+      "noRequests": "현재 필터와 일치하는 가입 요청이 없습니다.",
+      "unknownHumanRequester": "알 수 없는 사람 요청자",
+      "unknownAgentRequester": "알 수 없는 에이전트 요청자",
+      "reject": "거부",
+      "approve": "승인",
+      "inviteContext": "초대 컨텍스트",
+      "inviteContextSummary": "{{joinTypes}} 가입 초대",
+      "inviteContextSummaryWithRole": "{{joinTypes}} 가입 초대 • 기본 역할 {{role}}",
+      "inviteMetadataUnavailable": "초대 메타데이터를 사용할 수 없습니다",
+      "requestDetails": "요청 세부 정보",
+      "submitted": "제출됨 {{date}}",
+      "sourceIp": "소스 IP {{ip}}"
+    },
+    "boardClaim": {
+      "invalidUrl": "잘못된 보드 클레임 URL입니다.",
+      "loadingChallenge": "클레임 챌린지를 불러오는 중...",
+      "challengeUnavailableTitle": "클레임 챌린지를 사용할 수 없음",
+      "challengeInvalidOrExpired": "챌린지가 유효하지 않거나 만료되었습니다.",
+      "challengeUnavailable": "클레임 챌린지를 사용할 수 없습니다.",
+      "claimedTitle": "보드 소유권이 클레임됨",
+      "claimedDescription": "이제 이 인스턴스가 인증된 사용자와 연결되었습니다.",
+      "openBoard": "보드 열기",
+      "signInRequiredTitle": "로그인 필요",
+      "signInRequiredDescription": "로그인하거나 계정을 만든 다음, 이 페이지로 돌아와 보드 소유권을 클레임하세요.",
+      "signInCreateAccount": "로그인 / 계정 만들기",
+      "claimTitle": "보드 소유권 클레임",
+      "claimDescription": "이 작업은 사용자를 인스턴스 관리자로 승격하고 로컬 신뢰 모드에서 회사 소유권 접근 권한을 마이그레이션합니다.",
+      "claimError": "보드 소유권을 클레임하지 못했습니다",
+      "claiming": "클레임 중…",
+      "claimButton": "소유권 클레임"
+    }
+  },
+  "teamCatalog": {
+    "trust": {
+      "markdownOnly": {
+        "label": "마크다운만",
+        "tip": "마크다운과 참조만 포함합니다. 실행 가능한 콘텐츠가 없습니다."
+      },
+      "assets": {
+        "label": "에셋",
+        "tip": "정적 에셋(이미지, 픽스처)을 포함합니다. 실행 가능한 콘텐츠가 없습니다."
+      },
+      "scriptsExecutables": {
+        "label": "스크립트",
+        "tip": "번들링 전에 보안 검토를 거친 실행 가능한 스크립트를 포함합니다."
+      },
+      "externalSources": {
+        "label": "외부 소스",
+        "tip": "설치 시점에 해석되는 외부 소스를 참조합니다."
+      }
+    },
+    "compat": {
+      "compatible": "호환됨",
+      "unknown": "호환성 알 수 없음",
+      "invalid": "유효하지 않음"
+    },
+    "provenanceBadge": {
+      "tip": "카탈로그 패키지 출처"
+    },
+    "riskBanner": {
+      "externalSourceOne": "이 팀은 외부 소스 {{count}}개를 참조합니다",
+      "externalSourceOther": "이 팀은 외부 소스 {{count}}개를 참조합니다",
+      "unsupported": "브라우저 설치에서 지원되지 않음",
+      "unpinned": "고정되지 않음"
+    },
+    "hierarchy": {
+      "rootAgent": "루트 에이전트",
+      "empty": "이 팀에는 에이전트가 없습니다."
+    },
+    "detail": {
+      "installButton": {
+        "reinstall": "최신 버전 재설치",
+        "install": "팀 설치"
+      },
+      "installed": "설치됨",
+      "updateAvailable": "업데이트 가능",
+      "invalidTooltip": "이 팀은 설치할 수 없습니다 — 패키지 매니페스트가 유효하지 않습니다.",
+      "permissionTooltip": "이사회 운영자 또는 에이전트 생성 권한이 필요합니다.",
+      "metrics": {
+        "agents": "에이전트",
+        "projects": "프로젝트",
+        "routines": "루틴",
+        "requiredSkills": "필요한 스킬"
+      },
+      "sections": {
+        "agentHierarchy": "에이전트 계층",
+        "projects": "프로젝트",
+        "requiredSkills": "필요한 스킬",
+        "files": "파일"
+      },
+      "closeFile": "닫기"
+    },
+    "requiredSkills": {
+      "empty": "필요한 스킬이 없습니다.",
+      "resolved": "해석됨",
+      "external": "외부"
+    },
+    "envInputs": {
+      "section": "시크릿 및 환경 입력",
+      "required": "필수"
+    },
+    "externalSources": {
+      "toggle": "외부 소스 · {{count}}",
+      "pinned": "고정됨",
+      "unpinned": "고정되지 않음",
+      "unsupported": "브라우저 설치에서 지원되지 않음"
+    },
+    "steps": {
+      "targetManager": "대상 관리자",
+      "sourcePolicy": "소스 정책",
+      "skillPlan": "사전 필요 스킬",
+      "preview": "미리 보기"
+    },
+    "installer": {
+      "headerTitle": "{{name}} 설치",
+      "progress": "{{total}}단계 중 {{current}}단계 · {{step}}",
+      "errors": {
+        "previewFailed": "설치 미리 보기를 불러오지 못했습니다.",
+        "installFailed": "설치에 실패했습니다."
+      },
+      "applyError": {
+        "title": "설치 실패",
+        "note": "부분적으로 적용된 상태는 롤백되지 않습니다. 다시 시도하기 전에 회사 활동 로그를 검토하세요."
+      },
+      "footer": {
+        "back": "뒤로",
+        "cancel": "취소",
+        "blockedErrorsOne": "설치 차단됨: 오류 {{count}}개",
+        "blockedErrorsOther": "설치 차단됨: 오류 {{count}}개",
+        "missingSecrets": "누락된 필수 시크릿: {{count}}",
+        "confirmExecutables": "확인 — 실행 파일과 함께 설치",
+        "installWithExecutables": "실행 파일과 함께 설치",
+        "installTeam": "팀 설치",
+        "continue": "계속",
+        "close": "닫기"
+      }
+    },
+    "targetManagerStep": {
+      "help": "이 팀의 루트 에이전트에는 회사 내 관리자가 필요합니다. 상위가 될 에이전트를 선택하세요. 내부 팀 계층은 유지됩니다.",
+      "rootAgents": "루트 에이전트",
+      "targetManager": "대상 관리자",
+      "searchPlaceholder": "에이전트 검색…",
+      "noAgents": "에이전트를 찾을 수 없습니다.",
+      "fullCompany": "이 팀을 전체 회사 패키지로 사용(대상 관리자 없음)"
+    },
+    "sourcePolicyStep": {
+      "warningOne": "이 팀은 외부 소스 {{count}}개를 참조합니다. 계속하기 전에 각 항목을 검토하고 무엇을 허용할지 결정하세요.",
+      "warningOther": "이 팀은 외부 소스 {{count}}개를 참조합니다. 계속하기 전에 각 항목을 검토하고 무엇을 허용할지 결정하세요.",
+      "pinned": "고정됨",
+      "unpinned": "고정되지 않은 참조",
+      "unsupported": "브라우저에서 설치할 수 없음",
+      "allowExternal": {
+        "label": "외부 소스 허용",
+        "description": "설치 시점에 github/url 스킬 및 팀 소스를 해석합니다."
+      },
+      "allowUnpinned": {
+        "label": "고정되지 않은 선택적 소스 허용",
+        "description": "ref 또는 체크섬에 고정되지 않은 선택적 소스를 허용합니다."
+      },
+      "allowLocalPath": {
+        "label": "로컬 경로 소스 허용",
+        "description": "local_path / agent_package 소스에 필요합니다. 개발 용도로만 사용하세요."
+      },
+      "localPathHint": "이 팀에는 로컬 경로 소스가 있습니다. 계속하려면 “로컬 경로 소스 허용”을 활성화하거나 CLI에서 설치하세요."
+    },
+    "skillAction": {
+      "alreadyInPackage": "패키지에 번들됨",
+      "catalogInstallRequired": "카탈로그에서 설치 예정",
+      "externalImportRequired": "소스에서 가져올 예정",
+      "blocked": "차단됨"
+    },
+    "skillPlanStep": {
+      "intro": "에이전트를 가져오기 전에 카탈로그가 해당 에이전트가 의존하는 스킬을 해석합니다. 다음은 해석 계획입니다."
+    },
+    "preview": {
+      "preparing": "미리 보기 준비 중…",
+      "retry": "다시 시도",
+      "summary": "요약",
+      "summaryCounts": {
+        "agents": "에이전트",
+        "projects": "프로젝트",
+        "starterTasks": "시작 작업",
+        "requiredSkills": "필요한 스킬"
+      },
+      "collisionStrategy": "충돌 전략",
+      "renameCollisions": "충돌 이름 변경",
+      "skipCollisions": "충돌 건너뛰기",
+      "installBlocked": "설치 차단됨",
+      "agentsSection": "에이전트 · {{count}}",
+      "projectsSection": "프로젝트 · {{count}}",
+      "starterTasksSection": "시작 작업 · {{count}}",
+      "adapterSection": "어댑터 선택 · {{count}}",
+      "adapterNote": "가져온 각 에이전트는 기본적으로 패키지 어댑터를 사용합니다. 설치 전에 여기서 재정의하세요. 어댑터별 세부 모델 구성은 설치 후 에이전트에서 편집할 수 있습니다.",
+      "envInputsSection": "시크릿 및 환경 입력 · {{count}}",
+      "envInput": {
+        "required": "필수",
+        "requiredPlaceholder": "필수",
+        "optionalPlaceholder": "선택",
+        "valueAria": "{{key}} 값",
+        "hideAria": "{{key}} 숨기기",
+        "showAria": "{{key}} 표시",
+        "hideValue": "값 숨기기",
+        "showValue": "값 표시"
+      },
+      "provenance": "가져온 엔터티에는 <0>metadata.paperclip.catalogTeam</0>({{provenance}}, 콘텐츠 해시 <1>{{hash}}…</1>)이 표시되며, 미리 보기와 설치에 대한 활동 이벤트가 기록됩니다."
+    },
+    "apply": {
+      "installing": "{{name}} 설치 중…",
+      "installingNote": "스킬을 해석하고 에이전트, 프로젝트, 루틴을 가져오는 중입니다. 잠시 걸릴 수 있습니다."
+    },
+    "success": {
+      "title": "팀이 설치됨",
+      "summary": "{{name}}이(가) 회사로 가져와졌습니다. 가져온 엔터티에는 카탈로그 출처가 표시됩니다.",
+      "agentsImported": "가져온 에이전트",
+      "projectsImported": "가져온 프로젝트",
+      "skillsResolved": "해석된 스킬",
+      "viewAgents": "가져온 에이전트 보기 →",
+      "viewProjects": "가져온 프로젝트 보기 →",
+      "viewRoutines": "루틴 보기 →",
+      "viewActivity": "활동 로그 보기 →",
+      "done": "완료"
+    },
+    "row": {
+      "updateAvailable": "업데이트 가능",
+      "updateAvailableTip": "업데이트 가능 — 설치된 팀이 오래되었습니다",
+      "hasExternalSources": "외부 소스가 있습니다"
+    },
+    "card": {
+      "agentsOne": "에이전트 {{count}}명",
+      "agentsOther": "에이전트 {{count}}명",
+      "projectsOne": "프로젝트 {{count}}개",
+      "projectsOther": "프로젝트 {{count}}개",
+      "routinesOne": "루틴 {{count}}개",
+      "routinesOther": "루틴 {{count}}개"
+    },
+    "list": {
+      "title": "팀",
+      "searchPlaceholder": "팀 검색",
+      "allKinds": "모든 종류",
+      "bundled": "번들",
+      "optional": "선택",
+      "kind": "종류",
+      "categoryLabel": "카테고리 · {{category}}",
+      "allCategories": "모든 카테고리",
+      "category": "카테고리",
+      "anyRisk": "모든 위험",
+      "safeOnly": "안전한 항목만",
+      "hasWarnings": "경고 있음",
+      "blocked": "차단됨",
+      "risk": "위험",
+      "resetFilters": "필터 재설정",
+      "loadFailed": "팀 카탈로그를 불러오지 못했습니다.",
+      "retry": "다시 시도",
+      "noneConfigured": "구성된 팀 카탈로그가 없습니다.",
+      "noMatch": "이 필터와 일치하는 팀이 없습니다.",
+      "bundledGroup": "번들 · {{count}}",
+      "optionalGroup": "선택 · {{count}}",
+      "installedGroup": "설치됨 · {{count}}"
+    },
+    "page": {
+      "selectCompany": "팀 카탈로그를 탐색하려면 회사를 선택하세요.",
+      "backToCatalog": "카탈로그로 돌아가기",
+      "selectTeam": "세부 정보를 보려면 팀을 선택하세요.",
+      "breadcrumbOrgChart": "조직도",
+      "breadcrumbTeams": "팀"
+    },
+    "toast": {
+      "installedTitle": "팀이 설치됨",
+      "installedBody": "{{name}}이(가) 가져와졌습니다."
+    }
+  },
+  "projectDetail": {
+    "leftNotice": {
+      "message": "이 프로젝트에서 나갔습니다. 더 이상 사이드바에 표시되지 않습니다.",
+      "dismiss": "프로젝트 멤버십 알림 닫기"
+    },
+    "iconPicker": {
+      "trigger": "프로젝트 아이콘 및 색상 변경",
+      "icon": "아이콘",
+      "searchIcons": "아이콘 검색...",
+      "noIconsMatch": "일치하는 아이콘 없음",
+      "color": "색상",
+      "resetColor": "기본 회색으로 재설정",
+      "neutralColor": "중립 (기본값)",
+      "selectColor": "{{color}} 색상 선택"
+    },
+    "badges": {
+      "pausedByBudget": "예산 강제 중지로 일시 중지됨",
+      "managedBy": "{{name}}에서 관리"
+    },
+    "tabs": {
+      "tasks": "작업",
+      "overview": "개요",
+      "pluginOperations": "플러그인 작업",
+      "workspaces": "워크스페이스",
+      "configuration": "구성",
+      "budget": "예산"
+    },
+    "overview": {
+      "descriptionPlaceholder": "설명 추가...",
+      "status": "상태",
+      "targetDate": "목표 날짜"
+    },
+    "workspaces": {
+      "loading": "워크스페이스를 불러오는 중..."
+    },
+    "toasts": {
+      "archived": "\"{{name}}\"이(가) 보관되었습니다",
+      "unarchived": "\"{{name}}\"의 보관이 해제되었습니다",
+      "archiveFailed": "프로젝트 보관에 실패했습니다",
+      "unarchiveFailed": "프로젝트 보관 해제에 실패했습니다"
+    },
+    "fallback": {
+      "projectName": "프로젝트",
+      "noCompanySelected": "선택된 회사가 없습니다"
+    }
+  },
+  "workspaces": {
+    "list": {
+      "breadcrumb": "워크스페이스",
+      "heading": "워크스페이스",
+      "empty": "아직 워크스페이스 활동이 없습니다.",
+      "workspaceCountOne": "워크스페이스 {{count}}개",
+      "workspaceCountOther": "워크스페이스 {{count}}개"
+    },
+    "project": {
+      "loading": "워크스페이스를 불러오는 중…",
+      "loadFailed": "워크스페이스를 불러오지 못했습니다",
+      "notFound": "이 프로젝트에 대한 워크스페이스를 찾을 수 없습니다.",
+      "backToWorkspaces": "워크스페이스로 돌아가기",
+      "eyebrow": "프로젝트 워크스페이스",
+      "makePrimary": "기본으로 설정",
+      "isPrimary": "이 워크스페이스는 프로젝트의 기본 코드베이스 워크스페이스입니다.",
+      "sourceTypeOptions": {
+        "localPath": {
+          "label": "로컬 git 체크아웃",
+          "description": "Paperclip이 직접 사용할 수 있는 로컬 경로입니다."
+        },
+        "nonGitPath": {
+          "label": "로컬 비 git 경로",
+          "description": "git 의미가 없는 로컬 폴더입니다."
+        },
+        "gitRepo": {
+          "label": "원격 git 저장소",
+          "description": "선택적 ref와 로컬 체크아웃이 있는 저장소 URL입니다."
+        },
+        "remoteManaged": {
+          "label": "원격 관리 워크스페이스",
+          "description": "외부 참조로 추적되는 호스팅된 워크스페이스입니다."
+        }
+      },
+      "visibilityOptions": {
+        "default": "기본",
+        "advanced": "고급"
+      },
+      "errors": {
+        "commandsJsonObject": "워크스페이스 명령 JSON은 JSON 객체여야 합니다.",
+        "invalidJson": "잘못된 JSON입니다.",
+        "remoteRefOrRepoRequired": "원격 관리 워크스페이스에는 원격 워크스페이스 ref 또는 저장소 URL이 필요합니다.",
+        "localPathOrRepoRequired": "워크스페이스에는 로컬 경로 또는 저장소 URL이 하나 이상 필요합니다.",
+        "localPathAbsolute": "로컬 워크스페이스 경로는 절대 경로여야 합니다.",
+        "repoUrlValid": "저장소 URL은 유효한 URL이어야 합니다.",
+        "saveFailed": "워크스페이스를 저장하지 못했습니다.",
+        "updateFailed": "워크스페이스를 업데이트하지 못했습니다.",
+        "controlFailed": "워크스페이스 명령을 제어하지 못했습니다."
+      },
+      "runtimeActions": {
+        "jobCompleted": "워크스페이스 작업이 완료되었습니다.",
+        "serviceStopped": "워크스페이스 서비스가 중지되었습니다. 작업 실행은 일시 중지되지 않습니다.",
+        "serviceRestarted": "워크스페이스 서비스가 다시 시작되었습니다. 작업 실행은 일시 중지되지 않습니다.",
+        "serviceStarted": "워크스페이스 서비스가 시작되었습니다."
+      },
+      "intro": "Paperclip이 이 프로젝트에 연결하는 구체적인 워크스페이스를 구성합니다. 이 값은 워크스페이스별 체크아웃 동작과 하위 실행 워크스페이스의 기본 런타임 서비스를 제어하며, 특정 워크스페이스에 특별한 처리가 필요할 때 설정 또는 정리 명령을 재정의할 수 있게 합니다.",
+      "fields": {
+        "name": "워크스페이스 이름",
+        "namePlaceholder": "워크스페이스 이름",
+        "visibility": "표시 범위",
+        "sourceType": "소스 유형",
+        "localPath": "로컬 경로",
+        "localPathPlaceholder": "/absolute/path/to/workspace",
+        "repoUrl": "저장소 URL",
+        "repoUrlPlaceholder": "https://github.com/org/repo",
+        "repoRef": "저장소 ref",
+        "repoRefPlaceholder": "origin/main",
+        "defaultRef": "기본 ref",
+        "defaultRefPlaceholder": "origin/main",
+        "sharedWorkspaceKey": "공유 워크스페이스 키",
+        "sharedWorkspaceKeyPlaceholder": "frontend",
+        "remoteProvider": "원격 공급자",
+        "remoteProviderPlaceholder": "codespaces",
+        "remoteWorkspaceRef": "원격 워크스페이스 ref",
+        "remoteWorkspaceRefPlaceholder": "workspace-123",
+        "setupCommand": "설정 명령",
+        "setupCommandHint": "이 워크스페이스에 사용자 지정 부트스트랩이 필요할 때 실행됩니다",
+        "setupCommandPlaceholder": "pnpm install && pnpm dev",
+        "cleanupCommand": "정리 명령",
+        "cleanupCommandHint": "프로젝트 수준 실행 워크스페이스 해제 전에 실행됩니다",
+        "cleanupCommandPlaceholder": "pkill -f vite || true",
+        "commandsJson": "워크스페이스 명령 JSON",
+        "commandsJsonHint": "실행 워크스페이스는 재정의하지 않는 한 이 구성을 상속합니다. 기존 `services` 배열도 계속 작동하지만, `commands`는 서비스와 작업을 모두 지원합니다."
+      },
+      "advancedRuntime": {
+        "summary": "고급 런타임 JSON",
+        "description": "Paperclip은 이 JSON에서 서비스와 작업을 도출합니다. 먼저 명명된 명령을 편집하는 것이 좋으며, 고급 수명 주기, 포트, 준비 상태 또는 환경 설정에는 원시 JSON을 사용하세요."
+      },
+      "save": "변경 사항 저장",
+      "reset": "재설정",
+      "noUnsavedChanges": "저장되지 않은 변경 사항이 없습니다.",
+      "facts": {
+        "eyebrow": "워크스페이스 정보",
+        "title": "현재 상태",
+        "project": "프로젝트",
+        "workspaceId": "워크스페이스 ID",
+        "localPath": "로컬 경로",
+        "repo": "저장소",
+        "defaultRef": "기본 ref",
+        "updated": "업데이트됨",
+        "none": "없음"
+      },
+      "commands": {
+        "eyebrow": "워크스페이스 명령",
+        "title": "서비스 및 작업",
+        "description": "장기 실행 서비스는 여기서 계속 관리되고, 일회성 작업은 이 워크스페이스에 대해 필요할 때 실행됩니다. 실행 워크스페이스는 재정의하지 않는 한 이 구성을 상속합니다.",
+        "serviceEmptyWithConfig": "이 워크스페이스에 대해 아직 시작된 서비스가 없습니다.",
+        "serviceEmptyNoConfig": "이 워크스페이스에 대해 정의된 워크스페이스 명령 구성이 없습니다.",
+        "jobEmpty": "이 워크스페이스에 구성된 일회성 작업이 없습니다.",
+        "disabledHint": "프로젝트 워크스페이스는 로컬 명령을 실행하기 전에 작업 디렉터리가 필요하며, 서비스에는 런타임 구성도 필요합니다."
+      },
+      "pluginTab": {
+        "loading": "워크스페이스 플러그인을 불러오는 중...",
+        "backToConfiguration": "구성으로 돌아가기"
+      },
+      "tabs": {
+        "configuration": "구성"
+      }
+    },
+    "execution": {
+      "loading": "워크스페이스를 불러오는 중…",
+      "loadFailed": "워크스페이스를 불러오지 못했습니다",
+      "eyebrow": "실행 워크스페이스",
+      "tabs": {
+        "tasks": "작업",
+        "services": "서비스",
+        "configuration": "구성",
+        "runtimeLogs": "런타임 로그",
+        "routines": "루틴"
+      },
+      "errors": {
+        "repoUrlValid": "저장소 URL은 유효한 URL이어야 합니다.",
+        "commandsJsonObject": "워크스페이스 명령 JSON은 JSON 객체여야 합니다.",
+        "invalidJson": "잘못된 JSON입니다.",
+        "saveFailed": "실행 워크스페이스를 저장하지 못했습니다.",
+        "buildUpdateFailed": "워크스페이스 업데이트를 구성하지 못했습니다.",
+        "controlFailed": "워크스페이스 명령을 제어하지 못했습니다."
+      },
+      "runtimeActions": {
+        "jobCompleted": "워크스페이스 작업이 완료되었습니다.",
+        "serviceStopped": "워크스페이스 서비스가 중지되었습니다.",
+        "serviceRestarted": "워크스페이스 서비스가 다시 시작되었습니다.",
+        "serviceStarted": "워크스페이스 서비스가 시작되었습니다."
+      },
+      "services": {
+        "serviceEmptyWithConfig": "이 실행 워크스페이스에 대해 아직 시작된 서비스가 없습니다.",
+        "serviceEmptyNoConfig": "이 실행 워크스페이스에 대해 정의된 워크스페이스 명령 구성이 없습니다.",
+        "jobEmpty": "이 실행 워크스페이스에 구성된 일회성 작업이 없습니다.",
+        "disabledHint": "실행 워크스페이스는 로컬 명령을 실행하기 전에 작업 디렉터리가 필요하며, 서비스에는 런타임 구성도 필요합니다."
+      },
+      "settings": {
+        "title": "워크스페이스 설정",
+        "description": "이 실행 워크스페이스에 연결된 구체적인 경로, 저장소, 브랜치, 프로비저닝, 해제 및 런타임 재정의를 편집합니다.",
+        "retryClose": "닫기 다시 시도",
+        "closeWorkspace": "워크스페이스 닫기",
+        "sections": {
+          "general": "일반",
+          "sourceControl": "소스 제어",
+          "paths": "경로",
+          "lifecycleCommands": "수명 주기 명령",
+          "runtimeConfig": "런타임 구성"
+        },
+        "fields": {
+          "name": "워크스페이스 이름",
+          "namePlaceholder": "실행 워크스페이스 이름",
+          "branchName": "브랜치 이름",
+          "branchNameHint": "격리된 워크트리에 유용합니다",
+          "branchNamePlaceholder": "PAP-946-workspace",
+          "baseRef": "기준 ref",
+          "baseRefPlaceholder": "origin/main",
+          "repoUrl": "저장소 URL",
+          "repoUrlPlaceholder": "https://github.com/org/repo",
+          "workingDirectory": "작업 디렉터리",
+          "workingDirectoryPlaceholder": "/absolute/path/to/workspace",
+          "providerRef": "공급자 경로 / ref",
+          "providerRefPlaceholder": "/path/to/worktree 또는 공급자 ref",
+          "provisionCommand": "프로비저닝 명령",
+          "provisionCommandHint": "Paperclip이 이 실행 워크스페이스를 준비할 때 실행됩니다",
+          "provisionCommandPlaceholder": "bash ./scripts/provision-worktree.sh",
+          "teardownCommand": "해제 명령",
+          "teardownCommandHint": "실행 워크스페이스가 보관되거나 정리될 때 실행됩니다",
+          "teardownCommandPlaceholder": "bash ./scripts/teardown-worktree.sh",
+          "cleanupCommand": "정리 명령",
+          "cleanupCommandHint": "해제 전 워크스페이스별 정리",
+          "cleanupCommandPlaceholder": "pkill -f vite || true",
+          "commandsJson": "워크스페이스 명령 JSON",
+          "commandsJsonHint": "기존 `services` 배열도 계속 작동하지만, `commands`는 서비스와 작업을 모두 지원합니다."
+        },
+        "runtimeConfigSource": {
+          "title": "런타임 구성 소스",
+          "override": "이 실행 워크스페이스는 현재 프로젝트 워크스페이스 런타임 구성을 재정의합니다.",
+          "inherit": "이 실행 워크스페이스는 프로젝트 워크스페이스 런타임 구성을 상속하고 있습니다.",
+          "none": "이 실행 워크스페이스 또는 해당 프로젝트 워크스페이스에 현재 정의된 런타임 구성이 없습니다.",
+          "resetToInherit": "상속으로 재설정"
+        },
+        "advancedRuntime": {
+          "summary": "고급 런타임 JSON",
+          "description": "이 실행 워크스페이스에 실제로 다른 서비스 또는 작업 동작이 필요한 경우에만 상속된 워크스페이스 명령 모델을 재정의하세요.",
+          "inheritCheckbox": "프로젝트 워크스페이스 런타임 구성 상속"
+        },
+        "save": "변경 사항 저장",
+        "reset": "재설정",
+        "noUnsavedChanges": "저장되지 않은 변경 사항이 없습니다."
+      },
+      "context": {
+        "title": "워크스페이스 컨텍스트",
+        "description": "연결된 객체 및 관계",
+        "project": "프로젝트",
+        "projectWorkspace": "프로젝트 워크스페이스",
+        "sourceTask": "소스 작업",
+        "derivedFrom": "파생 원본",
+        "workspaceId": "워크스페이스 ID",
+        "none": "없음"
+      },
+      "location": {
+        "title": "구체적 위치",
+        "description": "경로 및 ref",
+        "workingDir": "작업 디렉터리",
+        "providerRef": "공급자 ref",
+        "repoUrl": "저장소 URL",
+        "baseRef": "기준 ref",
+        "branch": "브랜치",
+        "opened": "열림",
+        "lastUsed": "마지막 사용",
+        "cleanup": "정리",
+        "notScheduled": "예약되지 않음",
+        "none": "없음"
+      },
+      "logs": {
+        "title": "런타임 및 정리 로그",
+        "description": "최근 작업",
+        "loading": "워크스페이스 작업을 불러오는 중…",
+        "loadFailed": "워크스페이스 작업을 불러오지 못했습니다.",
+        "empty": "아직 기록된 워크스페이스 작업이 없습니다."
+      },
+      "routines": {
+        "title": "워크스페이스 루틴",
+        "description": "워크스페이스별 변수를 사용하는 루틴은 이 실행 워크스페이스에 대해 실행할 수 있습니다.",
+        "loading": "루틴을 불러오는 중...",
+        "loadFailed": "루틴을 불러오지 못했습니다.",
+        "empty": "아직 워크스페이스별 변수를 사용하는 루틴이 없습니다.",
+        "defaultAgentSet": "기본 에이전트 설정됨",
+        "chooseAgentWhenRunning": "실행 시 에이전트 선택",
+        "lastRun": "마지막 실행 {{time}}",
+        "running": "실행 중...",
+        "runNow": "지금 실행",
+        "started": "루틴 시작됨",
+        "startedBody": "Paperclip이 이 실행 워크스페이스를 사용하여 실행을 생성했습니다.",
+        "runFailed": "루틴 실행 실패",
+        "runFailedBody": "Paperclip이 루틴 실행을 시작하지 못했습니다."
+      },
+      "pluginTab": {
+        "loading": "워크스페이스 플러그인을 불러오는 중...",
+        "backToTasks": "작업으로 돌아가기"
+      },
+      "common": {
+        "never": "없음",
+        "copied": "복사됨"
+      }
+    }
+  },
+  "boardChat": {
+    "breadcrumb": "회의실",
+    "aria": {
+      "typing": "입력 중",
+      "chatHistory": "채팅 기록",
+      "newChat": "새 채팅",
+      "jumpToLatest": "최신 메시지로 이동",
+      "openAgentFeed": "에이전트 피드 열기",
+      "resizeSplit": "보드 채팅과 에이전트 피드 크기 조정"
+    },
+    "tooltip": {
+      "chatHistory": "채팅 기록",
+      "newChat": "새 채팅"
+    },
+    "header": {
+      "companyFallback": "내 회사"
+    },
+    "noCompany": {
+      "title": "선택된 회사가 없습니다",
+      "description": "보드 컨시어지와 대화를 시작하려면 회사를 선택하세요."
+    },
+    "welcome": {
+      "missionLine": " — 당신의 미션은 \"{{mission}}\"입니다.",
+      "noMissionLine": ".",
+      "body": "**{{company}}**에 오신 것을 환영합니다! 저는 팀 리드 {{ceo}}입니다. 마법사에서 공유해 주신 내용을 모두 읽었습니다{{missionLine}}\n\n지금 바로 문서로 정리할 수 있도록 도와드릴 수 있는 몇 가지를 소개합니다. 아래에서 하나를 선택하시면 알려주신 모든 내용을 바탕으로 초안을 작성해 드리겠습니다."
+    },
+    "chips": {
+      "companyBrief": {
+        "label": "회사 브리프 작성",
+        "prompt": "{{company}}의 한 페이지짜리 회사 브리프를 작성하세요 — 미션, 팀 구성, 첫 우선순위를 포함하세요."
+      },
+      "hiringPlan": {
+        "label": "채용 계획 만들기",
+        "prompt": "{{company}}의 채용 계획을 만드세요. 다음에 채용할 직무를 우선순위 순으로 나열하고, 각각에 대한 간단한 근거를 함께 적어주세요."
+      },
+      "first30Days": {
+        "label": "첫 30일 계획 정리",
+        "prompt": "첫 30일을 정리하세요. 누가 무엇을 맡을지 주간 우선순위로 나누세요."
+      },
+      "introPitch": {
+        "label": "소개 피치 작성",
+        "prompt": "투자자, 고객 또는 채용 대상자에게 재사용할 수 있는 {{company}}의 짧은 소개 피치를 작성하세요."
+      }
+    },
+    "agentFallback": "어시스턴트",
+    "status": {
+      "connecting": "연결 중...",
+      "thinking": "생각 중..."
+    },
+    "error": {
+      "generic": "보드 어시스턴트가 응답하지 못했습니다. 다시 시도해 주세요.",
+      "streamUnavailable": "보드 어시스턴트를 지금 사용할 수 없습니다. 잠시 후 다시 시도해 주세요."
+    },
+    "composer": {
+      "placeholder": "회사에 대해 무엇이든 물어보세요...",
+      "sendLabel": "메시지 보내기"
+    }
+  },
+  "cloudUpstream": {
+    "breadcrumbs": {
+      "companyFallback": "회사",
+      "settings": "설정",
+      "cloudUpstream": "클라우드 업스트림"
+    },
+    "steps": {
+      "connect": "연결",
+      "scan": "스캔",
+      "preview": "미리보기",
+      "push": "푸시",
+      "verify": "검증",
+      "activate": "활성화"
+    },
+    "categories": {
+      "agents": {
+        "label": "에이전트",
+        "pluralOne": "에이전트",
+        "pluralOther": "에이전트",
+        "detail": "가져온 에이전트의 일시 중지를 해제하기 전에 클라우드 시크릿과 어댑터 자격 증명을 확인하세요."
+      },
+      "routines": {
+        "label": "루틴",
+        "pluralOne": "루틴",
+        "pluralOther": "루틴",
+        "detail": "가져온 루틴을 활성화하기 전에 일정과 트리거 설정을 검토하세요."
+      },
+      "monitors": {
+        "label": "모니터",
+        "pluralOne": "모니터",
+        "pluralOther": "모니터",
+        "detail": "대상 스택을 스모크 테스트한 후 활성화하세요."
+      }
+    },
+    "selectCompany": "클라우드 업스트림을 구성하려면 회사를 선택하세요.",
+    "loadingExperimental": "실험적 설정을 불러오는 중...",
+    "title": "클라우드 업스트림",
+    "disabled": {
+      "intro": "클라우드 동기화가 비활성화되어 있습니다. 업스트림 연결 및 푸시 도구를 표시하려면",
+      "instanceSettingsLink": "인스턴스 설정",
+      "outro": "에서 활성화하세요."
+    },
+    "summary": "{{name}}을(를) Paperclip Cloud 스택으로 푸시합니다. 활성화 전까지 자동화는 일시 중지된 상태로 유지됩니다.",
+    "openCloud": "클라우드 열기",
+    "notices": {
+      "connectionApproved": "클라우드 업스트림 연결이 승인되었습니다.",
+      "pushSucceeded": "푸시 실행이 완료되었습니다. 자동화의 일시 중지를 해제하기 전에 활성화를 검토하세요.",
+      "pushFailed": "푸시 실행에 실패했습니다. 실행 이벤트를 검토하고 문제를 수정한 후 다시 시도하세요.",
+      "activationUpdated": "활성화 체크리스트가 업데이트되었습니다."
+    },
+    "errors": {
+      "finishConnection": "연결을 완료하지 못했습니다.",
+      "noPendingConnection": "대기 중인 클라우드 업스트림 연결을 찾을 수 없습니다. 연결을 다시 시작하세요.",
+      "connectionNotApproved": "클라우드 업스트림 연결이 승인되지 않았습니다: {{error}}",
+      "startConnection": "연결을 시작하지 못했습니다.",
+      "runPush": "푸시를 실행하지 못했습니다.",
+      "activateEntities": "가져온 항목을 활성화하지 못했습니다.",
+      "previewTooLarge": "로컬 회사가 너무 커서 단일 요청으로 미리 볼 수 없습니다. 계속하려면 푸시를 클릭하거나(푸시 단계는 청크 단위로 업로드합니다), 청크 미리보기 옵션은 문서를 참조하세요.",
+      "previewFailed": "푸시를 미리 보지 못했습니다."
+    },
+    "connection": {
+      "heading": "연결",
+      "tokenStatus": "토큰 {{status}}",
+      "schemaChunk": "스키마 {{schema}}. 최대 청크 {{chunk}}.",
+      "previewPush": "푸시 미리보기",
+      "urlPlaceholder": "https://paperclip.paperclip.app/PC521D/dashboard",
+      "urlLabel": "Paperclip Cloud 스택 URL",
+      "connect": "연결"
+    },
+    "previewProgress": {
+      "building": "매니페스트를 작성하는 중...",
+      "buildingElapsed": "매니페스트를 작성하는 중... {{elapsed}}초. 큰 회사는 최대 1분이 걸릴 수 있습니다.",
+      "stillBuilding": "여전히 매니페스트를 작성하는 중... {{elapsed}}초. PAP 규모의 회사는 보통 약 60초가 걸립니다."
+    },
+    "preview": {
+      "heading": "미리보기",
+      "pushToCloud": "클라우드로 푸시"
+    },
+    "warnings": {
+      "heading": "경고"
+    },
+    "conflicts": {
+      "heading": "충돌",
+      "none": "이 미리보기에서 대상 충돌이 감지되지 않았습니다."
+    },
+    "run": {
+      "heading": "진행 및 완료",
+      "downloadReport": "보고서 다운로드",
+      "retry": "다시 시도",
+      "rerun": "다시 실행",
+      "runLabel": "실행 {{id}}",
+      "completedAt": "{{date}}에 완료됨",
+      "inProgress": "진행 중",
+      "runMeta": "{{run}} · {{progress}}"
+    },
+    "activation": {
+      "heading": "활성화 체크리스트",
+      "noneInRun": "이번 실행에서 가져온 {{plural}}이(가) 0개입니다.",
+      "activated": "활성화됨",
+      "activate": "활성화",
+      "keepPaused": "일시 중지 유지",
+      "detail": "가져온 {{plural}} {{count}}개가 기본적으로 일시 중지되어 있습니다. {{categoryDetail}}",
+      "statusActivated": "{{count}}개 활성화됨",
+      "statusZero": "0개 가져옴",
+      "statusPaused": "{{count}}개 일시 중지됨"
+    },
+    "history": {
+      "heading": "기록",
+      "runEntry": "실행 {{id}} · {{status}}"
+    },
+    "units": {
+      "mib": "{{value}} MiB",
+      "kib": "{{value}} KiB",
+      "bytes": "{{value}} B"
+    }
+  },
+  "adapterManager": {
+    "breadcrumbs": {
+      "companyFallback": "회사",
+      "settings": "설정",
+      "instanceSettings": "인스턴스 설정",
+      "adapters": "어댑터"
+    },
+    "row": {
+      "external": "외부",
+      "builtin": "내장",
+      "installedFromLocalPath": "로컬 경로에서 설치됨",
+      "installedFromNpm": "npm에서 설치됨",
+      "overridesBuiltin": "내장 재정의",
+      "overriddenBy": "{{name}}에 의해 재정의됨",
+      "hiddenFromMenus": "메뉴에서 숨김",
+      "models": "모델 {{count}}개",
+      "reinstallTitle": "어댑터 재설치(npm에서 최신 버전 가져오기)",
+      "reloadTitle": "어댑터 다시 로드(핫스왑)",
+      "showInMenus": "에이전트 메뉴에 표시",
+      "hideFromMenus": "에이전트 메뉴에서 숨기기",
+      "removeTitle": "어댑터 제거"
+    },
+    "reinstallDialog": {
+      "title": "어댑터 재설치",
+      "descriptionPrefix": "다음의 최신 버전을 가져옵니다:",
+      "descriptionSuffix": "npm에서 가져와 실행 중인 어댑터 모듈을 핫스왑합니다. 기존 에이전트는 다음 실행 시 새 버전을 사용합니다.",
+      "package": "패키지",
+      "current": "현재",
+      "unknown": "알 수 없음",
+      "latestOnNpm": "npm 최신 버전",
+      "checking": "확인 중...",
+      "unavailable": "사용 불가",
+      "version": "v{{version}}",
+      "upToDate": "이미 최신 버전입니다.",
+      "cancel": "취소",
+      "reinstalling": "재설치 중...",
+      "reinstall": "재설치"
+    },
+    "toasts": {
+      "installedTitle": "어댑터가 설치되었습니다",
+      "installedBody": "\"{{type}}\" 유형이 성공적으로 등록되었습니다.{{version}}",
+      "installedVersionSuffix": " (v{{version}})",
+      "installFailed": "설치 실패",
+      "removedTitle": "어댑터가 제거되었습니다",
+      "removalFailed": "제거 실패",
+      "toggleFailed": "전환 실패",
+      "overrideToggleFailed": "재정의 전환 실패",
+      "reloadedTitle": "어댑터가 다시 로드되었습니다",
+      "reloadedBody": "\"{{type}}\" 유형이 다시 로드되었습니다.{{version}}",
+      "reloadFailed": "다시 로드 실패",
+      "reinstalledTitle": "어댑터가 재설치되었습니다",
+      "reinstalledBody": "\"{{type}}\" 유형이 npm에서 업데이트되었습니다.{{version}}",
+      "reinstallFailed": "재설치 실패"
+    },
+    "loading": "어댑터를 불러오는 중...",
+    "title": "어댑터",
+    "alpha": "알파",
+    "installAdapter": "어댑터 설치",
+    "installDialog": {
+      "title": "외부 어댑터 설치",
+      "descriptionPrefix": "npm 또는 로컬 경로에서 어댑터를 추가합니다. 어댑터 패키지는 다음을 내보내야 합니다:",
+      "npmPackage": "npm 패키지",
+      "localPath": "로컬 경로",
+      "pathLabel": "어댑터 패키지 경로",
+      "pathPlaceholder": "/mnt/e/Projects/my-adapter  또는  E:\\Projects\\my-adapter",
+      "pathHint": "Linux, WSL 및 Windows 경로를 허용합니다. Windows 경로는 자동으로 변환됩니다.",
+      "packageNameLabel": "패키지 이름",
+      "packageNamePlaceholder": "my-paperclip-adapter",
+      "versionLabel": "버전(선택 사항)",
+      "versionPlaceholder": "latest",
+      "cancel": "취소",
+      "installing": "설치 중...",
+      "install": "설치"
+    },
+    "alphaNotice": {
+      "title": "외부 어댑터는 알파 단계입니다.",
+      "body": "어댑터 플러그인 시스템은 활발히 개발 중입니다. API와 저장 형식이 변경될 수 있습니다. 전원 아이콘을 사용하면 어댑터를 제거하지 않고도 에이전트 메뉴에서 숨길 수 있습니다."
+    },
+    "external": {
+      "heading": "외부 어댑터",
+      "emptyTitle": "설치된 외부 어댑터가 없습니다",
+      "emptyBody": "모델 지원을 확장하려면 어댑터 패키지를 설치하세요.",
+      "pauseOverride": "외부 재정의 일시 중지",
+      "resumeOverride": "외부 재정의 재개",
+      "overridePaused": "재정의 일시 중지됨"
+    },
+    "builtin": {
+      "heading": "내장 어댑터",
+      "empty": "내장 어댑터를 찾을 수 없습니다."
+    },
+    "removeDialog": {
+      "title": "어댑터 제거",
+      "confirmPrefix": "정말로 다음 어댑터를 제거하시겠습니까:",
+      "confirmSuffix": "어댑터요? 등록이 해제되고 어댑터 저장소에서 제거됩니다.",
+      "npmCleanup": "npm 패키지가 디스크에서 정리됩니다.",
+      "cannotUndo": "이 작업은 되돌릴 수 없습니다.",
+      "cancel": "취소",
+      "removing": "제거 중...",
+      "remove": "제거"
+    }
+  },
+  "userProfile": {
+    "breadcrumbs": {
+      "users": "사용자"
+    },
+    "userFallback": "사용자",
+    "completion": {
+      "done": "{{rate}} 완료"
+    },
+    "window": {
+      "touched": "다룸",
+      "completed": "완료됨",
+      "comments": "댓글",
+      "actions": "작업",
+      "tokens": "토큰",
+      "spend": "지출",
+      "created": "생성됨",
+      "open": "열림"
+    },
+    "chart": {
+      "last14Days": "최근 14일",
+      "tokensTotal": "총 토큰",
+      "barTitle": "{{date}}: 토큰 {{tokens}}개, {{completed}}개 완료",
+      "tokensPerDay": "일일 토큰",
+      "completions": "완료"
+    },
+    "meta": {
+      "memberFallback": "멤버",
+      "joined": "{{date}}에 가입함"
+    },
+    "selectCompany": "사용자 프로필을 보려면 회사를 선택하세요.",
+    "notFound": "이 회사에 대한 사용자 프로필을 찾을 수 없습니다.",
+    "hero": {
+      "allTimeTokens": "전체 기간 토큰",
+      "spent": "{{amount}} 지출",
+      "completed": "완료됨",
+      "rate": "{{rate}} 비율",
+      "openAssigned": "열린 할당",
+      "created": "{{count}}개 생성됨",
+      "sevenDayActions": "7일 작업",
+      "comments": "댓글 {{count}}개"
+    },
+    "usage": {
+      "taskLinked": "작업 연결 사용량",
+      "billedThrough": "{{biller}}을(를) 통해 청구됨",
+      "agentUnknown": "알 수 없음"
+    },
+    "recentTasks": {
+      "heading": "최근 작업",
+      "empty": "아직 다룬 작업이 없습니다."
+    },
+    "recentActivity": {
+      "heading": "최근 활동",
+      "empty": "아직 기록된 직접 사용자 작업이 없습니다."
+    },
+    "lists": {
+      "agentTitle": "에이전트 귀속",
+      "agentEmpty": "아직 작업에 연결된 토큰 사용량이 없습니다.",
+      "providerTitle": "제공자 구성",
+      "providerEmpty": "아직 귀속된 제공자 사용량이 없습니다."
+    }
+  },
+  "myIssues": {
+    "breadcrumb": "내 작업",
+    "selectCompany": "작업을 보려면 회사를 선택하세요.",
+    "empty": "할당된 작업이 없습니다."
+  },
+  "notFound": {
+    "breadcrumb": "찾을 수 없음",
+    "title": {
+      "company": "회사를 찾을 수 없음",
+      "page": "페이지를 찾을 수 없음"
+    },
+    "description": {
+      "company": "\"{{prefix}}\" 접두사와 일치하는 회사가 없습니다.",
+      "page": "이 경로는 존재하지 않습니다."
+    },
+    "unknownPrefix": "알 수 없음",
+    "requestedPath": "요청한 경로:",
+    "openDashboard": "대시보드 열기",
+    "goHome": "홈으로 이동"
   }
 }

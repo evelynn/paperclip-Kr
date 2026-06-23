@@ -2933,5 +2933,1125 @@
       "extensionsUnavailable": "Plugin extensions unavailable: {{message}}",
       "duplicateRoute": "Multiple plugins declare the company settings route <0>{{routePath}}</0>. Disable one plugin or change its route."
     }
+  },
+  "authAccess": {
+    "auth": {
+      "loading": "Loading…",
+      "brand": "Paperclip",
+      "signInTitle": "Sign in to Paperclip",
+      "signUpTitle": "Create your Paperclip account",
+      "signInSubtitle": "Use your email and password to access this instance.",
+      "signUpSubtitle": "Create an account for this instance. Email confirmation is not required in v1.",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "fillRequiredFields": "Please fill in all required fields.",
+      "submitWorking": "Working…",
+      "submitSignIn": "Sign In",
+      "submitSignUp": "Create Account",
+      "needAccount": "Need an account?",
+      "haveAccount": "Already have an account?",
+      "createOne": "Create one",
+      "signIn": "Sign in",
+      "authenticationFailed": "Authentication failed"
+    },
+    "cli": {
+      "invalidUrl": "Invalid CLI auth URL.",
+      "loadingChallenge": "Loading CLI auth challenge...",
+      "challengeUnavailableTitle": "CLI auth challenge unavailable",
+      "challengeInvalidOrExpired": "Challenge is invalid or expired.",
+      "challengeUnavailable": "CLI auth challenge unavailable.",
+      "approvedTitle": "CLI access approved",
+      "approvedDescription": "The Paperclip CLI can now finish authentication on the requesting machine.",
+      "command": "Command:",
+      "expiredTitle": "CLI auth challenge expired",
+      "cancelledTitle": "CLI auth challenge cancelled",
+      "expiredCancelledDescription": "Start the CLI auth flow again from your terminal to generate a new approval request.",
+      "signInRequiredTitle": "Sign in required",
+      "signInRequiredDescription": "Sign in or create an account, then return to this page to approve the CLI access request.",
+      "signInCreateAccount": "Sign in / Create account",
+      "approveTitle": "Approve Paperclip CLI access",
+      "approveDescription": "A local Paperclip CLI process is requesting board access to this instance.",
+      "fieldCommand": "Command",
+      "fieldClient": "Client",
+      "defaultClientName": "paperclipai cli",
+      "fieldRequestedAccess": "Requested access",
+      "requestedAccessInstanceAdmin": "Instance admin",
+      "requestedAccessBoard": "Board",
+      "fieldRequestedCompany": "Requested company",
+      "updateError": "Failed to update CLI auth challenge",
+      "instanceAdminRequired": "This challenge requires instance-admin access. Sign in with an instance admin account to approve it.",
+      "approving": "Approving...",
+      "approveButton": "Approve CLI access",
+      "cancelling": "Cancelling...",
+      "cancel": "Cancel"
+    },
+    "instance": {
+      "breadcrumbSettings": "Settings",
+      "breadcrumbInstanceSettings": "Instance settings",
+      "breadcrumbAccess": "Access",
+      "companyAccessUpdated": "Company access updated",
+      "noUserSelected": "No user selected",
+      "instanceRoleUpdated": "Instance role updated",
+      "loadingUsers": "Loading instance users…",
+      "adminRequired": "Instance admin access is required to manage users.",
+      "loadUsersFailed": "Failed to load users.",
+      "title": "Instance Access",
+      "description": "Search users, manage instance-admin status, and control which companies they can access.",
+      "searchUsers": "Search users",
+      "searchPlaceholder": "Search by name or email",
+      "activeMembershipsOne": "{{count}} active company membership",
+      "activeMembershipsOther": "{{count}} active company memberships",
+      "selectUser": "Select a user to inspect instance access.",
+      "loadingUserAccess": "Loading user access…",
+      "loadUserAccessFailed": "Failed to load user access.",
+      "removeInstanceAdmin": "Remove instance admin",
+      "promoteInstanceAdmin": "Promote to instance admin",
+      "companyAccessHeading": "Company access",
+      "companyAccessDescription": "Toggle company membership for this user. New access defaults to an active operator membership.",
+      "saving": "Saving…",
+      "saveCompanyAccess": "Save company access",
+      "currentMemberships": "Current memberships",
+      "roleUnset": "unset",
+      "membershipMeta": "{{role}} • {{status}}"
+    },
+    "invite": {
+      "requestToJoin": "Request to join {{company}}",
+      "stillAwaitingApproval": "Your request is still awaiting approval. {{approver}} must approve your request to join.",
+      "defaultApprover": "A company admin",
+      "approvalPage": "Approval page",
+      "membersLink": "Company Settings → Members",
+      "askThemToVisit": "Ask them to visit <0>Company Settings → Members</0> to approve your request.",
+      "refreshAfterApproval": "Refresh this page after you've been approved — you'll be redirected automatically.",
+      "claimSecret": "Claim secret",
+      "claimApiKey": "POST {{path}}",
+      "onboarding": "Onboarding:",
+      "invalidToken": "Invalid invite token.",
+      "loadingInvite": "Loading invite...",
+      "checkingAccess": "Checking your access...",
+      "inviteNotAvailableTitle": "Invite not available",
+      "inviteNotAvailableDescription": "This invite may be expired, revoked, or already used.",
+      "openingCompany": "Opening company...",
+      "joinRequestRejected": "This join request was not approved.",
+      "inviteAlreadyUsed": "This invite has already been used.",
+      "bootstrapCompleteTitle": "Bootstrap complete",
+      "openBoard": "Open board",
+      "youJoinedTitle": "You joined the company",
+      "defaultCompanyName": "this Paperclip company",
+      "inviteNotFound": "Invite not found",
+      "checkingMembership": "Checking your company access. Try again in a moment.",
+      "alreadyMember": "This account already belongs to the company.",
+      "failedToAccept": "Failed to accept invite",
+      "userAlreadyExists": "An account already exists for {{email}}. Sign in below to continue with this invite.",
+      "invalidEmailOrPassword": "That email and password did not match an existing Paperclip account. Check both fields, or create an account first if you are new here.",
+      "userMayAlreadyExist": "An account may already exist for {{email}}. Try signing in instead.",
+      "authenticationFailed": "Authentication failed",
+      "defaultEmailLabel": "that email",
+      "buttonContinue": "Continue",
+      "buttonOpenCompany": "Open company",
+      "buttonAcceptInvite": "Accept invite",
+      "buttonSubmitRequest": "Submit request",
+      "invitedHeader": "You've been invited to join Paperclip",
+      "setUpPaperclip": "Set up Paperclip",
+      "joinCompany": "Join {{company}}",
+      "introAgent": "Review the invite details, then submit the agent information below to start the join request.",
+      "introRequiresAccount": "Create your Paperclip account first. If you already have one, switch to sign in and continue the invite with the same email.",
+      "introReady": "Your account is ready. Review the invite details, then accept it to continue.",
+      "fieldCompany": "Company",
+      "fieldInvitedBy": "Invited by",
+      "defaultInvitedBy": "Paperclip board",
+      "fieldRequestedAccess": "Requested access",
+      "requestedAccessAgent": "Agent join request",
+      "requestedAccessCompany": "Company access",
+      "fieldInviteExpires": "Invite expires",
+      "messageFromInviter": "Message from inviter",
+      "signedInAs": "Signed in as <0>{{label}}</0>.",
+      "defaultSessionLabel": "this account",
+      "submitAgentDetailsTitle": "Submit agent details",
+      "submitAgentDetailsDescription": "This invite will create an approval request for a new agent in {{company}}.",
+      "agentName": "Agent name",
+      "adapterType": "Adapter type",
+      "comingSoon": " (Coming soon)",
+      "capabilities": "Capabilities",
+      "working": "Working...",
+      "createAccountTitle": "Create your account",
+      "signInToContinueTitle": "Sign in to continue",
+      "createAccountDescription": "Start with a Paperclip account. After that, you'll come right back here to accept the invite for {{company}}.",
+      "signInDescription": "Use the Paperclip account that already matches this invite. If you do not have one yet, switch back to create account.",
+      "modeCreateAccount": "Create account",
+      "modeExistingAccount": "I already have an account",
+      "fillRequiredFields": "Please fill in all required fields.",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submitSignInContinue": "Sign in and continue",
+      "submitCreateAccountContinue": "Create account and continue",
+      "footerSignUp": "Already signed up before? Use the existing-account option instead so the invite lands on the right Paperclip user.",
+      "footerSignIn": "No account yet? Switch back to create account so you can accept the invite with a new login.",
+      "alreadyInCompany": "Already in this company",
+      "completingAccess": "Completing company access",
+      "acceptBootstrapInvite": "Accept bootstrap invite",
+      "acceptCompanyInvite": "Accept company invite",
+      "grantingAccess": "Granting your access to {{company}}.",
+      "alreadyBelongs": "This account already belongs to {{company}}.",
+      "willFinishBootstrap": "finish setting up Paperclip",
+      "willGrantAccess": "grant or complete your access to {{company}}",
+      "willPrefix": "This will {{action}}.",
+      "submittingRequest": "Submitting request...",
+      "finishingSignIn": "Finishing sign-in..."
+    },
+    "joinQueue": {
+      "breadcrumbCompany": "Company",
+      "breadcrumbInbox": "Inbox",
+      "breadcrumbJoinRequests": "Join Requests",
+      "approved": "Join request approved",
+      "rejected": "Join request rejected",
+      "selectCompany": "Select a company to review join requests.",
+      "loading": "Loading join requests…",
+      "noPermission": "You do not have permission to review join requests for this company.",
+      "loadFailed": "Failed to load join requests.",
+      "title": "Join Request Queue",
+      "description": "Review human and agent join requests outside the mixed inbox feed. This queue uses the same approval mutations as the inline inbox cards.",
+      "statusLabel": "Status",
+      "statusPendingApproval": "Pending approval",
+      "statusApproved": "Approved",
+      "statusRejected": "Rejected",
+      "requestTypeLabel": "Request type",
+      "requestTypeAll": "All",
+      "requestTypeHuman": "Human",
+      "requestTypeAgent": "Agent",
+      "noRequests": "No join requests match the current filters.",
+      "unknownHumanRequester": "Unknown human requester",
+      "unknownAgentRequester": "Unknown agent requester",
+      "reject": "Reject",
+      "approve": "Approve",
+      "inviteContext": "Invite context",
+      "inviteContextSummary": "{{joinTypes}} join invite",
+      "inviteContextSummaryWithRole": "{{joinTypes}} join invite • default role {{role}}",
+      "inviteMetadataUnavailable": "Invite metadata unavailable",
+      "requestDetails": "Request details",
+      "submitted": "Submitted {{date}}",
+      "sourceIp": "Source IP {{ip}}"
+    },
+    "boardClaim": {
+      "invalidUrl": "Invalid board claim URL.",
+      "loadingChallenge": "Loading claim challenge...",
+      "challengeUnavailableTitle": "Claim challenge unavailable",
+      "challengeInvalidOrExpired": "Challenge is invalid or expired.",
+      "challengeUnavailable": "Claim challenge unavailable.",
+      "claimedTitle": "Board ownership claimed",
+      "claimedDescription": "This instance is now linked to your authenticated user.",
+      "openBoard": "Open board",
+      "signInRequiredTitle": "Sign in required",
+      "signInRequiredDescription": "Sign in or create an account, then return to this page to claim Board ownership.",
+      "signInCreateAccount": "Sign in / Create account",
+      "claimTitle": "Claim Board ownership",
+      "claimDescription": "This will promote your user to instance admin and migrate company ownership access from local trusted mode.",
+      "claimError": "Failed to claim board ownership",
+      "claiming": "Claiming…",
+      "claimButton": "Claim ownership"
+    }
+  },
+  "teamCatalog": {
+    "trust": {
+      "markdownOnly": {
+        "label": "Markdown only",
+        "tip": "Contains only markdown and references. No executable content."
+      },
+      "assets": {
+        "label": "Assets",
+        "tip": "Includes static assets (images, fixtures). No executable content."
+      },
+      "scriptsExecutables": {
+        "label": "Scripts",
+        "tip": "Includes executable scripts that were security-reviewed before bundling."
+      },
+      "externalSources": {
+        "label": "External sources",
+        "tip": "References external sources resolved at install time."
+      }
+    },
+    "compat": {
+      "compatible": "Compatible",
+      "unknown": "Unknown compat",
+      "invalid": "Invalid"
+    },
+    "provenanceBadge": {
+      "tip": "Catalog package provenance"
+    },
+    "riskBanner": {
+      "externalSourceOne": "This team references {{count}} external source",
+      "externalSourceOther": "This team references {{count}} external sources",
+      "unsupported": "unsupported in browser install",
+      "unpinned": "unpinned"
+    },
+    "hierarchy": {
+      "rootAgent": "root agent",
+      "empty": "No agents in this team."
+    },
+    "detail": {
+      "installButton": {
+        "reinstall": "Re-install latest",
+        "install": "Install team"
+      },
+      "installed": "Installed",
+      "updateAvailable": "Update available",
+      "invalidTooltip": "This team cannot be installed — the package manifest is invalid.",
+      "permissionTooltip": "Requires board operator or agent-create permissions.",
+      "metrics": {
+        "agents": "Agents",
+        "projects": "Projects",
+        "routines": "Routines",
+        "requiredSkills": "Required skills"
+      },
+      "sections": {
+        "agentHierarchy": "Agent hierarchy",
+        "projects": "Projects",
+        "requiredSkills": "Required skills",
+        "files": "Files"
+      },
+      "closeFile": "Close"
+    },
+    "requiredSkills": {
+      "empty": "No required skills.",
+      "resolved": "resolved",
+      "external": "external"
+    },
+    "envInputs": {
+      "section": "Secrets & env inputs",
+      "required": "required"
+    },
+    "externalSources": {
+      "toggle": "External sources · {{count}}",
+      "pinned": "Pinned",
+      "unpinned": "Unpinned",
+      "unsupported": "Unsupported in browser install"
+    },
+    "steps": {
+      "targetManager": "Target manager",
+      "sourcePolicy": "Source policy",
+      "skillPlan": "Prerequisite skills",
+      "preview": "Preview"
+    },
+    "installer": {
+      "headerTitle": "Install {{name}}",
+      "progress": "Step {{current}} of {{total}} · {{step}}",
+      "errors": {
+        "previewFailed": "Failed to load install preview.",
+        "installFailed": "Install failed."
+      },
+      "applyError": {
+        "title": "Install failed",
+        "note": "Partial state is not rolled back. Review the company activity log before retrying."
+      },
+      "footer": {
+        "back": "Back",
+        "cancel": "Cancel",
+        "blockedErrorsOne": "Install blocked: {{count}} error",
+        "blockedErrorsOther": "Install blocked: {{count}} errors",
+        "missingSecrets": "Required secrets missing: {{count}}",
+        "confirmExecutables": "Confirm — install with executables",
+        "installWithExecutables": "Install with executables",
+        "installTeam": "Install team",
+        "continue": "Continue",
+        "close": "Close"
+      }
+    },
+    "targetManagerStep": {
+      "help": "This team's root agents need a manager in your company. Pick the agent who will become their parent. Internal team hierarchy is preserved.",
+      "rootAgents": "Root agents",
+      "targetManager": "Target manager",
+      "searchPlaceholder": "Search agents…",
+      "noAgents": "No agents found.",
+      "fullCompany": "Use this team as a full-company package (no target manager)"
+    },
+    "sourcePolicyStep": {
+      "warningOne": "This team references {{count}} external source. Review each one and decide what to allow before continuing.",
+      "warningOther": "This team references {{count}} external sources. Review each one and decide what to allow before continuing.",
+      "pinned": "pinned",
+      "unpinned": "unpinned reference",
+      "unsupported": "not installable from the browser",
+      "allowExternal": {
+        "label": "Allow external sources",
+        "description": "Resolve github/url skill and team sources at install time."
+      },
+      "allowUnpinned": {
+        "label": "Allow unpinned optional sources",
+        "description": "Permit optional sources that are not pinned to a ref or checksum."
+      },
+      "allowLocalPath": {
+        "label": "Allow local-path sources",
+        "description": "Required for local_path / agent_package sources. Development use only."
+      },
+      "localPathHint": "This team has local-path sources. Enable “Allow local-path sources” to continue, or install it from the CLI."
+    },
+    "skillAction": {
+      "alreadyInPackage": "Bundled in package",
+      "catalogInstallRequired": "Will install from catalog",
+      "externalImportRequired": "Will import from source",
+      "blocked": "Blocked"
+    },
+    "skillPlanStep": {
+      "intro": "Before agents are imported, the catalog resolves the skills they depend on. This is the resolution plan."
+    },
+    "preview": {
+      "preparing": "Preparing preview…",
+      "retry": "Retry",
+      "summary": "Summary",
+      "summaryCounts": {
+        "agents": "Agents",
+        "projects": "Projects",
+        "starterTasks": "Starter tasks",
+        "requiredSkills": "Required skills"
+      },
+      "collisionStrategy": "Collision strategy",
+      "renameCollisions": "Rename collisions",
+      "skipCollisions": "Skip collisions",
+      "installBlocked": "Install blocked",
+      "agentsSection": "Agents · {{count}}",
+      "projectsSection": "Projects · {{count}}",
+      "starterTasksSection": "Starter tasks · {{count}}",
+      "adapterSection": "Adapter selection · {{count}}",
+      "adapterNote": "Each imported agent defaults to its package adapter; override here before install. Deeper per-adapter model config is editable on the agent after install.",
+      "envInputsSection": "Secrets & env inputs · {{count}}",
+      "envInput": {
+        "required": "required",
+        "requiredPlaceholder": "Required",
+        "optionalPlaceholder": "Optional",
+        "valueAria": "{{key}} value",
+        "hideAria": "Hide {{key}}",
+        "showAria": "Show {{key}}",
+        "hideValue": "Hide value",
+        "showValue": "Show value"
+      },
+      "provenance": "Imported entities are stamped with <0>metadata.paperclip.catalogTeam</0> ({{provenance}}, content hash <1>{{hash}}…</1>), and an activity event is recorded for preview and install."
+    },
+    "apply": {
+      "installing": "Installing {{name}}…",
+      "installingNote": "Resolving skills, importing agents, projects, and routines. This may take a moment."
+    },
+    "success": {
+      "title": "Team installed",
+      "summary": "{{name}} was imported into your company. Imported entities are stamped with catalog provenance.",
+      "agentsImported": "Agents imported",
+      "projectsImported": "Projects imported",
+      "skillsResolved": "Skills resolved",
+      "viewAgents": "View imported agents →",
+      "viewProjects": "View imported projects →",
+      "viewRoutines": "View routines →",
+      "viewActivity": "View activity log →",
+      "done": "Done"
+    },
+    "row": {
+      "updateAvailable": "Update available",
+      "updateAvailableTip": "Update available — installed team is out of date",
+      "hasExternalSources": "Has external sources"
+    },
+    "card": {
+      "agentsOne": "{{count}} agent",
+      "agentsOther": "{{count}} agents",
+      "projectsOne": "{{count}} project",
+      "projectsOther": "{{count}} projects",
+      "routinesOne": "{{count}} routine",
+      "routinesOther": "{{count}} routines"
+    },
+    "list": {
+      "title": "Teams",
+      "searchPlaceholder": "Search teams",
+      "allKinds": "All kinds",
+      "bundled": "Bundled",
+      "optional": "Optional",
+      "kind": "Kind",
+      "categoryLabel": "Category · {{category}}",
+      "allCategories": "All categories",
+      "category": "Category",
+      "anyRisk": "Any risk",
+      "safeOnly": "Safe only",
+      "hasWarnings": "Has warnings",
+      "blocked": "Blocked",
+      "risk": "Risk",
+      "resetFilters": "Reset filters",
+      "loadFailed": "Failed to load team catalog.",
+      "retry": "Retry",
+      "noneConfigured": "No team catalog configured.",
+      "noMatch": "No teams match this filter.",
+      "bundledGroup": "Bundled · {{count}}",
+      "optionalGroup": "Optional · {{count}}",
+      "installedGroup": "Installed · {{count}}"
+    },
+    "page": {
+      "selectCompany": "Select a company to browse the team catalog.",
+      "backToCatalog": "Back to catalog",
+      "selectTeam": "Select a team to view details.",
+      "breadcrumbOrgChart": "Org Chart",
+      "breadcrumbTeams": "Teams"
+    },
+    "toast": {
+      "installedTitle": "Team installed",
+      "installedBody": "{{name}} was imported."
+    }
+  },
+  "projectDetail": {
+    "leftNotice": {
+      "message": "You left this project. It no longer appears in your sidebar.",
+      "dismiss": "Dismiss project membership notice"
+    },
+    "iconPicker": {
+      "trigger": "Change project icon and color",
+      "icon": "Icon",
+      "searchIcons": "Search icons...",
+      "noIconsMatch": "No icons match",
+      "color": "Color",
+      "resetColor": "Reset to neutral gray",
+      "neutralColor": "Neutral (default)",
+      "selectColor": "Select color {{color}}"
+    },
+    "badges": {
+      "pausedByBudget": "Paused by budget hard stop",
+      "managedBy": "Managed by {{name}}"
+    },
+    "tabs": {
+      "tasks": "Tasks",
+      "overview": "Overview",
+      "pluginOperations": "Plugin operations",
+      "workspaces": "Workspaces",
+      "configuration": "Configuration",
+      "budget": "Budget"
+    },
+    "overview": {
+      "descriptionPlaceholder": "Add a description...",
+      "status": "Status",
+      "targetDate": "Target Date"
+    },
+    "workspaces": {
+      "loading": "Loading workspaces..."
+    },
+    "toasts": {
+      "archived": "\"{{name}}\" has been archived",
+      "unarchived": "\"{{name}}\" has been unarchived",
+      "archiveFailed": "Failed to archive project",
+      "unarchiveFailed": "Failed to unarchive project"
+    },
+    "fallback": {
+      "projectName": "Project",
+      "noCompanySelected": "No company selected"
+    }
+  },
+  "workspaces": {
+    "list": {
+      "breadcrumb": "Workspaces",
+      "heading": "Workspaces",
+      "empty": "No workspace activity yet.",
+      "workspaceCountOne": "{{count}} workspace",
+      "workspaceCountOther": "{{count}} workspaces"
+    },
+    "project": {
+      "loading": "Loading workspace…",
+      "loadFailed": "Failed to load workspace",
+      "notFound": "Workspace not found for this project.",
+      "backToWorkspaces": "Back to workspaces",
+      "eyebrow": "Project workspace",
+      "makePrimary": "Make primary",
+      "isPrimary": "This is the project’s primary codebase workspace.",
+      "sourceTypeOptions": {
+        "localPath": {
+          "label": "Local git checkout",
+          "description": "A local path Paperclip can use directly."
+        },
+        "nonGitPath": {
+          "label": "Local non-git path",
+          "description": "A local folder without git semantics."
+        },
+        "gitRepo": {
+          "label": "Remote git repo",
+          "description": "A repo URL with optional refs and local checkout."
+        },
+        "remoteManaged": {
+          "label": "Remote-managed workspace",
+          "description": "A hosted workspace tracked by external reference."
+        }
+      },
+      "visibilityOptions": {
+        "default": "Default",
+        "advanced": "Advanced"
+      },
+      "errors": {
+        "commandsJsonObject": "Workspace commands JSON must be a JSON object.",
+        "invalidJson": "Invalid JSON.",
+        "remoteRefOrRepoRequired": "Remote-managed workspaces require a remote workspace ref or repo URL.",
+        "localPathOrRepoRequired": "Workspace requires at least one local path or repo URL.",
+        "localPathAbsolute": "Local workspace path must be absolute.",
+        "repoUrlValid": "Repo URL must be a valid URL.",
+        "saveFailed": "Failed to save workspace.",
+        "updateFailed": "Failed to update workspace.",
+        "controlFailed": "Failed to control workspace commands."
+      },
+      "runtimeActions": {
+        "jobCompleted": "Workspace job completed.",
+        "serviceStopped": "Workspace service stopped. Task execution is not paused.",
+        "serviceRestarted": "Workspace service restarted. Task execution is not paused.",
+        "serviceStarted": "Workspace service started."
+      },
+      "intro": "Configure the concrete workspace Paperclip attaches to this project. These values drive per-workspace checkout behavior, default runtime services for child execution workspaces, and let you override setup or cleanup commands when one workspace needs special handling.",
+      "fields": {
+        "name": "Workspace name",
+        "namePlaceholder": "Workspace name",
+        "visibility": "Visibility",
+        "sourceType": "Source type",
+        "localPath": "Local path",
+        "localPathPlaceholder": "/absolute/path/to/workspace",
+        "repoUrl": "Repo URL",
+        "repoUrlPlaceholder": "https://github.com/org/repo",
+        "repoRef": "Repo ref",
+        "repoRefPlaceholder": "origin/main",
+        "defaultRef": "Default ref",
+        "defaultRefPlaceholder": "origin/main",
+        "sharedWorkspaceKey": "Shared workspace key",
+        "sharedWorkspaceKeyPlaceholder": "frontend",
+        "remoteProvider": "Remote provider",
+        "remoteProviderPlaceholder": "codespaces",
+        "remoteWorkspaceRef": "Remote workspace ref",
+        "remoteWorkspaceRefPlaceholder": "workspace-123",
+        "setupCommand": "Setup command",
+        "setupCommandHint": "Runs when this workspace needs custom bootstrap",
+        "setupCommandPlaceholder": "pnpm install && pnpm dev",
+        "cleanupCommand": "Cleanup command",
+        "cleanupCommandHint": "Runs before project-level execution workspace teardown",
+        "cleanupCommandPlaceholder": "pkill -f vite || true",
+        "commandsJson": "Workspace commands JSON",
+        "commandsJsonHint": "Execution workspaces inherit this config unless they override it. Legacy `services` arrays still work, but `commands` supports both services and jobs."
+      },
+      "advancedRuntime": {
+        "summary": "Advanced runtime JSON",
+        "description": "Paperclip derives Services and Jobs from this JSON. Prefer editing named commands first; use raw JSON for advanced lifecycle, port, readiness, or environment settings."
+      },
+      "save": "Save changes",
+      "reset": "Reset",
+      "noUnsavedChanges": "No unsaved changes.",
+      "facts": {
+        "eyebrow": "Workspace facts",
+        "title": "Current state",
+        "project": "Project",
+        "workspaceId": "Workspace ID",
+        "localPath": "Local path",
+        "repo": "Repo",
+        "defaultRef": "Default ref",
+        "updated": "Updated",
+        "none": "None"
+      },
+      "commands": {
+        "eyebrow": "Workspace commands",
+        "title": "Services and jobs",
+        "description": "Long-running services stay supervised here, while one-shot jobs run on demand against this workspace. Execution workspaces inherit this config unless they override it.",
+        "serviceEmptyWithConfig": "No services have been started for this workspace yet.",
+        "serviceEmptyNoConfig": "No workspace command config is defined for this workspace yet.",
+        "jobEmpty": "No one-shot jobs are configured for this workspace yet.",
+        "disabledHint": "Project workspaces need a working directory before local commands can run, and services also need runtime config."
+      },
+      "pluginTab": {
+        "loading": "Loading workspace plugin...",
+        "backToConfiguration": "Back to configuration"
+      },
+      "tabs": {
+        "configuration": "Configuration"
+      }
+    },
+    "execution": {
+      "loading": "Loading workspace…",
+      "loadFailed": "Failed to load workspace",
+      "eyebrow": "Execution workspace",
+      "tabs": {
+        "tasks": "Tasks",
+        "services": "Services",
+        "configuration": "Configuration",
+        "runtimeLogs": "Runtime logs",
+        "routines": "Routines"
+      },
+      "errors": {
+        "repoUrlValid": "Repo URL must be a valid URL.",
+        "commandsJsonObject": "Workspace commands JSON must be a JSON object.",
+        "invalidJson": "Invalid JSON.",
+        "saveFailed": "Failed to save execution workspace.",
+        "buildUpdateFailed": "Failed to build workspace update.",
+        "controlFailed": "Failed to control workspace commands."
+      },
+      "runtimeActions": {
+        "jobCompleted": "Workspace job completed.",
+        "serviceStopped": "Workspace service stopped.",
+        "serviceRestarted": "Workspace service restarted.",
+        "serviceStarted": "Workspace service started."
+      },
+      "services": {
+        "serviceEmptyWithConfig": "No services have been started for this execution workspace yet.",
+        "serviceEmptyNoConfig": "No workspace command config is defined for this execution workspace yet.",
+        "jobEmpty": "No one-shot jobs are configured for this execution workspace yet.",
+        "disabledHint": "Execution workspaces need a working directory before local commands can run, and services also need runtime config."
+      },
+      "settings": {
+        "title": "Workspace settings",
+        "description": "Edit the concrete path, repo, branch, provisioning, teardown, and runtime overrides attached to this execution workspace.",
+        "retryClose": "Retry close",
+        "closeWorkspace": "Close workspace",
+        "sections": {
+          "general": "General",
+          "sourceControl": "Source control",
+          "paths": "Paths",
+          "lifecycleCommands": "Lifecycle commands",
+          "runtimeConfig": "Runtime config"
+        },
+        "fields": {
+          "name": "Workspace name",
+          "namePlaceholder": "Execution workspace name",
+          "branchName": "Branch name",
+          "branchNameHint": "Useful for isolated worktrees",
+          "branchNamePlaceholder": "PAP-946-workspace",
+          "baseRef": "Base ref",
+          "baseRefPlaceholder": "origin/main",
+          "repoUrl": "Repo URL",
+          "repoUrlPlaceholder": "https://github.com/org/repo",
+          "workingDirectory": "Working directory",
+          "workingDirectoryPlaceholder": "/absolute/path/to/workspace",
+          "providerRef": "Provider path / ref",
+          "providerRefPlaceholder": "/path/to/worktree or provider ref",
+          "provisionCommand": "Provision command",
+          "provisionCommandHint": "Runs when Paperclip prepares this execution workspace",
+          "provisionCommandPlaceholder": "bash ./scripts/provision-worktree.sh",
+          "teardownCommand": "Teardown command",
+          "teardownCommandHint": "Runs when the execution workspace is archived or cleaned up",
+          "teardownCommandPlaceholder": "bash ./scripts/teardown-worktree.sh",
+          "cleanupCommand": "Cleanup command",
+          "cleanupCommandHint": "Workspace-specific cleanup before teardown",
+          "cleanupCommandPlaceholder": "pkill -f vite || true",
+          "commandsJson": "Workspace commands JSON",
+          "commandsJsonHint": "Legacy `services` arrays still work, but `commands` supports both services and jobs."
+        },
+        "runtimeConfigSource": {
+          "title": "Runtime config source",
+          "override": "This execution workspace currently overrides the project workspace runtime config.",
+          "inherit": "This execution workspace is inheriting the project workspace runtime config.",
+          "none": "No runtime config is currently defined on this execution workspace or its project workspace.",
+          "resetToInherit": "Reset to inherit"
+        },
+        "advancedRuntime": {
+          "summary": "Advanced runtime JSON",
+          "description": "Override the inherited workspace command model only when this execution workspace truly needs different service or job behavior.",
+          "inheritCheckbox": "Inherit project workspace runtime config"
+        },
+        "save": "Save changes",
+        "reset": "Reset",
+        "noUnsavedChanges": "No unsaved changes."
+      },
+      "context": {
+        "title": "Workspace context",
+        "description": "Linked objects and relationships",
+        "project": "Project",
+        "projectWorkspace": "Project workspace",
+        "sourceTask": "Source task",
+        "derivedFrom": "Derived from",
+        "workspaceId": "Workspace ID",
+        "none": "None"
+      },
+      "location": {
+        "title": "Concrete location",
+        "description": "Paths and refs",
+        "workingDir": "Working dir",
+        "providerRef": "Provider ref",
+        "repoUrl": "Repo URL",
+        "baseRef": "Base ref",
+        "branch": "Branch",
+        "opened": "Opened",
+        "lastUsed": "Last used",
+        "cleanup": "Cleanup",
+        "notScheduled": "Not scheduled",
+        "none": "None"
+      },
+      "logs": {
+        "title": "Runtime and cleanup logs",
+        "description": "Recent operations",
+        "loading": "Loading workspace operations…",
+        "loadFailed": "Failed to load workspace operations.",
+        "empty": "No workspace operations have been recorded yet."
+      },
+      "routines": {
+        "title": "Workspace routines",
+        "description": "Routines that use workspace-specific variables can be run against this execution workspace.",
+        "loading": "Loading routines...",
+        "loadFailed": "Failed to load routines.",
+        "empty": "No routines use workspace-specific variables yet.",
+        "defaultAgentSet": "Default agent set",
+        "chooseAgentWhenRunning": "Choose agent when running",
+        "lastRun": "Last run {{time}}",
+        "running": "Running...",
+        "runNow": "Run now",
+        "started": "Routine started",
+        "startedBody": "Paperclip created a run using this execution workspace.",
+        "runFailed": "Routine run failed",
+        "runFailedBody": "Paperclip could not start the routine run."
+      },
+      "pluginTab": {
+        "loading": "Loading workspace plugin...",
+        "backToTasks": "Back to tasks"
+      },
+      "common": {
+        "never": "Never",
+        "copied": "Copied"
+      }
+    }
+  },
+  "boardChat": {
+    "breadcrumb": "Conference Room",
+    "aria": {
+      "typing": "typing",
+      "chatHistory": "chat history",
+      "newChat": "new chat",
+      "jumpToLatest": "Jump to latest messages",
+      "openAgentFeed": "Open agent feed",
+      "resizeSplit": "Resize board chat and agent feed"
+    },
+    "tooltip": {
+      "chatHistory": "chat history",
+      "newChat": "new chat"
+    },
+    "header": {
+      "companyFallback": "Your company"
+    },
+    "noCompany": {
+      "title": "No company selected",
+      "description": "Select a company to start chatting with your board concierge."
+    },
+    "welcome": {
+      "missionLine": " — your mission is \"{{mission}}\".",
+      "noMissionLine": ".",
+      "body": "Welcome to **{{company}}**! I'm {{ceo}}, your team lead. I've read through what you shared in the wizard{{missionLine}}\n\nHere are a few things I can help you put on paper right now. Pick one below and I'll draft it for you using everything you told us."
+    },
+    "chips": {
+      "companyBrief": {
+        "label": "Draft a Company Brief",
+        "prompt": "Draft a one-page Company Brief for {{company}} — include our mission, team roster, and first priorities."
+      },
+      "hiringPlan": {
+        "label": "Create a hiring plan",
+        "prompt": "Create a hiring plan for {{company}}. List the next roles to hire, in priority order, with a short rationale for each."
+      },
+      "first30Days": {
+        "label": "Outline our first 30 days",
+        "prompt": "Outline our first 30 days. Break it into weekly priorities with who owns what."
+      },
+      "introPitch": {
+        "label": "Write an intro pitch",
+        "prompt": "Write a short intro pitch for {{company}} that I could reuse for investors, customers, or recruits."
+      }
+    },
+    "agentFallback": "Assistant",
+    "status": {
+      "connecting": "Connecting...",
+      "thinking": "Thinking..."
+    },
+    "error": {
+      "generic": "The board assistant couldn't respond. Please try again.",
+      "streamUnavailable": "The board assistant is unavailable right now. Please try again in a moment."
+    },
+    "composer": {
+      "placeholder": "Ask anything about your company...",
+      "sendLabel": "Send message"
+    }
+  },
+  "cloudUpstream": {
+    "breadcrumbs": {
+      "companyFallback": "Company",
+      "settings": "Settings",
+      "cloudUpstream": "Cloud upstream"
+    },
+    "steps": {
+      "connect": "Connect",
+      "scan": "Scan",
+      "preview": "Preview",
+      "push": "Push",
+      "verify": "Verify",
+      "activate": "Activate"
+    },
+    "categories": {
+      "agents": {
+        "label": "Agents",
+        "pluralOne": "agent",
+        "pluralOther": "agents",
+        "detail": "Confirm cloud secrets and adapter credentials before unpausing imported agents."
+      },
+      "routines": {
+        "label": "Routines",
+        "pluralOne": "routine",
+        "pluralOther": "routines",
+        "detail": "Review schedules and trigger settings before enabling imported routines."
+      },
+      "monitors": {
+        "label": "Monitors",
+        "pluralOne": "monitor",
+        "pluralOther": "monitors",
+        "detail": "Activate after the target stack has been smoke tested."
+      }
+    },
+    "selectCompany": "Select a company to configure cloud upstream.",
+    "loadingExperimental": "Loading experimental settings...",
+    "title": "Cloud upstream",
+    "disabled": {
+      "intro": "Cloud sync is disabled. Enable it in",
+      "instanceSettingsLink": "Instance Settings",
+      "outro": "to show upstream connection and push tools."
+    },
+    "summary": "Push {{name}} into a Paperclip Cloud stack. Automations stay paused until activation.",
+    "openCloud": "Open cloud",
+    "notices": {
+      "connectionApproved": "Cloud upstream connection approved.",
+      "pushSucceeded": "Push run completed. Review activation before unpausing automations.",
+      "pushFailed": "Push run failed. Review the run events and retry after correcting the issue.",
+      "activationUpdated": "Activation checklist updated."
+    },
+    "errors": {
+      "finishConnection": "Failed to finish connection.",
+      "noPendingConnection": "No pending cloud upstream connection was found. Start the connection again.",
+      "connectionNotApproved": "Cloud upstream connection was not approved: {{error}}",
+      "startConnection": "Failed to start connection.",
+      "runPush": "Failed to run push.",
+      "activateEntities": "Failed to activate imported entities.",
+      "previewTooLarge": "Local company is too large to preview as a single request. Click Push to continue (the Push step uploads in chunks), or see the docs for chunked-preview options.",
+      "previewFailed": "Failed to preview push."
+    },
+    "connection": {
+      "heading": "Connection",
+      "tokenStatus": "token {{status}}",
+      "schemaChunk": "Schema {{schema}}. Max chunk {{chunk}}.",
+      "previewPush": "Preview push",
+      "urlPlaceholder": "https://paperclip.paperclip.app/PC521D/dashboard",
+      "urlLabel": "Paperclip Cloud stack URL",
+      "connect": "Connect"
+    },
+    "previewProgress": {
+      "building": "Building manifest...",
+      "buildingElapsed": "Building manifest... {{elapsed}}s. Large companies can take up to a minute.",
+      "stillBuilding": "Still building manifest... {{elapsed}}s. PAP-scale companies routinely take ~60s."
+    },
+    "preview": {
+      "heading": "Preview",
+      "pushToCloud": "Push to cloud"
+    },
+    "warnings": {
+      "heading": "Warnings"
+    },
+    "conflicts": {
+      "heading": "Conflicts",
+      "none": "No target conflicts detected for this preview."
+    },
+    "run": {
+      "heading": "Progress and finish",
+      "downloadReport": "Download report",
+      "retry": "Retry",
+      "rerun": "Re-run",
+      "runLabel": "Run {{id}}",
+      "completedAt": "completed {{date}}",
+      "inProgress": "in progress",
+      "runMeta": "{{run}} · {{progress}}"
+    },
+    "activation": {
+      "heading": "Activation checklist",
+      "noneInRun": "0 imported {{plural}} in this run.",
+      "activated": "Activated",
+      "activate": "Activate",
+      "keepPaused": "Keep paused",
+      "detail": "{{count}} imported {{plural}} are paused by default. {{categoryDetail}}",
+      "statusActivated": "{{count}} activated",
+      "statusZero": "0 imported",
+      "statusPaused": "{{count}} paused"
+    },
+    "history": {
+      "heading": "History",
+      "runEntry": "Run {{id}} · {{status}}"
+    },
+    "units": {
+      "mib": "{{value}} MiB",
+      "kib": "{{value}} KiB",
+      "bytes": "{{value}} B"
+    }
+  },
+  "adapterManager": {
+    "breadcrumbs": {
+      "companyFallback": "Company",
+      "settings": "Settings",
+      "instanceSettings": "Instance settings",
+      "adapters": "Adapters"
+    },
+    "row": {
+      "external": "External",
+      "builtin": "Built-in",
+      "installedFromLocalPath": "Installed from local path",
+      "installedFromNpm": "Installed from npm",
+      "overridesBuiltin": "Overrides built-in",
+      "overriddenBy": "Overridden by {{name}}",
+      "hiddenFromMenus": "Hidden from menus",
+      "models": "{{count}} models",
+      "reinstallTitle": "Reinstall adapter (pull latest from npm)",
+      "reloadTitle": "Reload adapter (hot-swap)",
+      "showInMenus": "Show in agent menus",
+      "hideFromMenus": "Hide from agent menus",
+      "removeTitle": "Remove adapter"
+    },
+    "reinstallDialog": {
+      "title": "Reinstall Adapter",
+      "descriptionPrefix": "This will pull the latest version of",
+      "descriptionSuffix": "from npm and hot-swap the running adapter module. Existing agents will use the new version on their next run.",
+      "package": "Package",
+      "current": "Current",
+      "unknown": "unknown",
+      "latestOnNpm": "Latest on npm",
+      "checking": "checking...",
+      "unavailable": "unavailable",
+      "version": "v{{version}}",
+      "upToDate": "Already on the latest version.",
+      "cancel": "Cancel",
+      "reinstalling": "Reinstalling...",
+      "reinstall": "Reinstall"
+    },
+    "toasts": {
+      "installedTitle": "Adapter installed",
+      "installedBody": "Type \"{{type}}\" registered successfully.{{version}}",
+      "installedVersionSuffix": " (v{{version}})",
+      "installFailed": "Install failed",
+      "removedTitle": "Adapter removed",
+      "removalFailed": "Removal failed",
+      "toggleFailed": "Toggle failed",
+      "overrideToggleFailed": "Override toggle failed",
+      "reloadedTitle": "Adapter reloaded",
+      "reloadedBody": "Type \"{{type}}\" reloaded.{{version}}",
+      "reloadFailed": "Reload failed",
+      "reinstalledTitle": "Adapter reinstalled",
+      "reinstalledBody": "Type \"{{type}}\" updated from npm.{{version}}",
+      "reinstallFailed": "Reinstall failed"
+    },
+    "loading": "Loading adapters...",
+    "title": "Adapters",
+    "alpha": "Alpha",
+    "installAdapter": "Install Adapter",
+    "installDialog": {
+      "title": "Install External Adapter",
+      "descriptionPrefix": "Add an adapter from npm or a local path. The adapter package must export",
+      "npmPackage": "npm package",
+      "localPath": "Local path",
+      "pathLabel": "Path to adapter package",
+      "pathPlaceholder": "/mnt/e/Projects/my-adapter  or  E:\\Projects\\my-adapter",
+      "pathHint": "Accepts Linux, WSL, and Windows paths. Windows paths are auto-converted.",
+      "packageNameLabel": "Package Name",
+      "packageNamePlaceholder": "my-paperclip-adapter",
+      "versionLabel": "Version (optional)",
+      "versionPlaceholder": "latest",
+      "cancel": "Cancel",
+      "installing": "Installing...",
+      "install": "Install"
+    },
+    "alphaNotice": {
+      "title": "External adapters are alpha.",
+      "body": "The adapter plugin system is under active development. APIs and storage format may change. Use the power icon to hide adapters from agent menus without removing them."
+    },
+    "external": {
+      "heading": "External Adapters",
+      "emptyTitle": "No external adapters installed",
+      "emptyBody": "Install an adapter package to extend model support.",
+      "pauseOverride": "Pause external override",
+      "resumeOverride": "Resume external override",
+      "overridePaused": "Override paused"
+    },
+    "builtin": {
+      "heading": "Built-in Adapters",
+      "empty": "No built-in adapters found."
+    },
+    "removeDialog": {
+      "title": "Remove Adapter",
+      "confirmPrefix": "Are you sure you want to remove the",
+      "confirmSuffix": "adapter? It will be unregistered and removed from the adapter store.",
+      "npmCleanup": "npm packages will be cleaned up from disk.",
+      "cannotUndo": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "removing": "Removing...",
+      "remove": "Remove"
+    }
+  },
+  "userProfile": {
+    "breadcrumbs": {
+      "users": "Users"
+    },
+    "userFallback": "User",
+    "completion": {
+      "done": "{{rate}} done"
+    },
+    "window": {
+      "touched": "Touched",
+      "completed": "Completed",
+      "comments": "Comments",
+      "actions": "Actions",
+      "tokens": "Tokens",
+      "spend": "Spend",
+      "created": "Created",
+      "open": "Open"
+    },
+    "chart": {
+      "last14Days": "Last 14 days",
+      "tokensTotal": "tokens total",
+      "barTitle": "{{date}}: {{tokens}} tokens, {{completed}} completed",
+      "tokensPerDay": "tokens / day",
+      "completions": "completions"
+    },
+    "meta": {
+      "memberFallback": "member",
+      "joined": "joined {{date}}"
+    },
+    "selectCompany": "Select a company to view user profiles.",
+    "notFound": "User profile not found for this company.",
+    "hero": {
+      "allTimeTokens": "All-time tokens",
+      "spent": "{{amount}} spent",
+      "completed": "Completed",
+      "rate": "{{rate}} rate",
+      "openAssigned": "Open assigned",
+      "created": "{{count}} created",
+      "sevenDayActions": "7-day actions",
+      "comments": "{{count}} comments"
+    },
+    "usage": {
+      "taskLinked": "Task-linked usage",
+      "billedThrough": "Billed through {{biller}}",
+      "agentUnknown": "unknown"
+    },
+    "recentTasks": {
+      "heading": "Recent tasks",
+      "empty": "No touched tasks yet."
+    },
+    "recentActivity": {
+      "heading": "Recent activity",
+      "empty": "No direct user actions recorded yet."
+    },
+    "lists": {
+      "agentTitle": "Agent attribution",
+      "agentEmpty": "No issue-linked token usage yet.",
+      "providerTitle": "Provider mix",
+      "providerEmpty": "No provider usage attributed yet."
+    }
+  },
+  "myIssues": {
+    "breadcrumb": "My Tasks",
+    "selectCompany": "Select a company to view your tasks.",
+    "empty": "No tasks assigned to you."
+  },
+  "notFound": {
+    "breadcrumb": "Not Found",
+    "title": {
+      "company": "Company not found",
+      "page": "Page not found"
+    },
+    "description": {
+      "company": "No company matches prefix \"{{prefix}}\".",
+      "page": "This route does not exist."
+    },
+    "unknownPrefix": "unknown",
+    "requestedPath": "Requested path:",
+    "openDashboard": "Open dashboard",
+    "goHome": "Go home"
   }
 }
