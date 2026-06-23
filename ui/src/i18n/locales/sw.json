@@ -6871,5 +6871,13 @@
       "most_recent": "Most recent",
       "longest_stopped": "Longest stopped"
     }
+  },
+  "recovery": {
+    "needed": "Recovery needed",
+    "in_progress": "Recovery in progress",
+    "observe_only": "Observing active run",
+    "escalated": "Recovery escalated",
+    "workspaceNeeded": "Workspace recovery needed",
+    "openSourceHint": "{{label}} — open the source task to act."
   }
 }

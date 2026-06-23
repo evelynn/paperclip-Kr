@@ -9,6 +9,7 @@ import { queryKeys } from "../lib/queryKeys";
 import { cn, relativeTime } from "../lib/utils";
 import {
   deriveActiveRecoveryDisplayState,
+  recoveryChipLabel,
   RECOVERY_CHIP_DEFAULT_TONE,
 } from "../lib/recovery-display";
 import { ExternalLink } from "lucide-react";
@@ -18,24 +19,26 @@ import { useLiveRunTranscripts } from "./transcript/useLiveRunTranscripts";
 import { useTranslation } from "@/i18n";
 
 function RunCardRecoveryChip({ action }: { action: IssueRecoveryAction }) {
+  const { t } = useTranslation();
   const state = deriveActiveRecoveryDisplayState(action);
   if (!state) return null;
   const tone = RECOVERY_CHIP_DEFAULT_TONE[state];
   const Icon = tone.icon;
+  const label = recoveryChipLabel(state, action.kind, t);
   return (
     <span
       data-testid="active-agent-run-recovery-indicator"
       data-recovery-state={state}
       role="status"
-      aria-label={tone.label}
-      title={`${tone.label} — open the source task to act.`}
+      aria-label={label}
+      title={t("recovery.openSourceHint", { label })}
       className={cn(
         "inline-flex shrink-0 items-center gap-0.5 rounded-full border px-1.5 py-0.5 text-[10px] font-medium",
         tone.className,
       )}
     >
       <Icon className="h-2.5 w-2.5" aria-hidden />
-      {tone.label}
+      {label}
     </span>
   );
 }

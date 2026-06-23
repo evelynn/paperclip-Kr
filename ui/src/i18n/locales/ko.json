@@ -6871,5 +6871,13 @@
       "most_recent": "최신순",
       "longest_stopped": "가장 오래 중지순"
     }
+  },
+  "recovery": {
+    "needed": "복구 필요",
+    "in_progress": "복구 진행 중",
+    "observe_only": "활성 실행 관찰 중",
+    "escalated": "복구 에스컬레이션됨",
+    "workspaceNeeded": "워크스페이스 복구 필요",
+    "openSourceHint": "{{label}} — 원본 작업을 열어 조치하세요."
   }
 }
