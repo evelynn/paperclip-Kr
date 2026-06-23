@@ -12,6 +12,25 @@ import { createRoot, type Root } from "react-dom/client";
 
 import { getLocale, i18n, setLocale, t } from "./index";
 import { PriorityIcon } from "../components/PriorityIcon";
+import enMessages from "./locales/en.json";
+import koMessages from "./locales/ko.json";
+
+type LeafMap = Record<string, string>;
+function flatten(obj: Record<string, unknown>, prefix = ""): LeafMap {
+  const out: LeafMap = {};
+  for (const [k, v] of Object.entries(obj)) {
+    const key = prefix ? `${prefix}.${k}` : k;
+    if (v && typeof v === "object") Object.assign(out, flatten(v as Record<string, unknown>, key));
+    else out[key] = String(v);
+  }
+  return out;
+}
+function firstLeafOf(ns: string): string {
+  const branch = (enMessages as Record<string, unknown>)[ns];
+  const leaves = Object.keys(flatten({ [ns]: branch }));
+  return leaves[0]!;
+}
+const HANGUL = /[가-힣]/;
 
 function act(callback: () => void) {
   flushSync(callback);
@@ -125,5 +144,71 @@ describe("Korean localization (E2E)", () => {
     expect(t("nav.company.reorder", { name: "Acme" })).toContain("Acme");
     expect(t("issues.list.rendering", { shown: 10, total: 42 })).toContain("10");
     expect(t("issues.list.rendering", { shown: 10, total: 42 })).toContain("42");
+  });
+
+  // Shared cross-cutting vocabulary added during the full-app pass. These are
+  // resolved through helper functions (issue-labels, work-mode-meta, blockedInbox,
+  // recovery-display, trust-policy-ui, agent-role-labels) at runtime.
+  const sharedVocab: Array<[string, string, Record<string, unknown>?]> = [
+    ["statusLabels.in_progress", "진행 중"],
+    ["statusLabels.done", "완료"],
+    ["workMode.standard.label", "표준"],
+    ["workMode.standardCrc.short", "에이전트"],
+    ["workMode.title.standard", "이 제출은 표준 모드입니다. 클릭하여 변경하세요.", { mode: "표준" }],
+    ["blockedReasons.variant.needs_decision", "결정 필요"],
+    ["blockedReasons.reason.open_recovery_issue", "복구 진행 중"],
+    ["recovery.needed", "복구 필요"],
+    ["recovery.escalated", "복구 에스컬레이션됨"],
+    ["trust.source.lowTrust", "저신뢰 출처"],
+    ["trust.presetLabel.low_trust_review", "저신뢰 검토"],
+    ["agentRoles.engineer", "엔지니어"],
+    ["agentRoles.designer", "디자이너"],
+    ["misc.missingPluginTab", "워크스페이스 플러그인 탭을 사용할 수 없습니다."],
+    ["chrome.routeError.title", "이 페이지에서 오류가 발생했습니다"],
+  ];
+
+  it("resolves shared cross-cutting vocabulary to Korean", async () => {
+    await useLocale("ko");
+    for (const [key, expected, options] of sharedVocab) {
+      expect(t(key, options ?? {}), `key ${key} should be Korean`).toBe(expected);
+    }
+  });
+
+  it("keeps acronym agent roles untranslated (CEO/PM/QA)", async () => {
+    await useLocale("ko");
+    expect(t("agentRoles.ceo")).toBe("CEO");
+    expect(t("agentRoles.pm")).toBe("PM");
+    expect(t("agentRoles.qa")).toBe("QA");
+  });
+
+  // Whole-app coverage: every top-level namespace must have a wired Korean bundle.
+  it("resolves the first leaf of every namespace to its ko bundle value", async () => {
+    await useLocale("ko");
+    const koFlat = flatten(koMessages as Record<string, unknown>);
+    const namespaces = Object.keys(enMessages as Record<string, unknown>);
+    expect(namespaces.length).toBeGreaterThan(40); // the app grew far beyond the seed
+    for (const ns of namespaces) {
+      const leaf = firstLeafOf(ns);
+      const resolved = t(leaf);
+      expect(resolved, `namespace ${ns} (${leaf}) should resolve`).toBeTruthy();
+      expect(resolved, `namespace ${ns} (${leaf}) should match ko bundle`).toBe(koFlat[leaf]);
+    }
+  });
+
+  // The ko bundle is genuinely translated, not English placeholders. Allow for
+  // proper nouns / interpolation-only / numeric leaves that legitimately carry
+  // no Hangul, but require the clear majority to be Korean.
+  it("has a genuinely Korean ko bundle (Hangul majority)", () => {
+    const koFlat = flatten(koMessages as Record<string, unknown>);
+    const enFlat = flatten(enMessages as Record<string, unknown>);
+    const translatable = Object.entries(koFlat).filter(([key, val]) => {
+      // Skip leaves whose English is itself non-alphabetic (placeholders/symbols).
+      const en = enFlat[key] ?? "";
+      return /[A-Za-z]/.test(en) && val.trim().length > 0;
+    });
+    const hangul = translatable.filter(([, val]) => HANGUL.test(val));
+    const ratio = hangul.length / translatable.length;
+    expect(translatable.length).toBeGreaterThan(2000); // thousands of localized leaves
+    expect(ratio).toBeGreaterThan(0.85);
   });
 });
