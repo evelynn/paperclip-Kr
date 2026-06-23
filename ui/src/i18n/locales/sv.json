@@ -4354,5 +4354,35 @@
       "loading": "Loading…",
       "empty": "No access events recorded yet. Each runtime resolution writes a redacted entry here."
     }
+  },
+  "statusLabels": {
+    "backlog": "backlog",
+    "todo": "todo",
+    "in_progress": "in progress",
+    "in_review": "in review",
+    "done": "done",
+    "blocked": "blocked",
+    "cancelled": "cancelled",
+    "active": "active",
+    "idle": "idle",
+    "running": "running",
+    "error": "error",
+    "paused": "paused",
+    "pending": "pending",
+    "completed": "completed",
+    "failed": "failed",
+    "succeeded": "succeeded",
+    "approved": "approved",
+    "rejected": "rejected",
+    "archived": "archived",
+    "queued": "queued",
+    "scheduled": "scheduled",
+    "waiting": "waiting",
+    "draft": "draft",
+    "open": "open",
+    "closed": "closed",
+    "live": "live",
+    "stopped": "stopped",
+    "expired": "expired"
   }
 }

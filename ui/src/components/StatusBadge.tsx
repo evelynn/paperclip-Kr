@@ -12,13 +12,26 @@ import {
   issueStatusColor,
   issueStatusColorDefault,
 } from "../lib/status-colors";
+import { useTranslation } from "@/i18n";
 import { useConferenceRoomChatEnabled } from "../hooks/useConferenceRoomChatEnabled";
+
+/**
+ * Localized label for an open-ended status enum. Known statuses resolve through
+ * the shared `statusLabels` namespace; anything unmapped falls back to the
+ * humanized (underscore-spaced) raw value, preserving master's behaviour.
+ */
+function useStatusLabel(): (status: string) => string {
+  const { t } = useTranslation();
+  return (status: string) =>
+    t(`statusLabels.${status}`, { defaultValue: status.replace(/_/g, " ") });
+}
 
 export function StatusBadge({ status }: { status: string }) {
   // PAP-75 brand hues for issue statuses (todo/in_progress) ship behind the
   // Conference Room Chat flag (PAP-139); OFF keeps master's palette. Non-issue
   // entries are identical in both records.
   const { enabled: conferenceRoomChatEnabled } = useConferenceRoomChatEnabled();
+  const statusLabel = useStatusLabel();
   const palette = conferenceRoomChatEnabled ? statusBadge : statusBadgeClassic;
   return (
     <span
@@ -27,7 +40,7 @@ export function StatusBadge({ status }: { status: string }) {
         palette[status] ?? statusBadgeDefault
       )}
     >
-      {status.replace(/_/g, " ")}
+      {statusLabel(status)}
     </span>
   );
 }
@@ -39,6 +52,7 @@ export function StatusBadge({ status }: { status: string }) {
  * renders as "idle" (alias for dead code).
  */
 export function AgentStatusBadge({ status }: { status: string }) {
+  const statusLabel = useStatusLabel();
   const color = agentStatusColor[status] ?? agentStatusColorDefault;
   const label = status === "active" ? "idle" : status;
   return (
@@ -48,7 +62,7 @@ export function AgentStatusBadge({ status }: { status: string }) {
         agentStatusBadge[color]
       )}
     >
-      {label.replace(/_/g, " ")}
+      {statusLabel(label)}
     </span>
   );
 }
@@ -153,6 +167,7 @@ export function IssueStatusBadge({ status }: { status: string }) {
   // Conference Room Chat flag OFF (PAP-139): fall back to the plain master
   // badge — same markup master rendered at this badge's call sites.
   const { enabled: conferenceRoomChatEnabled } = useConferenceRoomChatEnabled();
+  const statusLabel = useStatusLabel();
   const color = issueStatusColor[status] ?? issueStatusColorDefault;
   if (!conferenceRoomChatEnabled) {
     return <StatusBadge status={status} />;
@@ -166,7 +181,7 @@ export function IssueStatusBadge({ status }: { status: string }) {
       )}
     >
       <IssueStatusGlyph status={status} />
-      {status.replace(/_/g, " ")}
+      {statusLabel(status)}
     </span>
   );
 }

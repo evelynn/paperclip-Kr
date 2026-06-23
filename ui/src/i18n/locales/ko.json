@@ -4354,5 +4354,35 @@
       "loading": "불러오는 중…",
       "empty": "아직 기록된 액세스 이벤트가 없습니다. 각 런타임 확인은 여기에 수정된 항목을 씁니다."
     }
+  },
+  "statusLabels": {
+    "backlog": "백로그",
+    "todo": "할 일",
+    "in_progress": "진행 중",
+    "in_review": "검토 중",
+    "done": "완료",
+    "blocked": "차단됨",
+    "cancelled": "취소됨",
+    "active": "활성",
+    "idle": "대기",
+    "running": "실행 중",
+    "error": "오류",
+    "paused": "일시 중지됨",
+    "pending": "대기 중",
+    "completed": "완료됨",
+    "failed": "실패",
+    "succeeded": "성공",
+    "approved": "승인됨",
+    "rejected": "거부됨",
+    "archived": "보관됨",
+    "queued": "대기열",
+    "scheduled": "예약됨",
+    "waiting": "대기 중",
+    "draft": "초안",
+    "open": "열림",
+    "closed": "닫힘",
+    "live": "실시간",
+    "stopped": "중지됨",
+    "expired": "만료됨"
   }
 }
