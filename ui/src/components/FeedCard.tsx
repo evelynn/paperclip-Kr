@@ -2,6 +2,8 @@ import { Link } from "@/lib/router";
 import { AgentIcon } from "./AgentIconPicker";
 import { timeAgo } from "../lib/timeAgo";
 import { cn } from "../lib/utils";
+import { useTranslation } from "@/i18n";
+import type { TFunction } from "i18next";
 import { deriveProjectUrlKey, type ActivityEvent, type Agent } from "@paperclipai/shared";
 import { issueStatusIcon, issueStatusIconDefault } from "../lib/status-colors";
 import {
@@ -36,91 +38,96 @@ function humanize(value: unknown): string {
 /** One verb per action. Pinned context (Tier 0) swaps a couple of verbs to
  *  emphasize that user action is needed. */
 function formatVerb(
+  t: TFunction,
   action: string,
   details: Record<string, unknown> | null | undefined,
   context: VerbContext = "chronological",
 ): string {
   switch (action) {
     case "issue.created":
-      return "opened";
+      return t("feedComp.feedCard.verb.opened");
     case "issue.updated": {
       const status = details?.status;
-      if (typeof status === "string") return `moved to ${humanize(status)}`;
+      if (typeof status === "string") return t("feedComp.feedCard.verb.movedTo", { status: humanize(status) });
       const priority = details?.priority;
-      if (typeof priority === "string") return `set priority to ${humanize(priority)} on`;
-      return "updated";
+      if (typeof priority === "string") return t("feedComp.feedCard.verb.setPriority", { priority: humanize(priority) });
+      return t("feedComp.feedCard.verb.updated");
     }
     case "issue.document_created":
-      return "wrote doc on";
+      return t("feedComp.feedCard.verb.wroteDoc");
     case "issue.document_updated":
-      return "edited doc on";
+      return t("feedComp.feedCard.verb.editedDoc");
     case "issue.document_deleted":
-      return "deleted doc from";
+      return t("feedComp.feedCard.verb.deletedDoc");
     case "issue.work_product_created":
-      return "delivered work on";
+      return t("feedComp.feedCard.verb.deliveredWork");
     case "issue.work_product_updated":
-      return "updated work on";
+      return t("feedComp.feedCard.verb.updatedWork");
     case "issue.work_product_deleted":
-      return "removed work from";
+      return t("feedComp.feedCard.verb.removedWork");
     case "issue.checked_out":
-      return "picked up";
+      return t("feedComp.feedCard.verb.pickedUp");
     case "issue.released":
-      return "released";
+      return t("feedComp.feedCard.verb.released");
     case "issue.commented":
     case "issue.comment_added":
-      return "commented on";
+      return t("feedComp.feedCard.verb.commentedOn");
     case "issue.attachment_added":
-      return "attached a file to";
+      return t("feedComp.feedCard.verb.attachedFile");
     case "issue.attachment_removed":
-      return "removed attachment from";
+      return t("feedComp.feedCard.verb.removedAttachment");
     case "issue.deleted":
-      return "deleted";
+      return t("feedComp.feedCard.verb.deleted");
 
     case "approval.created":
-      return context === "pinned" ? "needs approval on" : "requested approval on";
+      return context === "pinned"
+        ? t("feedComp.feedCard.verb.needsApproval")
+        : t("feedComp.feedCard.verb.requestedApproval");
     case "approval.approved":
-      return "approved";
+      return t("feedComp.feedCard.verb.approved");
     case "approval.rejected":
-      return "rejected";
+      return t("feedComp.feedCard.verb.rejected");
     case "approval.revision_requested":
-      return "requested changes on";
+      return t("feedComp.feedCard.verb.requestedChanges");
 
     case "agent.created":
-      return context === "pinned" ? "wants to hire" : "hired";
+      return context === "pinned"
+        ? t("feedComp.feedCard.verb.wantsToHire")
+        : t("feedComp.feedCard.verb.hired");
     case "agent.paused":
-      return "paused";
+      return t("feedComp.feedCard.verb.paused");
     case "agent.resumed":
-      return "resumed";
+      return t("feedComp.feedCard.verb.resumed");
     case "agent.updated":
-      return "updated";
+      return t("feedComp.feedCard.verb.updated");
     case "agent.terminated":
-      return "terminated";
+      return t("feedComp.feedCard.verb.terminated");
 
     case "heartbeat.invoked":
-      return "started a run on";
+      return t("feedComp.feedCard.verb.startedRun");
     case "heartbeat.cancelled":
-      return "cancelled a run on";
+      return t("feedComp.feedCard.verb.cancelledRun");
 
     case "project.created":
-      return "created project";
+      return t("feedComp.feedCard.verb.createdProject");
     case "project.updated":
-      return "updated project";
+      return t("feedComp.feedCard.verb.updatedProject");
     case "project.deleted":
-      return "deleted project";
+      return t("feedComp.feedCard.verb.deletedProject");
     case "goal.created":
-      return "created goal";
+      return t("feedComp.feedCard.verb.createdGoal");
     case "goal.updated":
-      return "updated goal";
+      return t("feedComp.feedCard.verb.updatedGoal");
     case "goal.deleted":
-      return "deleted goal";
+      return t("feedComp.feedCard.verb.deletedGoal");
     case "company.created":
-      return "created company";
+      return t("feedComp.feedCard.verb.createdCompany");
     case "company.updated":
-      return "updated company";
+      return t("feedComp.feedCard.verb.updatedCompany");
     case "company.archived":
-      return "archived company";
+      return t("feedComp.feedCard.verb.archivedCompany");
     case "company.budget_updated":
-      return "updated company budget";
+      return t("feedComp.feedCard.verb.updatedCompanyBudget");
 
     default:
       return action.replace(/[._]/g, " ");
@@ -282,6 +289,7 @@ interface CardContent {
 }
 
 function resolveContent(
+  t: TFunction,
   event: ActivityEvent,
   agentMap: Map<string, Agent>,
   entityNameMap: Map<string, string>,
@@ -292,10 +300,10 @@ function resolveContent(
   const actorName =
     actor?.name ??
     (event.actorType === "system"
-      ? "System"
+      ? t("feedComp.actor.system")
       : event.actorType === "user"
-        ? "Board"
-        : event.actorId || "Unknown");
+        ? t("feedComp.actor.board")
+        : event.actorId || t("feedComp.actor.unknown"));
 
   const entityTitle = entityTitleMap?.get(`${event.entityType}:${event.entityId}`) ?? null;
 
@@ -350,7 +358,7 @@ function resolveContent(
     if (approvalAgentName) {
       identifier = approvalAgentName;
     } else {
-      identifier = approvalType ? humanize(approvalType) : "approval";
+      identifier = approvalType ? humanize(approvalType) : t("feedComp.feedCard.approvalFallback");
       identifierMono = false;
     }
     title = entityTitle;
@@ -424,9 +432,10 @@ export function FeedCard({
   isPinned = false,
   className,
 }: FeedCardProps) {
+  const { t } = useTranslation();
   const details = event.details as Record<string, unknown> | null;
-  const content = resolveContent(event, agentMap, entityNameMap, entityTitleMap);
-  const verb = formatVerb(event.action, details, isPinned ? "pinned" : "chronological");
+  const content = resolveContent(t, event, agentMap, entityNameMap, entityTitleMap);
+  const verb = formatVerb(t, event.action, details, isPinned ? "pinned" : "chronological");
   const iconSpec = getIconSpec(event, details, isActive);
 
   const mutedTextBase = isMuted ? "text-muted-foreground/70" : "text-[#959596]";
@@ -467,7 +476,7 @@ export function FeedCard({
         )}
       </span>
       {isPinned && (
-        <span className="shrink-0 text-xs text-muted-foreground">Review →</span>
+        <span className="shrink-0 text-xs text-muted-foreground">{t("feedComp.feedCard.review")}</span>
       )}
       <span data-fc="time" className="shrink-0 text-muted-foreground">
         {timeAgo(event.createdAt)}

@@ -1,5 +1,6 @@
 import type { MouseEvent, ReactNode } from "react";
 import { FileCode2, FolderOpen } from "lucide-react";
+import { useTranslation } from "@/i18n";
 import { useLocation } from "@/lib/router";
 import { cn } from "@/lib/utils";
 import type { ParsedWorkspaceFileRef } from "@/lib/workspace-file-parser";
@@ -29,20 +30,27 @@ export function WorkspaceFileLink({
   showIcon = true,
   title,
 }: WorkspaceFileLinkProps) {
+  const { t } = useTranslation();
   const viewer = useFileViewer();
   const location = useLocation();
   const display = typeof label !== "undefined" ? label : formatWorkspaceFileRefDisplay(workspaceFileRef);
   const canOpen = !!(onOpen || viewer);
   const isDirectory = workspaceFileRef.resourceKind === "directory" || workspaceFileRef.path.endsWith("/");
   const lineSuffix = workspaceFileRef.line
-    ? ` line ${workspaceFileRef.line}${workspaceFileRef.column ? ` column ${workspaceFileRef.column}` : ""}`
+    ? `${t("workspaceComp.fileLink.lineSuffix", { line: workspaceFileRef.line })}${workspaceFileRef.column ? t("workspaceComp.fileLink.columnSuffix", { column: workspaceFileRef.column }) : ""}`
     : "";
-  const ariaLabel = canOpen
-    ? `Open ${workspaceFileRef.path}${lineSuffix} in the ${isDirectory ? "workspace browser" : "file viewer"}`
-    : `Workspace ${isDirectory ? "folder" : "file"} ${workspaceFileRef.path}${lineSuffix}`;
-  const tooltip = title ?? (canOpen
-    ? `Open ${workspaceFileRef.path}${lineSuffix} in the ${isDirectory ? "workspace browser" : "file viewer"}`
-    : `Workspace ${isDirectory ? "folder" : "file"} ${workspaceFileRef.path}${lineSuffix}`);
+  const describe = (canOpen: boolean) =>
+    canOpen
+      ? t(isDirectory ? "workspaceComp.fileLink.openFolder" : "workspaceComp.fileLink.openFile", {
+          path: workspaceFileRef.path,
+          suffix: lineSuffix,
+        })
+      : t(isDirectory ? "workspaceComp.fileLink.staticFolder" : "workspaceComp.fileLink.staticFile", {
+          path: workspaceFileRef.path,
+          suffix: lineSuffix,
+        });
+  const ariaLabel = describe(canOpen);
+  const tooltip = title ?? describe(canOpen);
 
   const deepLinkSearch = isDirectory
     ? writeFolderViewerStateToSearch(location.search, {
