@@ -1658,5 +1658,115 @@
       "revokedKeys": "취소된 키",
       "revoked": "{{date}} 취소됨"
     }
+  },
+  "inbox": {
+    "breadcrumb": "받은 항목",
+    "selectCompany": "받은 항목을 보려면 회사를 선택하세요.",
+    "searchPlaceholder": "받은 항목 검색…",
+    "tabs": {
+      "mine": "내 항목",
+      "recent": "최근",
+      "unread": "읽지 않음",
+      "blocked": "차단됨",
+      "all": "전체"
+    },
+    "toolbar": {
+      "group": "그룹화",
+      "sort": "정렬",
+      "columnsTitle": "받은 항목에 표시할 열을 선택하세요",
+      "enableNesting": "상위-하위 중첩 사용",
+      "disableNesting": "상위-하위 중첩 해제"
+    },
+    "groupBy": {
+      "none": "없음",
+      "type": "유형",
+      "assignee": "담당자",
+      "project": "프로젝트",
+      "workspace": "워크스페이스"
+    },
+    "markAllRead": {
+      "button": "모두 읽음으로 표시",
+      "pending": "표시하는 중…",
+      "confirmTitle": "모두 읽음으로 표시할까요?",
+      "confirmBodyOne": "읽지 않은 항목 {{count}}개를 읽음으로 표시합니다.",
+      "confirmBodyOther": "읽지 않은 항목 {{count}}개를 읽음으로 표시합니다.",
+      "cancel": "취소",
+      "confirm": "모두 읽음으로 표시"
+    },
+    "categoryFilter": {
+      "placeholder": "카테고리",
+      "everything": "모든 카테고리",
+      "myRecentTasks": "내 최근 작업",
+      "joinRequests": "참가 요청",
+      "approvals": "승인",
+      "failedRuns": "실패한 실행",
+      "alerts": "알림"
+    },
+    "approvalFilter": {
+      "placeholder": "승인 상태",
+      "all": "모든 승인 상태",
+      "actionable": "조치 필요",
+      "resolved": "해결됨"
+    },
+    "searchDivider": {
+      "archived": "보관됨",
+      "other": "기타 결과"
+    },
+    "group": {
+      "newTask": "{{group}}에 새 작업",
+      "subTaskCountOne": "(하위 작업 {{count}}개)",
+      "subTaskCountOther": "(하위 작업 {{count}}개)"
+    },
+    "todayDivider": "이전",
+    "empty": {
+      "search": "검색과 일치하는 받은 항목이 없습니다.",
+      "mine": "받은 항목이 없습니다.",
+      "unread": "새로운 받은 항목이 없습니다.",
+      "recent": "최근 받은 항목이 없습니다.",
+      "all": "이 필터와 일치하는 받은 항목이 없습니다."
+    },
+    "alerts": {
+      "heading": "알림",
+      "agentErrorsOne": "에이전트 <0>{{count}}</0>개에 오류가 있습니다",
+      "agentErrorsOther": "에이전트 <0>{{count}}</0>개에 오류가 있습니다",
+      "budget": "이번 달 예산 사용률 <0>{{percent}}%</0>입니다",
+      "dismiss": "닫기"
+    },
+    "row": {
+      "markRead": "읽음으로 표시",
+      "dismissFromInbox": "받은 항목에서 제거",
+      "dismiss": "닫기"
+    },
+    "failedRun": {
+      "title": "실패한 실행",
+      "titleWithAgent": "실패한 실행 — {{name}}",
+      "retry": "재시도",
+      "retrying": "재시도 중…",
+      "runError": "오류와 함께 실행이 종료되었습니다."
+    },
+    "approval": {
+      "requestedBy": "{{name}} 요청",
+      "updated": "{{time}} 업데이트됨"
+    },
+    "joinRequest": {
+      "agentLabel": "에이전트 참가 요청",
+      "agentLabelNamed": "에이전트 참가 요청: {{name}}",
+      "humanLabel": "사용자 참가 요청",
+      "requestedFromIp": "IP {{ip}}에서 {{time}} 요청됨",
+      "adapter": "어댑터: {{type}}"
+    },
+    "actions": {
+      "approve": "승인",
+      "reject": "거부"
+    },
+    "errors": {
+      "approve": "승인하지 못했습니다",
+      "reject": "거부하지 못했습니다",
+      "approveJoin": "참가 요청을 승인하지 못했습니다",
+      "rejectJoin": "참가 요청을 거부하지 못했습니다",
+      "archive": "작업을 보관하지 못했습니다",
+      "undoArchive": "받은 항목 보관을 취소하지 못했습니다",
+      "retrySkipped": "재시도를 건너뛰었습니다."
+    }
   }
 }

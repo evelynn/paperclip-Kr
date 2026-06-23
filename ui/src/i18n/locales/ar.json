@@ -1658,5 +1658,115 @@
       "revokedKeys": "Revoked Keys",
       "revoked": "Revoked {{date}}"
     }
+  },
+  "inbox": {
+    "breadcrumb": "Inbox",
+    "selectCompany": "Select a company to view inbox.",
+    "searchPlaceholder": "Search inbox…",
+    "tabs": {
+      "mine": "Mine",
+      "recent": "Recent",
+      "unread": "Unread",
+      "blocked": "Blocked",
+      "all": "All"
+    },
+    "toolbar": {
+      "group": "Group",
+      "sort": "Sort",
+      "columnsTitle": "Choose which inbox columns stay visible",
+      "enableNesting": "Enable parent-child nesting",
+      "disableNesting": "Disable parent-child nesting"
+    },
+    "groupBy": {
+      "none": "None",
+      "type": "Type",
+      "assignee": "Assignee",
+      "project": "Project",
+      "workspace": "Workspace"
+    },
+    "markAllRead": {
+      "button": "Mark all as read",
+      "pending": "Marking…",
+      "confirmTitle": "Mark all as read?",
+      "confirmBodyOne": "This will mark {{count}} unread item as read.",
+      "confirmBodyOther": "This will mark {{count}} unread items as read.",
+      "cancel": "Cancel",
+      "confirm": "Mark all as read"
+    },
+    "categoryFilter": {
+      "placeholder": "Category",
+      "everything": "All categories",
+      "myRecentTasks": "My recent tasks",
+      "joinRequests": "Join requests",
+      "approvals": "Approvals",
+      "failedRuns": "Failed runs",
+      "alerts": "Alerts"
+    },
+    "approvalFilter": {
+      "placeholder": "Approval status",
+      "all": "All approval statuses",
+      "actionable": "Needs action",
+      "resolved": "Resolved"
+    },
+    "searchDivider": {
+      "archived": "Archived",
+      "other": "Other results"
+    },
+    "group": {
+      "newTask": "New task in {{group}}",
+      "subTaskCountOne": "({{count}} sub-task)",
+      "subTaskCountOther": "({{count}} sub-tasks)"
+    },
+    "todayDivider": "Earlier",
+    "empty": {
+      "search": "No inbox items match your search.",
+      "mine": "Inbox zero.",
+      "unread": "No new inbox items.",
+      "recent": "No recent inbox items.",
+      "all": "No inbox items match these filters."
+    },
+    "alerts": {
+      "heading": "Alerts",
+      "agentErrorsOne": "<0>{{count}}</0> agent has errors",
+      "agentErrorsOther": "<0>{{count}}</0> agents have errors",
+      "budget": "Budget at <0>{{percent}}%</0> utilization this month",
+      "dismiss": "Dismiss"
+    },
+    "row": {
+      "markRead": "Mark as read",
+      "dismissFromInbox": "Dismiss from inbox",
+      "dismiss": "Dismiss"
+    },
+    "failedRun": {
+      "title": "Failed run",
+      "titleWithAgent": "Failed run — {{name}}",
+      "retry": "Retry",
+      "retrying": "Retrying…",
+      "runError": "Run exited with an error."
+    },
+    "approval": {
+      "requestedBy": "requested by {{name}}",
+      "updated": "updated {{time}}"
+    },
+    "joinRequest": {
+      "agentLabel": "Agent join request",
+      "agentLabelNamed": "Agent join request: {{name}}",
+      "humanLabel": "Human join request",
+      "requestedFromIp": "requested {{time}} from IP {{ip}}",
+      "adapter": "adapter: {{type}}"
+    },
+    "actions": {
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "errors": {
+      "approve": "Failed to approve",
+      "reject": "Failed to reject",
+      "approveJoin": "Failed to approve join request",
+      "rejectJoin": "Failed to reject join request",
+      "archive": "Failed to archive task",
+      "undoArchive": "Failed to undo inbox archive",
+      "retrySkipped": "Retry was skipped."
+    }
   }
 }
