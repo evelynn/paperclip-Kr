@@ -844,5 +844,198 @@
       "runStatusUpdateFailedBody": "Run was stopped, but updating the task failed: {{message}}",
       "runStatusUpdateFailedRetry": "Run was stopped, but updating the task failed. Retry the task status update."
     }
+  },
+  "issueProperties": {
+    "copy": {
+      "copied": "Copied!",
+      "clickToCopy": "Click to copy"
+    },
+    "rows": {
+      "status": "Status",
+      "priority": "Priority",
+      "labels": "Labels",
+      "assignee": "Assignee",
+      "model": "Model",
+      "project": "Project",
+      "parent": "Parent",
+      "blockedBy": "Blocked by",
+      "blocking": "Blocking",
+      "subTasks": "Sub-tasks",
+      "relatedTasks": "Related Tasks",
+      "reviewers": "Reviewers",
+      "approvers": "Approvers",
+      "execution": "Execution",
+      "scheduledRetry": "Scheduled retry",
+      "monitor": "Monitor",
+      "watchdog": "Watchdog",
+      "depth": "Depth",
+      "service": "Service",
+      "workspace": "Workspace",
+      "branch": "Branch",
+      "folder": "Folder",
+      "createdBy": "Created by",
+      "started": "Started",
+      "completed": "Completed",
+      "created": "Created",
+      "updated": "Updated"
+    },
+    "blocker": {
+      "removeAria": "Remove {{label}} as blocker",
+      "taskAria": "Task {{label}}: {{title}}",
+      "removeTitle": "Remove blocker?",
+      "removeDescription": "Remove {{label}} as a blocker for this task.",
+      "cancel": "Cancel",
+      "removeBlocker": "Remove blocker",
+      "addBlocker": "Add blocker",
+      "noBlockers": "No blockers",
+      "searchTasks": "Search tasks...",
+      "searchTasksAria": "Search tasks to add as blockers",
+      "searchingTasks": "Searching tasks...",
+      "noMatchingTasks": "No matching tasks."
+    },
+    "assignee": {
+      "unassigned": "Unassigned",
+      "searchAssignees": "Search assignees...",
+      "noAssignee": "No assignee",
+      "noMatches": "No matches.",
+      "agents": "Agents",
+      "boardUsers": "Board users",
+      "assignToMe": "Assign to me",
+      "assignToRequester": "Assign to requester",
+      "assignToUser": "Assign to {{name}}"
+    },
+    "modelOptions": {
+      "cheapModel": "Cheap model",
+      "primaryModel": "Primary model",
+      "customAdapterOptionsSuffix": " adapter options",
+      "modelLane": "Model lane",
+      "primary": "Primary",
+      "cheap": "Cheap",
+      "custom": "Custom",
+      "cheapSends": "Sends",
+      "cheapAdapterDefault": "adapter default",
+      "cheapUsesProfile": "uses the agent's configured cheap profile",
+      "cheapFallback": "falls back to the primary model if no cheap profile is configured",
+      "model": "Model",
+      "defaultModel": "Default model",
+      "searchModels": "Search models...",
+      "noModels": "No models found.",
+      "thinkingEffort": "Thinking effort",
+      "enableChrome": "Enable Chrome (--chrome)",
+      "noEditableOverrides": "This assignee's adapter does not expose editable task overrides.",
+      "selectCompatibleAgent": "Select a compatible agent assignee to edit these overrides.",
+      "clearAdapterOptions": "Clear adapter options",
+      "chrome": "Chrome"
+    },
+    "thinkingEffort": {
+      "default": "Default",
+      "minimal": "Minimal",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "xhigh": "X-High",
+      "max": "Max"
+    },
+    "participants": {
+      "none": "None",
+      "searchReviewers": "Search reviewers...",
+      "searchApprovers": "Search approvers...",
+      "noReviewers": "No reviewers",
+      "noApprovers": "No approvers",
+      "assignToMe": "Assign to me",
+      "requester": "Requester",
+      "runReviewNow": "Run review now",
+      "runApprovalNow": "Run approval now",
+      "user": "User"
+    },
+    "execution": {
+      "reviewLabel": "Review",
+      "approvalLabel": "Approval",
+      "requestedChanges": "{{stage}} requested changes",
+      "requestedChangesBy": "{{stage}} requested changes by {{participant}}",
+      "pending": "{{stage}} pending",
+      "pendingWith": "{{stage}} pending with {{participant}}"
+    },
+    "project": {
+      "noProject": "No project",
+      "searchProjects": "Search projects..."
+    },
+    "parent": {
+      "noParent": "No parent",
+      "searchTasks": "Search tasks..."
+    },
+    "labelsField": {
+      "noLabels": "No labels",
+      "addLabel": "Add label",
+      "searchLabels": "Search labels...",
+      "newLabel": "New label",
+      "creating": "Creating…",
+      "createLabel": "Create label"
+    },
+    "subTasks": {
+      "addSubTask": "Add sub-task"
+    },
+    "monitor": {
+      "nextCheck": "Next check {{date}}",
+      "nextCheckOffset": "Next check {{offset}}",
+      "cleared": "Cleared",
+      "lastTriggered": "Last triggered {{time}}",
+      "notScheduled": "Not scheduled",
+      "attempt": "Attempt {{count}}",
+      "recheckPlaceholder": "What should the agent re-check?",
+      "externalServicePlaceholder": "External service",
+      "schedule": "Schedule",
+      "clear": "Clear"
+    },
+    "scheduledRetry": {
+      "pendingSchedule": "Pending schedule",
+      "continuation": "Continuation",
+      "retry": "Retry",
+      "dueNow": "{{action}} due now",
+      "dueIn": "{{action}} {{offset}}",
+      "attempt": "Attempt {{count}}",
+      "scheduledContinuation": "Scheduled continuation",
+      "scheduledRetry": "Scheduled retry",
+      "reason": "Reason",
+      "nextAttempt": "Next attempt",
+      "replacesRun": "Replaces run",
+      "agent": "Agent",
+      "lastError": "Last error",
+      "retrying": "Retrying…",
+      "alreadyPromoted": "Already promoted",
+      "promoted": "Promoted",
+      "retryNow": "Retry now",
+      "promotingScheduledRetry": "Promoting scheduled retry",
+      "alreadyPromotedRunStarting": "Already promoted — run starting",
+      "promotedRunStarting": "Promoted — run starting",
+      "pullsContinuationForward": "Pulls continuation forward immediately",
+      "pullsRetryForward": "Pulls retry forward immediately"
+    },
+    "watchdog": {
+      "setWatchdog": "Set watchdog",
+      "disabled": "(disabled)",
+      "watchdogAgent": "Watchdog agent",
+      "selectAgent": "Select agent",
+      "noWatchdogAgent": "No watchdog agent",
+      "searchAgents": "Search agents...",
+      "noAgents": "No agents found.",
+      "instructions": "Instructions",
+      "optional": "(optional)",
+      "instructionsPlaceholder": "What should the watchdog watch for and how should it keep work moving?",
+      "watchdogTask": "Watchdog task:",
+      "viewTask": "View task",
+      "removing": "Removing…",
+      "remove": "Remove",
+      "saving": "Saving…",
+      "update": "Update",
+      "openWatchdogTask": "Open watchdog task",
+      "task": "Task"
+    },
+    "workspace": {
+      "viewWorkspace": "View workspace"
+    },
+    "createdBy": {
+      "user": "User"
+    }
   }
 }

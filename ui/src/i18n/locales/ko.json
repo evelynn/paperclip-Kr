@@ -844,5 +844,198 @@
       "runStatusUpdateFailedBody": "실행이 중지되었지만 작업 업데이트에 실패했습니다: {{message}}",
       "runStatusUpdateFailedRetry": "실행이 중지되었지만 작업 업데이트에 실패했습니다. 작업 상태 업데이트를 재시도하세요."
     }
+  },
+  "issueProperties": {
+    "copy": {
+      "copied": "복사됨!",
+      "clickToCopy": "클릭하여 복사"
+    },
+    "rows": {
+      "status": "상태",
+      "priority": "우선순위",
+      "labels": "라벨",
+      "assignee": "담당자",
+      "model": "모델",
+      "project": "프로젝트",
+      "parent": "상위",
+      "blockedBy": "차단 요인",
+      "blocking": "차단 중",
+      "subTasks": "하위 작업",
+      "relatedTasks": "관련 작업",
+      "reviewers": "검토자",
+      "approvers": "승인자",
+      "execution": "실행",
+      "scheduledRetry": "예약된 재시도",
+      "monitor": "모니터",
+      "watchdog": "워치독",
+      "depth": "깊이",
+      "service": "서비스",
+      "workspace": "작업 공간",
+      "branch": "브랜치",
+      "folder": "폴더",
+      "createdBy": "생성자",
+      "started": "시작됨",
+      "completed": "완료됨",
+      "created": "생성됨",
+      "updated": "업데이트됨"
+    },
+    "blocker": {
+      "removeAria": "{{label}}을(를) 차단 요인에서 제거",
+      "taskAria": "작업 {{label}}: {{title}}",
+      "removeTitle": "차단 요인을 제거하시겠습니까?",
+      "removeDescription": "{{label}}을(를) 이 작업의 차단 요인에서 제거합니다.",
+      "cancel": "취소",
+      "removeBlocker": "차단 요인 제거",
+      "addBlocker": "차단 요인 추가",
+      "noBlockers": "차단 요인 없음",
+      "searchTasks": "작업 검색...",
+      "searchTasksAria": "차단 요인으로 추가할 작업 검색",
+      "searchingTasks": "작업 검색 중...",
+      "noMatchingTasks": "일치하는 작업이 없습니다."
+    },
+    "assignee": {
+      "unassigned": "담당자 없음",
+      "searchAssignees": "담당자 검색...",
+      "noAssignee": "담당자 없음",
+      "noMatches": "일치 항목 없음.",
+      "agents": "에이전트",
+      "boardUsers": "보드 사용자",
+      "assignToMe": "나에게 할당",
+      "assignToRequester": "요청자에게 할당",
+      "assignToUser": "{{name}}에게 할당"
+    },
+    "modelOptions": {
+      "cheapModel": "저렴한 모델",
+      "primaryModel": "기본 모델",
+      "customAdapterOptionsSuffix": " 어댑터 옵션",
+      "modelLane": "모델 레인",
+      "primary": "기본",
+      "cheap": "저렴",
+      "custom": "사용자 지정",
+      "cheapSends": "전송",
+      "cheapAdapterDefault": "어댑터 기본값",
+      "cheapUsesProfile": "에이전트에 구성된 저렴 프로필을 사용합니다",
+      "cheapFallback": "저렴 프로필이 구성되지 않은 경우 기본 모델로 대체됩니다",
+      "model": "모델",
+      "defaultModel": "기본 모델",
+      "searchModels": "모델 검색...",
+      "noModels": "모델을 찾을 수 없습니다.",
+      "thinkingEffort": "사고 강도",
+      "enableChrome": "Chrome 사용 (--chrome)",
+      "noEditableOverrides": "이 담당자의 어댑터는 편집 가능한 작업 재정의를 제공하지 않습니다.",
+      "selectCompatibleAgent": "이 재정의를 편집하려면 호환되는 에이전트 담당자를 선택하세요.",
+      "clearAdapterOptions": "어댑터 옵션 지우기",
+      "chrome": "Chrome"
+    },
+    "thinkingEffort": {
+      "default": "기본",
+      "minimal": "최소",
+      "low": "낮음",
+      "medium": "보통",
+      "high": "높음",
+      "xhigh": "매우 높음",
+      "max": "최대"
+    },
+    "participants": {
+      "none": "없음",
+      "searchReviewers": "검토자 검색...",
+      "searchApprovers": "승인자 검색...",
+      "noReviewers": "검토자 없음",
+      "noApprovers": "승인자 없음",
+      "assignToMe": "나에게 할당",
+      "requester": "요청자",
+      "runReviewNow": "지금 검토 실행",
+      "runApprovalNow": "지금 승인 실행",
+      "user": "사용자"
+    },
+    "execution": {
+      "reviewLabel": "검토",
+      "approvalLabel": "승인",
+      "requestedChanges": "{{stage}}에서 변경을 요청함",
+      "requestedChangesBy": "{{participant}}이(가) {{stage}}에서 변경을 요청함",
+      "pending": "{{stage}} 대기 중",
+      "pendingWith": "{{participant}}와(과) {{stage}} 대기 중"
+    },
+    "project": {
+      "noProject": "프로젝트 없음",
+      "searchProjects": "프로젝트 검색..."
+    },
+    "parent": {
+      "noParent": "상위 없음",
+      "searchTasks": "작업 검색..."
+    },
+    "labelsField": {
+      "noLabels": "라벨 없음",
+      "addLabel": "라벨 추가",
+      "searchLabels": "라벨 검색...",
+      "newLabel": "새 라벨",
+      "creating": "생성 중…",
+      "createLabel": "라벨 만들기"
+    },
+    "subTasks": {
+      "addSubTask": "하위 작업 추가"
+    },
+    "monitor": {
+      "nextCheck": "다음 확인 {{date}}",
+      "nextCheckOffset": "다음 확인 {{offset}}",
+      "cleared": "해제됨",
+      "lastTriggered": "마지막 트리거 {{time}}",
+      "notScheduled": "예약되지 않음",
+      "attempt": "{{count}}번째 시도",
+      "recheckPlaceholder": "에이전트가 무엇을 다시 확인해야 하나요?",
+      "externalServicePlaceholder": "외부 서비스",
+      "schedule": "예약",
+      "clear": "지우기"
+    },
+    "scheduledRetry": {
+      "pendingSchedule": "예약 대기 중",
+      "continuation": "계속",
+      "retry": "재시도",
+      "dueNow": "{{action}} 지금 예정",
+      "dueIn": "{{action}} {{offset}}",
+      "attempt": "{{count}}번째 시도",
+      "scheduledContinuation": "예약된 계속",
+      "scheduledRetry": "예약된 재시도",
+      "reason": "사유",
+      "nextAttempt": "다음 시도",
+      "replacesRun": "대체 실행",
+      "agent": "에이전트",
+      "lastError": "마지막 오류",
+      "retrying": "재시도 중…",
+      "alreadyPromoted": "이미 승격됨",
+      "promoted": "승격됨",
+      "retryNow": "지금 재시도",
+      "promotingScheduledRetry": "예약된 재시도 승격 중",
+      "alreadyPromotedRunStarting": "이미 승격됨 — 실행 시작 중",
+      "promotedRunStarting": "승격됨 — 실행 시작 중",
+      "pullsContinuationForward": "계속을 즉시 앞당깁니다",
+      "pullsRetryForward": "재시도를 즉시 앞당깁니다"
+    },
+    "watchdog": {
+      "setWatchdog": "워치독 설정",
+      "disabled": "(비활성화됨)",
+      "watchdogAgent": "워치독 에이전트",
+      "selectAgent": "에이전트 선택",
+      "noWatchdogAgent": "워치독 에이전트 없음",
+      "searchAgents": "에이전트 검색...",
+      "noAgents": "에이전트를 찾을 수 없습니다.",
+      "instructions": "지침",
+      "optional": "(선택 사항)",
+      "instructionsPlaceholder": "워치독이 무엇을 감시하고 어떻게 작업을 진행시켜야 하나요?",
+      "watchdogTask": "워치독 작업:",
+      "viewTask": "작업 보기",
+      "removing": "제거 중…",
+      "remove": "제거",
+      "saving": "저장 중…",
+      "update": "업데이트",
+      "openWatchdogTask": "워치독 작업 열기",
+      "task": "작업"
+    },
+    "workspace": {
+      "viewWorkspace": "작업 공간 보기"
+    },
+    "createdBy": {
+      "user": "사용자"
+    }
   }
 }
