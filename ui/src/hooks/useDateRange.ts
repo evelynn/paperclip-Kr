@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { TFunction } from "i18next";
+import { i18n } from "@/i18n";
 
 export type DatePreset = "mtd" | "7d" | "30d" | "ytd" | "all" | "custom";
 
@@ -10,6 +12,11 @@ export const PRESET_LABELS: Record<DatePreset, string> = {
   all: "All Time",
   custom: "Custom",
 };
+
+/** Localized date-range preset label. `t` defaults to the global i18n.t. */
+export function datePresetLabel(preset: DatePreset, t: TFunction = i18n.t): string {
+  return t(`dateRange.${preset}`);
+}
 
 export const PRESET_KEYS: DatePreset[] = ["mtd", "7d", "30d", "ytd", "all", "custom"];
 
