@@ -18,7 +18,17 @@ const SELECTABLE_ROLES = AGENT_ROLES.filter((role) => role !== "general");
 interface SkillRecommendationRailProps {
   companyId: string;
   installedKeys: string[];
+  /** Initial role to recommend for — typically the company's most common agent role. */
+  defaultRole?: string;
   className?: string;
+}
+
+function resolveInitialRole(defaultRole: string | undefined): string {
+  const candidate = defaultRole?.trim().toLowerCase();
+  if (candidate && candidate !== "general" && SELECTABLE_ROLES.includes(candidate as never)) {
+    return candidate;
+  }
+  return "engineer";
 }
 
 /**
@@ -29,12 +39,13 @@ interface SkillRecommendationRailProps {
 export function SkillRecommendationRail({
   companyId,
   installedKeys,
+  defaultRole,
   className,
 }: SkillRecommendationRailProps) {
   const { t } = useTranslation();
   const { pushToast } = useToastActions();
   const queryClient = useQueryClient();
-  const [role, setRole] = useState<string>("engineer");
+  const [role, setRole] = useState<string>(() => resolveInitialRole(defaultRole));
 
   const excludeKey = useMemo(() => [...installedKeys].sort().join(","), [installedKeys]);
 
@@ -159,7 +170,10 @@ function RecommendationCard({
         <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">{skill.description}</p>
       </div>
       <div className="flex items-center justify-between gap-2">
-        <span className="inline-flex items-center rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:text-amber-300">
+        <span
+          className="inline-flex items-center rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:text-amber-300"
+          title={recommendation.matchedRoles.length > 0 ? recommendation.matchedRoles.join(", ") : undefined}
+        >
           {reasonLabel}
         </span>
         <Button size="sm" variant="outline" onClick={onInstall} disabled={installing}>

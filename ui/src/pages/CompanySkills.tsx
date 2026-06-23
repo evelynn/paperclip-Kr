@@ -4229,6 +4229,24 @@ export function CompanySkills() {
     },
   });
 
+  // Default the recommendation rail to the company's most common agent role.
+  const dominantAgentRole = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const agent of agentsQuery.data ?? []) {
+      if (!agent.role || agent.role === "general") continue;
+      counts.set(agent.role, (counts.get(agent.role) ?? 0) + 1);
+    }
+    let best: string | undefined;
+    let bestCount = 0;
+    for (const [role, count] of counts) {
+      if (count > bestCount) {
+        best = role;
+        bestCount = count;
+      }
+    }
+    return best;
+  }, [agentsQuery.data]);
+
   const eligibleAgentsForAttach = useMemo(() => {
     const data = agentsQuery.data ?? [];
     return data.map((agent: Agent) => {
@@ -4581,6 +4599,7 @@ export function CompanySkills() {
         <SkillRecommendationRail
           companyId={selectedCompanyId}
           installedKeys={installedSkills.map((skill) => skill.key)}
+          defaultRole={dominantAgentRole}
         />
       ) : null}
 
