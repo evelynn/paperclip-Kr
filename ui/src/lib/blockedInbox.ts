@@ -4,6 +4,12 @@ import type {
   IssueBlockedInboxReason,
   IssueBlockedInboxSeverity,
 } from "@paperclipai/shared";
+import type { TFunction } from "i18next";
+import { i18n } from "@/i18n";
+
+// Labels resolve through i18n. The optional `t` defaults to the global `i18n.t`
+// so non-component callers and the exact-English unit tests (default "en"
+// locale) keep working; UI surfaces re-render reactively on a language switch.
 
 export type BlockedReasonVariant =
   | "needs_decision"
@@ -74,12 +80,12 @@ export function blockedReasonVariant(reason: IssueBlockedInboxReason): BlockedRe
   return VARIANT_BY_REASON[reason] ?? "needs_attention";
 }
 
-export function blockedReasonLabel(reason: IssueBlockedInboxReason): string {
-  return REASON_LABELS[reason] ?? "Stopped";
+export function blockedReasonLabel(reason: IssueBlockedInboxReason, t: TFunction = i18n.t): string {
+  return t(`blockedReasons.reason.${reason}`, { defaultValue: t("blockedReasons.reasonDefault") });
 }
 
-export function blockedVariantLabel(variant: BlockedReasonVariant): string {
-  return BLOCKED_VARIANT_LABELS[variant];
+export function blockedVariantLabel(variant: BlockedReasonVariant, t: TFunction = i18n.t): string {
+  return t(`blockedReasons.variant.${variant}`);
 }
 
 export function blockedSeverityRank(severity: IssueBlockedInboxSeverity): number {
@@ -210,7 +216,7 @@ export function groupBlockedInboxRows(
     const list = buckets.get(variant);
     if (!list || list.length === 0) continue;
     const sorted = sortBlockedInboxRows(list, sort);
-    groups.push({ variant, label: BLOCKED_VARIANT_LABELS[variant], rows: sorted });
+    groups.push({ variant, label: blockedVariantLabel(variant), rows: sorted });
   }
   return groups;
 }
@@ -248,28 +254,27 @@ export function blockedBadgeTone(rows: readonly BlockedInboxIssueRow[]): Blocked
   return "muted";
 }
 
-export function formatStoppedAge(stoppedSinceAt: string | null, now: number = Date.now()): string {
-  if (!stoppedSinceAt) return "stopped";
+export function formatStoppedAge(
+  stoppedSinceAt: string | null,
+  now: number = Date.now(),
+  t: TFunction = i18n.t,
+): string {
+  if (!stoppedSinceAt) return t("blockedReasons.stopped");
   const then = new Date(stoppedSinceAt).getTime();
-  if (!Number.isFinite(then)) return "stopped";
+  if (!Number.isFinite(then)) return t("blockedReasons.stopped");
   const seconds = Math.max(0, Math.round((now - then) / 1000));
-  if (seconds < 60) return "stopped just now";
+  if (seconds < 60) return t("blockedReasons.stoppedJustNow");
   if (seconds < 3600) {
-    const m = Math.floor(seconds / 60);
-    return `stopped ${m}m`;
+    return t("blockedReasons.stoppedMinutes", { n: Math.floor(seconds / 60) });
   }
   if (seconds < 86_400) {
-    const h = Math.floor(seconds / 3600);
-    return `stopped ${h}h`;
+    return t("blockedReasons.stoppedHours", { n: Math.floor(seconds / 3600) });
   }
   if (seconds < 86_400 * 7) {
-    const d = Math.floor(seconds / 86_400);
-    return `stopped ${d}d`;
+    return t("blockedReasons.stoppedDays", { n: Math.floor(seconds / 86_400) });
   }
   if (seconds < 86_400 * 30) {
-    const w = Math.floor(seconds / (86_400 * 7));
-    return `stopped ${w}w`;
+    return t("blockedReasons.stoppedWeeks", { n: Math.floor(seconds / (86_400 * 7)) });
   }
-  const mo = Math.floor(seconds / (86_400 * 30));
-  return `stopped ${mo}mo`;
+  return t("blockedReasons.stoppedMonths", { n: Math.floor(seconds / (86_400 * 30)) });
 }

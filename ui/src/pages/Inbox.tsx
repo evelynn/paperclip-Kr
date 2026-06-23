@@ -2060,7 +2060,7 @@ export function Inbox() {
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-44 p-0">
                   <div className="space-y-0.5 p-2">
-                    {BLOCKED_GROUP_OPTIONS.map(([value, label]) => (
+                    {BLOCKED_GROUP_OPTIONS.map(([value]) => (
                       <button
                         key={value}
                         type="button"
@@ -2070,7 +2070,7 @@ export function Inbox() {
                         )}
                         onClick={() => setBlockedGroupBy(value)}
                       >
-                        <span>{label}</span>
+                        <span>{t(`blockedReasons.groupOptions.${value}`)}</span>
                         {blockedGroupBy === value ? <Check className="h-3.5 w-3.5" /> : null}
                       </button>
                     ))}
@@ -2099,7 +2099,7 @@ export function Inbox() {
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-48 p-0">
                   <div className="space-y-0.5 p-2">
-                    {BLOCKED_SORT_OPTIONS.map(([value, label]) => (
+                    {BLOCKED_SORT_OPTIONS.map(([value]) => (
                       <button
                         key={value}
                         type="button"
@@ -2109,7 +2109,7 @@ export function Inbox() {
                         )}
                         onClick={() => setBlockedSortBy(value)}
                       >
-                        <span>{label}</span>
+                        <span>{t(`blockedReasons.sortOptions.${value}`)}</span>
                         {blockedSortBy === value ? <Check className="h-3.5 w-3.5" /> : null}
                       </button>
                     ))}

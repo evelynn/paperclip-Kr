@@ -6829,5 +6829,47 @@
       "statusCancelled": "취소됨",
       "statusBacklog": "백로그"
     }
+  },
+  "blockedReasons": {
+    "variant": {
+      "needs_decision": "결정 필요",
+      "stalled": "차단 체인 정체",
+      "needs_attention": "주의 필요",
+      "recovery_required": "복구 필요",
+      "external_wait": "외부 대기",
+      "owner_paused": "담당자 일시중지"
+    },
+    "reason": {
+      "pending_board_decision": "보드 결정 대기",
+      "pending_user_decision": "사용자 결정 대기",
+      "missing_successful_run_disposition": "처리 선택 필요",
+      "blocked_chain_stalled": "차단 체인 정체",
+      "blocked_by_unassigned_issue": "미배정 차단 요인",
+      "blocked_by_assigned_backlog_issue": "보류된 차단 요인",
+      "blocked_by_cancelled_issue": "취소된 차단 요인",
+      "in_review_without_action_path": "조치 경로 없는 검토",
+      "invalid_review_participant": "잘못된 검토 참여자",
+      "open_recovery_issue": "복구 진행 중",
+      "external_owner_action": "외부 담당자 조치",
+      "blocked_by_uninvokable_assignee": "담당자 일시중지"
+    },
+    "reasonDefault": "중지됨",
+    "stopped": "중지됨",
+    "stoppedJustNow": "방금 중지됨",
+    "stoppedMinutes": "{{n}}분 전 중지",
+    "stoppedHours": "{{n}}시간 전 중지",
+    "stoppedDays": "{{n}}일 전 중지",
+    "stoppedWeeks": "{{n}}주 전 중지",
+    "stoppedMonths": "{{n}}개월 전 중지",
+    "chipAria": "사유: {{label}}, 심각도 {{severity}}",
+    "groupOptions": {
+      "blocker_type": "차단 유형",
+      "none": "없음"
+    },
+    "sortOptions": {
+      "urgency": "긴급순",
+      "most_recent": "최신순",
+      "longest_stopped": "가장 오래 중지순"
+    }
   }
 }

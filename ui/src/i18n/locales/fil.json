@@ -6829,5 +6829,47 @@
       "statusCancelled": "Cancelled",
       "statusBacklog": "Backlog"
     }
+  },
+  "blockedReasons": {
+    "variant": {
+      "needs_decision": "Needs decision",
+      "stalled": "Blocked chain stalled",
+      "needs_attention": "Needs attention",
+      "recovery_required": "Recovery required",
+      "external_wait": "External wait",
+      "owner_paused": "Owner paused"
+    },
+    "reason": {
+      "pending_board_decision": "Pending board decision",
+      "pending_user_decision": "Pending user decision",
+      "missing_successful_run_disposition": "Pick disposition",
+      "blocked_chain_stalled": "Blocked chain stalled",
+      "blocked_by_unassigned_issue": "Unassigned blocker",
+      "blocked_by_assigned_backlog_issue": "Parked blocker",
+      "blocked_by_cancelled_issue": "Cancelled blocker",
+      "in_review_without_action_path": "Review without action path",
+      "invalid_review_participant": "Invalid review participant",
+      "open_recovery_issue": "Recovery in progress",
+      "external_owner_action": "External owner action",
+      "blocked_by_uninvokable_assignee": "Owner paused"
+    },
+    "reasonDefault": "Stopped",
+    "stopped": "stopped",
+    "stoppedJustNow": "stopped just now",
+    "stoppedMinutes": "stopped {{n}}m",
+    "stoppedHours": "stopped {{n}}h",
+    "stoppedDays": "stopped {{n}}d",
+    "stoppedWeeks": "stopped {{n}}w",
+    "stoppedMonths": "stopped {{n}}mo",
+    "chipAria": "Reason: {{label}}, severity {{severity}}",
+    "groupOptions": {
+      "blocker_type": "Blocker type",
+      "none": "None"
+    },
+    "sortOptions": {
+      "urgency": "Most urgent",
+      "most_recent": "Most recent",
+      "longest_stopped": "Longest stopped"
+    }
   }
 }
