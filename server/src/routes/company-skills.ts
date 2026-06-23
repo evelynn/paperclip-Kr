@@ -2,6 +2,7 @@ import { Router, type Request } from "express";
 import type { Db } from "@paperclipai/db";
 import {
   catalogSkillListQuerySchema,
+  catalogSkillRecommendQuerySchema,
   companySkillCommentCreateSchema,
   companySkillCommentUpdateSchema,
   companySkillCreateSchema,
@@ -23,6 +24,7 @@ import {
   getCatalogSkillOrThrow,
   listCatalogSkillsOrEmpty,
   readCatalogSkillFile,
+  recommendCatalogSkillsOrEmpty,
 } from "../services/skills-catalog.js";
 import { forbidden } from "../errors.js";
 import { assertAuthenticated, assertCompanyAccess, getActorInfo } from "./authz.js";
@@ -126,6 +128,23 @@ export function companySkillRoutes(db: Db) {
       q: firstQueryString(req.query.q),
     });
     res.json(listCatalogSkillsOrEmpty(query));
+  });
+
+  // Role-based recommendations. Registered before the ":catalogId" routes so
+  // "recommended" is not captured as a catalog id.
+  router.get("/skills/catalog/recommended", async (req, res) => {
+    assertAuthenticated(req);
+    const query = catalogSkillRecommendQuerySchema.parse({
+      role: firstQueryString(req.query.role),
+      limit: firstQueryString(req.query.limit),
+    });
+    const excludeRaw = firstQueryString(req.query.exclude);
+    const excludeKeys = excludeRaw
+      ? excludeRaw.split(",").map((entry) => entry.trim()).filter(Boolean)
+      : undefined;
+    res.json(
+      recommendCatalogSkillsOrEmpty({ role: query.role, limit: query.limit, excludeKeys }),
+    );
   });
 
   router.get("/skills/catalog/:catalogId/files", async (req, res) => {

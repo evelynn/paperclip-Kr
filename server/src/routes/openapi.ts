@@ -4333,6 +4333,7 @@ registerCurrentRoute({
 
 for (const route of [
   ["get", "/api/skills/catalog", "List catalog skills"],
+  ["get", "/api/skills/catalog/recommended", "Recommend catalog skills for a role"],
   ["get", "/api/skills/catalog/{catalogId}", "Get a catalog skill"],
   ["get", "/api/skills/catalog/{catalogId}/files", "List catalog skill files"],
   ["post", "/api/companies/{companyId}/skills/install-catalog", "Install a catalog skill"],

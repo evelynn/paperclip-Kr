@@ -58,6 +58,29 @@ export const AGENT_ROLES = [
 ] as const;
 export type AgentRole = (typeof AGENT_ROLES)[number];
 
+/**
+ * Bridge between an agent's role taxonomy ({@link AGENT_ROLES}) and the broader,
+ * looser role vocabulary that catalog skills tag themselves with in
+ * `recommendedForRoles` (e.g. "product", "manager", "marketer", "devrel"). Used
+ * to recommend catalog skills for an agent's role. The agent role itself is
+ * always matched in addition to these aliases, so entries list only the EXTRA
+ * catalog roles a given agent role should also match.
+ */
+export const AGENT_ROLE_SKILL_ALIASES: Record<string, string[]> = {
+  ceo: ["manager"],
+  cto: ["engineer", "manager"],
+  cmo: ["marketer", "product", "devrel"],
+  cfo: ["analyst", "manager"],
+  security: ["engineer"],
+  engineer: [],
+  designer: ["product"],
+  pm: ["product", "product-manager", "manager"],
+  qa: ["engineer"],
+  devops: ["engineer"],
+  researcher: ["analyst"],
+  general: [],
+};
+
 export const AGENT_ROLE_LABELS: Record<AgentRole, string> = {
   ceo: "CEO",
   cto: "CTO",

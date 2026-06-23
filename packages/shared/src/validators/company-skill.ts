@@ -328,6 +328,11 @@ export const catalogSkillListQuerySchema = z.object({
   q: z.string().min(1).optional(),
 });
 
+export const catalogSkillRecommendQuerySchema = z.object({
+  role: z.string().min(1),
+  limit: z.coerce.number().int().min(1).max(50).optional(),
+});
+
 export const catalogSkillFileDetailSchema = z.object({
   catalogSkillId: z.string().min(1),
   path: z.string().min(1),
@@ -361,6 +366,7 @@ export type CompanySkillCommentUpdate = z.infer<typeof companySkillCommentUpdate
 export type CompanySkillFork = z.infer<typeof companySkillForkSchema>;
 export type CompanySkillUpdate = z.infer<typeof companySkillUpdateSchema>;
 export type CatalogSkillListQuery = z.infer<typeof catalogSkillListQuerySchema>;
+export type CatalogSkillRecommendQuery = z.infer<typeof catalogSkillRecommendQuerySchema>;
 export type CompanySkillInstallCatalog = z.infer<typeof companySkillInstallCatalogSchema>;
 export type CompanySkillInstallUpdate = z.infer<typeof companySkillInstallUpdateSchema>;
 export type CompanySkillReset = z.infer<typeof companySkillResetSchema>;

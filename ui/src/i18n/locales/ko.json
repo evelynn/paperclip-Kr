@@ -7401,5 +7401,18 @@
     "runs": "{{count}}회 실행",
     "reviewLabel": "검토:",
     "aria": "검토 중 · 생산성 검토 {{id}} ({{label}})"
+  },
+  "skillRecs": {
+    "title": "추천 스킬",
+    "subtitle": "선택한 역할에 맞는 추천 스킬",
+    "role": "역할",
+    "install": "설치",
+    "installing": "설치 중...",
+    "reasonRole": "역할 추천",
+    "reasonDefault": "기본 추천",
+    "empty": "이 역할에 대한 추천 스킬이 아직 없습니다.",
+    "loading": "추천을 불러오는 중...",
+    "installedTitle": "스킬 설치됨",
+    "installFailed": "스킬 설치 실패"
   }
 }

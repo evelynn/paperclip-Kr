@@ -7401,5 +7401,18 @@
     "runs": "{{count}} runs",
     "reviewLabel": "Review:",
     "aria": "Under review · productivity review {{id}} ({{label}})"
+  },
+  "skillRecs": {
+    "title": "Recommended skills",
+    "subtitle": "Skills suggested for the selected role",
+    "role": "Role",
+    "install": "Install",
+    "installing": "Installing...",
+    "reasonRole": "Recommended for role",
+    "reasonDefault": "Default pick",
+    "empty": "No recommendations for this role yet.",
+    "loading": "Loading recommendations...",
+    "installedTitle": "Skill installed",
+    "installFailed": "Failed to install skill"
   }
 }

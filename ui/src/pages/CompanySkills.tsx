@@ -28,6 +28,7 @@ import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import { useToastActions } from "../context/ToastContext";
 import { queryKeys } from "../lib/queryKeys";
 import { EmptyState } from "../components/EmptyState";
+import { SkillRecommendationRail } from "../components/SkillRecommendationRail";
 import { MarkdownBody } from "../components/MarkdownBody";
 import { MarkdownEditor } from "../components/MarkdownEditor";
 import { PageSkeleton } from "../components/PageSkeleton";
@@ -4575,6 +4576,13 @@ export function CompanySkills() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {isDiscovery && discoveryTab === "catalog" && selectedCompanyId ? (
+        <SkillRecommendationRail
+          companyId={selectedCompanyId}
+          installedKeys={installedSkills.map((skill) => skill.key)}
+        />
+      ) : null}
 
       {isDiscovery ? (
         <DiscoveryGrid
