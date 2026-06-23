@@ -4384,5 +4384,12 @@
     "live": "실시간",
     "stopped": "중지됨",
     "expired": "만료됨"
+  },
+  "misc": {
+    "modeBadge": {
+      "localTrusted": "로컬 신뢰됨",
+      "authenticated": "인증됨 ({{exposure}})"
+    },
+    "missingPluginTab": "워크스페이스 플러그인 탭을 사용할 수 없습니다."
   }
 }

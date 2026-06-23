@@ -4384,5 +4384,12 @@
     "live": "live",
     "stopped": "stopped",
     "expired": "expired"
+  },
+  "misc": {
+    "modeBadge": {
+      "localTrusted": "Local trusted",
+      "authenticated": "Authenticated {{exposure}}"
+    },
+    "missingPluginTab": "Workspace plugin tab is not available."
   }
 }
