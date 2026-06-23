@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { agentRoleLabel } from "@/lib/agent-role-labels";
 import { Link, useNavigate } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
 import { agentsApi, type OrgNode } from "../api/agents";
@@ -625,5 +626,5 @@ export function OrgChart() {
 const roleLabels: Record<string, string> = AGENT_ROLE_LABELS;
 
 function roleLabel(role: string): string {
-  return roleLabels[role] ?? role;
+  return agentRoleLabel(role);
 }

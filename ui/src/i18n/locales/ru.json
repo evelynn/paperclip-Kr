@@ -7319,5 +7319,19 @@
       "work product": "work product",
       "content": "content"
     }
+  },
+  "agentRoles": {
+    "ceo": "CEO",
+    "cto": "CTO",
+    "cmo": "CMO",
+    "cfo": "CFO",
+    "security": "Security",
+    "engineer": "Engineer",
+    "designer": "Designer",
+    "pm": "PM",
+    "qa": "QA",
+    "devops": "DevOps",
+    "researcher": "Researcher",
+    "general": "General"
   }
 }

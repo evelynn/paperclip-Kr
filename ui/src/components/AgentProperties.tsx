@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { agentRoleLabel } from "@/lib/agent-role-labels";
 import { Link } from "@/lib/router";
 import { AGENT_ROLE_LABELS, type Agent, type AgentRuntimeState } from "@paperclipai/shared";
 import { agentsApi } from "../api/agents";
@@ -54,7 +55,7 @@ export function AgentProperties({ agent, runtimeState }: AgentPropertiesProps) {
           </PropertyRow>
         )}
         <PropertyRow label={t("agentConfig.properties.role")}>
-          <span className="text-sm">{roleLabels[agent.role] ?? agent.role}</span>
+          <span className="text-sm">{agentRoleLabel(agent.role)}</span>
         </PropertyRow>
         {agent.title && (
           <PropertyRow label={t("agentConfig.properties.title")}>

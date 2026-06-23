@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { agentRoleLabel } from "@/lib/agent-role-labels";
 import { Link, useNavigate, useLocation } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
 import { agentsApi, type OrgNode } from "../api/agents";
@@ -223,7 +224,7 @@ export function Agents() {
                 // columns line up vertically (PAP-86). Agent names vary in width, so
                 // a content-sized title (`min-w-[7rem]`) shifted meta's start per row.
                 titleClassName="w-56"
-                subtitle={`${roleLabels[agent.role] ?? agent.role}${agent.title ? ` - ${agent.title}` : ""}`}
+                subtitle={`${agentRoleLabel(agent.role)}${agent.title ? ` - ${agent.title}` : ""}`}
                 to={agentUrl(agent)}
                 className={cn(
                   "group",
@@ -398,7 +399,7 @@ function OrgTreeNode({
         <div className="flex-1 min-w-[7rem]">
           <span className="text-sm font-medium">{node.name}</span>
           <span className="text-xs text-muted-foreground ml-2">
-            {roleLabels[node.role] ?? node.role}
+            {agentRoleLabel(node.role)}
             {agent?.title ? ` - ${agent.title}` : ""}
           </span>
         </div>
