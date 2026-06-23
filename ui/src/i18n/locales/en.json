@@ -4391,5 +4391,68 @@
       "authenticated": "Authenticated {{exposure}}"
     },
     "missingPluginTab": "Workspace plugin tab is not available."
+  },
+  "chrome": {
+    "routeError": {
+      "title": "This page hit an error",
+      "body": "Something went wrong while rendering this page. You can go back and try again, or reload.",
+      "goBack": "Go back",
+      "reload": "Reload page"
+    },
+    "cloudAccess": {
+      "noAccessTitle": "No company access",
+      "noAccessBody1": "This account is signed in, but it does not have an active company membership or instance-admin access on this Paperclip instance.",
+      "noAccessBody2": "Use a company invite or sign in with an account that already belongs to this org.",
+      "loading": "Loading...",
+      "loadFailed": "Failed to load app state"
+    }
+  },
+  "issueRelated": {
+    "panel": {
+      "referencesTitle": "References",
+      "referencesDescription": "Other tasks this task currently points at in its title, description, comments, or documents.",
+      "referencesEmpty": "This task does not reference any other tasks yet.",
+      "referencedByTitle": "Referenced by",
+      "referencedByDescription": "Other tasks that currently point at this task.",
+      "referencedByEmpty": "No other tasks reference this task yet."
+    },
+    "pill": {
+      "taskAria": "Task {{identifier}}: {{title}}",
+      "taskAriaNoIdentifier": "Task: {{title}}"
+    },
+    "activity": {
+      "addedReferences": "Added references",
+      "removedReferences": "Removed references"
+    },
+    "siblings": {
+      "navAria": "Sub-task navigation",
+      "previous": "Previous",
+      "next": "Next",
+      "previousAria": "Previous sub-task",
+      "nextAria": "Next sub-task",
+      "linkAria": "{{direction}}: {{identifier}} - {{title}}"
+    },
+    "quicklook": {
+      "previewError": "Unable to load task preview."
+    },
+    "decompositions": {
+      "heading": "Plan decomposition",
+      "statusCompleted": "Completed",
+      "statusInFlight": "In flight",
+      "revisionsCountOne": "1 accepted plan revision",
+      "revisionsCountOther": "{{count}} accepted plan revisions",
+      "planRevisionNumber": "Plan revision {{number}}",
+      "planRevisionId": "Plan revision {{id}}",
+      "childCountOne": "{{created}} of {{requested}} child task created",
+      "childCountOther": "{{created}} of {{requested}} child tasks created",
+      "idempotentClaim": "Idempotent claim",
+      "idempotentClaimTitle": "Repeat attempts with this fingerprint reuse this record instead of creating new children",
+      "ownerAgentFallback": "agent",
+      "owner": "Owner: {{name}}",
+      "started": "Started {{time}}",
+      "completed": "Completed {{time}}",
+      "updated": "Updated {{time}}",
+      "planDocument": "Plan document"
+    }
   }
 }

@@ -4391,5 +4391,68 @@
       "authenticated": "인증됨 ({{exposure}})"
     },
     "missingPluginTab": "워크스페이스 플러그인 탭을 사용할 수 없습니다."
+  },
+  "chrome": {
+    "routeError": {
+      "title": "이 페이지에서 오류가 발생했습니다",
+      "body": "이 페이지를 렌더링하는 중 문제가 발생했습니다. 돌아가서 다시 시도하거나 새로고침할 수 있습니다.",
+      "goBack": "뒤로 가기",
+      "reload": "페이지 새로고침"
+    },
+    "cloudAccess": {
+      "noAccessTitle": "회사 접근 권한 없음",
+      "noAccessBody1": "이 계정은 로그인되어 있지만, 이 Paperclip 인스턴스에서 활성 회사 멤버십이나 인스턴스 관리자 권한이 없습니다.",
+      "noAccessBody2": "회사 초대를 사용하거나, 이미 이 조직에 속한 계정으로 로그인하세요.",
+      "loading": "불러오는 중...",
+      "loadFailed": "앱 상태를 불러오지 못했습니다"
+    }
+  },
+  "issueRelated": {
+    "panel": {
+      "referencesTitle": "참조",
+      "referencesDescription": "이 작업이 제목, 설명, 댓글 또는 문서에서 현재 가리키고 있는 다른 작업입니다.",
+      "referencesEmpty": "이 작업은 아직 다른 작업을 참조하지 않습니다.",
+      "referencedByTitle": "참조됨",
+      "referencedByDescription": "현재 이 작업을 가리키고 있는 다른 작업입니다.",
+      "referencedByEmpty": "아직 이 작업을 참조하는 다른 작업이 없습니다."
+    },
+    "pill": {
+      "taskAria": "작업 {{identifier}}: {{title}}",
+      "taskAriaNoIdentifier": "작업: {{title}}"
+    },
+    "activity": {
+      "addedReferences": "추가된 참조",
+      "removedReferences": "제거된 참조"
+    },
+    "siblings": {
+      "navAria": "하위 작업 탐색",
+      "previous": "이전",
+      "next": "다음",
+      "previousAria": "이전 하위 작업",
+      "nextAria": "다음 하위 작업",
+      "linkAria": "{{direction}}: {{identifier}} - {{title}}"
+    },
+    "quicklook": {
+      "previewError": "작업 미리보기를 불러올 수 없습니다."
+    },
+    "decompositions": {
+      "heading": "계획 분해",
+      "statusCompleted": "완료됨",
+      "statusInFlight": "진행 중",
+      "revisionsCountOne": "승인된 계획 수정본 1개",
+      "revisionsCountOther": "승인된 계획 수정본 {{count}}개",
+      "planRevisionNumber": "계획 수정본 {{number}}",
+      "planRevisionId": "계획 수정본 {{id}}",
+      "childCountOne": "하위 작업 {{requested}}개 중 {{created}}개 생성됨",
+      "childCountOther": "하위 작업 {{requested}}개 중 {{created}}개 생성됨",
+      "idempotentClaim": "멱등 클레임",
+      "idempotentClaimTitle": "이 지문으로 다시 시도하면 새 하위 작업을 만드는 대신 이 기록을 재사용합니다.",
+      "ownerAgentFallback": "에이전트",
+      "owner": "담당자: {{name}}",
+      "started": "시작됨 {{time}}",
+      "completed": "완료됨 {{time}}",
+      "updated": "업데이트됨 {{time}}",
+      "planDocument": "계획 문서"
+    }
   }
 }

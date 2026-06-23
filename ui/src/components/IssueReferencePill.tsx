@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { IssueRelationIssueSummary } from "@paperclipai/shared";
+import { useTranslation } from "@/i18n";
 import { Link } from "@/lib/router";
 import { cn } from "../lib/utils";
 import { StatusIcon } from "./StatusIcon";
@@ -16,6 +17,7 @@ export function IssueReferencePill({
   className?: string;
   children?: ReactNode;
 }) {
+  const { t } = useTranslation();
   const issueLabel = issue.identifier ?? issue.title;
   const classNames = cn(
     "paperclip-mention-chip paperclip-mention-chip--issue",
@@ -37,7 +39,7 @@ export function IssueReferencePill({
         data-mention-kind="issue"
         className={classNames}
         title={issue.title}
-        aria-label={`Task: ${issue.title}`}
+        aria-label={t("issueRelated.pill.taskAriaNoIdentifier", { title: issue.title })}
       >
         {content}
       </span>
@@ -50,7 +52,7 @@ export function IssueReferencePill({
       data-mention-kind="issue"
       className={classNames}
       title={issue.title}
-      aria-label={`Task ${issueLabel}: ${issue.title}`}
+      aria-label={t("issueRelated.pill.taskAria", { identifier: issueLabel, title: issue.title })}
     >
       {content}
     </Link>
