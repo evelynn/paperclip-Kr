@@ -1768,5 +1768,188 @@
       "undoArchive": "Failed to undo inbox archive",
       "retrySkipped": "Retry was skipped."
     }
+  },
+  "routines": {
+    "common": {
+      "breadcrumb": "Routines",
+      "selectCompany": "Select a company to view routines.",
+      "cancel": "Cancel",
+      "titlePlaceholder": "Routine title",
+      "assignee": "Assignee",
+      "noAssignee": "No assignee",
+      "searchAssignees": "Search assignees...",
+      "noAssigneesFound": "No assignees found.",
+      "project": "Project",
+      "noProject": "No project",
+      "searchProjects": "Search projects...",
+      "noProjectsFound": "No projects found.",
+      "addInstructions": "Add instructions...",
+      "toasts": {
+        "runFailed": {
+          "title": "Routine run failed",
+          "body": "Paperclip could not start the routine run."
+        },
+        "updateFailed": {
+          "title": "Failed to update routine",
+          "body": "Paperclip could not update the routine."
+        },
+        "defaultAgentRequired": {
+          "title": "Default agent required",
+          "body": "Set a default agent before enabling routine automation."
+        }
+      }
+    },
+    "list": {
+      "subtitle": "Recurring work definitions that materialize into auditable execution tasks.",
+      "createRoutine": "Create routine",
+      "tabs": {
+        "routines": "Routines",
+        "runs": "Recent Runs"
+      },
+      "routineCountOne": "{{count}} routine",
+      "routineCountOther": "{{count}} routines",
+      "toolbar": {
+        "sort": "Sort",
+        "group": "Group"
+      },
+      "sortFields": {
+        "updated": "Updated",
+        "created": "Created",
+        "lastRun": "Last run",
+        "title": "Title"
+      },
+      "sortDir": {
+        "asc": "Asc",
+        "desc": "Desc"
+      },
+      "groupBy": {
+        "project": "Project",
+        "assignee": "Agent",
+        "none": "None"
+      },
+      "groups": {
+        "noProject": "No project",
+        "unknownProject": "Unknown project",
+        "unassigned": "Unassigned",
+        "unknownAgent": "Unknown agent"
+      },
+      "empty": "No active routines. Use Create routine to define the first recurring workflow.",
+      "loadError": "Failed to load routines",
+      "toasts": {
+        "created": {
+          "title": "Routine created",
+          "bodyWithAgent": "Add the first trigger to turn it into a live workflow.",
+          "bodyDraft": "Draft saved. Add a default agent before enabling automation."
+        }
+      },
+      "composer": {
+        "eyebrow": "New routine",
+        "subtitle": "Define the recurring work first. Default project and agent are optional for draft routines.",
+        "for": "For",
+        "in": "in",
+        "advancedTitle": "Advanced delivery settings",
+        "advancedSubtitle": "Keep policy controls secondary to the work definition.",
+        "concurrency": "Concurrency",
+        "catchUp": "Catch-up",
+        "concurrencyDescriptions": {
+          "coalesce_if_active": "If a run is already active, keep just one follow-up run queued.",
+          "always_enqueue": "Queue every trigger occurrence, even if the routine is already running.",
+          "skip_if_active": "Drop new trigger occurrences while a run is still active."
+        },
+        "catchUpDescriptions": {
+          "skip_missed": "Ignore windows that were missed while the scheduler or routine was paused.",
+          "enqueue_missed_with_cap": "Catch up missed schedule windows in capped batches after recovery."
+        },
+        "footerHint": "After creation, Paperclip takes you straight to trigger setup. Draft routines stay paused until you add a default agent.",
+        "creating": "Creating...",
+        "createFailed": "Failed to create routine"
+      }
+    },
+    "detail": {
+      "loadError": "We couldn't load this routine.",
+      "skipToSection": "Skip to section",
+      "sections": {
+        "overview": "Overview",
+        "triggers": "Triggers",
+        "variables": "Variables",
+        "secrets": "Secrets",
+        "delivery": "Delivery",
+        "runs": "Runs",
+        "activity": "Activity",
+        "history": "History"
+      },
+      "automation": {
+        "archived": "Archived",
+        "draft": "Draft",
+        "active": "Active",
+        "paused": "Paused",
+        "pauseAria": "Pause automatic triggers",
+        "enableAria": "Enable automatic triggers"
+      },
+      "dirtyFields": {
+        "title": "the title",
+        "description": "the description",
+        "project": "the project",
+        "defaultAgent": "the default agent",
+        "priority": "the priority",
+        "concurrencyPolicy": "the concurrency policy",
+        "catchUpPolicy": "the catch-up policy",
+        "variables": "the variables",
+        "secrets": "the secrets"
+      },
+      "secrets": {
+        "selectCompanyToCreate": "Select a company to create secrets",
+        "copied": "{{label}} copied",
+        "copyFailed": "Failed to copy {{label}}",
+        "clipboardDenied": "Clipboard access was denied."
+      },
+      "triggers": {
+        "webhookCreated": "Webhook trigger created",
+        "added": {
+          "title": "Trigger added",
+          "body": "The routine schedule was saved."
+        },
+        "addFailed": {
+          "title": "Failed to add trigger",
+          "body": "Paperclip could not create the trigger."
+        },
+        "updated": {
+          "title": "Trigger saved",
+          "body": "The routine cadence update was saved."
+        },
+        "updateFailed": {
+          "title": "Failed to update trigger",
+          "body": "Paperclip could not update the trigger."
+        },
+        "deleted": "Trigger deleted",
+        "deleteFailed": {
+          "title": "Failed to delete trigger",
+          "body": "Paperclip could not delete the trigger."
+        },
+        "secretRotated": "Webhook secret rotated",
+        "rotateFailed": {
+          "title": "Failed to rotate webhook secret",
+          "body": "Paperclip could not rotate the webhook secret."
+        },
+        "restoredOne": "Webhook trigger restored",
+        "restoredOther": "{{count}} webhook triggers restored"
+      },
+      "toasts": {
+        "conflict": {
+          "title": "Routine changed",
+          "body": "Someone else updated this routine. Reload to see the latest revision."
+        },
+        "saveFailed": {
+          "title": "Failed to save routine",
+          "body": "Paperclip could not save the routine."
+        },
+        "runStarted": "Routine run started",
+        "statusSaved": {
+          "title": "Routine saved",
+          "paused": "Automation paused.",
+          "enabled": "Automation enabled."
+        }
+      }
+    }
   }
 }
