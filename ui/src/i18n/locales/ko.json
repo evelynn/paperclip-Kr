@@ -2057,5 +2057,95 @@
     "filterByType": "유형으로 필터",
     "allTypes": "모든 유형",
     "empty": "아직 활동이 없습니다."
+  },
+  "projects": {
+    "breadcrumb": "프로젝트",
+    "selectCompany": "프로젝트를 보려면 회사를 선택하세요.",
+    "addProject": "프로젝트 추가",
+    "sort": {
+      "label": "정렬",
+      "current": "정렬: {{label}}",
+      "asc": "오름차순",
+      "desc": "내림차순"
+    },
+    "sortFields": {
+      "name": "이름",
+      "updated": "업데이트",
+      "created": "생성",
+      "targetDate": "목표일"
+    },
+    "empty": {
+      "message": "아직 프로젝트가 없습니다."
+    },
+    "sections": {
+      "mine": "내 프로젝트",
+      "other": "기타 프로젝트"
+    },
+    "projectCountOne": "프로젝트 {{count}}개",
+    "projectCountOther": "프로젝트 {{count}}개",
+    "taskCountOne": "작업 {{count}}개",
+    "taskCountOther": "작업 {{count}}개"
+  },
+  "companies": {
+    "breadcrumb": "회사",
+    "newCompany": "새 회사",
+    "loading": "회사를 불러오는 중...",
+    "menu": {
+      "rename": "이름 변경",
+      "delete": "회사 삭제"
+    },
+    "stats": {
+      "agentCountOne": "에이전트 {{count}}명",
+      "agentCountOther": "에이전트 {{count}}명",
+      "taskCountOne": "작업 {{count}}개",
+      "taskCountOther": "작업 {{count}}개",
+      "unlimitedBudget": "무제한 예산",
+      "created": "{{time}} 생성됨"
+    },
+    "delete": {
+      "confirm": "이 회사와 모든 데이터를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+      "cancel": "취소",
+      "delete": "삭제",
+      "deleting": "삭제 중…"
+    }
+  },
+  "goals": {
+    "breadcrumb": "목표",
+    "selectCompany": "목표를 보려면 회사를 선택하세요.",
+    "newGoal": "새 목표",
+    "empty": {
+      "message": "아직 목표가 없습니다.",
+      "action": "목표 추가"
+    },
+    "detail": {
+      "breadcrumb": "목표",
+      "fallbackTitle": "목표",
+      "showProperties": "속성 표시",
+      "noCompanySelected": "선택된 회사가 없습니다",
+      "descriptionPlaceholder": "설명 추가...",
+      "tabs": {
+        "subGoals": "하위 목표 ({{count}})",
+        "projects": "프로젝트 ({{count}})"
+      },
+      "subGoal": "하위 목표",
+      "noSubGoals": "하위 목표가 없습니다.",
+      "noLinkedProjects": "연결된 프로젝트가 없습니다."
+    }
+  },
+  "org": {
+    "breadcrumb": "조직도",
+    "selectCompany": "조직도를 보려면 회사를 선택하세요.",
+    "empty": "조직에 에이전트가 없습니다. 에이전트를 만들어 조직도를 구성하세요.",
+    "chart": {
+      "breadcrumb": "조직도",
+      "selectCompany": "조직도를 보려면 회사를 선택하세요.",
+      "empty": "정의된 조직 계층이 없습니다.",
+      "importCompany": "회사 가져오기",
+      "exportCompany": "회사 내보내기",
+      "zoomIn": "확대",
+      "zoomOut": "축소",
+      "fitToScreen": "화면에 맞추기",
+      "fitChartToScreen": "차트를 화면에 맞추기"
+    }
   }
 }

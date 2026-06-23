@@ -2057,5 +2057,95 @@
     "filterByType": "Filter by type",
     "allTypes": "All types",
     "empty": "No activity yet."
+  },
+  "projects": {
+    "breadcrumb": "Projects",
+    "selectCompany": "Select a company to view projects.",
+    "addProject": "Add Project",
+    "sort": {
+      "label": "Sort",
+      "current": "Sort: {{label}}",
+      "asc": "Asc",
+      "desc": "Desc"
+    },
+    "sortFields": {
+      "name": "Name",
+      "updated": "Updated",
+      "created": "Created",
+      "targetDate": "Target date"
+    },
+    "empty": {
+      "message": "No projects yet."
+    },
+    "sections": {
+      "mine": "My Projects",
+      "other": "Other Projects"
+    },
+    "projectCountOne": "{{count}} project",
+    "projectCountOther": "{{count}} projects",
+    "taskCountOne": "{{count}} task",
+    "taskCountOther": "{{count}} tasks"
+  },
+  "companies": {
+    "breadcrumb": "Companies",
+    "newCompany": "New Company",
+    "loading": "Loading companies...",
+    "menu": {
+      "rename": "Rename",
+      "delete": "Delete Company"
+    },
+    "stats": {
+      "agentCountOne": "{{count}} agent",
+      "agentCountOther": "{{count}} agents",
+      "taskCountOne": "{{count}} task",
+      "taskCountOther": "{{count}} tasks",
+      "unlimitedBudget": "Unlimited budget",
+      "created": "Created {{time}}"
+    },
+    "delete": {
+      "confirm": "Delete this company and all its data? This cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting…"
+    }
+  },
+  "goals": {
+    "breadcrumb": "Goals",
+    "selectCompany": "Select a company to view goals.",
+    "newGoal": "New Goal",
+    "empty": {
+      "message": "No goals yet.",
+      "action": "Add Goal"
+    },
+    "detail": {
+      "breadcrumb": "Goals",
+      "fallbackTitle": "Goal",
+      "showProperties": "Show properties",
+      "noCompanySelected": "No company selected",
+      "descriptionPlaceholder": "Add a description...",
+      "tabs": {
+        "subGoals": "Sub-Goals ({{count}})",
+        "projects": "Projects ({{count}})"
+      },
+      "subGoal": "Sub Goal",
+      "noSubGoals": "No sub-goals.",
+      "noLinkedProjects": "No linked projects."
+    }
+  },
+  "org": {
+    "breadcrumb": "Org Chart",
+    "selectCompany": "Select a company to view org chart.",
+    "empty": "No agents in the organization. Create agents to build your org chart.",
+    "chart": {
+      "breadcrumb": "Org Chart",
+      "selectCompany": "Select a company to view the org chart.",
+      "empty": "No organizational hierarchy defined.",
+      "importCompany": "Import company",
+      "exportCompany": "Export company",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "fitToScreen": "Fit to screen",
+      "fitChartToScreen": "Fit chart to screen"
+    }
   }
 }
