@@ -6667,5 +6667,167 @@
       "advancedOptions": "고급 옵션",
       "moreOptionsGroup": "기타 옵션"
     }
+  },
+  "financeComp": {
+    "budgetPolicy": {
+      "windowLifetime": "전체 기간 예산",
+      "windowMonthly": "월간 UTC 예산",
+      "observed": "관측값",
+      "pctOfLimit": "한도의 {{percent}}%",
+      "noCap": "한도가 설정되지 않음",
+      "budget": "예산",
+      "disabled": "사용 안 함",
+      "softAlertAt": "{{percent}}%에서 알림",
+      "pauseSuffix": " · {{reason}} 일시 중지",
+      "remaining": "남은 금액",
+      "unlimited": "무제한",
+      "budgetUsd": "예산 (USD)",
+      "saving": "저장 중...",
+      "updateBudget": "예산 수정",
+      "setBudget": "예산 설정",
+      "pausedProject": "예산을 상향하거나 사고를 무시할 때까지 이 프로젝트의 실행이 일시 중지됩니다.",
+      "pausedScope": "예산을 상향하거나 사고를 무시할 때까지 이 범위의 하트비트가 일시 중지됩니다.",
+      "invalidAmount": "0 이상의 유효한 금액을 입력하세요.",
+      "statusPaused": "일시 중지됨",
+      "statusWarning": "경고",
+      "statusHardStop": "강제 중단",
+      "statusHealthy": "정상"
+    },
+    "budgetIncident": {
+      "stateResolved": "해결됨",
+      "stateDismissed": "무시됨",
+      "stateEscalated": "에스컬레이션됨",
+      "statePending": "승인 대기 중",
+      "stateOpen": "열림",
+      "hardStop": "{{scope}} 강제 중단",
+      "spendingReached": "지출이 한도 {{limit}}에 대해 {{observed}}에 도달했습니다.",
+      "pausedProject": "프로젝트 실행이 일시 중지되었습니다. 예산 사고를 해결할 때까지 이 프로젝트의 새 작업이 시작되지 않습니다.",
+      "pausedScope": "이 범위가 일시 중지되었습니다. 예산 사고를 해결할 때까지 새 하트비트가 시작되지 않습니다.",
+      "newBudgetUsd": "새 예산 (USD)",
+      "applying": "적용 중...",
+      "raiseResume": "예산 상향 후 재개",
+      "mustExceed": "새 예산은 현재 관측된 지출을 초과해야 합니다.",
+      "keepPaused": "일시 중지 유지"
+    },
+    "sidebarMarker": {
+      "healthy": "예산 정상",
+      "warning": "예산 경고",
+      "critical": "예산으로 인해 일시 중지됨"
+    },
+    "accountingModel": {
+      "title": "회계 모델",
+      "description": "이제 Paperclip은 요청 단위 추론 사용량과 계정 단위 회계 이벤트를 분리합니다. 덕분에 청구자가 OpenRouter, Cloudflare, Bedrock 또는 다른 중개자일 때도 제공자 보고가 정확하게 유지됩니다.",
+      "inferenceLedger": {
+        "title": "추론 원장",
+        "description": "cost_events의 요청 단위 사용량과 청구된 실행입니다.",
+        "point1": "토큰 + 청구 금액",
+        "point2": "제공자, 청구자, 모델",
+        "point3": "구독 및 초과분 인식"
+      },
+      "financeLedger": {
+        "title": "회계 원장",
+        "description": "하나의 프롬프트-응답 쌍이 아닌 계정 단위 청구입니다.",
+        "point1": "충전, 환불, 수수료",
+        "point2": "Bedrock 프로비저닝 또는 학습 비용",
+        "point3": "크레딧 만료 및 조정"
+      },
+      "liveQuotas": {
+        "title": "실시간 할당량",
+        "description": "트래픽을 실시간으로 중단할 수 있는 제공자 또는 청구자 윈도우입니다.",
+        "point1": "제공자 할당량 윈도우",
+        "point2": "청구자 크레딧 시스템",
+        "point3": "오류 직접 표시"
+      }
+    },
+    "billerSpend": {
+      "tokensIn": "입력",
+      "tokensOut": "출력",
+      "providerOne": "제공자 {{count}}개",
+      "providerOther": "제공자 {{count}}개",
+      "modelOne": "모델 {{count}}개",
+      "modelOther": "모델 {{count}}개",
+      "periodSpend": "기간 지출",
+      "pctOfAllocation": "배정량의 {{percent}}%",
+      "meteredRunOne": "측정 실행 {{count}}회",
+      "meteredRunOther": "측정 실행 {{count}}회",
+      "subscriptionRunOne": "구독 실행 {{count}}회",
+      "subscriptionRunOther": "구독 실행 {{count}}회",
+      "thisWeek": "이번 주 {{amount}}",
+      "billingTypes": "청구 유형",
+      "upstreamProviders": "상위 제공자",
+      "tok": "{{tokens}} 토큰"
+    },
+    "financeBiller": {
+      "eventOne": "이벤트 {{count}}건",
+      "eventOther": "이벤트 {{count}}건",
+      "kindOne": "종류 {{count}}개",
+      "kindOther": "종류 {{count}}개",
+      "eventsAcrossKinds": "{{kinds}}에 걸친 {{events}}",
+      "net": "순액",
+      "debits": "차변",
+      "credits": "대변",
+      "estimated": "추정치"
+    },
+    "financeKind": {
+      "title": "회계 이벤트 구성",
+      "description": "이벤트 종류별로 묶은 계정 단위 청구입니다.",
+      "empty": "이 기간에 회계 이벤트가 없습니다.",
+      "eventOne": "이벤트 {{count}}건",
+      "eventOther": "이벤트 {{count}}건",
+      "billerOne": "청구자 {{count}}명",
+      "billerOther": "청구자 {{count}}명",
+      "eventsBillers": "{{events}} · {{billers}}",
+      "debits": "{{amount}} 차변"
+    },
+    "financeTimeline": {
+      "title": "최근 회계 이벤트",
+      "description": "충전, 수수료, 크레딧, 약정 및 기타 비요청 청구입니다.",
+      "defaultEmpty": "이 기간에 회계 이벤트가 없습니다.",
+      "invoice": "인보이스 {{id}}",
+      "region": "리전 {{region}}",
+      "tier": "등급 {{tier}}",
+      "estimated": "추정치"
+    },
+    "providerQuota": {
+      "tokensIn": "입력",
+      "tokensOut": "출력",
+      "totalSuffix": "합계",
+      "runsSuffix": "실행",
+      "apiRuns": "~{{count}} API",
+      "subRuns": "~{{count}} 구독",
+      "periodSpend": "기간 지출",
+      "pctOfAllocation": "배정량의 {{percent}}%",
+      "thisWeek": "이번 주",
+      "perWeek": "~{{amount}} / 주",
+      "rollingWindows": "롤링 윈도우",
+      "tok": "{{tokens}} 토큰",
+      "subscription": "구독",
+      "subShare": "토큰 사용량의 {{percent}}%가 구독을 통함",
+      "subscriptionQuota": "구독 할당량",
+      "percentUsed": "{{percent}}% 사용됨",
+      "resets": "{{date}} 초기화",
+      "tokenShareTitle": "제공자 토큰의 {{percent}}%",
+      "costShareTitle": "제공자 비용의 {{percent}}%"
+    },
+    "activity": {
+      "noRunsYet": "아직 실행 없음",
+      "noTasks": "작업 없음",
+      "runTooltipOne": "{{day}}: 실행 {{count}}회",
+      "runTooltipOther": "{{day}}: 실행 {{count}}회",
+      "issueTooltipOne": "{{day}}: 이슈 {{count}}건",
+      "issueTooltipOther": "{{day}}: 이슈 {{count}}건",
+      "successTooltip": "{{day}}: {{percent}}% ({{succeeded}}/{{total}})",
+      "priorityCritical": "긴급",
+      "priorityHigh": "높음",
+      "priorityMedium": "보통",
+      "priorityLow": "낮음",
+      "statusTodo": "할 일",
+      "statusInProgress": "진행 중",
+      "statusInReview": "검토 중",
+      "statusDone": "완료",
+      "statusBlocked": "차단됨",
+      "statusCancelled": "취소됨",
+      "statusBacklog": "백로그"
+    }
   }
 }
