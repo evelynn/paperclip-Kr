@@ -1,11 +1,13 @@
 import { useEffect, useMemo } from "react";
 import { useParams } from "@/lib/router";
+import { useTranslation, Trans } from "@/i18n";
 import { useBreadcrumbs } from "@/context/BreadcrumbContext";
 import { useCompany } from "@/context/CompanyContext";
 import { PluginSlotMount, usePluginSlots } from "@/plugins/slots";
 import { NotFoundPage } from "./NotFound";
 
 export function CompanySettingsPluginPage() {
+  const { t } = useTranslation();
   const params = useParams<{
     companyPrefix?: string;
     settingsRoutePath?: string;
@@ -41,26 +43,26 @@ export function CompanySettingsPluginPage() {
   useEffect(() => {
     if (!pageSlot) return;
     setBreadcrumbs([
-      { label: "Settings", href: "/company/settings" },
+      { label: t("settings.breadcrumbs.settings"), href: "/company/settings" },
       { label: pageSlot.displayName },
     ]);
-  }, [pageSlot, setBreadcrumbs]);
+  }, [pageSlot, setBreadcrumbs, t]);
 
   if (!resolvedCompanyId) {
     if (hasInvalidCompanyPrefix) {
       return <NotFoundPage scope="invalid_company_prefix" requestedPrefix={routeCompanyPrefix} />;
     }
-    return <div className="text-sm text-muted-foreground">Select a company to view this page.</div>;
+    return <div className="text-sm text-muted-foreground">{t("plugins.companyPage.selectCompany")}</div>;
   }
 
   if (!settingsRoutePath || isLoading) {
-    return <div className="text-sm text-muted-foreground">Loading...</div>;
+    return <div className="text-sm text-muted-foreground">{t("plugins.companyPage.loading")}</div>;
   }
 
   if (errorMessage) {
     return (
       <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-        Plugin extensions unavailable: {errorMessage}
+        {t("plugins.companyPage.extensionsUnavailable", { message: errorMessage })}
       </div>
     );
   }
@@ -68,7 +70,11 @@ export function CompanySettingsPluginPage() {
   if (pageSlots.length > 1) {
     return (
       <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-        Multiple plugins declare the company settings route <code>{settingsRoutePath}</code>. Disable one plugin or change its route.
+        <Trans
+          i18nKey="plugins.companyPage.duplicateRoute"
+          values={{ routePath: settingsRoutePath }}
+          components={[<code />]}
+        />
       </div>
     );
   }

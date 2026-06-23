@@ -2341,5 +2341,597 @@
       "sortedByRelevance": "sorted by relevance",
       "updating": "Updating…"
     }
+  },
+  "companyAdmin": {
+    "access": {
+      "breadcrumbs": {
+        "company": "Company",
+        "settings": "Settings",
+        "members": "Members",
+        "access": "Access"
+      },
+      "title": "Company Members",
+      "intro": "Manage the people who can work in {{name}}. Members can collaborate across the company by default.",
+      "coreNote": "Core keeps this page focused on membership, invite approvals, and safe member removal.",
+      "instanceAdminNote": "This account can manage access here through instance-admin privileges, but it does not currently hold an active company membership.",
+      "humans": "Humans",
+      "humansDescription": "Manage human company memberships and status here.",
+      "pendingJoins": {
+        "title": "Pending human joins",
+        "description": "Review pending join requests before they become active company members.",
+        "badge": "{{count}} pending",
+        "unknownRequester": "Unknown human requester",
+        "noEmail": "No email available",
+        "joinInvite": "{{types}} join invite",
+        "joinInviteWithRole": "{{types}} join invite • default role {{role}}",
+        "inviteUnavailable": "Invite metadata unavailable",
+        "submitted": "Submitted {{date}}",
+        "approve": "Approve human",
+        "reject": "Reject human"
+      },
+      "table": {
+        "userAccount": "User account",
+        "role": "Role",
+        "status": "Status",
+        "action": "Action",
+        "empty": "No user memberships found for this company yet.",
+        "roleUnset": "Unset",
+        "edit": "Edit",
+        "remove": "Remove"
+      },
+      "toast": {
+        "memberUpdated": "Member updated",
+        "memberUpdateFailed": "Failed to update member",
+        "joinApproved": "Join request approved",
+        "joinApproveFailed": "Failed to approve join request",
+        "joinRejected": "Join request rejected",
+        "joinRejectFailed": "Failed to reject join request",
+        "memberRemoved": "Member removed",
+        "memberRemovedBodyOne": "{{count}} assigned task cleaned up.",
+        "memberRemovedBodyOther": "{{count}} assigned tasks cleaned up.",
+        "memberRemoveFailed": "Failed to remove member",
+        "unknownError": "Unknown error"
+      },
+      "editDialog": {
+        "title": "Edit member",
+        "description": "Update company role and membership status for {{name}}.",
+        "companyRole": "Company role",
+        "roleUnset": "Unset",
+        "membershipStatus": "Membership status",
+        "statusActive": "Active",
+        "statusPending": "Pending",
+        "statusSuspended": "Suspended",
+        "cancel": "Cancel",
+        "save": "Save member",
+        "saving": "Saving…"
+      },
+      "removeDialog": {
+        "title": "Remove member",
+        "description": "Archive {{name}} and move active assignments before hiding this user from assignment fields.",
+        "checking": "Checking assigned tasks...",
+        "openTasksOne": "{{count}} open assigned task",
+        "openTasksOther": "{{count}} open assigned tasks",
+        "reassignment": "Task reassignment",
+        "leaveUnassigned": "Leave unassigned",
+        "humans": "Humans",
+        "agents": "Agents",
+        "agentOption": "{{name}} ({{role}})",
+        "moreTasksOne": "{{count}} more task",
+        "moreTasksOther": "{{count}} more tasks",
+        "cancel": "Cancel",
+        "remove": "Remove member",
+        "removing": "Removing..."
+      },
+      "selectCompany": "Select a company to manage access.",
+      "loading": "Loading company access…",
+      "errorForbidden": "You do not have permission to manage company members.",
+      "errorGeneric": "Failed to load company members.",
+      "thisMember": "this member",
+      "legacy": {
+        "breadcrumbAccess": "Access",
+        "checking": "Checking for advanced permission extensions...",
+        "title": "Advanced Permissions",
+        "intro": "Advanced access, scoped assignment, and explicit grant controls are provided by installed company settings extensions.",
+        "unavailableTitle": "Advanced permissions unavailable",
+        "unavailableBody": "Core Paperclip keeps enforcing company boundaries and any existing restrictive policy data, but editing advanced permissions requires an installed extension.",
+        "pluginUnavailable": "Plugin extensions unavailable: {{error}}",
+        "openMembers": "Open Members",
+        "openInvites": "Open Invites"
+      }
+    },
+    "environments": {
+      "breadcrumbs": {
+        "settings": "Settings",
+        "instanceSettings": "Instance settings",
+        "environments": "Environments"
+      },
+      "selectCompany": "Select a company context to manage environment secrets and bindings.",
+      "disabled": "Enable Environments in instance experimental settings to manage shared execution targets.",
+      "createSecretError": "Select a company to create secrets",
+      "default": "Default",
+      "local": "Local",
+      "addEnvironment": "Add environment",
+      "runsOnHost": "Runs on this Paperclip host.",
+      "sshHost": "SSH host",
+      "sshUser": "user",
+      "sandbox": "sandbox",
+      "sandboxProviderSummary": "{{name}} sandbox provider",
+      "sandboxProviderSummaryWithDetail": "{{name}} sandbox provider · {{summary}}",
+      "testing": "Testing...",
+      "testConnection": "Test connection",
+      "testProvider": "Test provider",
+      "editing": "Editing",
+      "edit": "Edit",
+      "toast": {
+        "environmentUpdated": "Environment updated",
+        "environmentCreated": "Environment created",
+        "environmentReady": "{{name}} is ready.",
+        "saveFailed": "Failed to save environment",
+        "saveFailedBody": "Environment save failed.",
+        "defaultUpdated": "Default environment updated",
+        "defaultUpdatedBody": "Agent inheritance now follows the updated instance default.",
+        "defaultUpdateFailed": "Failed to update default environment",
+        "defaultUpdateFailedBody": "Default environment update failed.",
+        "probePassed": "Environment probe passed",
+        "probeFailed": "Environment probe failed",
+        "probeFailedBody": "Environment probe failed.",
+        "draftProbePassed": "Draft probe passed",
+        "draftProbeFailed": "Draft probe failed"
+      },
+      "dialog": {
+        "editTitle": "Edit environment",
+        "addTitle": "Add environment",
+        "description": "Configure a reusable execution target for your agents.",
+        "nameLabel": "Name",
+        "nameHint": "Operator-facing name for this execution target.",
+        "descriptionLabel": "Description",
+        "descriptionHint": "Optional note about what this machine is for.",
+        "driverLabel": "Driver",
+        "driverHint": "Sandbox stores plugin-backed provider config on the shared environment seam. SSH stores a remote machine target.",
+        "driverSandbox": "Sandbox",
+        "driverSsh": "SSH",
+        "driverLocal": "Local",
+        "hostLabel": "Host",
+        "hostHint": "DNS name or IP address for the remote machine.",
+        "portLabel": "Port",
+        "portHint": "Defaults to 22.",
+        "usernameLabel": "Username",
+        "usernameHint": "SSH login user.",
+        "remoteWorkspaceLabel": "Remote workspace path",
+        "remoteWorkspaceHint": "Absolute path that Paperclip will verify during SSH connection tests.",
+        "remoteWorkspacePlaceholder": "/Users/paperclip/workspace",
+        "privateKeyLabel": "Private key",
+        "privateKeyHint": "Optional PEM private key. Leave blank to rely on the server's SSH agent or default keychain.",
+        "noSavedSecret": "No saved secret",
+        "knownHostsLabel": "Known hosts",
+        "knownHostsHint": "Optional known_hosts block used when strict host key checking is enabled.",
+        "strictHostKeyLabel": "Strict host key checking",
+        "strictHostKeyHint": "Keep this on unless you deliberately want probe-time host key acceptance disabled.",
+        "providerLabel": "Provider",
+        "providerHint": "Installed run-capable sandbox provider plugins appear here.",
+        "noConfigFields": "This provider does not declare additional configuration fields.",
+        "envVarsLabel": "Environment variables",
+        "envVarsHint": "Injected into runs that resolve through this environment. Use plain values or company secrets.",
+        "saveError": "Failed to save environment",
+        "cancel": "Cancel",
+        "test": "Test",
+        "testing": "Testing...",
+        "saving": "Saving...",
+        "creating": "Creating...",
+        "saveEnvironment": "Save environment",
+        "createEnvironment": "Create environment"
+      }
+    },
+    "invites": {
+      "breadcrumbs": {
+        "company": "Company",
+        "settings": "Settings",
+        "invites": "Invites"
+      },
+      "roles": {
+        "viewerLabel": "Viewer",
+        "viewerDescription": "Can view company work and follow along.",
+        "viewerGets": "View-only company membership.",
+        "operatorLabel": "Operator",
+        "operatorDescription": "Recommended for people who need to help run work without managing access.",
+        "operatorGets": "Can assign tasks.",
+        "adminLabel": "Admin",
+        "adminDescription": "Recommended for operators who need to invite people, create agents, and approve joins.",
+        "adminGets": "Can create agents, invite users, assign tasks, and approve join requests.",
+        "ownerLabel": "Owner",
+        "ownerDescription": "Full company access, including membership management.",
+        "ownerGets": "Everything in Admin, plus managing members."
+      },
+      "clipboard": {
+        "unavailable": "Clipboard unavailable",
+        "selectManually": "The invite URL is selected. Copy it manually from the field.",
+        "copyManually": "Copy the invite URL manually from the field below."
+      },
+      "toast": {
+        "inviteCreated": "Invite created",
+        "inviteReadyCopied": "Invite ready below and copied to clipboard.",
+        "inviteReady": "Invite ready below.",
+        "createFailed": "Failed to create invite",
+        "inviteRevoked": "Invite revoked",
+        "revokeFailed": "Failed to revoke invite",
+        "unknownError": "Unknown error"
+      },
+      "selectCompany": "Select a company to manage invites.",
+      "loading": "Loading invites…",
+      "errorForbidden": "You do not have permission to manage company invites.",
+      "errorGeneric": "Failed to load invites.",
+      "title": "Company Invites",
+      "intro": "Invite people to request access to this company. New invite links are copied to your clipboard when they are generated.",
+      "invitePerson": "Invite a person",
+      "invitePersonDescription": "Generate a human invite link and choose the default access it should request.",
+      "chooseRole": "Choose a role",
+      "defaultBadge": "Default",
+      "singleUseNote": "Each invite link is single-use. Human invitees get the selected role immediately after sign-in; agent invites still create a join request for approval.",
+      "createInvite": "Create invite",
+      "creating": "Creating…",
+      "auditTrailNote": "Invite history below keeps the audit trail.",
+      "latestInviteLink": "Latest invite link",
+      "copied": "Copied",
+      "latestInviteDomainNote": "This URL includes the current Paperclip domain returned by the server.",
+      "latestInviteUrlLabel": "Latest invite URL",
+      "copyLink": "Copy link",
+      "openInvite": "Open invite",
+      "inviteHistory": "Invite history",
+      "inviteHistoryDescription": "Review invite status, audience, inviter, and any linked join request.",
+      "openJoinQueue": "Open join request queue",
+      "historyEmpty": "No invites have been created for this company yet.",
+      "columnState": "State",
+      "columnFor": "For",
+      "columnInvitedBy": "Invited by",
+      "columnCreated": "Created",
+      "columnJoinRequest": "Join request",
+      "columnAction": "Action",
+      "unknownInviter": "Unknown inviter",
+      "reviewRequest": "Review request",
+      "revoke": "Revoke",
+      "inactive": "Inactive",
+      "loadingMore": "Loading more…",
+      "viewMore": "View more",
+      "state": {
+        "active": "Active",
+        "accepted": "Accepted",
+        "expired": "Expired",
+        "revoked": "Revoked"
+      },
+      "audience": {
+        "agent": "Agent",
+        "humanOrAgentWithRole": "Human or agent · {{role}}",
+        "humanOrAgent": "Human or agent",
+        "human": "Human"
+      }
+    }
+  },
+  "companyData": {
+    "import": {
+      "breadcrumb": "Import",
+      "selectCompany": "Select a company to import into.",
+      "source": {
+        "title": "Import source",
+        "subtitle": "Choose a GitHub repo or upload a local Paperclip zip package."
+      },
+      "sourceModes": {
+        "github": "GitHub repo",
+        "local": "Local zip"
+      },
+      "chooseZip": "Choose zip",
+      "localZipHelpText": "Upload a .zip exported directly from Paperclip. Re-zipped archives created by Finder, Explorer, or other zip tools may not import correctly.",
+      "packageSummaryOne": "{{name}} with {{count}} file",
+      "packageSummaryOther": "{{name}} with {{count}} files",
+      "fields": {
+        "githubUrl": {
+          "label": "GitHub URL",
+          "hint": "Repo tree path or blob URL to COMPANY.md (e.g. github.com/owner/repo/tree/main/company).",
+          "placeholder": "https://github.com/owner/repo/tree/main/company"
+        },
+        "target": {
+          "label": "Target",
+          "hint": "Import into this company or create a new one.",
+          "newOption": "Create new company",
+          "existingOption": "Existing company: {{name}}"
+        },
+        "newName": {
+          "label": "New company name",
+          "hint": "Optional override. Leave blank to use the package name.",
+          "placeholder": "Imported Company"
+        },
+        "collision": {
+          "label": "Collision strategy",
+          "hint": "Board imports can rename, skip, or replace matching company content.",
+          "rename": "Rename on conflict",
+          "skip": "Skip on conflict",
+          "replace": "Replace existing"
+        }
+      },
+      "previewButton": "Preview import",
+      "previewButtonLoading": "Previewing...",
+      "bar": {
+        "previewLabel": "Import preview"
+      },
+      "fileSelectedCountOne": "{{selected}} / {{total}} file selected",
+      "fileSelectedCountOther": "{{selected}} / {{total}} files selected",
+      "conflictCountOne": "{{count}} conflict",
+      "conflictCountOther": "{{count}} conflicts",
+      "errorCountOne": "{{count}} error",
+      "errorCountOther": "{{count}} errors",
+      "conflicts": {
+        "title": "Renames",
+        "itemCountOne": "{{count}} item",
+        "itemCountOther": "{{count}} items",
+        "skip": "skip",
+        "skipped": "skipped",
+        "confirmRename": "confirm rename",
+        "confirmed": "confirmed"
+      },
+      "adapters": {
+        "title": "Adapters",
+        "agentCountOne": "{{count}} agent",
+        "agentCountOther": "{{count}} agents",
+        "agentBadge": "agent",
+        "configure": "configure adapter"
+      },
+      "importButtonOne": "Import {{count}} file",
+      "importButtonOther": "Import {{count}} files",
+      "importButtonLoading": "Importing...",
+      "packageFiles": "Package files",
+      "previewPane": {
+        "selectFile": "Select a file to preview its contents.",
+        "binaryUnavailable": "Binary asset preview is not available for this file type."
+      },
+      "actions": {
+        "create": "create",
+        "update": "update",
+        "overwrite": "overwrite",
+        "replace": "replace",
+        "skip": "skip",
+        "none": "none"
+      },
+      "kinds": {
+        "agent": "agent",
+        "project": "project",
+        "issue": "issue",
+        "skill": "skill"
+      },
+      "toasts": {
+        "previewFailedTitle": "Preview failed",
+        "previewFailedBody": "Failed to preview import.",
+        "importCompleteTitle": "Import complete",
+        "importCompleteBodyOne": "{{name}}: {{count}} agent processed.",
+        "importCompleteBodyOther": "{{name}}: {{count}} agents processed.",
+        "importFailedTitle": "Import failed",
+        "importFailedBody": "Failed to apply import.",
+        "packageReadFailedTitle": "Package read failed",
+        "packageReadFailedBody": "Failed to read folder."
+      },
+      "errors": {
+        "noSource": "No source configured.",
+        "selectZip": "Select a .zip company package.",
+        "noPackageFiles": "No package files were found in the selected zip archive."
+      }
+    },
+    "export": {
+      "breadcrumb": "Export",
+      "selectCompany": "Select a company to export.",
+      "loading": "Loading export data...",
+      "exportLabel": "{{name}} export",
+      "companyFallback": "Company",
+      "fileSelectedCountOne": "{{selected}} / {{total}} file selected",
+      "fileSelectedCountOther": "{{selected}} / {{total}} files selected",
+      "warningCountOne": "{{count}} warning",
+      "warningCountOther": "{{count}} warnings",
+      "downloadButtonOne": "Export {{count}} file",
+      "downloadButtonOther": "Export {{count}} files",
+      "downloadButtonLoading": "Building export...",
+      "packageFiles": "Package files",
+      "searchPlaceholder": "Search files...",
+      "showMoreTasks": "Show more tasks ({{visible}} of {{total}})",
+      "previewPane": {
+        "selectFile": "Select a file to preview its contents.",
+        "binaryUnavailable": "Binary asset preview is not available for this file type."
+      },
+      "toasts": {
+        "exportFailedTitle": "Export failed",
+        "loadFailedBody": "Failed to load export data.",
+        "downloadedTitle": "Export downloaded",
+        "downloadedBodyOne": "{{count}} file exported as {{name}}.zip",
+        "downloadedBodyOther": "{{count}} files exported as {{name}}.zip",
+        "buildFailedBody": "Failed to build export package."
+      }
+    }
+  },
+  "plugins": {
+    "settings": {
+      "loading": "Loading plugin details...",
+      "detailsBreadcrumb": "Plugin Details",
+      "tabs": {
+        "configuration": "Configuration",
+        "status": "Status"
+      },
+      "about": {
+        "heading": "About",
+        "description": "Description",
+        "author": "Author",
+        "categories": "Categories",
+        "none": "None"
+      },
+      "noDescription": "No description provided.",
+      "section": {
+        "settings": "Settings"
+      },
+      "localFolders": {
+        "selectCompany": "Select a company to configure this plugin's local folders.",
+        "heading": "Local folders",
+        "loadError": "Failed to load local folder settings.",
+        "loading": "Loading local folders...",
+        "healthy": "Healthy",
+        "needsAttention": "Needs attention",
+        "readWrite": "Read/write",
+        "readOnly": "Read only",
+        "configured": "Configured",
+        "readable": "Readable",
+        "writable": "Writable",
+        "yes": "Yes",
+        "no": "No",
+        "notRequested": "Not requested",
+        "configuredPath": "Configured path",
+        "pathLabel": "Local folder path",
+        "pathPlaceholder": "/absolute/path/to/folder",
+        "save": "Save",
+        "saved": "Local folder saved.",
+        "savedNeedsAttention": "Local folder saved, but validation still needs attention.",
+        "saveError": "Failed to save local folder.",
+        "pathRequired": "Local folder path is required.",
+        "pathMustBeAbsolute": "Local folder must be a full absolute path.",
+        "validationProblems": "Validation problems",
+        "requiredDirectories": "Required directories",
+        "requiredFiles": "Required files",
+        "missingDirectories": "Missing directories",
+        "missingFiles": "Missing files",
+        "notInspected": "Not inspected",
+        "missingCount": "{{count}} missing",
+        "present": "Present",
+        "noneDeclared": "None declared.",
+        "rootNotInspected": "Configured root was not inspected."
+      },
+      "configForm": {
+        "loading": "Loading configuration...",
+        "saved": "Configuration saved.",
+        "saveError": "Failed to save configuration.",
+        "testPassed": "Configuration test passed.",
+        "testFailed": "Configuration test failed.",
+        "save": "Save Configuration",
+        "saving": "Saving...",
+        "test": "Test Configuration",
+        "testing": "Testing..."
+      },
+      "environments": {
+        "configureFromInstance": "Configure this plugin from Instance Settings → Environments.",
+        "description": "{{driverLabel}} registers environment runtime settings there so the execution target stays instance-scoped while secret bindings still resolve through the selected company context.",
+        "thisPlugin": "This plugin",
+        "open": "Open Environments"
+      },
+      "noSettings": "This plugin does not require any settings.",
+      "status": {
+        "runtimeDashboard": "Runtime Dashboard",
+        "runtimeDescription": "Worker process, scheduled jobs, and webhook deliveries",
+        "workerProcess": "Worker Process",
+        "workerStatus": "Status",
+        "pid": "PID",
+        "uptime": "Uptime",
+        "pendingRpcs": "Pending RPCs",
+        "crashes": "Crashes",
+        "crashesValue": "{{consecutive}} consecutive / {{total}} total",
+        "lastCrash": "Last Crash",
+        "noWorker": "No worker process registered.",
+        "recentJobRuns": "Recent Job Runs",
+        "noJobRuns": "No job runs recorded yet.",
+        "recentWebhookDeliveries": "Recent Webhook Deliveries",
+        "noWebhookDeliveries": "No webhook deliveries recorded yet.",
+        "lastChecked": "Last checked: {{time}}",
+        "runtimeUnavailable": "Runtime diagnostics are unavailable right now.",
+        "recentLogs": "Recent Logs",
+        "logEntriesOne": "Last {{count}} log entry",
+        "logEntriesOther": "Last {{count}} log entries",
+        "healthStatus": "Health Status",
+        "checkingHealth": "Checking health...",
+        "overall": "Overall",
+        "lifecycle": "Lifecycle",
+        "healthAfterReady": "Health checks run once the plugin is ready.",
+        "details": "Details",
+        "pluginId": "Plugin ID",
+        "pluginKey": "Plugin Key",
+        "npmPackage": "NPM Package",
+        "version": "Version",
+        "permissions": "Permissions",
+        "noPermissions": "No special permissions requested."
+      }
+    },
+    "manager": {
+      "experimental": "Experimental",
+      "noErrorMessage": "Plugin entered an error state without a stored error message.",
+      "loading": "Loading plugins...",
+      "loadError": "Failed to load plugins.",
+      "title": "Plugin Manager",
+      "install": "Install Plugin",
+      "installDescription": "Enter the npm package name of the plugin you wish to install.",
+      "packageNameLabel": "npm Package Name",
+      "cancel": "Cancel",
+      "installing": "Installing...",
+      "installAction": "Install",
+      "toast": {
+        "installed": "Plugin installed successfully",
+        "installFailed": "Failed to install plugin",
+        "uninstalled": "Plugin uninstalled successfully",
+        "uninstallFailed": "Failed to uninstall plugin",
+        "enabled": "Plugin enabled",
+        "enableFailed": "Failed to enable plugin",
+        "disabled": "Plugin disabled",
+        "disableFailed": "Failed to disable plugin"
+      },
+      "alpha": {
+        "title": "Plugins are alpha.",
+        "description": "The plugin runtime and API surface are still changing. Expect breaking changes while this feature settles."
+      },
+      "available": {
+        "heading": "Available Plugins",
+        "bundled": "Bundled",
+        "loading": "Loading bundled plugins...",
+        "loadError": "Failed to load bundled plugins.",
+        "empty": "No bundled plugins were found in this checkout.",
+        "firstParty": "First-party",
+        "example": "Example",
+        "notInstalled": "Not installed",
+        "building": "Building plugin...",
+        "enable": "Enable",
+        "openSettings": "Open Settings",
+        "review": "Review"
+      },
+      "installed": {
+        "heading": "Installed Plugins",
+        "empty": "No plugins installed",
+        "emptyHint": "Install a plugin to extend functionality.",
+        "noDescription": "No description provided.",
+        "error": "Plugin error",
+        "viewFullError": "View full error",
+        "disable": "Disable",
+        "enable": "Enable",
+        "uninstall": "Uninstall",
+        "configure": "Configure"
+      },
+      "uninstall": {
+        "title": "Uninstall Plugin",
+        "confirm": "Are you sure you want to uninstall <0>{{name}}</0>? This action cannot be undone.",
+        "cancel": "Cancel",
+        "uninstalling": "Uninstalling...",
+        "uninstall": "Uninstall"
+      },
+      "errorDialog": {
+        "title": "Error Details",
+        "description": "{{name}} hit an error state.",
+        "pluginFallback": "Plugin",
+        "whatErrored": "What errored",
+        "noSummary": "No error summary available.",
+        "fullOutput": "Full error output",
+        "noStoredError": "No stored error message.",
+        "close": "Close"
+      }
+    },
+    "page": {
+      "selectCompany": "Select a company to view this page.",
+      "loading": "Loading…",
+      "duplicateRoute": "Multiple plugins declare the route <0>{{routePath}}</0>. Use the plugin-id route until the conflict is resolved.",
+      "breadcrumb": "Plugins",
+      "back": "Back"
+    },
+    "companyPage": {
+      "selectCompany": "Select a company to view this page.",
+      "loading": "Loading...",
+      "extensionsUnavailable": "Plugin extensions unavailable: {{message}}",
+      "duplicateRoute": "Multiple plugins declare the company settings route <0>{{routePath}}</0>. Disable one plugin or change its route."
+    }
   }
 }
