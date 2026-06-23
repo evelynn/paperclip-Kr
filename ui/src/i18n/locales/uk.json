@@ -4053,5 +4053,306 @@
     "requestedPath": "Requested path:",
     "openDashboard": "Open dashboard",
     "goHome": "Go home"
+  },
+  "secrets": {
+    "title": "Secrets",
+    "selectCompany": "Select a company to manage secrets.",
+    "tabs": {
+      "secrets": "Secrets",
+      "vaults": "Provider vaults"
+    },
+    "mode": {
+      "paperclipManaged": "Paperclip-managed",
+      "linkedExternal": "Linked external",
+      "paperclipManagedDescription": "Paperclip owns create and rotation writes for this provider secret.",
+      "linkedExternalDescription": "Paperclip resolves this provider reference but does not rotate the provider value."
+    },
+    "createBlock": {
+      "selectProvider": "Select a provider.",
+      "noManagedValues": "{{label}} does not support Paperclip-managed secret values.",
+      "noExternalReferences": "{{label}} does not support linked external references.",
+      "notConfiguredWithMessage": "{{label}} is not configured in this deployment. {{message}}",
+      "notConfigured": "{{label}} is not configured in this deployment.",
+      "healthCheckFailed": "{{label}} health check failed: {{message}}"
+    },
+    "providerConfigBlock": {
+      "disabled": "This provider vault is disabled.",
+      "draftOnly": "This provider vault is saved as draft metadata only.",
+      "healthCheckFailed": "This provider vault health check failed."
+    },
+    "providerVaultLabel": {
+      "deploymentDefault": "Deployment default",
+      "unknown": "Unknown vault"
+    },
+    "howToUse": {
+      "heading": "Use secrets by binding them to runtime environment variables.",
+      "body": "Create or link a secret here, then open an agent's Environment variables or a project's Env field. Add the env key the process expects, for example <0>GH_TOKEN</0>, choose <1>Secret</1>, and select the stored secret version.",
+      "resolveNote": "Paperclip resolves the value server-side when the run starts and injects it as that env var. Project env applies to every task in the project and overrides agent env on matching keys."
+    },
+    "search": {
+      "placeholder": "Search by name, key, ref",
+      "ariaLabel": "Search secrets"
+    },
+    "newSecret": "New secret",
+    "list": {
+      "loadError": "Failed to load secrets: {{message}}",
+      "retry": "Retry",
+      "empty": "No secrets yet. Create your first managed secret or link an external reference.",
+      "emptyAction": "New secret",
+      "noMatch": "No secrets match your filters.",
+      "columns": {
+        "name": "Name",
+        "mode": "Mode",
+        "provider": "Provider",
+        "status": "Status",
+        "version": "Version",
+        "lastRotated": "Last rotated",
+        "lastResolved": "Last resolved",
+        "references": "References",
+        "reference": "Reference"
+      },
+      "viewReferences": "View references for {{name}}",
+      "owned": "Owned",
+      "open": "Open"
+    },
+    "status": {
+      "active": "active",
+      "disabled": "disabled",
+      "archived": "archived",
+      "deleted": "deleted"
+    },
+    "filters": {
+      "title": "Filters",
+      "withCount": "Filters: {{count}}",
+      "filter": "Filter",
+      "clear": "Clear",
+      "status": "Status",
+      "provider": "Provider",
+      "allStatuses": "All statuses",
+      "allProviders": "All providers",
+      "statusActive": "Active",
+      "statusDisabled": "Disabled",
+      "statusArchived": "Archived"
+    },
+    "importFromVault": {
+      "disabledManage": "AWS vault disabled — manage",
+      "disabledTitle": "Configure an AWS provider vault to enable remote import",
+      "import": "Import from vault"
+    },
+    "detail": {
+      "updateReference": "Update reference",
+      "updateValue": "Update value",
+      "disable": "Disable",
+      "activate": "Activate",
+      "unarchive": "Unarchive",
+      "archive": "Archive",
+      "delete": "Delete",
+      "tabs": {
+        "details": "Details",
+        "usage": "Usage",
+        "usageWithCount": "Usage ({{count}})",
+        "events": "Access events"
+      }
+    },
+    "toast": {
+      "created": "Secret created",
+      "rotated": "Rotated",
+      "rotatedBody": "{{name}} → v{{version}}",
+      "statusUpdated": "Secret {{status}}",
+      "statusUpdateFailed": "Status update failed",
+      "deleted": "Secret deleted",
+      "deleteFailed": "Delete failed",
+      "tryAgain": "Try again",
+      "rotateFailed": "Rotate failed",
+      "vaultUpdated": "Provider vault updated",
+      "vaultCreated": "Provider vault created",
+      "vaultDisabled": "Provider vault disabled",
+      "disableFailed": "Disable failed",
+      "vaultRemoved": "Provider vault removed",
+      "vaultRemovedBody": "{{name}} was removed from Paperclip only.",
+      "removeFailed": "Remove failed",
+      "defaultVaultSet": "Default vault set",
+      "defaultUpdateFailed": "Default update failed",
+      "healthChecked": "Health checked",
+      "healthCheckFailed": "Health check failed"
+    },
+    "errors": {
+      "selectSecretFirst": "Select a secret first"
+    },
+    "usageDialog": {
+      "title": "Secret references",
+      "referencedByOne": "{{name}} is referenced by {{count}} place.",
+      "referencedByOther": "{{name}} is referenced by {{count}} places."
+    },
+    "create": {
+      "title": "Create secret",
+      "description": "Choose whether Paperclip should own future provider writes, or only resolve an existing provider reference at runtime.",
+      "managedTab": "Managed value",
+      "externalTab": "External reference",
+      "name": "Name",
+      "namePlaceholder": "OPENAI_API_KEY",
+      "key": "Key",
+      "optional": "(optional)",
+      "keyPlaceholder": "auto from name",
+      "provider": "Provider",
+      "providerNotConfigured": " (not configured)",
+      "providerExternalOnly": " (external only)",
+      "providerVault": "Provider vault",
+      "deploymentDefault": "Deployment default",
+      "vaultDefaultSuffix": " (default)",
+      "vaultBlockSuffix": " ({{reason}})",
+      "vaultBackcompat": "Existing deployment-level provider settings stay available for backwards compatibility.",
+      "managedInfo": "Paperclip-managed secrets are created in the selected provider and future rotations write a new provider version through Paperclip.",
+      "awsManagedPath": "AWS managed path:",
+      "value": "Value",
+      "valuePlaceholder": "Stored once, never re-displayed",
+      "externalReference": "External reference",
+      "externalReferencePlaceholder": "arn:aws:secretsmanager:...",
+      "externalReferenceNote": "Existing provider secrets are resolve-only in Paperclip. Rotate the value in the provider, then update this reference only if the path, ARN, or version changes.",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "What is this secret used for? (no values)",
+      "cancel": "Cancel",
+      "createSecret": "Create secret",
+      "linkReference": "Link reference"
+    },
+    "vaultDialog": {
+      "editTitle": "Edit provider vault",
+      "createTitle": "Create provider vault",
+      "description": "Save only non-sensitive routing metadata. Credentials stay in the runtime environment or provider identity.",
+      "provider": "Provider",
+      "displayName": "Display name",
+      "displayNamePlaceholder": "Production local vault",
+      "status": "Status",
+      "statusReady": "Ready",
+      "statusWarning": "Warning",
+      "statusComingSoon": "Coming soon",
+      "statusDisabled": "Disabled",
+      "defaultFor": "Default for {{provider}}",
+      "comingSoonNote": "This provider can save draft routing metadata, but runtime writes and resolution stay disabled until the provider module is implemented and reviewed.",
+      "cancel": "Cancel",
+      "saveVault": "Save vault",
+      "createVault": "Create vault"
+    },
+    "vaultFields": {
+      "localAck": "I understand backup and restore require both the database metadata and the local encrypted master key file.",
+      "awsRegion": "AWS region",
+      "awsRegionPlaceholder": "us-east-1",
+      "namespace": "Namespace",
+      "namespacePlaceholder": "production",
+      "secretNamePrefix": "Secret name prefix",
+      "secretNamePrefixPlaceholder": "paperclip",
+      "kmsKeyId": "KMS key id",
+      "kmsKeyIdPlaceholder": "alias/paperclip-secrets",
+      "ownerTag": "Owner tag",
+      "ownerTagPlaceholder": "platform",
+      "environmentTag": "Environment tag",
+      "environmentTagPlaceholder": "prod",
+      "projectId": "Project id",
+      "projectIdPlaceholder": "paperclip-prod",
+      "location": "Location",
+      "locationPlaceholder": "global",
+      "vaultNamespacePlaceholder": "admin",
+      "address": "Address",
+      "addressPlaceholder": "https://vault.example.com",
+      "mountPath": "Mount path",
+      "mountPathPlaceholder": "secret",
+      "secretPathPrefix": "Secret path prefix",
+      "secretPathPrefixPlaceholder": "paperclip/prod",
+      "optional": " (optional)"
+    },
+    "discovery": {
+      "heading": "AWS discovery",
+      "description": "Uses the current draft routing fields to inspect AWS Secrets Manager metadata. Values are not read.",
+      "findValues": "Find existing AWS values",
+      "enterRegion": "Enter an AWS region before discovery.",
+      "searching": "Searching AWS Secrets Manager metadata",
+      "noCandidates": "No AWS vault metadata candidates found. Manual entry is still available.",
+      "candidatesOne": "{{count}} candidate from {{sampled}}",
+      "candidatesOther": "{{count}} candidates from {{sampled}}",
+      "sampledOne": "{{count}} sampled secret",
+      "sampledOther": "{{count}} sampled secrets",
+      "useValues": "Use values",
+      "samplesOne": "{{count}} sample",
+      "samplesOther": "{{count}} samples",
+      "noStableNamespace": "No stable namespace or prefix detected"
+    },
+    "rotate": {
+      "titleExternal": "Update external reference",
+      "titleManaged": "Update secret value",
+      "descriptionExternal": "Creates a new Paperclip metadata version that points at an existing provider secret. Paperclip does not write a new provider value.",
+      "descriptionManaged": "Creates a new provider-backed version. Consumers pinned to latest pick up the new value on the next run.",
+      "providerVault": "Provider vault",
+      "deploymentDefault": "Deployment default",
+      "vaultDefaultSuffix": " (default)",
+      "vaultBlockSuffix": " ({{reason}})",
+      "deploymentDefaultNote": "Rotating with the deployment default preserves current fallback behavior.",
+      "externalReference": "External reference",
+      "externalReferencePlaceholder": "Updated reference",
+      "externalReferenceNote": "Rotate the actual value in the provider before changing this Paperclip reference.",
+      "newValue": "New value",
+      "newValuePlaceholder": "Paste the new value",
+      "cancel": "Cancel",
+      "updateReference": "Update reference",
+      "updateValue": "Update value"
+    },
+    "deleteDialog": {
+      "title": "Delete secret",
+      "description": "Permanently removes <0>{{name}}</0>. Active bindings will fail until you remap them.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "removeVaultDialog": {
+      "title": "Remove provider vault",
+      "descriptionAws": "Removes <0>{{name}}</0> from Paperclip only. This does not delete the remote AWS Secrets Manager vault, secrets, or any AWS data. Secrets using this vault will lose the vault association until you assign another one.",
+      "descriptionOther": "Removes <0>{{name}}</0> from Paperclip only. This does not delete any remote provider data. Secrets using this vault will lose the vault association until you assign another one.",
+      "cancel": "Cancel",
+      "removeFromPaperclip": "Remove from Paperclip"
+    },
+    "vaultsTab": {
+      "loading": "Loading provider vaults",
+      "loadError": "Failed to load provider vaults: {{message}}",
+      "retry": "Retry",
+      "comingSoon": "Coming soon",
+      "addVault": "Add vault",
+      "notSupported": "Not yet supported.",
+      "noVaults": "No company-specific vaults yet. Secrets can still use the deployment default provider settings."
+    },
+    "vaultCard": {
+      "default": "Default",
+      "healthWithStatus": "Health {{status}} · {{time}}",
+      "healthNotChecked": "Health not checked",
+      "checkHealth": "Check health",
+      "makeDefault": "Make default",
+      "disable": "Disable",
+      "remove": "Remove"
+    },
+    "inlineWarning": {
+      "defaultVault": "Default vault",
+      "vault": "Vault"
+    },
+    "details": {
+      "description": "Description",
+      "custody": "Custody",
+      "provider": "Provider",
+      "providerVault": "Provider vault",
+      "latestVersion": "Latest version",
+      "created": "Created",
+      "updated": "Updated",
+      "lastRotated": "Last rotated",
+      "lastResolved": "Last resolved",
+      "linkedProviderReference": "Linked provider reference",
+      "providerManagedPath": "Provider-managed path",
+      "neverRedisplays": "Paperclip never re-displays stored values."
+    },
+    "usage": {
+      "loading": "Loading…",
+      "empty": "No active bindings. Add this secret in agent, project, environment, or plugin config to start using it.",
+      "required": "· required",
+      "optional": "· optional"
+    },
+    "events": {
+      "loading": "Loading…",
+      "empty": "No access events recorded yet. Each runtime resolution writes a redacted entry here."
+    }
   }
 }
