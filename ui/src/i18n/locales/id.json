@@ -6154,5 +6154,35 @@
       "createAndBind": "Create & bind",
       "createSecretFailed": "Failed to create secret"
     }
+  },
+  "workMode": {
+    "standard": {
+      "label": "Standard",
+      "short": "Standard"
+    },
+    "standardCrc": {
+      "label": "Agent mode",
+      "short": "Agent"
+    },
+    "planning": {
+      "label": "Planning",
+      "short": "Planning"
+    },
+    "planningCrc": {
+      "label": "Plan mode",
+      "short": "Plan"
+    },
+    "ask": {
+      "label": "Ask",
+      "short": "Ask"
+    },
+    "askCrc": {
+      "label": "Ask mode"
+    },
+    "title": {
+      "ask": "Ask mode for this submission. Click to change. The assignee will answer in this thread; no implementation work.",
+      "planning": "{{mode}} mode is on for this submission. Click to change.",
+      "standard": "{{mode}} mode for this submission. Click to change."
+    }
   }
 }

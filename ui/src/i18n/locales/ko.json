@@ -6154,5 +6154,35 @@
       "createAndBind": "만들고 바인딩",
       "createSecretFailed": "비밀을 만들지 못했습니다"
     }
+  },
+  "workMode": {
+    "standard": {
+      "label": "표준",
+      "short": "표준"
+    },
+    "standardCrc": {
+      "label": "에이전트 모드",
+      "short": "에이전트"
+    },
+    "planning": {
+      "label": "계획",
+      "short": "계획"
+    },
+    "planningCrc": {
+      "label": "계획 모드",
+      "short": "계획"
+    },
+    "ask": {
+      "label": "질문",
+      "short": "질문"
+    },
+    "askCrc": {
+      "label": "질문 모드"
+    },
+    "title": {
+      "ask": "이 제출은 질문 모드입니다. 클릭하여 변경하세요. 담당자가 이 스레드에서 답변하며, 구현 작업은 하지 않습니다.",
+      "planning": "이 제출은 {{mode}} 모드가 켜져 있습니다. 클릭하여 변경하세요.",
+      "standard": "이 제출은 {{mode}} 모드입니다. 클릭하여 변경하세요."
+    }
   }
 }
