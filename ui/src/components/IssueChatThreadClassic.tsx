@@ -2440,7 +2440,7 @@ function SystemNoticeCommentRow({
     }).catch((error) => {
       toastActions?.pushToast({
         title: t("chatThread.copyFailed"),
-        body: error instanceof Error ? error.message : "Unable to copy system notice",
+        body: error instanceof Error ? error.message : t("chatThread.copyNoticeFailed"),
         tone: "error",
       });
     });
@@ -2455,7 +2455,7 @@ function SystemNoticeCommentRow({
     }).catch((error) => {
       toastActions?.pushToast({
         title: t("chatThread.copyFailed"),
-        body: error instanceof Error ? error.message : "Unable to copy system notice link",
+        body: error instanceof Error ? error.message : t("chatThread.copyNoticeLinkFailed"),
         tone: "error",
       });
     });
@@ -2494,8 +2494,8 @@ function SystemNoticeCommentRow({
             <button
               type="button"
               className="inline-flex h-6 w-6 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
-              title="Copy link"
-              aria-label="Copy link to system notice"
+              title={t("chatThread.copyLink")}
+              aria-label={t("chatThread.copyLinkAria")}
               onClick={handleCopyLink}
             >
               {copiedLink ? <Check className="h-3.5 w-3.5" /> : <Paperclip className="h-3.5 w-3.5" />}
@@ -2504,8 +2504,8 @@ function SystemNoticeCommentRow({
           <button
             type="button"
             className="inline-flex h-6 w-6 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
-            title="Copy notice text"
-            aria-label="Copy system notice"
+            title={t("chatThread.copyNoticeText")}
+            aria-label={t("chatThread.copyNoticeAria")}
             onClick={handleCopy}
           >
             {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}

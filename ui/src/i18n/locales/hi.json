@@ -221,7 +221,38 @@
       "none": "No skills yet. Create one or install from the catalog.",
       "noMatch": "No skills match your filters.",
       "noneInTab": "No skills in this tab yet."
-    }
+    },
+    "filters": {
+      "source": "Source",
+      "type": "Type",
+      "all": "All",
+      "bundled": "Bundled",
+      "optional": "Optional",
+      "category": "Category",
+      "allCategories": "All categories"
+    },
+    "create": {
+      "namePlaceholder": "Skill name",
+      "promisePlaceholder": "One-line promise for the skill"
+    },
+    "hashChangedTooltip": "Catalog content hash has changed since this skill was installed.",
+    "copyHashTitle": "Copy content hash",
+    "filterAgentsPlaceholder": "Filter agents",
+    "versionLatest": "Latest",
+    "versionInitial": "Initial",
+    "diffOld": "Old",
+    "diffNew": "New",
+    "installedAgentsTooltip": "Agents in this company that currently have this skill installed.",
+    "forkTitle": "Fork this skill",
+    "pinnedRevisionTooltip": "Pinned source revision",
+    "settingsDialogTitle": "Skill settings",
+    "copySourcePathTitle": "Copy source path",
+    "locallyModified": "Locally modified",
+    "locallyModifiedTooltip": "You have edited this skill after installing. Updates from the catalog will overwrite your changes.",
+    "removeDialogTitle": "Remove skill",
+    "addSourceDialogTitle": "Add a skill source",
+    "importDialogTitle": "Import a skill",
+    "importPlaceholder": "Paste path, GitHub URL, or skills.sh command"
   },
   "nav": {
     "newTask": "New Task",
@@ -4405,7 +4436,10 @@
       "noAccessBody2": "Use a company invite or sign in with an account that already belongs to this org.",
       "loading": "Loading...",
       "loadFailed": "Failed to load app state"
-    }
+    },
+    "closeSidebar": "Close sidebar",
+    "resizeSidebar": "Resize sidebar",
+    "dialogClose": "Close"
   },
   "issueRelated": {
     "panel": {
@@ -4578,7 +4612,11 @@
     "couldNotDuplicateAgent": "Could not duplicate agent",
     "failedToDuplicateAgent": "Failed to duplicate agent",
     "failedToResetSession": "Failed to reset session",
-    "confirmDuplicateAgent": "Duplicate {{name}} as {{nextName}}?"
+    "confirmDuplicateAgent": "Duplicate {{name}} as {{nextName}}?",
+    "copyLinkAria": "Copy link to system notice",
+    "copyNoticeAria": "Copy system notice",
+    "copyNoticeFailed": "Unable to copy system notice",
+    "copyNoticeLinkFailed": "Unable to copy system notice link"
   },
   "issueNotices": {
     "blocked": {
@@ -7341,5 +7379,27 @@
     "ytd": "Year to Date",
     "all": "All Time",
     "custom": "Custom"
+  },
+  "productivityReview": {
+    "trigger": {
+      "no_comment_streak": "No-comment streak",
+      "long_active_duration": "Long active duration",
+      "high_churn": "High churn",
+      "default": "Productivity review"
+    },
+    "status": {
+      "todo": "Open",
+      "in_progress": "In progress",
+      "in_review": "In review",
+      "blocked": "Blocked",
+      "backlog": "Open"
+    },
+    "underReview": "Under review",
+    "open": "Productivity review open",
+    "triggerLabel": "Trigger:",
+    "noCommentStreakLabel": "No-comment streak:",
+    "runs": "{{count}} runs",
+    "reviewLabel": "Review:",
+    "aria": "Under review · productivity review {{id}} ({{label}})"
   }
 }
