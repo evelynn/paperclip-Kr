@@ -6,11 +6,8 @@ import { IssuesQuicklook } from "./IssuesQuicklook";
 import type { ProjectWorkspaceSummary } from "../lib/project-workspaces-tab";
 import { cn, projectWorkspaceUrl } from "../lib/utils";
 import { timeAgo } from "../lib/timeAgo";
+import { useTranslation } from "@/i18n";
 import { Copy, ExternalLink, FolderOpen, GitBranch, Loader2, Play, Square } from "lucide-react";
-
-function workspaceKindLabel(kind: ProjectWorkspaceSummary["kind"]) {
-  return kind === "execution_workspace" ? "Execution workspace" : "Project workspace";
-}
 
 function truncatePath(path: string) {
   const parts = path.split("/").filter(Boolean);
@@ -44,6 +41,7 @@ export function ProjectWorkspaceSummaryCard({
   onRuntimeAction,
   onCloseWorkspace,
 }: ProjectWorkspaceSummaryCardProps) {
+  const { t } = useTranslation();
   const visibleIssues = summary.issues.slice(0, 4);
   const hiddenIssueCount = Math.max(summary.issues.length - visibleIssues.length, 0);
   const workspaceHref =
@@ -60,10 +58,12 @@ export function ProjectWorkspaceSummaryCard({
           <div className="min-w-0 space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-                {workspaceKindLabel(summary.kind)}
+                {summary.kind === "execution_workspace"
+                  ? t("projectsComp.workspaceCard.executionWorkspace")
+                  : t("projectsComp.workspaceCard.projectWorkspace")}
               </span>
               <span className="inline-flex items-center rounded-full border border-border/70 bg-background px-2.5 py-1 text-xs text-muted-foreground">
-                Updated {timeAgo(summary.lastUpdatedAt)}
+                {t("projectsComp.workspaceCard.updated", { time: timeAgo(summary.lastUpdatedAt) })}
               </span>
               {summary.serviceCount > 0 ? (
                 <span
@@ -80,7 +80,10 @@ export function ProjectWorkspaceSummaryCard({
                       hasRunningServices ? "bg-emerald-500" : "bg-muted-foreground/40",
                     )}
                   />
-                  {summary.runningServiceCount}/{summary.serviceCount} services
+                  {t("projectsComp.workspaceCard.servicesCount", {
+                    running: summary.runningServiceCount,
+                    total: summary.serviceCount,
+                  })}
                 </span>
               ) : null}
               {summary.executionWorkspaceStatus ? (
@@ -123,7 +126,7 @@ export function ProjectWorkspaceSummaryCard({
                 ) : (
                   <Play className="mr-2 h-3.5 w-3.5" />
                 )}
-                {hasRunningServices ? "Stop services" : "Start services"}
+                {hasRunningServices ? t("projectsComp.workspaceCard.stopServices") : t("projectsComp.workspaceCard.startServices")}
               </Button>
             ) : null}
             {summary.kind === "execution_workspace" && summary.executionWorkspaceId && summary.executionWorkspaceStatus ? (
@@ -137,7 +140,7 @@ export function ProjectWorkspaceSummaryCard({
                   status: summary.executionWorkspaceStatus!,
                 })}
               >
-                {summary.executionWorkspaceStatus === "cleanup_failed" ? "Retry close" : "Close workspace"}
+                {summary.executionWorkspaceStatus === "cleanup_failed" ? t("projectsComp.workspaceCard.retryClose") : t("projectsComp.workspaceCard.closeWorkspace")}
               </Button>
             ) : null}
           </div>
@@ -149,21 +152,21 @@ export function ProjectWorkspaceSummaryCard({
               <div className="flex items-start gap-2">
                 <GitBranch className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Branch</div>
+                  <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{t("projectsComp.workspaceCard.branch")}</div>
                   <div className="flex items-start gap-2">
                     <CopyText
                       text={summary.branchName}
                       containerClassName="min-w-0"
                       className="min-w-0 break-all text-left font-mono text-xs text-foreground"
-                      copiedLabel="Branch copied"
+                      copiedLabel={t("projectsComp.workspaceCard.branchCopied")}
                     >
                       {summary.branchName}
                     </CopyText>
                     <CopyText
                       text={summary.branchName}
-                      ariaLabel="Copy branch"
+                      ariaLabel={t("projectsComp.workspaceCard.copyBranch")}
                       className="mt-0.5 shrink-0 text-muted-foreground hover:text-foreground"
-                      copiedLabel="Branch copied"
+                      copiedLabel={t("projectsComp.workspaceCard.branchCopied")}
                     >
                       <Copy className="h-3.5 w-3.5" />
                     </CopyText>
@@ -176,22 +179,22 @@ export function ProjectWorkspaceSummaryCard({
               <div className="flex items-start gap-2">
                 <FolderOpen className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Path</div>
+                  <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{t("projectsComp.workspaceCard.path")}</div>
                   <div className="flex items-start gap-2">
                     <CopyText
                       text={summary.cwd}
                       title={summary.cwd}
                       containerClassName="min-w-0"
                       className="min-w-0 break-all text-left font-mono text-xs text-foreground"
-                      copiedLabel="Path copied"
+                      copiedLabel={t("projectsComp.workspaceCard.pathCopied")}
                     >
                       {truncatePath(summary.cwd)}
                     </CopyText>
                     <CopyText
                       text={summary.cwd}
-                      ariaLabel="Copy path"
+                      ariaLabel={t("projectsComp.workspaceCard.copyPath")}
                       className="mt-0.5 shrink-0 text-muted-foreground hover:text-foreground"
-                      copiedLabel="Path copied"
+                      copiedLabel={t("projectsComp.workspaceCard.pathCopied")}
                     >
                       <Copy className="h-3.5 w-3.5" />
                     </CopyText>
@@ -204,7 +207,7 @@ export function ProjectWorkspaceSummaryCard({
               <div className="flex items-start gap-2">
                 <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <div className="min-w-0">
-                  <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Service</div>
+                  <div className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{t("projectsComp.workspaceCard.service")}</div>
                   <a
                     href={summary.primaryServiceUrl}
                     target="_blank"
@@ -227,7 +230,7 @@ export function ProjectWorkspaceSummaryCard({
         {summary.issues.length > 0 ? (
           <div className="space-y-2">
             <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              Linked tasks
+              {t("projectsComp.workspaceCard.linkedTasks")}
             </div>
             <div className="flex flex-wrap gap-2">
               {visibleIssues.map((issue) => (
@@ -238,7 +241,7 @@ export function ProjectWorkspaceSummaryCard({
                   to={workspaceHref}
                   className="inline-flex items-center rounded-full border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground hover:text-foreground hover:underline"
                 >
-                  +{hiddenIssueCount} more
+                  {t("projectsComp.workspaceCard.moreCount", { count: hiddenIssueCount })}
                 </Link>
               ) : null}
             </div>
