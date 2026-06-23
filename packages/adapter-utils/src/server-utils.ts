@@ -475,6 +475,9 @@ type PaperclipWakeTreeHoldSummary = {
 
 type PaperclipWakePayload = {
   reason: string | null;
+  // Instance-wide language (locale tag, e.g. "ko") the agent should respond in.
+  // Set server-side from instance settings; null = English / natural default.
+  responseLanguage: string | null;
   issue: PaperclipWakeIssue | null;
   checkedOutByHarness: boolean;
   dependencyBlockedInteraction: boolean;
@@ -784,6 +787,7 @@ export function normalizePaperclipWakePayload(value: unknown): PaperclipWakePayl
 
   return {
     reason: asString(payload.reason, "").trim() || null,
+    responseLanguage: asString(payload.responseLanguage, "").trim() || null,
     issue: normalizePaperclipWakeIssue(payload.issue),
     checkedOutByHarness: asBoolean(payload.checkedOutByHarness, false),
     dependencyBlockedInteraction: asBoolean(payload.dependencyBlockedInteraction, false),
@@ -1105,7 +1109,24 @@ export function renderPaperclipWakePrompt(
     lines.push("");
   }
 
-  return lines.join("\n").trim();
+  const responseLanguageDirective = normalized.responseLanguage
+    ? (() => {
+        const tag = normalized.responseLanguage as string;
+        let name = tag;
+        try {
+          name = new Intl.DisplayNames(["en"], { type: "language" }).of(tag.split("-")[0]) ?? tag;
+        } catch {
+          name = tag;
+        }
+        return [
+          "## Response Language",
+          "",
+          `Respond to the user in ${name} for all natural-language output — comments, summaries, status updates, questions, and the issue's visible disposition. Keep code, identifiers, file paths, commands, API field names, and technical terms in their original form. This overrides the language of the task or repository.`,
+          "",
+        ];
+      })()
+    : [];
+  return [...responseLanguageDirective, ...lines].join("\n").trim();
 }
 
 export function redactEnvForLogs(env: Record<string, string>): Record<string, string> {

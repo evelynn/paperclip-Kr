@@ -34,6 +34,11 @@ export const instanceGeneralSettingsSchema = z.object({
   // Execution policy. Absent/"any" = unrestricted; "kubernetes" forces the
   // Kubernetes sandbox provider and denies local/ssh execution (cloud_tenant).
   executionMode: z.enum(["kubernetes", "any"]).optional(),
+  // Instance-wide language for AI agents. When set, every agent is instructed
+  // to respond to users in this language (a supported UI locale tag, e.g.
+  // "ko"). Absent = English / the agent's natural default. The UI language
+  // switcher writes this so one selector drives both the interface and agents.
+  agentLanguage: z.string().min(2).max(16).optional(),
 }).strict();
 
 export const patchInstanceGeneralSettingsSchema = instanceGeneralSettingsSchema.partial();

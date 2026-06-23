@@ -2,6 +2,7 @@ import { Languages } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { setLocale, useTranslation } from "@/i18n";
+import { instanceSettingsApi } from "@/api/instanceSettings";
 
 type LanguageToggleVariant = "icon" | "menu-action";
 
@@ -43,6 +44,11 @@ export function LanguageToggle({ className, variant = "icon", onAfterToggle }: L
 
   function handleClick() {
     setLocale(next);
+    // PAP-Kr: one selector drives both the UI and the agents. Persist the choice
+    // as the instance-wide agent language so every agent responds in it. The
+    // setting is admin-gated, so for non-admins this PATCH simply 403s and is
+    // ignored — they still get the UI switch.
+    void instanceSettingsApi.updateGeneral({ agentLanguage: next }).catch(() => {});
     onAfterToggle?.();
   }
 

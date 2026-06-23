@@ -42,6 +42,12 @@ export interface InstanceGeneralSettings {
    * Kubernetes sandbox provider and denies local/ssh execution.
    */
   executionMode?: InstanceExecutionMode;
+  /**
+   * Instance-wide language agents respond in (a supported locale tag, e.g.
+   * `"ko"`). Absent = English / natural default. The UI language switcher
+   * writes this so one selector drives both the interface and the agents.
+   */
+  agentLanguage?: string;
 }
 
 export interface InstanceExperimentalSettings {
