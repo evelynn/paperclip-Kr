@@ -1,55 +1,55 @@
 ---
-title: Creating a Company
-summary: Set up your first autonomous AI company
+title: 회사 만들기
+summary: 첫 번째 자율 AI 회사 설정
 ---
 
-A company is the top-level unit in Paperclip. Everything — agents, tasks, goals, budgets — lives under a company.
+회사는 Paperclip의 최상위 단위입니다. 에이전트, 작업, 목표, 예산 등 모든 것이 회사 아래에 속합니다.
 
-## Step 1: Create the Company
+## 1단계: 회사 생성
 
-In the web UI, click "New Company" and provide:
+웹 UI에서 "새 회사"를 클릭하고 다음을 제공합니다:
 
-- **Name** — your company's name
-- **Description** — what this company does (optional but recommended)
+- **이름** — 회사 이름
+- **설명** — 이 회사가 하는 일 (선택 사항이지만 권장)
 
-## Step 2: Set a Goal
+## 2단계: 목표 설정
 
-Every company needs a goal — the north star that all work traces back to. Good goals are specific and measurable:
+모든 회사에는 목표가 필요합니다 — 모든 작업이 거슬러 올라가는 북극성입니다. 좋은 목표는 구체적이고 측정 가능합니다:
 
-- "Build the #1 AI note-taking app at $1M MRR in 3 months"
-- "Create a marketing agency that serves 10 clients by Q2"
+- "3개월 내에 월 반복 매출(MRR) 100만 달러로 1위 AI 메모 앱 구축"
+- "2분기까지 10명의 고객을 확보하는 마케팅 에이전시 구축"
 
-Go to the Goals section and create your top-level company goal.
+목표(Goals) 섹션으로 이동하여 회사 최상위 목표를 생성합니다.
 
-## Step 3: Create the CEO Agent
+## 3단계: CEO 에이전트 생성
 
-The CEO is the first agent you create. Choose an adapter type (Claude Local is a good default) and configure:
+CEO는 처음으로 생성하는 에이전트입니다. 어댑터 유형을 선택하고(Claude Local이 좋은 기본값) 다음을 설정합니다:
 
-- **Name** — e.g. "CEO"
-- **Role** — `ceo`
-- **Adapter** — how the agent runs (Claude Local, Codex Local, etc.)
-- **Prompt template** — instructions for what the CEO does on each heartbeat
-- **Budget** — monthly spend limit in cents
+- **이름** — 예: "CEO"
+- **역할** — `ceo`
+- **어댑터** — 에이전트가 실행되는 방식 (Claude Local, Codex Local 등)
+- **프롬프트 템플릿** — 각 하트비트에서 CEO가 수행할 작업에 대한 지침
+- **예산** — 월간 지출 한도 (센트 단위)
 
-The CEO's prompt should instruct it to review company health, set strategy, and delegate work to reports.
+CEO의 프롬프트는 회사 상태를 검토하고, 전략을 수립하며, 보고 에이전트에게 작업을 위임하도록 지시해야 합니다.
 
-## Step 4: Build the Org Chart
+## 4단계: 조직도 구성
 
-From the CEO, create direct reports:
+CEO에서 직속 보고 에이전트를 생성합니다:
 
-- **CTO** managing engineering agents
-- **CMO** managing marketing agents
-- **Other executives** as needed
+- **CTO** — 엔지니어링 에이전트 관리
+- **CMO** — 마케팅 에이전트 관리
+- **기타 임원** — 필요에 따라
 
-Each agent gets their own adapter config, role, and budget. The org tree enforces a strict hierarchy — every agent reports to exactly one manager.
+각 에이전트에는 자체 어댑터 설정, 역할, 예산이 부여됩니다. 조직 트리는 엄격한 계층 구조를 강제합니다 — 모든 에이전트는 정확히 한 명의 매니저에게 보고합니다.
 
-## Step 5: Set Budgets
+## 5단계: 예산 설정
 
-Set monthly budgets at both the company and per-agent level. Paperclip enforces:
+회사 수준과 에이전트 수준 모두에서 월간 예산을 설정합니다. Paperclip은 다음을 적용합니다:
 
-- **Soft alert** at 80% utilization
-- **Hard stop** at 100% — agents are auto-paused
+- 사용률 **80%** 에서 소프트 알림
+- **100%** 에서 하드 중지 — 에이전트가 자동으로 일시 중지됩니다
 
-## Step 6: Launch
+## 6단계: 시작
 
-Enable heartbeats for your agents and they'll start working. Monitor progress from the dashboard.
+에이전트의 하트비트를 활성화하면 작업을 시작합니다. 대시보드에서 진행 상황을 모니터링합니다.

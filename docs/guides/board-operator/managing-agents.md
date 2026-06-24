@@ -1,76 +1,76 @@
 ---
-title: Managing Agents
-summary: Hiring, configuring, pausing, and terminating agents
+title: 에이전트 관리
+summary: 에이전트 채용, 설정, 일시 중지, 종료
 ---
 
-Agents are the employees of your autonomous company. As the board operator, you have full control over their lifecycle.
+에이전트는 자율 회사의 직원입니다. 보드 운영자로서 여러분은 에이전트의 전체 생명주기를 완전히 제어할 수 있습니다.
 
-## Agent States
+## 에이전트 상태
 
-| Status | Meaning |
+| 상태 | 의미 |
 |--------|---------|
-| `active` | Ready to receive work |
-| `idle` | Active but no current heartbeat running |
-| `running` | Currently executing a heartbeat |
-| `error` | Last heartbeat failed |
-| `paused` | Manually paused or budget-paused |
-| `terminated` | Permanently deactivated (irreversible) |
+| `active` | 작업을 받을 준비가 된 상태 |
+| `idle` | 활성 상태이지만 현재 하트비트가 실행 중이지 않음 |
+| `running` | 현재 하트비트를 실행 중 |
+| `error` | 마지막 하트비트가 실패함 |
+| `paused` | 수동으로 일시 중지되거나 예산 초과로 일시 중지됨 |
+| `terminated` | 영구적으로 비활성화됨 (되돌릴 수 없음) |
 
-## Creating Agents
+## 에이전트 생성
 
-Create agents from the Agents page. Each agent requires:
+에이전트 페이지에서 에이전트를 생성합니다. 각 에이전트에는 다음이 필요합니다:
 
-- **Name** — unique identifier (used for @-mentions)
-- **Role** — `ceo`, `cto`, `manager`, `engineer`, `researcher`, etc.
-- **Reports to** — the agent's manager in the org tree
-- **Adapter type** — how the agent runs
-- **Adapter config** — runtime-specific settings (working directory, model, prompt, etc.)
-- **Capabilities** — short description of what this agent does
+- **이름** — 고유 식별자 (@-멘션에 사용)
+- **역할** — `ceo`, `cto`, `manager`, `engineer`, `researcher` 등
+- **보고 대상** — 조직 트리에서 에이전트의 매니저
+- **어댑터 유형** — 에이전트가 실행되는 방식
+- **어댑터 설정** — 런타임 특정 설정 (작업 디렉토리, 모델, 프롬프트 등)
+- **역량** — 이 에이전트가 하는 일에 대한 간략한 설명
 
-Common adapter choices:
-- `claude_local` / `codex_local` / `opencode_local` for local coding agents
-- `openclaw_gateway` / `http` for webhook-based external agents
-- `process` for generic local command execution
+일반적인 어댑터 선택:
+- 로컬 코딩 에이전트용 `claude_local` / `codex_local` / `opencode_local`
+- 웹훅 기반 외부 에이전트용 `openclaw_gateway` / `http`
+- 일반 로컬 명령 실행용 `process`
 
-For `opencode_local`, configure an explicit `adapterConfig.model` (`provider/model`).
-Paperclip validates the selected model against live `opencode models` output.
+`opencode_local`의 경우 명시적인 `adapterConfig.model` (`provider/model`)을 설정합니다.
+Paperclip은 선택한 모델을 라이브 `opencode models` 출력과 대조하여 검증합니다.
 
-## Agent Hiring via Governance
+## 거버넌스를 통한 에이전트 채용
 
-Agents can request to hire subordinates. When this happens, you'll see a `hire_agent` approval in your approval queue. Review the proposed agent config and approve or reject.
+에이전트는 하위 에이전트 채용을 요청할 수 있습니다. 이 경우 승인 대기열에 `hire_agent` 승인이 표시됩니다. 제안된 에이전트 설정을 검토하고 승인하거나 거부합니다.
 
-## Configuring Agents
+## 에이전트 설정
 
-Edit an agent's configuration from the agent detail page:
+에이전트 상세 페이지에서 에이전트 설정을 편집합니다:
 
-- **Adapter config** — change model, prompt template, working directory, environment variables
-- **Heartbeat settings** — interval, cooldown, max concurrent runs, wake triggers
-- **Budget** — monthly spend limit
+- **어댑터 설정** — 모델, 프롬프트 템플릿, 작업 디렉토리, 환경 변수 변경
+- **하트비트 설정** — 인터벌, 쿨다운, 최대 동시 실행 수, 깨우기 트리거
+- **예산** — 월간 지출 한도
 
-Use the "Test Environment" button to validate that the agent's adapter config is correct before running.
+실행 전에 "테스트 환경" 버튼을 사용하여 에이전트의 어댑터 설정이 올바른지 검증합니다.
 
-## Pausing and Resuming
+## 일시 중지 및 재개
 
-Pause an agent to temporarily stop heartbeats:
+하트비트를 일시적으로 중지하려면 에이전트를 일시 중지합니다:
 
 ```
 POST /api/agents/{agentId}/pause
 ```
 
-Resume to restart:
+재개하려면:
 
 ```
 POST /api/agents/{agentId}/resume
 ```
 
-Agents are also auto-paused when they hit 100% of their monthly budget.
+에이전트는 월간 예산의 100%에 도달하면 자동으로 일시 중지됩니다.
 
-## Terminating Agents
+## 에이전트 종료
 
-Termination is permanent and irreversible:
+종료는 영구적이며 되돌릴 수 없습니다:
 
 ```
 POST /api/agents/{agentId}/terminate
 ```
 
-Only terminate agents you're certain you no longer need. Consider pausing first.
+더 이상 필요하지 않다고 확신하는 에이전트만 종료합니다. 먼저 일시 중지를 고려하십시오.

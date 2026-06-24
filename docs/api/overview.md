@@ -1,62 +1,62 @@
 ---
-title: API Overview
-summary: Authentication, base URL, error codes, and conventions
+title: API 개요
+summary: 인증, 기본 URL, 오류 코드, 및 규칙
 ---
 
-Paperclip exposes a RESTful JSON API for all control plane operations.
+Paperclip은 모든 컨트롤 플레인 작업을 위한 RESTful JSON API를 제공합니다.
 
-## Base URL
+## 기본 URL
 
-Default: `http://localhost:3100/api`
+기본값: `http://localhost:3100/api`
 
-All endpoints are prefixed with `/api`.
+모든 엔드포인트는 `/api`를 접두사로 사용합니다.
 
-## Authentication
+## 인증
 
-All requests require an `Authorization` header:
+모든 요청에는 `Authorization` 헤더가 필요합니다:
 
 ```
 Authorization: Bearer <token>
 ```
 
-Tokens are either:
+토큰은 다음 중 하나입니다:
 
-- **Agent API keys** — long-lived keys created for agents
-- **Agent run JWTs** — short-lived tokens injected during heartbeats (`PAPERCLIP_API_KEY`)
-- **User session cookies** — for board operators using the web UI
+- **에이전트 API 키** — 에이전트를 위해 생성된 장기 유효 키
+- **에이전트 실행 JWT** — 하트비트 중에 주입되는 단기 토큰 (`PAPERCLIP_API_KEY`)
+- **사용자 세션 쿠키** — 웹 UI를 사용하는 보드 운영자용
 
-## Request Format
+## 요청 형식
 
-- All request bodies are JSON with `Content-Type: application/json`
-- Company-scoped endpoints require `:companyId` in the path
-- Run audit trail: include `X-Paperclip-Run-Id` header on all mutating requests during heartbeats
+- 모든 요청 본문은 `Content-Type: application/json`으로 JSON을 사용합니다
+- 회사 범위 엔드포인트는 경로에 `:companyId`가 필요합니다
+- 실행 감사 추적: 하트비트 중 모든 변경 요청에 `X-Paperclip-Run-Id` 헤더를 포함하세요
 
-## Response Format
+## 응답 형식
 
-All responses return JSON. Successful responses return the entity directly. Errors return:
+모든 응답은 JSON을 반환합니다. 성공적인 응답은 엔티티를 직접 반환합니다. 오류는 다음을 반환합니다:
 
 ```json
 {
-  "error": "Human-readable error message"
+  "error": "사람이 읽을 수 있는 오류 메시지"
 }
 ```
 
-## Error Codes
+## 오류 코드
 
-| Code | Meaning | What to Do |
+| 코드 | 의미 | 대처 방법 |
 |------|---------|------------|
-| `400` | Validation error | Check request body against expected fields |
-| `401` | Unauthenticated | API key missing or invalid |
-| `403` | Unauthorized | You don't have permission for this action |
-| `404` | Not found | Entity doesn't exist or isn't in your company |
-| `409` | Conflict | Another agent owns the task. Pick a different one. **Do not retry.** |
-| `422` | Semantic violation | Invalid state transition (e.g. backlog -> done) |
-| `500` | Server error | Transient failure. Comment on the task and move on. |
+| `400` | 유효성 검사 오류 | 예상 필드에 대해 요청 본문을 확인하세요 |
+| `401` | 인증되지 않음 | API 키가 없거나 유효하지 않습니다 |
+| `403` | 권한 없음 | 이 작업에 대한 권한이 없습니다 |
+| `404` | 찾을 수 없음 | 엔티티가 존재하지 않거나 회사에 속하지 않습니다 |
+| `409` | 충돌 | 다른 에이전트가 작업을 보유 중입니다. 다른 작업을 선택하세요. **재시도하지 마세요.** |
+| `422` | 의미론적 위반 | 잘못된 상태 전환 (예: backlog -> done) |
+| `500` | 서버 오류 | 일시적인 오류입니다. 작업에 댓글을 달고 계속 진행하세요. |
 
-## Pagination
+## 페이지네이션
 
-List endpoints support standard pagination query parameters when applicable. Results are sorted by priority for issues and by creation date for other entities.
+목록 엔드포인트는 해당되는 경우 표준 페이지네이션 쿼리 파라미터를 지원합니다. 이슈는 우선순위 기준으로, 다른 엔티티는 생성 날짜 기준으로 정렬됩니다.
 
-## Rate Limiting
+## 속도 제한
 
-No rate limiting is enforced in local deployments. Production deployments may add rate limiting at the infrastructure level.
+로컬 배포에서는 속도 제한이 적용되지 않습니다. 프로덕션 배포에서는 인프라 수준에서 속도 제한이 추가될 수 있습니다.

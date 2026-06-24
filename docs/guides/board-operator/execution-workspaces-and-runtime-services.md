@@ -1,85 +1,85 @@
 ---
-title: Execution Workspaces And Runtime Services
-summary: How project runtime configuration, execution workspaces, and issue runs fit together
+title: 실행 워크스페이스와 런타임 서비스
+summary: 프로젝트 런타임 설정, 실행 워크스페이스, 이슈 실행의 연관 관계
 ---
 
-This guide documents the intended runtime model for projects, execution workspaces, and issue runs in Paperclip.
+이 가이드는 Paperclip에서 프로젝트, 실행 워크스페이스, 이슈 실행의 의도된 런타임 모델을 설명합니다.
 
-Paperclip now presents this as a workspace-command model:
+Paperclip은 이제 워크스페이스-커맨드 모델로 이를 표현합니다:
 
-- `Services` are long-running commands that stay supervised.
-- `Jobs` are one-shot commands that run once and exit.
-- Raw runtime JSON is still available for advanced config, but it is no longer the primary mental model.
+- `서비스(Services)`는 지속적으로 감독받으며 실행되는 장기 실행 명령입니다.
+- `작업(Jobs)`은 한 번 실행하고 종료되는 단발성 명령입니다.
+- 고급 설정을 위해 원시 런타임 JSON도 여전히 사용 가능하지만, 더 이상 기본 개념 모델은 아닙니다.
 
-## Project runtime configuration
+## 프로젝트 런타임 설정
 
-You can define how to run a project on the project workspace itself.
+프로젝트 워크스페이스 자체에서 프로젝트 실행 방법을 정의할 수 있습니다.
 
-- Project workspace runtime config describes the services and jobs available for that project checkout.
-- This is the default runtime configuration that child execution workspaces may inherit.
-- Defining the config does not start anything by itself.
+- 프로젝트 워크스페이스 런타임 설정은 해당 프로젝트 체크아웃에서 사용 가능한 서비스 및 작업을 설명합니다.
+- 이것은 자식 실행 워크스페이스가 상속할 수 있는 기본 런타임 설정입니다.
+- 설정을 정의해도 자체적으로는 아무것도 시작하지 않습니다.
 
-## Manual runtime control
+## 수동 런타임 제어
 
-Workspace commands are manually controlled from the UI.
+워크스페이스 명령은 UI에서 수동으로 제어합니다.
 
-- Project workspace services are started and stopped from the project workspace UI, and project jobs can be run on demand there.
-- Execution workspace services are started and stopped from the execution workspace UI, and execution-workspace jobs can be run on demand there.
-- Paperclip does not automatically start or stop these workspace services as part of issue execution.
-- Paperclip also does not automatically restart workspace services on server boot.
+- 프로젝트 워크스페이스 서비스는 프로젝트 워크스페이스 UI에서 시작 및 중지하며, 프로젝트 작업은 해당 UI에서 온디맨드로 실행할 수 있습니다.
+- 실행 워크스페이스 서비스는 실행 워크스페이스 UI에서 시작 및 중지하며, 실행 워크스페이스 작업은 해당 UI에서 온디맨드로 실행할 수 있습니다.
+- Paperclip은 이슈 실행의 일환으로 워크스페이스 서비스를 자동으로 시작하거나 중지하지 않습니다.
+- Paperclip은 서버 부팅 시 워크스페이스 서비스를 자동으로 재시작하지도 않습니다.
 
-## Execution workspace inheritance
+## 실행 워크스페이스 상속
 
-Execution workspaces isolate code and runtime state from the project primary workspace.
+실행 워크스페이스는 프로젝트 기본 워크스페이스에서 코드 및 런타임 상태를 격리합니다.
 
-- An isolated execution workspace has its own checkout path, branch, and local runtime instance.
-- The runtime configuration may inherit from the linked project workspace by default.
-- The execution workspace may override that runtime configuration with its own workspace-specific settings.
-- The inherited configuration answers "which commands exist and how to run them", but any running service process is still specific to that execution workspace.
+- 격리된 실행 워크스페이스는 자체 체크아웃 경로, 브랜치, 로컬 런타임 인스턴스를 가집니다.
+- 런타임 설정은 기본적으로 연결된 프로젝트 워크스페이스에서 상속될 수 있습니다.
+- 실행 워크스페이스는 워크스페이스별 설정으로 해당 런타임 설정을 재정의할 수 있습니다.
+- 상속된 설정은 "어떤 명령이 존재하며 어떻게 실행하는가"를 답하지만, 실행 중인 서비스 프로세스는 여전히 해당 실행 워크스페이스에 특정됩니다.
 
-## Issues and execution workspaces
+## 이슈와 실행 워크스페이스
 
-Issues are attached to execution workspace behavior, not to automatic runtime management.
+이슈는 자동 런타임 관리가 아닌 실행 워크스페이스 동작에 연결됩니다.
 
-- An issue may create a new execution workspace when you choose an isolated workspace mode.
-- An issue may reuse an existing execution workspace when you choose reuse.
-- Multiple issues may intentionally share one execution workspace so they can work against the same branch and running runtime services.
-- Assigning or running an issue does not automatically start or stop workspace services for that workspace.
+- 격리된 워크스페이스 모드를 선택하면 이슈가 새 실행 워크스페이스를 생성할 수 있습니다.
+- 재사용을 선택하면 이슈가 기존 실행 워크스페이스를 재사용할 수 있습니다.
+- 여러 이슈가 동일한 브랜치와 실행 중인 런타임 서비스를 대상으로 작업할 수 있도록 의도적으로 하나의 실행 워크스페이스를 공유할 수 있습니다.
+- 이슈를 할당하거나 실행해도 해당 워크스페이스의 워크스페이스 서비스가 자동으로 시작되거나 중지되지 않습니다.
 
-## Execution workspace lifecycle
+## 실행 워크스페이스 생명주기
 
-Execution workspaces are durable until a human closes them.
+실행 워크스페이스는 사람이 닫을 때까지 지속됩니다.
 
-- The UI can archive an execution workspace.
-- Closing an execution workspace stops its runtime services and cleans up its workspace artifacts when allowed.
-- Shared workspaces that point at the project primary checkout are treated more conservatively during cleanup than disposable isolated workspaces.
+- UI에서 실행 워크스페이스를 보관할 수 있습니다.
+- 실행 워크스페이스를 닫으면 런타임 서비스가 중지되고 허용될 때 워크스페이스 아티팩트가 정리됩니다.
+- 프로젝트 기본 체크아웃을 가리키는 공유 워크스페이스는 일회용 격리 워크스페이스보다 정리 시 더 보수적으로 처리됩니다.
 
-## Resolved workspace logic during heartbeat runs
+## 하트비트 실행 중 워크스페이스 해석 로직
 
-Heartbeat still resolves a workspace for the run, but that is about code location and session continuity, not runtime-service control.
+하트비트는 여전히 실행을 위한 기본 워크스페이스를 해석하지만, 이는 코드 위치와 세션 연속성에 관한 것이지 런타임 서비스 제어에 관한 것이 아닙니다.
 
-1. Heartbeat resolves a base workspace for the run.
-2. Paperclip realizes the effective execution workspace, including creating or reusing a worktree when needed.
-3. Paperclip persists execution-workspace metadata such as paths, refs, and provisioning settings.
-4. Heartbeat passes the resolved code workspace to the agent run.
-5. Workspace runtime services remain manual UI-managed controls rather than automatic heartbeat-managed services.
+1. 하트비트가 실행을 위한 기본 워크스페이스를 해석합니다.
+2. Paperclip이 필요 시 worktree를 생성하거나 재사용하는 것을 포함하여 효과적인 실행 워크스페이스를 실현합니다.
+3. Paperclip이 경로, refs, 프로비저닝 설정 등 실행 워크스페이스 메타데이터를 저장합니다.
+4. 하트비트가 해석된 코드 워크스페이스를 에이전트 실행에 전달합니다.
+5. 워크스페이스 런타임 서비스는 자동 하트비트 관리 서비스가 아닌 수동 UI 관리 제어로 유지됩니다.
 
-## Cross-run persistence (no-remote-git contract)
+## 실행 간 지속성 (원격 git 계약 없음)
 
-Code state moves between runs through the local execution-workspace cwd alone — not through a git remote.
+코드 상태는 git 원격이 아닌 로컬 실행 워크스페이스 cwd만을 통해 실행 간에 이동합니다.
 
-- Each run's prepare step bundles the local worktree to the run's remote dir over ssh, with no `git remote` configured.
-- The adapter's restore step at the end of the run writes any new remote commits back into the local worktree directly.
-- Adapters must never `git push` from runtime code, and must never assume a remote exists.
-- A failed restore is a run-level error and records `workspace_finalize=failed` on the execution workspace, which gates dependent issue wakes until the next successful finalize.
+- 각 실행의 준비 단계는 `git remote`가 설정되지 않은 상태로 ssh를 통해 로컬 worktree를 실행의 원격 디렉토리에 번들로 묶습니다.
+- 실행 종료 시 어댑터의 복원 단계는 새로운 원격 커밋을 로컬 worktree에 직접 씁니다.
+- 어댑터는 런타임 코드에서 `git push`를 절대 사용하지 않아야 하며, 원격이 존재한다고 가정해서도 안 됩니다.
+- 복원 실패는 실행 수준 오류이며 실행 워크스페이스에 `workspace_finalize=failed`를 기록하고, 다음 성공적인 finalize까지 종속 이슈 깨우기를 차단합니다.
 
-The invariant is enforced by the "no-remote-git contract" case in `packages/adapter-utils/src/ssh-fixture.test.ts`, which asserts a remote-only commit reaches the local worktree with no remote configured at any point.
+이 불변성은 `packages/adapter-utils/src/ssh-fixture.test.ts`의 "원격 git 계약 없음" 케이스에 의해 강제되며, 원격 전용 커밋이 어떤 시점에도 원격이 설정되지 않은 상태로 로컬 worktree에 도달함을 검증합니다.
 
-## Current implementation guarantees
+## 현재 구현 보장 사항
 
-With the current implementation:
+현재 구현에서:
 
-- Project workspace command config is the fallback for execution workspace UI controls.
-- Execution workspace runtime overrides are stored on the execution workspace.
-- Heartbeat runs do not auto-start workspace services.
-- Server startup does not auto-restart workspace services.
+- 프로젝트 워크스페이스 커맨드 설정은 실행 워크스페이스 UI 제어의 폴백입니다.
+- 실행 워크스페이스 런타임 재정의는 실행 워크스페이스에 저장됩니다.
+- 하트비트 실행은 워크스페이스 서비스를 자동으로 시작하지 않습니다.
+- 서버 시작 시 워크스페이스 서비스를 자동으로 재시작하지 않습니다.

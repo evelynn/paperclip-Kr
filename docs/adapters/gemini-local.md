@@ -1,45 +1,45 @@
 ---
 title: Gemini Local
-summary: Gemini CLI local adapter setup and configuration
+summary: Gemini CLI 로컬 어댑터 설정 및 구성
 ---
 
-The `gemini_local` adapter runs Google's Gemini CLI locally. It supports session persistence with `--resume`, skills injection, and structured `stream-json` output parsing.
+`gemini_local` 어댑터는 Google의 Gemini CLI를 로컬에서 실행합니다. `--resume`을 사용한 세션 지속성, 스킬 주입, 구조화된 `stream-json` 출력 파싱을 지원합니다.
 
-## Prerequisites
+## 사전 요구 사항
 
-- Gemini CLI installed (`gemini` command available)
-- `GEMINI_API_KEY` or `GOOGLE_API_KEY` set, or local Gemini CLI auth configured
+- Gemini CLI가 설치되어 있어야 합니다(`gemini` 명령 사용 가능).
+- `GEMINI_API_KEY` 또는 `GOOGLE_API_KEY`가 설정되어 있거나, 로컬 Gemini CLI 인증이 구성되어 있어야 합니다.
 
-## Configuration Fields
+## 설정 필드
 
-| Field | Type | Required | Description |
+| 필드 | 타입 | 필수 여부 | 설명 |
 |-------|------|----------|-------------|
-| `cwd` | string | Yes | Working directory for the agent process (absolute path; created automatically if missing when permissions allow) |
-| `model` | string | No | Gemini model to use. Defaults to `auto`. |
-| `promptTemplate` | string | No | Prompt used for all runs |
-| `instructionsFilePath` | string | No | Markdown instructions file prepended to the prompt |
-| `env` | object | No | Environment variables (supports secret refs) |
-| `timeoutSec` | number | No | Process timeout (0 = no timeout) |
-| `graceSec` | number | No | Grace period before force-kill |
-| `yolo` | boolean | No | Pass `--approval-mode yolo` for unattended operation |
+| `cwd` | string | Yes | 에이전트 프로세스의 작업 디렉터리(절대 경로; 권한이 허용될 경우 누락 시 자동 생성) |
+| `model` | string | No | 사용할 Gemini 모델. 기본값은 `auto`. |
+| `promptTemplate` | string | No | 모든 실행에 사용되는 프롬프트 |
+| `instructionsFilePath` | string | No | 프롬프트 앞에 추가되는 마크다운 지침 파일 |
+| `env` | object | No | 환경 변수(시크릿 참조 지원) |
+| `timeoutSec` | number | No | 프로세스 타임아웃(0 = 타임아웃 없음) |
+| `graceSec` | number | No | 강제 종료 전 유예 기간 |
+| `yolo` | boolean | No | 자동 작업을 위해 `--approval-mode yolo`를 전달합니다. |
 
-## Session Persistence
+## 세션 지속성
 
-The adapter persists Gemini session IDs between heartbeats. On the next wake, it resumes the existing conversation with `--resume` so the agent retains context.
+어댑터는 하트비트 사이에 Gemini 세션 ID를 유지합니다. 다음 기상 시 `--resume`을 사용하여 기존 대화를 재개하여 에이전트가 컨텍스트를 유지합니다.
 
-Session resume is cwd-aware: if the working directory changed since the last run, a fresh session starts instead.
+세션 재개는 cwd를 인식합니다. 마지막 실행 이후 작업 디렉터리가 변경된 경우, 새 세션이 시작됩니다.
 
-If resume fails with an unknown session error, the adapter automatically retries with a fresh session.
+알 수 없는 세션 오류로 재개에 실패하면, 어댑터가 자동으로 새 세션으로 재시도합니다.
 
-## Skills Injection
+## 스킬 주입
 
-The adapter symlinks Paperclip skills into the Gemini global skills directory (`~/.gemini/skills`). Existing user skills are not overwritten.
+어댑터는 Paperclip 스킬을 Gemini 글로벌 스킬 디렉터리(`~/.gemini/skills`)에 심볼릭 링크합니다. 기존 사용자 스킬은 덮어쓰지 않습니다.
 
-## Environment Test
+## 환경 테스트
 
-Use the "Test Environment" button in the UI to validate the adapter config. It checks:
+UI의 "Test Environment" 버튼을 사용하여 어댑터 설정을 검증합니다. 다음 항목을 확인합니다.
 
-- Gemini CLI is installed and accessible
-- Working directory is absolute and available (auto-created if missing and permitted)
-- API key/auth hints (`GEMINI_API_KEY` or `GOOGLE_API_KEY`)
-- A live hello probe (`gemini --output-format json "Respond with hello."`) to verify CLI readiness
+- Gemini CLI가 설치되어 있고 접근 가능한지
+- 작업 디렉터리가 절대 경로이고 사용 가능한지(허가된 경우 누락 시 자동 생성)
+- API 키/인증 힌트(`GEMINI_API_KEY` 또는 `GOOGLE_API_KEY`)
+- CLI 준비 상태를 검증하기 위한 라이브 헬로 프로브(`gemini --output-format json "Respond with hello."`)

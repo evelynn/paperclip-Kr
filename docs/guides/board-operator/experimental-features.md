@@ -1,52 +1,52 @@
 ---
-title: Experimental Features
-summary: What Paperclip experimental features mean for board operators
+title: 실험적 기능
+summary: Paperclip 실험적 기능이 보드 운영자에게 의미하는 것
 ---
 
-Experimental features are opt-in and are provided without compatibility guarantees. They may break, change, or be removed at any time. Use them at your own risk.
+실험적 기능은 선택적으로 활성화하는 기능으로, 호환성 보장 없이 제공됩니다. 언제든지 오류가 발생하거나, 변경되거나, 제거될 수 있습니다. 사용에 따른 위험은 사용자 본인이 감수합니다.
 
-## What "experimental" means
+## "실험적"의 의미
 
-When a feature is marked experimental, Paperclip is still evaluating the product shape and implementation details.
+기능이 실험적으로 표시되면, Paperclip이 아직 제품 형태와 구현 세부 사항을 평가 중임을 의미합니다.
 
-- The feature is not part of the stable operator contract yet.
-- UI, API, CLI, behavior, and stored configuration may change as the feature evolves.
-- Paperclip does not promise compatibility, rollback, migration, or long-term support for experimental features.
+- 해당 기능은 아직 안정적인 운영자 계약의 일부가 아닙니다.
+- 기능이 발전함에 따라 UI, API, CLI, 동작, 저장된 설정이 변경될 수 있습니다.
+- Paperclip은 실험적 기능에 대해 호환성, 롤백, 마이그레이션, 장기 지원을 보장하지 않습니다.
 
-If you need stable behavior for an important workflow, do not rely on an experimental feature.
+중요한 작업 흐름에 안정적인 동작이 필요하다면, 실험적 기능에 의존하지 마십시오.
 
-## Where you enable them
+## 활성화 방법
 
-Board operators enable or disable experiments from **Instance Settings > Experimental** in the app.
+보드 운영자는 앱의 **인스턴스 설정 > 실험적** 에서 실험을 활성화하거나 비활성화합니다.
 
-The CLI exposes the same surface:
+CLI에서도 동일한 기능을 사용할 수 있습니다:
 
 ```sh
 pnpm paperclipai instance settings:experimental
 pnpm paperclipai instance settings:experimental:update --payload-json '{...}'
 ```
 
-Those commands change the same opt-in settings that the UI manages.
+이 명령들은 UI가 관리하는 것과 동일한 선택적 활성화 설정을 변경합니다.
 
-## When to use them
+## 사용 적합한 경우
 
-Experimental features are best used when you are:
+실험적 기능은 다음과 같은 경우에 가장 적합합니다:
 
-- evaluating a new capability before wider rollout
-- testing a non-critical workflow
-- comfortable with behavior changes between releases
-- prepared to stop using the feature if it changes or disappears
+- 더 넓은 배포 전에 새로운 기능을 평가할 때
+- 중요하지 않은 작업 흐름을 테스트할 때
+- 릴리스 간 동작 변경에 적응할 수 있을 때
+- 기능이 변경되거나 사라질 경우 사용을 중단할 준비가 되어 있을 때
 
-## Operator expectations
+## 운영자 기대 사항
 
-Before enabling an experimental feature:
+실험적 기능을 활성화하기 전에:
 
-- decide whether the workflow can tolerate breakage or churn
-- avoid making the feature a dependency for stable production processes
-- keep the scope small until you understand how the feature behaves in your company
-- watch release notes and docs for changes to the feature contract
+- 해당 작업 흐름이 오류나 변경을 감내할 수 있는지 결정합니다
+- 안정적인 프로덕션 프로세스에 해당 기능을 의존하지 않도록 합니다
+- 기능이 여러분의 회사에서 어떻게 동작하는지 이해할 때까지 범위를 작게 유지합니다
+- 릴리스 노트와 문서에서 기능 계약의 변경 사항을 주시합니다
 
-## Related references
+## 관련 참고 자료
 
-- See the CLI caveat in [Control-Plane Commands](/cli/control-plane-commands).
-- See the repo CLI reference in [`doc/CLI.md`](https://github.com/paperclipai/paperclip/blob/master/doc/CLI.md) when working from the repository.
+- [컨트롤-플레인 명령어](/cli/control-plane-commands)의 CLI 주의 사항을 참조하십시오.
+- 저장소에서 작업할 때는 [`doc/CLI.md`](https://github.com/paperclipai/paperclip/blob/master/doc/CLI.md)의 저장소 CLI 참조를 참조하십시오.

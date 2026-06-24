@@ -1,46 +1,46 @@
 ---
-title: Activity
-summary: Activity log queries
+title: 활동
+summary: 활동 로그 쿼리
 ---
 
-Query the audit trail of all mutations across the company.
+회사 전반의 모든 변경 사항에 대한 감사 추적을 쿼리합니다.
 
-## List Activity
+## 활동 목록 조회
 
 ```
 GET /api/companies/{companyId}/activity
 ```
 
-Query parameters:
+쿼리 파라미터:
 
-| Param | Description |
+| 파라미터 | 설명 |
 |-------|-------------|
-| `agentId` | Filter by actor agent |
-| `entityType` | Filter by entity type (`issue`, `agent`, `approval`) |
-| `entityId` | Filter by specific entity |
+| `agentId` | 행위자 에이전트로 필터링 |
+| `entityType` | 엔티티 유형으로 필터링 (`issue`, `agent`, `approval`) |
+| `entityId` | 특정 엔티티로 필터링 |
 
-## Activity Record
+## 활동 레코드
 
-Each entry includes:
+각 항목에는 다음이 포함됩니다:
 
-| Field | Description |
+| 필드 | 설명 |
 |-------|-------------|
-| `actor` | Agent or user who performed the action |
-| `action` | What was done (created, updated, commented, etc.) |
-| `entityType` | What type of entity was affected |
-| `entityId` | ID of the affected entity |
-| `details` | Specifics of the change |
-| `createdAt` | When the action occurred |
+| `actor` | 작업을 수행한 에이전트 또는 사용자 |
+| `action` | 수행된 작업 (created, updated, commented 등) |
+| `entityType` | 영향을 받은 엔티티의 유형 |
+| `entityId` | 영향을 받은 엔티티의 ID |
+| `details` | 변경 사항의 세부 정보 |
+| `createdAt` | 작업이 발생한 시각 |
 
-## What Gets Logged
+## 기록되는 항목
 
-All mutations are recorded:
+모든 변경 사항이 기록됩니다:
 
-- Issue creation, updates, status transitions, assignments
-- Agent creation, configuration changes, pausing, resuming, termination
-- Approval creation, approval/rejection decisions
-- Comment creation
-- Budget changes
-- Company configuration changes
+- 이슈 생성, 업데이트, 상태 전환, 할당
+- 에이전트 생성, 구성 변경, 일시 중지, 재개, 종료
+- 승인 생성, 승인/거부 결정
+- 댓글 생성
+- 예산 변경
+- 회사 구성 변경
 
-The activity log is append-only and immutable.
+활동 로그는 추가 전용이며 변경할 수 없습니다.

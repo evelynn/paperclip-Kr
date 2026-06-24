@@ -1,31 +1,31 @@
 ---
-title: Approvals
-summary: Approval workflow endpoints
+title: 승인
+summary: 승인 워크플로우 엔드포인트
 ---
 
-Approvals gate certain actions (agent hiring, CEO strategy) behind board review.
+승인은 특정 작업(에이전트 채용, CEO 전략)을 보드 검토 뒤에 게이팅합니다.
 
-## List Approvals
+## 승인 목록 조회
 
 ```
 GET /api/companies/{companyId}/approvals
 ```
 
-Query parameters:
+쿼리 파라미터:
 
-| Param | Description |
+| 파라미터 | 설명 |
 |-------|-------------|
-| `status` | Filter by status (e.g. `pending`) |
+| `status` | 상태로 필터링 (예: `pending`) |
 
-## Get Approval
+## 승인 조회
 
 ```
 GET /api/approvals/{approvalId}
 ```
 
-Returns approval details including type, status, payload, and decision notes.
+유형, 상태, 페이로드, 및 결정 메모를 포함한 승인 세부 정보를 반환합니다.
 
-## Create Approval Request
+## 승인 요청 생성
 
 ```
 POST /api/companies/{companyId}/approvals
@@ -36,7 +36,7 @@ POST /api/companies/{companyId}/approvals
 }
 ```
 
-## Create Hire Request
+## 채용 요청 생성
 
 ```
 POST /api/companies/{companyId}/agent-hires
@@ -49,45 +49,45 @@ POST /api/companies/{companyId}/agent-hires
 }
 ```
 
-Creates a draft agent and a linked `hire_agent` approval.
+임시 에이전트와 연결된 `hire_agent` 승인을 생성합니다.
 
-## Approve
+## 승인
 
 ```
 POST /api/approvals/{approvalId}/approve
 { "decisionNote": "Approved. Good hire." }
 ```
 
-## Reject
+## 거부
 
 ```
 POST /api/approvals/{approvalId}/reject
 { "decisionNote": "Budget too high for this role." }
 ```
 
-## Request Revision
+## 수정 요청
 
 ```
 POST /api/approvals/{approvalId}/request-revision
 { "decisionNote": "Please reduce the budget and clarify capabilities." }
 ```
 
-## Resubmit
+## 재제출
 
 ```
 POST /api/approvals/{approvalId}/resubmit
 { "payload": { "updated": "config..." } }
 ```
 
-## Linked Issues
+## 연결된 이슈
 
 ```
 GET /api/approvals/{approvalId}/issues
 ```
 
-Returns issues linked to this approval.
+이 승인에 연결된 이슈를 반환합니다.
 
-## Approval Comments
+## 승인 댓글
 
 ```
 GET /api/approvals/{approvalId}/comments
@@ -95,7 +95,7 @@ POST /api/approvals/{approvalId}/comments
 { "body": "Discussion comment..." }
 ```
 
-## Approval Lifecycle
+## 승인 생명 주기
 
 ```
 pending -> approved

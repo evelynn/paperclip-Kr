@@ -1,186 +1,186 @@
-# Agent Runtime Guide
+# 에이전트 런타임 가이드
 
-Status: User-facing guide
-Last updated: 2026-03-26
-Audience: Operators setting up and running agents in Paperclip
+상태: 사용자 대상 가이드
+최종 업데이트: 2026-03-26
+대상: Paperclip에서 에이전트를 설정하고 운영하는 운영자
 
-## 1. What this system does
+## 1. 이 시스템이 하는 일
 
-Agents in Paperclip do not run continuously.  
-They run in **heartbeats**: short execution windows triggered by a wakeup.
+Paperclip의 에이전트는 지속적으로 실행되지 않습니다.  
+**하트비트**: 웨이크업에 의해 트리거되는 짧은 실행 창에서 동작합니다.
 
-Each heartbeat:
+각 하트비트는:
 
-1. Starts the configured agent adapter (for example, Claude CLI or Codex CLI)
-2. Gives it the current prompt/context
-3. Lets it work until it exits, times out, or is cancelled
-4. Stores results (status, token usage, errors, logs)
-5. Updates the UI live
+1. 설정된 에이전트 어댑터를 시작합니다 (예: Claude CLI 또는 Codex CLI).
+2. 현재 프롬프트/컨텍스트를 제공합니다.
+3. 종료, 타임아웃, 또는 취소될 때까지 작업하도록 합니다.
+4. 결과를 저장합니다 (상태, 토큰 사용량, 오류, 로그).
+5. UI를 실시간으로 업데이트합니다.
 
-## 2. When an agent wakes up
+## 2. 에이전트가 깨어나는 시점
 
-An agent can be woken up in four ways:
+에이전트는 네 가지 방식으로 깨어날 수 있습니다.
 
-- `timer`: scheduled interval (for example every 5 minutes)
-- `assignment`: when work is assigned/checked out to that agent
-- `on_demand`: manual wakeup (button/API)
-- `automation`: system-triggered wakeup for future automations
+- `timer`: 예약된 간격 (예: 매 5분)
+- `assignment`: 해당 에이전트에게 작업이 배정/체크아웃될 때
+- `on_demand`: 수동 웨이크업 (버튼/API)
+- `automation`: 향후 자동화를 위한 시스템 트리거 웨이크업
 
-If an agent is already running, new wakeups are merged (coalesced) instead of launching duplicate runs.
+에이전트가 이미 실행 중인 경우, 새 웨이크업은 중복 실행을 시작하는 대신 병합(코얼레싱)됩니다.
 
-## 3. What to configure per agent
+## 3. 에이전트별 설정 항목
 
-## 3.1 Adapter choice
+## 3.1 어댑터 선택
 
-Built-in adapters:
+내장 어댑터:
 
-- `claude_local`: runs your local `claude` CLI
-- `codex_local`: runs your local `codex` CLI
-- `opencode_local`: runs your local `opencode` CLI
-- `cursor`: runs Cursor in background mode
-- `pi_local`: runs an embedded Pi agent locally
-- `hermes_local`: runs your local `hermes` CLI (`hermes-paperclip-adapter`)
-- `openclaw_gateway`: connects to an OpenClaw gateway endpoint
-- `process`: generic shell command adapter
-- `http`: calls an external HTTP endpoint
+- `claude_local`: 로컬 `claude` CLI 실행
+- `codex_local`: 로컬 `codex` CLI 실행
+- `opencode_local`: 로컬 `opencode` CLI 실행
+- `cursor`: 백그라운드 모드로 Cursor 실행
+- `pi_local`: 로컬에 임베디드 Pi 에이전트 실행
+- `hermes_local`: 로컬 `hermes` CLI 실행 (`hermes-paperclip-adapter`)
+- `openclaw_gateway`: OpenClaw 게이트웨이 엔드포인트에 연결
+- `process`: 일반 쉘 명령어 어댑터
+- `http`: 외부 HTTP 엔드포인트 호출
 
-External plugin adapters (install via the adapter manager or API):
+외부 플러그인 어댑터 (어댑터 관리자 또는 API를 통해 설치):
 
-- `droid_local`: runs your local Factory Droid CLI (`@henkey/droid-paperclip-adapter`)
+- `droid_local`: 로컬 Factory Droid CLI 실행 (`@henkey/droid-paperclip-adapter`)
 
-For local CLI adapters (`claude_local`, `codex_local`, `opencode_local`, `hermes_local`, `droid_local`), Paperclip assumes the CLI is already installed and authenticated on the host machine.
+로컬 CLI 어댑터(`claude_local`, `codex_local`, `opencode_local`, `hermes_local`, `droid_local`)의 경우, Paperclip은 CLI가 이미 호스트 머신에 설치 및 인증되어 있다고 가정합니다.
 
-## 3.2 Runtime behavior
+## 3.2 런타임 동작
 
-In agent runtime settings, configure heartbeat policy:
+에이전트 런타임 설정에서 하트비트 정책을 설정합니다.
 
-- `enabled`: allow scheduled heartbeats
-- `intervalSec`: timer interval (0 = disabled)
-- `wakeOnAssignment`: wake when assigned work
-- `wakeOnOnDemand`: allow ping-style on-demand wakeups
-- `wakeOnAutomation`: allow system automation wakeups
+- `enabled`: 예약된 하트비트 허용
+- `intervalSec`: 타이머 간격 (0 = 비활성화)
+- `wakeOnAssignment`: 작업이 배정되면 깨우기
+- `wakeOnOnDemand`: 핑 방식의 온디맨드 웨이크업 허용
+- `wakeOnAutomation`: 시스템 자동화 웨이크업 허용
 
-## 3.3 Working directory and execution limits
+## 3.3 작업 디렉터리 및 실행 제한
 
-For local adapters, set:
+로컬 어댑터의 경우 다음을 설정합니다.
 
-- `cwd` (working directory)
-- `timeoutSec` (max runtime per heartbeat)
-- `graceSec` (time before force-kill after timeout/cancel)
-- optional env vars and extra CLI args
-- use **Test environment** in agent configuration to run adapter-specific diagnostics before saving
+- `cwd` (작업 디렉터리)
+- `timeoutSec` (하트비트당 최대 실행 시간)
+- `graceSec` (타임아웃/취소 후 강제 종료 전 대기 시간)
+- 선택적 환경 변수 및 추가 CLI 인수
+- 에이전트 설정에서 **테스트 환경**을 사용하여 저장 전 어댑터별 진단 실행
 
-## 3.4 Prompt templates
+## 3.4 프롬프트 템플릿
 
-You can set:
+다음을 설정할 수 있습니다.
 
-- `promptTemplate`: used for every run (first run and resumed sessions)
+- `promptTemplate`: 모든 실행(첫 실행 및 재개된 세션)에 사용됨
 
-Templates support variables like `{{agent.id}}`, `{{agent.name}}`, and run context values.
+템플릿은 `{{agent.id}}`, `{{agent.name}}`, 실행 컨텍스트 값과 같은 변수를 지원합니다.
 
-> **Note:** `bootstrapPromptTemplate` is deprecated and should not be used for new agents. Existing configs that use it will continue to work but should be migrated to the managed instructions bundle system.
+> **참고:** `bootstrapPromptTemplate`은 더 이상 사용되지 않으며 새 에이전트에 사용해서는 안 됩니다. 이를 사용하는 기존 설정은 계속 작동하지만, 관리형 지시사항 번들 시스템으로 마이그레이션해야 합니다.
 
-## 4. Session resume behavior
+## 4. 세션 재개 동작
 
-Paperclip stores session IDs for resumable adapters.
+Paperclip은 재개 가능한 어댑터의 세션 ID를 저장합니다.
 
-- Next heartbeat reuses the saved session automatically.
-- This gives continuity across heartbeats.
-- You can reset a session if context gets stale or confused.
+- 다음 하트비트는 저장된 세션을 자동으로 재사용합니다.
+- 이를 통해 하트비트 간 연속성이 유지됩니다.
+- 컨텍스트가 오래되거나 혼란스러워지면 세션을 초기화할 수 있습니다.
 
-Use session reset when:
+다음 경우에 세션을 초기화하세요.
 
-- you significantly changed prompt strategy
-- the agent is stuck in a bad loop
-- you want a clean restart
+- 프롬프트 전략을 크게 변경한 경우
+- 에이전트가 나쁜 루프에 갇힌 경우
+- 깨끗한 재시작을 원하는 경우
 
-## 5. Logs, status, and run history
+## 5. 로그, 상태, 실행 이력
 
-For each heartbeat run you get:
+각 하트비트 실행에 대해 다음을 확인할 수 있습니다.
 
-- run status (`queued`, `running`, `succeeded`, `failed`, `timed_out`, `cancelled`)
-- error text and stderr/stdout excerpts
-- token usage/cost when available from the adapter
-- full logs (stored outside core run rows, optimized for large output)
+- 실행 상태 (`queued`, `running`, `succeeded`, `failed`, `timed_out`, `cancelled`)
+- 오류 텍스트 및 stderr/stdout 발췌
+- 어댑터에서 사용 가능한 경우 토큰 사용량/비용
+- 전체 로그 (핵심 실행 행 외부에 저장, 대용량 출력에 최적화)
 
-In local/dev setups, full logs are stored on disk under the configured run-log path.
+로컬/개발 설정에서 전체 로그는 설정된 실행 로그 경로 아래 디스크에 저장됩니다.
 
-## 6. Live updates in the UI
+## 6. UI 실시간 업데이트
 
-Paperclip pushes runtime/activity updates to the browser in real time.
+Paperclip은 런타임/활동 업데이트를 브라우저에 실시간으로 푸시합니다.
 
-You should see live changes for:
+다음 항목의 실시간 변경을 확인할 수 있습니다.
 
-- agent status
-- heartbeat run status
-- task/activity updates caused by agent work
-- dashboard/cost/activity panels as relevant
+- 에이전트 상태
+- 하트비트 실행 상태
+- 에이전트 작업으로 인한 작업/활동 업데이트
+- 관련 대시보드/비용/활동 패널
 
-If the connection drops, the UI reconnects automatically.
+연결이 끊어지면 UI가 자동으로 재연결합니다.
 
-## 7. Common operating patterns
+## 7. 일반적인 운영 패턴
 
-## 7.1 Simple autonomous loop
+## 7.1 단순 자율 루프
 
-1. Enable timer wakeups (for example every 300s)
-2. Keep assignment wakeups on
-3. Use a focused prompt template that tells agents to act in the same heartbeat, leave durable progress, and mark blocked work with an owner/action
-4. Watch run logs and adjust prompt/config over time
+1. 타이머 웨이크업 활성화 (예: 매 300초)
+2. 배정 웨이크업 켜두기
+3. 에이전트가 같은 하트비트 내에서 행동하고, 지속적인 진행 상황을 남기며, 차단된 작업에 소유자/조치를 표시하도록 지시하는 집중된 프롬프트 템플릿 사용
+4. 실행 로그를 모니터링하며 시간에 따라 프롬프트/설정을 조정
 
-## 7.2 Event-driven loop (less constant polling)
+## 7.2 이벤트 기반 루프 (지속적인 폴링 감소)
 
-1. Disable timer or set a long interval
-2. Keep wake-on-assignment enabled
-3. Use child issues, comments, and on-demand wakeups for handoffs instead of loops that poll agents, sessions, or processes
+1. 타이머 비활성화 또는 긴 간격 설정
+2. 배정 시 깨우기 활성화 유지
+3. 에이전트, 세션, 프로세스를 폴링하는 루프 대신 자식 이슈, 댓글, 온디맨드 웨이크업을 핸드오프에 사용
 
-## 7.3 Safety-first loop
+## 7.3 안전 우선 루프
 
-1. Short timeout
-2. Conservative prompt
-3. Monitor errors + cancel quickly when needed
-4. Reset sessions when drift appears
+1. 짧은 타임아웃
+2. 보수적인 프롬프트
+3. 오류 모니터링 + 필요 시 신속한 취소
+4. 드리프트 발생 시 세션 초기화
 
-## 8. Troubleshooting
+## 8. 문제 해결
 
-If runs fail repeatedly:
+실행이 반복적으로 실패하는 경우:
 
-1. Check adapter command availability (e.g. `claude`/`codex`/`opencode`/`hermes` installed and logged in).
-2. Verify `cwd` exists and is accessible.
-3. Inspect run error + stderr excerpt, then full log.
-4. Confirm timeout is not too low.
-5. Reset session and retry.
-6. Pause agent if it is causing repeated bad updates.
+1. 어댑터 명령어 가용성 확인 (예: `claude`/`codex`/`opencode`/`hermes` 설치 및 로그인 여부).
+2. `cwd`가 존재하고 접근 가능한지 확인.
+3. 실행 오류 + stderr 발췌를 검사한 후 전체 로그 확인.
+4. 타임아웃이 너무 낮지 않은지 확인.
+5. 세션을 초기화하고 재시도.
+6. 반복적인 잘못된 업데이트를 유발하는 경우 에이전트 일시 중지.
 
-Typical failure causes:
+일반적인 실패 원인:
 
-- CLI not installed/authenticated
-- bad working directory
-- malformed adapter args/env
-- prompt too broad or missing constraints
-- process timeout
+- CLI 미설치/미인증
+- 잘못된 작업 디렉터리
+- 잘못된 어댑터 인수/환경 변수
+- 프롬프트가 너무 광범위하거나 제약 조건 없음
+- 프로세스 타임아웃
 
-Claude-specific note:
+Claude 관련 참고:
 
-- If `ANTHROPIC_API_KEY` is set in adapter env or host environment, Claude uses API-key auth instead of subscription login. Paperclip surfaces this as a warning in environment tests, not a hard error.
+- `ANTHROPIC_API_KEY`가 어댑터 환경 또는 호스트 환경에 설정된 경우, Claude는 구독 로그인 대신 API 키 인증을 사용합니다. Paperclip은 이를 환경 테스트에서 하드 오류가 아닌 경고로 표시합니다.
 
-## 9. Security and risk notes
+## 9. 보안 및 위험 참고 사항
 
-Local CLI adapters run unsandboxed on the host machine.
+로컬 CLI 어댑터는 호스트 머신에서 샌드박스 없이 실행됩니다.
 
-That means:
+이것이 의미하는 것:
 
-- prompt instructions matter
-- configured credentials/env vars are sensitive
-- working directory permissions matter
+- 프롬프트 지시사항이 중요합니다.
+- 설정된 자격 증명/환경 변수가 민감합니다.
+- 작업 디렉터리 권한이 중요합니다.
 
-Start with least privilege where possible, and avoid exposing secrets in broad reusable prompts unless intentionally required.
+가능하면 최소 권한으로 시작하고, 의도적으로 필요하지 않는 한 광범위하게 재사용되는 프롬프트에 시크릿을 노출하지 마세요.
 
-## 10. Minimal setup checklist
+## 10. 최소 설정 체크리스트
 
-1. Choose adapter (e.g. `claude_local`, `codex_local`, `opencode_local`, `hermes_local`, `cursor`, or `openclaw_gateway`). External plugins like `droid_local` are also available via the adapter manager.
-2. Set `cwd` to the target workspace (for local adapters).
-3. Optionally add a prompt template (`promptTemplate`) or use the managed instructions bundle.
-4. Configure heartbeat policy (timer and/or assignment wakeups).
-5. Trigger a manual wakeup.
-6. Confirm run succeeds and session/token usage is recorded.
-7. Watch live updates and iterate prompt/config.
+1. 어댑터 선택 (예: `claude_local`, `codex_local`, `opencode_local`, `hermes_local`, `cursor`, 또는 `openclaw_gateway`). `droid_local`과 같은 외부 플러그인도 어댑터 관리자를 통해 사용 가능합니다.
+2. 로컬 어댑터의 경우 대상 워크스페이스로 `cwd` 설정.
+3. 선택적으로 프롬프트 템플릿(`promptTemplate`)을 추가하거나 관리형 지시사항 번들 사용.
+4. 하트비트 정책 설정 (타이머 및/또는 배정 웨이크업).
+5. 수동 웨이크업 트리거.
+6. 실행이 성공하고 세션/토큰 사용량이 기록되는지 확인.
+7. 실시간 업데이트를 모니터링하며 프롬프트/설정 반복 개선.

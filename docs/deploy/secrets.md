@@ -1,390 +1,238 @@
 ---
-title: Secrets Management
-summary: Master key, encryption, and strict mode
+title: 시크릿 관리
+summary: 마스터 키, 암호화, 엄격 모드
 ---
 
-Paperclip encrypts secrets at rest using a local master key. Agent environment variables that contain sensitive values (API keys, tokens) are stored as encrypted secret references.
+Paperclip은 로컬 마스터 키를 사용하여 시크릿을 저장 시 암호화합니다. 민감한 값(API 키, 토큰)이 포함된 에이전트 환경 변수는 암호화된 시크릿 참조로 저장됩니다.
 
-## Custody Boundaries
+## 보관 경계
 
-Paperclip protects secret values up to the moment they are handed to an agent
-or workload:
+Paperclip은 에이전트 또는 워크로드에 값이 전달되는 순간까지 시크릿 값을 보호합니다.
 
-- Storage: values are encrypted at rest by the active provider. The local
-  provider keeps them encrypted with a key that never leaves the host.
-- Transport: values are decrypted server-side and injected into the agent
-  process environment, SSH command env, sandbox driver, or HTTP request
-  immediately before the call. Paperclip does not return decrypted values to
-  the board UI.
-- Audit: each resolution records a non-sensitive event (secret id, version,
-  provider id, consumer, outcome) without the value or provider credentials.
+- 스토리지: 값은 활성 프로바이더에 의해 저장 시 암호화됩니다. 로컬 프로바이더는 호스트를 절대 벗어나지 않는 키로 값을 암호화합니다.
+- 전송: 값은 서버 측에서 복호화되어 에이전트 프로세스 환경, SSH 명령 환경, 샌드박스 드라이버, 또는 HTTP 요청에 호출 직전 주입됩니다. Paperclip은 복호화된 값을 보드 UI에 반환하지 않습니다.
+- 감사: 각 해석은 값이나 프로바이더 자격 증명 없이 비민감 이벤트(시크릿 id, 버전, 프로바이더 id, 소비자, 결과)를 기록합니다.
 
-Once a value reaches the consuming process, Paperclip can no longer guarantee
-secrecy. The agent (or sandbox, or remote host) can read the value, write it to
-its own logs or transcript, or pass it to downstream tools. Treat any secret
-you bind to an agent as exposed to that agent. Limit blast radius with bindings
-(only bind what each agent needs), short-lived provider credentials where the
-provider supports them, and rotation when an agent transcript or downstream
-system might have captured a value.
+값이 소비 프로세스에 도달하면 Paperclip은 더 이상 기밀성을 보장할 수 없습니다. 에이전트(또는 샌드박스, 원격 호스트)는 값을 읽거나, 자신의 로그나 트랜스크립트에 기록하거나, 다운스트림 도구에 전달할 수 있습니다. 에이전트에 바인딩하는 모든 시크릿은 해당 에이전트에 노출된다고 간주하십시오. 바인딩으로 폭발 반경을 제한하고(각 에이전트에 필요한 것만 바인딩), 프로바이더가 지원하는 경우 수명이 짧은 프로바이더 자격 증명을 사용하며, 에이전트 트랜스크립트나 다운스트림 시스템이 값을 캡처했을 가능성이 있을 때 교체하십시오.
 
-## Using Secrets In Runs
+## 실행 시 시크릿 사용
 
-Creating a company secret does not automatically create an environment variable.
-You use a secret by binding it into an agent, project, environment, or plugin
-configuration field that supports secret references.
+회사 시크릿을 생성한다고 해서 환경 변수가 자동으로 생성되지는 않습니다. 시크릿 참조를 지원하는 에이전트, 프로젝트, 환경, 또는 플러그인 구성 필드에 바인딩하여 시크릿을 사용합니다.
 
-For agent and project environment variables:
+에이전트 및 프로젝트 환경 변수의 경우:
 
-1. Create or link the secret in `Company Settings > Secrets`.
-2. Open the agent's `Environment variables` field, or the project's `Env`
-   field.
-3. Add the environment variable key the process expects, such as `GH_TOKEN` or
-   `OPENAI_API_KEY`.
-4. Set the row source to `Secret`, select the stored secret, and choose either
-   `latest` or a pinned version.
+1. `Company Settings > Secrets`에서 시크릿을 생성하거나 연결합니다.
+2. 에이전트의 `Environment variables` 필드 또는 프로젝트의 `Env` 필드를 엽니다.
+3. `GH_TOKEN` 또는 `OPENAI_API_KEY`와 같이 프로세스가 기대하는 환경 변수 키를 추가합니다.
+4. 행 소스를 `Secret`으로 설정하고, 저장된 시크릿을 선택하며, `latest` 또는 고정된 버전을 선택합니다.
 
-At runtime, Paperclip resolves the selected secret server-side and injects the
-resolved value under the env key from the binding row. The stored secret name
-can be human-readable; the binding key is what the agent process receives.
+런타임에 Paperclip은 선택된 시크릿을 서버 측에서 해석하고 바인딩 행의 환경 키 아래에 해석된 값을 주입합니다. 저장된 시크릿 이름은 사람이 읽기 쉬운 형태일 수 있으며, 바인딩 키가 에이전트 프로세스가 수신하는 값입니다.
 
-Project env applies to every issue run in that project. When a project env key
-matches an agent env key, the project value wins before Paperclip injects its
-own `PAPERCLIP_*` runtime variables.
+프로젝트 환경은 해당 프로젝트에서 실행되는 모든 이슈에 적용됩니다. 프로젝트 환경 키가 에이전트 환경 키와 일치하는 경우, Paperclip이 자체 `PAPERCLIP_*` 런타임 변수를 주입하기 전에 프로젝트 값이 우선됩니다.
 
-## Default Provider: `local_encrypted`
+## 기본 프로바이더: `local_encrypted`
 
-Secrets are encrypted with a local master key stored at:
+시크릿은 다음 경로에 저장된 로컬 마스터 키로 암호화됩니다.
 
 ```
 ~/.paperclip/instances/default/secrets/master.key
 ```
 
-This key is auto-created during onboarding. The key never leaves your machine.
-Paperclip best-effort enforces `0600` permissions when it creates or loads the
-key file. `paperclipai doctor` and the provider health API warn when the file is
-readable by group or other users.
+이 키는 온보딩 중 자동으로 생성됩니다. 키는 절대 사용자의 머신을 벗어나지 않습니다. Paperclip은 키 파일을 생성하거나 로드할 때 최선을 다해 `0600` 권한을 적용합니다. `paperclipai doctor`와 프로바이더 상태 API는 파일이 그룹 또는 다른 사용자에게 읽기 가능한 경우 경고를 표시합니다.
 
-Back up the key file together with database backups. A database backup without
-the key cannot decrypt local secrets, and a key backup without the database
-metadata is not enough to restore named secret versions.
+키 파일을 데이터베이스 백업과 함께 백업하십시오. 키 없는 데이터베이스 백업은 로컬 시크릿을 복호화할 수 없으며, 데이터베이스 메타데이터 없는 키 백업만으로는 명명된 시크릿 버전을 복원하기에 충분하지 않습니다.
 
-## Configuration
+## 구성
 
-### CLI Setup
+### CLI 설정
 
-Onboarding writes default secrets config:
+온보딩 시 기본 시크릿 구성이 작성됩니다.
 
 ```sh
 pnpm paperclipai onboard
 ```
 
-Update secrets settings:
+시크릿 설정 업데이트:
 
 ```sh
 pnpm paperclipai configure --section secrets
 ```
 
-Validate secrets config:
+시크릿 구성 유효성 검사:
 
 ```sh
 pnpm paperclipai doctor
 pnpm paperclipai secrets doctor --company-id <company-id>
 ```
 
-### Environment Overrides
+### 환경 변수 재정의
 
-| Variable | Description |
+| 변수 | 설명 |
 |----------|-------------|
-| `PAPERCLIP_SECRETS_MASTER_KEY` | 32-byte key as base64, hex, or raw string |
-| `PAPERCLIP_SECRETS_MASTER_KEY_FILE` | Custom key file path |
-| `PAPERCLIP_SECRETS_STRICT_MODE` | Set to `true` to enforce secret refs |
+| `PAPERCLIP_SECRETS_MASTER_KEY` | base64, hex, 또는 raw 문자열로 된 32바이트 키 |
+| `PAPERCLIP_SECRETS_MASTER_KEY_FILE` | 사용자 지정 키 파일 경로 |
+| `PAPERCLIP_SECRETS_STRICT_MODE` | 시크릿 참조를 강제하려면 `true`로 설정 |
 
-## Strict Mode
+## 엄격 모드
 
-When strict mode is enabled, sensitive env keys (matching `*_API_KEY`, `*_TOKEN`, `*_SECRET`) must use secret references instead of inline plain values.
+엄격 모드가 활성화되면, 민감한 환경 키(`*_API_KEY`, `*_TOKEN`, `*_SECRET`에 일치하는)는 인라인 평문 값 대신 시크릿 참조를 사용해야 합니다.
 
 ```sh
 PAPERCLIP_SECRETS_STRICT_MODE=true
 ```
 
-Recommended for any deployment beyond local trusted.
+로컬 신뢰 환경 이상의 모든 배포에 권장됩니다.
 
-Authenticated deployments default strict mode on unless explicitly overridden by
-configuration or `PAPERCLIP_SECRETS_STRICT_MODE=false`.
+인증된 배포는 구성이나 `PAPERCLIP_SECRETS_STRICT_MODE=false`로 명시적으로 재정의하지 않는 한 기본적으로 엄격 모드가 활성화됩니다.
 
-## External References
+## 외부 참조
 
-Provider-owned secrets can be linked without copying values into Paperclip by
-using `managedMode: "external_reference"` plus a provider `externalRef`.
-Paperclip stores metadata and a non-sensitive fingerprint, never the value.
-Runtime resolution remains server-side and binding-enforced.
+`managedMode: "external_reference"`와 프로바이더 `externalRef`를 사용하면 값을 Paperclip에 복사하지 않고 프로바이더 소유 시크릿을 연결할 수 있습니다. Paperclip은 메타데이터와 비민감 지문만 저장하며 값 자체는 저장하지 않습니다. 런타임 해석은 서버 측으로 유지되며 바인딩이 강제됩니다.
 
-The built-in AWS, GCP, and Vault provider IDs currently accept external
-reference metadata, but runtime resolution requires provider configuration in the
-deployment. Their provider health check reports this as a warning until
-configured.
+내장 AWS, GCP, Vault 프로바이더 ID는 현재 외부 참조 메타데이터를 허용하지만, 런타임 해석은 배포 시 프로바이더 구성이 필요합니다. 해당 프로바이더 상태 검사는 구성될 때까지 경고로 보고됩니다.
 
-For hosted Paperclip Cloud on AWS, see the AWS Secrets Manager operational
-contract — required env vars, IAM/KMS scoping, naming and tag conventions, and
-backup/rotation/incident runbooks — in `doc/SECRETS-AWS-PROVIDER.md`.
+AWS에서 호스팅된 Paperclip Cloud의 경우, AWS Secrets Manager 운영 계약(필수 환경 변수, IAM/KMS 범위 지정, 명명 및 태그 규칙, 백업/교체/사고 런북)은 `doc/SECRETS-AWS-PROVIDER.md`를 참조하십시오.
 
-## Provider Vaults
+## 프로바이더 볼트
 
-A *provider vault* is a named, company-scoped configuration that points secret
-material at one of the supported provider backends. Each company can configure
-multiple vaults, including more than one vault per provider family, and pick a
-default vault per family for new secret operations. Existing secrets created
-before any vault was configured continue to resolve through the deployment-level
-default provider — no migration is required.
+*프로바이더 볼트*는 지원되는 프로바이더 백엔드 중 하나에 시크릿 자료를 지정하는, 명명된 회사 범위 구성입니다. 각 회사는 프로바이더 패밀리당 하나 이상을 포함하여 여러 볼트를 구성할 수 있으며, 새 시크릿 작업을 위해 패밀리당 기본 볼트를 선택할 수 있습니다. 볼트가 구성되기 전에 생성된 기존 시크릿은 배포 수준 기본 프로바이더를 통해 계속 해석됩니다. 마이그레이션이 필요하지 않습니다.
 
-### Where to configure
+### 구성 위치
 
-Open `Company Settings → Secrets` in the board UI and switch to the
-`Provider vaults` tab. From there you can:
+보드 UI에서 `Company Settings → Secrets`를 열고 `Provider vaults` 탭으로 전환합니다. 여기에서 다음을 수행할 수 있습니다.
 
-- Create a vault for any supported provider family.
-- Edit the non-secret config of an existing vault.
-- Set one ready vault per provider family as the company default.
-- Disable a vault (a soft delete that keeps audit history).
-- Run a health check against a vault and read the latest result inline.
+- 지원되는 프로바이더 패밀리에 대한 볼트를 생성합니다.
+- 기존 볼트의 비시크릿 구성을 편집합니다.
+- 프로바이더 패밀리당 하나의 준비된 볼트를 회사 기본값으로 설정합니다.
+- 볼트를 비활성화합니다(감사 이력을 유지하는 소프트 삭제).
+- 볼트에 대해 상태 검사를 실행하고 최신 결과를 인라인으로 읽습니다.
 
-The same operations are exposed under
-`/api/companies/{companyId}/secret-provider-configs` for automation. See the
-[secrets API reference](/api/secrets#provider-vaults) for the full route table.
+자동화를 위해 동일한 작업이 `/api/companies/{companyId}/secret-provider-configs`에서도 노출됩니다. 전체 경로 테이블은 [시크릿 API 참조](/api/secrets#provider-vaults)를 참조하십시오.
 
-### Custody Of Provider Credentials
+### 프로바이더 자격 증명의 보관
 
-Provider vaults intentionally store only **non-sensitive** configuration:
-region, project id, namespace, prefix, KMS key id, mount path, address, and
-similar routing metadata. The API, UI, and activity log never accept, return,
-or display provider credential values. Submitting fields with names like
-`accessKeyId`, `secretAccessKey`, `token`, `password`, `serviceAccountJson`,
-`privateKey`, `keyFile`, `unsealKey`, or any common credential alias is rejected
-at validation time.
+프로바이더 볼트는 의도적으로 **비민감** 구성만 저장합니다: 리전, 프로젝트 id, 네임스페이스, 접두사, KMS 키 id, 마운트 경로, 주소 및 유사한 라우팅 메타데이터. API, UI, 활동 로그는 프로바이더 자격 증명 값을 절대 수락, 반환, 또는 표시하지 않습니다. `accessKeyId`, `secretAccessKey`, `token`, `password`, `serviceAccountJson`, `privateKey`, `keyFile`, `unsealKey` 또는 일반적인 자격 증명 별칭과 같은 이름의 필드를 제출하면 유효성 검사 시 거부됩니다.
 
-That keeps the bootstrap rule from the AWS provider applicable to every
-provider family: **provider credentials live in deployment infrastructure
-identity, not in Paperclip company secrets**. Allowed credential sources are
-workload identity attached to the Paperclip server (instance profile, IRSA, ECS
-task role), `AWS_PROFILE` / SSO / shared config for local runs, an orchestrator
-secret store that boots the server, or short-lived shell credentials for local
-development. Do not paste long-lived API keys into the vault config.
+이를 통해 AWS 프로바이더의 부트스트랩 규칙이 모든 프로바이더 패밀리에 적용됩니다: **프로바이더 자격 증명은 Paperclip 회사 시크릿이 아닌 배포 인프라 ID에 있습니다.** 허용되는 자격 증명 소스는 Paperclip 서버에 연결된 워크로드 ID(인스턴스 프로파일, IRSA, ECS 태스크 역할), 로컬 실행을 위한 `AWS_PROFILE` / SSO / 공유 구성, 서버를 부팅하는 오케스트레이터 시크릿 저장소, 또는 로컬 개발을 위한 수명이 짧은 셸 자격 증명입니다. 장기 API 키를 볼트 구성에 붙여넣지 마십시오.
 
-### Vault Status
+### 볼트 상태
 
-Each vault carries a status that drives what the runtime can do with it:
+각 볼트는 런타임이 수행할 수 있는 작업을 결정하는 상태를 가집니다.
 
-| Status        | Meaning                                                                                       |
+| 상태        | 의미                                                                                       |
 |---------------|-----------------------------------------------------------------------------------------------|
-| `ready`       | Selectable for create/rotate/resolve. Eligible to be the default.                             |
-| `warning`     | Saved config exists but health needs attention (for example missing AWS env). Still selectable. |
-| `coming_soon` | Visible and editable as draft metadata, but locked out of all runtime operations.            |
-| `disabled`    | Soft-deleted. Hidden from the secret create/rotate flow.                                      |
+| `ready`       | 생성/교체/해석에 선택 가능합니다. 기본값으로 지정될 수 있습니다.                             |
+| `warning`     | 저장된 구성이 있지만 상태에 주의가 필요합니다(예: AWS 환경 변수 누락). 여전히 선택 가능합니다. |
+| `coming_soon` | 초안 메타데이터로 표시 및 편집 가능하지만, 모든 런타임 작업에서 잠겨 있습니다.            |
+| `disabled`    | 소프트 삭제됩니다. 시크릿 생성/교체 흐름에서 숨겨집니다.                                      |
 
-`gcp_secret_manager` and `vault` are pinned to `coming_soon` until their
-runtime modules ship. The settings UI lets you save draft configuration for
-those providers (and surfaces them on the vault list), but secret create,
-rotate, and resolve calls that target a coming-soon vault fail with a clear
-runtime-locked error.
+`gcp_secret_manager`와 `vault`는 해당 런타임 모듈이 출시될 때까지 `coming_soon`으로 고정됩니다. 설정 UI를 통해 해당 프로바이더에 대한 초안 구성을 저장할 수 있으며(볼트 목록에 표시됨), coming-soon 볼트를 대상으로 하는 시크릿 생성, 교체, 해석 호출은 명확한 런타임 잠금 오류와 함께 실패합니다.
 
-### Default Vault Behavior
+### 기본 볼트 동작
 
-A company can mark **one** ready (or warning) vault per provider family as the
-default. The secret create and rotate dialogs preselect the default vault for
-the chosen provider so operators don't have to remember which vault to pick.
-Coming-soon and disabled vaults cannot be marked default; attempting to do so
-returns a validation error. Setting a new default automatically clears the
-previous default for that provider.
+회사는 프로바이더 패밀리당 **하나**의 준비된(또는 경고) 볼트를 기본값으로 표시할 수 있습니다. 시크릿 생성 및 교체 다이얼로그는 선택된 프로바이더의 기본 볼트를 미리 선택하므로 운영자가 어떤 볼트를 선택할지 기억할 필요가 없습니다. coming-soon 및 비활성화된 볼트는 기본값으로 표시할 수 없으며, 그렇게 하려고 하면 유효성 검사 오류가 반환됩니다. 새 기본값을 설정하면 해당 프로바이더의 이전 기본값이 자동으로 지워집니다.
 
-If a secret is created without any `providerConfigId` (no vaults exist yet, or
-the operator clears the selector), runtime resolution falls back to the
-deployment-level provider configuration — the same path existing installs use.
-This keeps secrets created before any provider vault was configured working
-without migration. Picking the default in the UI is an explicit selection, not
-a runtime fallback: the create call still sends an explicit `providerConfigId`.
+`providerConfigId` 없이 시크릿이 생성된 경우(볼트가 아직 없거나 운영자가 선택기를 지운 경우), 런타임 해석은 배포 수준 프로바이더 구성으로 폴백됩니다. 이는 기존 설치가 마이그레이션 없이 작동하도록 유지합니다. UI에서 기본값을 선택하는 것은 명시적인 선택이며, 런타임 폴백이 아닙니다: 생성 호출은 여전히 명시적인 `providerConfigId`를 전송합니다.
 
-### Multiple Vaults Per Provider
+### 프로바이더당 여러 볼트
 
-Multiple vaults from the same provider family are first-class. Common patterns:
+동일한 프로바이더 패밀리의 여러 볼트는 일급 지원됩니다. 일반적인 패턴:
 
-- Two AWS vaults pointing at different regions or KMS keys for environment
-  separation.
-- A staging Vault address alongside a production address.
-- A dedicated GCP project for a single product line while the rest of the
-  company uses another.
+- 환경 분리를 위해 다른 리전 또는 KMS 키를 가리키는 두 개의 AWS 볼트.
+- 프로덕션 주소 옆에 스테이징 Vault 주소.
+- 나머지 회사가 다른 것을 사용하는 동안 단일 제품 라인에 전용 GCP 프로젝트.
 
-Each vault has its own display name, status, default flag, and health record.
-Operators choose the vault explicitly when creating or rotating a secret; the
-default vault is preselected to avoid accidental routing to the wrong account.
+각 볼트에는 자체 표시 이름, 상태, 기본 플래그, 상태 기록이 있습니다. 운영자는 시크릿을 생성하거나 교체할 때 볼트를 명시적으로 선택합니다. 기본 볼트는 잘못된 계정으로의 우발적인 라우팅을 방지하기 위해 미리 선택됩니다.
 
-### Per-Vault Health Checks
+### 볼트별 상태 검사
 
-`POST /api/secret-provider-configs/{id}/health` runs a provider-specific health
-probe and stores the result on the vault row. The settings UI exposes the same
-action and renders the result inline. Health responses include a status,
-operator-facing message, and structured guidance (such as missing env var
-names, expected credential sources, and backup reminders). They never include
-provider credentials or secret values. Coming-soon vaults always return a
-`runtime_locked` health code and never call into provider modules.
+`POST /api/secret-provider-configs/{id}/health`는 프로바이더별 상태 프로브를 실행하고 볼트 행에 결과를 저장합니다. 설정 UI는 동일한 작업을 노출하고 결과를 인라인으로 렌더링합니다. 상태 응답에는 상태, 운영자 대상 메시지, 구조화된 안내(예: 누락된 환경 변수 이름, 예상 자격 증명 소스, 백업 알림)가 포함됩니다. 프로바이더 자격 증명이나 시크릿 값은 포함되지 않습니다. coming-soon 볼트는 항상 `runtime_locked` 상태 코드를 반환하며 프로바이더 모듈을 호출하지 않습니다.
 
-### Provider-Specific Notes
+### 프로바이더별 참고 사항
 
-**Local encrypted vaults** wrap the existing `local_encrypted` provider. The
-master key path and rotation guidance described above still applies. A local
-vault config is mostly bookkeeping plus an explicit acknowledgement that the
-key file is backed up alongside the database.
+**로컬 암호화 볼트**는 기존 `local_encrypted` 프로바이더를 래핑합니다. 위에서 설명한 마스터 키 경로 및 교체 안내가 여전히 적용됩니다. 로컬 볼트 구성은 주로 부기(bookkeeping) 및 키 파일이 데이터베이스와 함께 백업되었다는 명시적인 확인입니다.
 
-**AWS Secrets Manager vaults** read the per-vault `region`, `namespace`,
-`secretNamePrefix`, `kmsKeyId`, `ownerTag`, and `environmentTag` to route
-managed writes and external-reference reads. The vault config supplements (and
-can override) the deployment-level `PAPERCLIP_SECRETS_AWS_*` env. Bootstrap
-credentials still come from the AWS SDK default credential chain — see
-`doc/SECRETS-AWS-PROVIDER.md` for the full IAM and KMS contract.
+**AWS Secrets Manager 볼트**는 볼트별 `region`, `namespace`, `secretNamePrefix`, `kmsKeyId`, `ownerTag`, `environmentTag`를 읽어 관리되는 쓰기 및 외부 참조 읽기를 라우팅합니다. 볼트 구성은 배포 수준 `PAPERCLIP_SECRETS_AWS_*` 환경 변수를 보완하고(재정의할 수 있음) 부트스트랩 자격 증명은 여전히 AWS SDK 기본 자격 증명 체인에서 옵니다. 전체 IAM 및 KMS 계약은 `doc/SECRETS-AWS-PROVIDER.md`를 참조하십시오.
 
-**GCP Secret Manager** and **HashiCorp Vault** vaults are coming soon. You can
-save draft `projectId`, `location`, `namespace`, `address`, and `mountPath`
-metadata so the company is ready to flip them on when the provider modules
-ship. Vault `address` values must be origin-only `http(s)://host[:port]` URLs;
-addresses with embedded credentials, paths, query strings, or fragments are
-rejected.
+**GCP Secret Manager**와 **HashiCorp Vault** 볼트는 곧 지원될 예정입니다. 프로바이더 모듈이 출시될 때 바로 활성화할 수 있도록 초안 `projectId`, `location`, `namespace`, `address`, `mountPath` 메타데이터를 저장할 수 있습니다. Vault `address` 값은 원본 전용 `http(s)://host[:port]` URL이어야 합니다. 자격 증명, 경로, 쿼리 문자열, 또는 프래그먼트가 포함된 주소는 거부됩니다.
 
-### Remote Import From AWS Vaults
+### AWS 볼트에서 원격 가져오기
 
-AWS provider vaults can import existing AWS Secrets Manager entries as
-Paperclip `external_reference` secrets. This is a metadata-only link: Paperclip
-stores the AWS ARN/path, a fingerprint/version reference, and binding metadata.
-It does not read, copy, store, log, or display the remote plaintext secret
-value during preview or import.
+AWS 프로바이더 볼트는 기존 AWS Secrets Manager 항목을 Paperclip `external_reference` 시크릿으로 가져올 수 있습니다. 이는 메타데이터 전용 연결입니다: Paperclip은 AWS ARN/경로, 지문/버전 참조, 바인딩 메타데이터를 저장합니다. 미리보기 또는 가져오기 중에 원격 평문 시크릿 값을 읽거나, 복사하거나, 저장하거나, 기록하거나, 표시하지 않습니다.
 
-Operator flow in the board UI:
+보드 UI에서의 운영자 흐름:
 
-1. Open `Company Settings -> Secrets`.
-2. Confirm at least one AWS provider vault is `ready` or `warning`.
-3. In the `Secrets` tab, choose `Import from vault`.
-4. Select an AWS vault, search the remote inventory, and load more pages as
-   needed.
-5. Check the rows to import, review/edit the Paperclip name and key, then
-   submit.
-6. Review the result summary for created, skipped, and failed rows.
+1. `Company Settings -> Secrets`를 엽니다.
+2. AWS 프로바이더 볼트가 하나 이상 `ready` 또는 `warning` 상태인지 확인합니다.
+3. `Secrets` 탭에서 `Import from vault`를 선택합니다.
+4. AWS 볼트를 선택하고, 원격 인벤토리를 검색하며, 필요에 따라 더 많은 페이지를 로드합니다.
+5. 가져올 행을 체크하고, Paperclip 이름과 키를 검토/편집한 다음 제출합니다.
+6. 생성됨, 건너뜀, 실패한 행에 대한 결과 요약을 검토합니다.
 
-The preview list is intentionally paged and search-first. AWS accounts can have
-large per-Region inventories, and `ListSecrets` returns opaque `NextToken`
-cursors. Do not expect Paperclip to crawl a whole account in the background;
-load pages deliberately and retry throttled requests with backoff.
+미리보기 목록은 의도적으로 페이지 단위로 제공되며 검색 우선입니다. AWS 계정은 리전당 대규모 인벤토리를 가질 수 있으며 `ListSecrets`는 불투명한 `NextToken` 커서를 반환합니다. Paperclip이 백그라운드에서 전체 계정을 크롤링할 것으로 기대하지 마십시오. 페이지를 의도적으로 로드하고 제한된 요청은 백오프를 적용하여 재시도하십시오.
 
-Remote import exposes AWS secret metadata visible to the Paperclip runtime
-role, including names/ARNs and safe derived fields such as dates, whether a
-description or KMS key exists, and tag count. Treat names, ARNs, tags, and
-search text as operational metadata that may be sensitive. The API and activity
-log must not store raw descriptions, tags, plaintext values, provider
-credentials, or raw AWS error blobs.
+원격 가져오기는 Paperclip 런타임 역할에 표시되는 AWS 시크릿 메타데이터를 노출합니다. 여기에는 이름/ARN과 날짜, 설명 또는 KMS 키 존재 여부, 태그 수와 같은 안전한 파생 필드가 포함됩니다. 이름, ARN, 태그, 검색 텍스트는 민감할 수 있는 운영 메타데이터로 취급하십시오. API 및 활동 로그는 원시 설명, 태그, 평문 값, 프로바이더 자격 증명, 또는 원시 AWS 오류 블롭을 저장해서는 안 됩니다.
 
-Required AWS posture:
+필수 AWS 자세:
 
-- Preview needs optional `secretsmanager:ListSecrets` permission on
-  `Resource: "*"`. AWS does not support constraining `ListSecrets` to
-  individual secret ARNs or tags as an IAM boundary.
-- Preview/import must not call `secretsmanager:GetSecretValue`,
-  `secretsmanager:BatchGetSecretValue`, or KMS decrypt.
-- Runtime resolution of an imported reference still needs
-  `secretsmanager:GetSecretValue` on the selected external ARN/path and KMS
-  decrypt when that secret uses a customer-managed key.
-- Keep managed create/rotate/delete permissions scoped to the Paperclip
-  deployment prefix. Do not broaden managed write/delete permissions just
-  because import inventory is enabled.
+- 미리보기에는 `Resource: "*"`에 대한 선택적 `secretsmanager:ListSecrets` 권한이 필요합니다. AWS는 `ListSecrets`를 개별 시크릿 ARN 또는 태그로 IAM 경계로 제한하는 것을 지원하지 않습니다.
+- 미리보기/가져오기는 `secretsmanager:GetSecretValue`, `secretsmanager:BatchGetSecretValue`, 또는 KMS 복호화를 호출해서는 안 됩니다.
+- 가져온 참조의 런타임 해석은 여전히 선택된 외부 ARN/경로에 대한 `secretsmanager:GetSecretValue`와 해당 시크릿이 고객 관리 키를 사용하는 경우 KMS 복호화가 필요합니다.
+- 관리되는 생성/교체/삭제 권한은 Paperclip 배포 접두사로 범위를 제한하십시오. 가져오기 인벤토리가 활성화되었다고 해서 관리되는 쓰기/삭제 권한을 확장하지 마십시오.
 
-Safe scoping comes from deployment posture rather than AWS list filtering:
-dedicated Paperclip runtime roles per environment/account, AWS vaults pointed at
-the intended account and Region, import-enabled roles only where inventory
-exposure is acceptable, and board-only access to the import routes. Tags and
-name filters are search aids, not a permission model.
+안전한 범위 지정은 AWS 목록 필터링이 아닌 배포 자세에서 나옵니다: 환경/계정당 전용 Paperclip 런타임 역할, 의도한 계정 및 리전을 가리키는 AWS 볼트, 인벤토리 노출이 허용된 경우에만 가져오기 활성화 역할, 가져오기 경로에 대한 보드 전용 액세스. 태그와 이름 필터는 검색 도구이지 권한 모델이 아닙니다.
 
-If import preview fails:
+가져오기 미리보기가 실패한 경우:
 
-- `AccessDenied` or `not authorized`: the runtime role is missing
-  `secretsmanager:ListSecrets`; add the optional inventory statement only if
-  remote import should be enabled for that vault.
-- Throttling: retry after a short delay and narrow the search before loading
-  more pages.
-- Invalid cursor: refresh the preview; AWS `NextToken` values are opaque and
-  can expire or become stale.
-- Runtime resolution failure after import: verify `GetSecretValue` and KMS
-  decrypt scope for the selected external secret. Being visible in inventory is
-  not proof that the runtime role can read the value.
+- `AccessDenied` 또는 `not authorized`: 런타임 역할에 `secretsmanager:ListSecrets`가 없습니다. 해당 볼트에 대해 원격 가져오기를 활성화해야 하는 경우에만 선택적 인벤토리 문을 추가하십시오.
+- 제한: 잠시 기다린 후 재시도하고, 더 많은 페이지를 로드하기 전에 검색을 좁히십시오.
+- 잘못된 커서: 미리보기를 새로 고칩니다. AWS `NextToken` 값은 불투명하며 만료되거나 오래될 수 있습니다.
+- 가져오기 후 런타임 해석 실패: 선택된 외부 시크릿에 대한 `GetSecretValue` 및 KMS 복호화 범위를 확인하십시오. 인벤토리에서 보인다고 해서 런타임 역할이 값을 읽을 수 있다는 것을 의미하지는 않습니다.
 
-### Backup And Restore
+### 백업 및 복원
 
-Each provider family has a different backup story:
+각 프로바이더 패밀리는 다른 백업 방식을 가집니다.
 
-- `local_encrypted`: back up the local master key file and the Paperclip
-  database together. Either alone is not enough to restore the encrypted
-  values, and the vault row only records the path and acknowledgement, not the
-  key bytes.
-- `aws_secrets_manager`: back up Paperclip's database for vault metadata
-  (vault id, region, prefix, KMS key id, default flag, bindings, version
-  pointers). The actual secret values live in AWS Secrets Manager under the
-  configured prefix; restore by pointing the same Paperclip company at the
-  same AWS namespace and confirming the runtime role still has
-  `GetSecretValue` plus KMS decrypt. The full restore checklist lives in
-  `doc/SECRETS-AWS-PROVIDER.md`.
-- `gcp_secret_manager` and `vault`: while these are coming soon, only the
-  draft vault config exists in Paperclip. Database backups capture it. There
-  is nothing to restore on the provider side until runtime support lands.
+- `local_encrypted`: 로컬 마스터 키 파일과 Paperclip 데이터베이스를 함께 백업하십시오. 하나만으로는 암호화된 값을 복원하기에 충분하지 않으며, 볼트 행은 경로와 확인만 기록하고 키 바이트는 기록하지 않습니다.
+- `aws_secrets_manager`: 볼트 메타데이터(볼트 id, 리전, 접두사, KMS 키 id, 기본 플래그, 바인딩, 버전 포인터)를 위해 Paperclip 데이터베이스를 백업하십시오. 실제 시크릿 값은 구성된 접두사 아래 AWS Secrets Manager에 있습니다. 동일한 Paperclip 회사를 동일한 AWS 네임스페이스에 가리키고 런타임 역할이 여전히 `GetSecretValue` 및 KMS 복호화 권한을 가지고 있는지 확인하여 복원하십시오. 전체 복원 체크리스트는 `doc/SECRETS-AWS-PROVIDER.md`에 있습니다.
+- `gcp_secret_manager`와 `vault`: 이들이 곧 지원될 예정이므로, Paperclip에는 초안 볼트 구성만 있습니다. 데이터베이스 백업이 이를 캡처합니다. 런타임 지원이 제공될 때까지 프로바이더 측에서 복원할 것이 없습니다.
 
-### AWS Provider Bootstrap Boundary
+### AWS 프로바이더 부트스트랩 경계
 
-The AWS Secrets Manager provider cannot bootstrap itself from Paperclip
-`company_secrets`. Its initial AWS access must be present before the server can
-create or resolve AWS-backed company secrets, regardless of whether you use the
-deployment-level default or a per-company vault.
+AWS Secrets Manager 프로바이더는 Paperclip `company_secrets`에서 자체 부트스트랩을 할 수 없습니다. 배포 수준 기본값을 사용하든 회사별 볼트를 사용하든, 서버가 AWS 기반 회사 시크릿을 생성하거나 해석하기 전에 초기 AWS 액세스가 있어야 합니다.
 
-For Paperclip Cloud, provision the server runtime IAM role/workload identity,
-KMS key, deployment prefix, and non-secret `PAPERCLIP_SECRETS_AWS_*` environment
-configuration before enabling AWS-backed secrets in the board UI. For
-self-hosted and local runs, use the AWS SDK default credential chain: instance
-profile, ECS task role, EKS IRSA/OIDC web identity, AWS SSO/shared config via
-`AWS_PROFILE`, or short-lived shell credentials for local development.
+Paperclip Cloud의 경우, 보드 UI에서 AWS 기반 시크릿을 활성화하기 전에 서버 런타임 IAM 역할/워크로드 ID, KMS 키, 배포 접두사, 비시크릿 `PAPERCLIP_SECRETS_AWS_*` 환경 구성을 프로비저닝하십시오. 자체 호스팅 및 로컬 실행의 경우, AWS SDK 기본 자격 증명 체인을 사용하십시오: 인스턴스 프로파일, ECS 태스크 역할, EKS IRSA/OIDC 웹 ID, `AWS_PROFILE`을 통한 AWS SSO/공유 구성, 또는 로컬 개발용 수명이 짧은 셸 자격 증명.
 
-Do not store AWS root credentials or long-lived IAM user access keys in
-Paperclip secrets. Bootstrap material belongs in infrastructure IAM/workload
-identity, the process environment, an AWS profile, or the orchestrator secret
-store.
+AWS 루트 자격 증명이나 장기 IAM 사용자 액세스 키를 Paperclip 시크릿에 저장하지 마십시오. 부트스트랩 자료는 인프라 IAM/워크로드 ID, 프로세스 환경, AWS 프로파일, 또는 오케스트레이터 시크릿 저장소에 있어야 합니다.
 
-## Migrating Inline Secrets
+## 인라인 시크릿 마이그레이션
 
-If you have existing agents with inline API keys in their config, migrate them to encrypted secret refs:
+구성에 인라인 API 키가 있는 기존 에이전트가 있다면, 암호화된 시크릿 참조로 마이그레이션하십시오.
 
 ```sh
 pnpm paperclipai secrets migrate-inline-env --company-id <company-id>
 pnpm paperclipai secrets migrate-inline-env --company-id <company-id> --apply
 
-# low-level script for direct database maintenance
-pnpm secrets:migrate-inline-env         # dry run
-pnpm secrets:migrate-inline-env --apply # apply migration
+# 직접 데이터베이스 유지 관리를 위한 저수준 스크립트
+pnpm secrets:migrate-inline-env         # 드라이 런
+pnpm secrets:migrate-inline-env --apply # 마이그레이션 적용
 ```
 
-Use the CLI command for normal operations because it goes through the Paperclip
-API, creates or rotates secret records, and updates agent env bindings with
-audit logging.
+Paperclip API를 통해 진행하고, 시크릿 기록을 생성 또는 교체하며, 감사 로깅으로 에이전트 환경 바인딩을 업데이트하기 때문에 일반 작업에는 CLI 명령을 사용하십시오.
 
-## Portable Declarations
+## 이식 가능한 선언
 
-Company exports include only environment declarations. They do not include
-secret IDs, provider references, encrypted material, or plaintext values.
+회사 내보내기에는 환경 선언만 포함됩니다. 시크릿 ID, 프로바이더 참조, 암호화된 자료, 또는 평문 값은 포함되지 않습니다.
 
 ```sh
 pnpm paperclipai secrets declarations --company-id <company-id> --kind secret
 ```
 
-Before importing a package into another instance, use those declarations to
-create local values or link hosted provider references in the target deployment.
-For hosted providers such as AWS Secrets Manager, the hosted provider remains
-the value custodian; Paperclip stores metadata and provider version references,
-not provider credentials or plaintext secret values.
+패키지를 다른 인스턴스로 가져오기 전에, 해당 선언을 사용하여 대상 배포에서 로컬 값을 생성하거나 호스팅된 프로바이더 참조를 연결하십시오. AWS Secrets Manager와 같은 호스팅 프로바이더의 경우, 호스팅 프로바이더가 값의 보관자로 유지됩니다. Paperclip은 메타데이터와 프로바이더 버전 참조만 저장하며 프로바이더 자격 증명이나 평문 시크릿 값은 저장하지 않습니다.
 
-## Secret References in Agent Config
+## 에이전트 구성의 시크릿 참조
 
-Agent environment variables use secret references:
+에이전트 환경 변수는 시크릿 참조를 사용합니다.
 
 ```json
 {
@@ -398,4 +246,4 @@ Agent environment variables use secret references:
 }
 ```
 
-The server resolves and decrypts these at runtime, injecting the real value into the agent process environment.
+서버는 런타임에 이를 해석하고 복호화하여 에이전트 프로세스 환경에 실제 값을 주입합니다.

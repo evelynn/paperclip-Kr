@@ -1,56 +1,56 @@
-# Agent Companies Specification
+# 에이전트 회사 명세
 
-Extension of the Agent Skills Specification
+Agent Skills 명세의 확장
 
-Version: `agentcompanies/v1-draft`
+버전: `agentcompanies/v1-draft`
 
-## 1. Purpose
+## 1. 목적
 
-An Agent Company package is a filesystem- and GitHub-native format for describing a company, team, agent, project, task, and associated skills using markdown files with YAML frontmatter.
+에이전트 회사 패키지는 YAML 프론트매터를 포함한 마크다운 파일을 사용하여 회사, 팀, 에이전트, 프로젝트, 작업, 관련 스킬을 기술하는 파일시스템 및 GitHub 네이티브 형식입니다.
 
-This specification is an extension of the Agent Skills specification, not a replacement for it.
+이 명세는 Agent Skills 명세의 대체가 아닌 확장입니다.
 
-It defines how company-, team-, and agent-level package structure composes around the existing `SKILL.md` model.
+기존 `SKILL.md` 모델 주변에서 회사, 팀, 에이전트 수준의 패키지 구조가 어떻게 구성되는지 정의합니다.
 
-This specification is vendor-neutral. It is intended to be usable by any agent-company runtime, not only Paperclip.
+이 명세는 벤더 중립적입니다. Paperclip에만 국한되지 않고 모든 에이전트 회사 런타임에서 사용할 수 있도록 설계되었습니다.
 
-The format is designed to:
+형식의 설계 목표:
 
-- be readable and writable by humans
-- work directly from a local folder or GitHub repository
-- require no central registry
-- support attribution and pinned references to upstream files
-- extend the existing Agent Skills ecosystem without redefining it
-- be useful outside Paperclip
+- 사람이 읽고 쓸 수 있을 것
+- 로컬 폴더 또는 GitHub 저장소에서 직접 동작할 것
+- 중앙 레지스트리 불필요
+- 업스트림 파일에 대한 귀속 표시 및 고정된 참조 지원
+- 기존 Agent Skills 에코시스템을 재정의하지 않고 확장할 것
+- Paperclip 외부에서도 유용할 것
 
-## 2. Core Principles
+## 2. 핵심 원칙
 
-1. Markdown is canonical.
-2. Git repositories are valid package containers.
-3. Registries are optional discovery layers, not authorities.
-4. `SKILL.md` remains owned by the Agent Skills specification.
-5. External references must be pinnable to immutable Git commits.
-6. Attribution and license metadata must survive import/export.
-7. Slugs and relative paths are the portable identity layer, not database ids.
-8. Conventional folder structure should work without verbose wiring.
-9. Vendor-specific fidelity belongs in optional extensions, not the base package.
+1. 마크다운이 정식 형식입니다.
+2. Git 저장소는 유효한 패키지 컨테이너입니다.
+3. 레지스트리는 선택적 발견 레이어이며, 권위 기관이 아닙니다.
+4. `SKILL.md`는 Agent Skills 명세가 소유합니다.
+5. 외부 참조는 불변 Git 커밋에 고정될 수 있어야 합니다.
+6. 귀속 및 라이선스 메타데이터는 가져오기/내보내기 시 유지되어야 합니다.
+7. 슬러그와 상대 경로가 이식 가능한 ID 레이어입니다 (데이터베이스 ID가 아님).
+8. 관례적인 폴더 구조는 상세한 설정 없이도 동작해야 합니다.
+9. 벤더별 충실도는 기본 패키지가 아닌 선택적 확장에 속합니다.
 
-## 3. Package Kinds
+## 3. 패키지 종류
 
-A package root is identified by one primary markdown file:
+패키지 루트는 하나의 기본 마크다운 파일로 식별됩니다.
 
-- `COMPANY.md` for a company package
-- `TEAM.md` for a team package
-- `AGENTS.md` for an agent package
-- `PROJECT.md` for a project package
-- `TASK.md` for a task package
-- `SKILL.md` for a skill package defined by the Agent Skills specification
+- 회사 패키지용 `COMPANY.md`
+- 팀 패키지용 `TEAM.md`
+- 에이전트 패키지용 `AGENTS.md`
+- 프로젝트 패키지용 `PROJECT.md`
+- 작업 패키지용 `TASK.md`
+- Agent Skills 명세에서 정의된 스킬 패키지용 `SKILL.md`
 
-A GitHub repo may contain one package at root or many packages in subdirectories.
+GitHub 저장소에는 루트에 하나의 패키지가 있거나 하위 디렉터리에 여러 패키지가 있을 수 있습니다.
 
-## 4. Reserved Files And Directories
+## 4. 예약된 파일 및 디렉터리
 
-Common conventions:
+공통 관례:
 
 ```text
 COMPANY.md
@@ -77,15 +77,15 @@ scripts/
 references/
 ```
 
-Rules:
+규칙:
 
-- only markdown files are canonical content docs
-- non-markdown directories like `assets/`, `scripts/`, and `references/` are allowed
-- package tools may generate optional lock files, but lock files are not required for authoring
+- 마크다운 파일만이 정식 콘텐츠 문서입니다.
+- `assets/`, `scripts/`, `references/`와 같은 비마크다운 디렉터리는 허용됩니다.
+- 패키지 도구는 선택적 잠금 파일을 생성할 수 있지만, 잠금 파일은 작성에 필수가 아닙니다.
 
-## 5. Common Frontmatter
+## 5. 공통 프론트매터
 
-Package docs may support these fields:
+패키지 문서는 다음 필드를 지원할 수 있습니다.
 
 ```yaml
 schema: agentcompanies/v1
@@ -105,20 +105,20 @@ metadata: {}
 sources: []
 ```
 
-Notes:
+참고 사항:
 
-- `schema` is optional and should usually appear only at the package root
-- `kind` is optional when file path and file name already make the kind obvious
-- `slug` should be URL-safe and stable
-- `sources` is for provenance and external references
-- `metadata` is for tool-specific extensions
-- exporters should omit empty or default-valued fields
+- `schema`는 선택 사항이며 일반적으로 패키지 루트에만 표시됩니다.
+- `kind`는 파일 경로와 파일 이름으로 종류를 알 수 있을 때 선택 사항입니다.
+- `slug`는 URL 안전하고 안정적이어야 합니다.
+- `sources`는 출처 및 외부 참조를 위한 필드입니다.
+- `metadata`는 도구별 확장을 위한 필드입니다.
+- 내보내기 시 비어 있거나 기본값 필드는 생략해야 합니다.
 
 ## 6. COMPANY.md
 
-`COMPANY.md` is the root entrypoint for a whole company package.
+`COMPANY.md`는 전체 회사 패키지의 루트 진입점입니다.
 
-### Required fields
+### 필수 필드
 
 ```yaml
 name: Lean Dev Shop
@@ -127,7 +127,7 @@ slug: lean-dev-shop
 schema: agentcompanies/v1
 ```
 
-### Recommended fields
+### 권장 필드
 
 ```yaml
 version: 1.0.0
@@ -143,20 +143,20 @@ requirements:
     - OPENAI_API_KEY
 ```
 
-### Semantics
+### 의미론
 
-- `includes` defines the package graph
-- local package contents should be discovered implicitly by folder convention
-- `includes` is optional and should be used mainly for external refs or nonstandard locations
-- included items may be local or external references
-- `COMPANY.md` may include agents directly, teams, projects, tasks, or skills
-- a company importer may render `includes` as the tree/checkbox import UI
+- `includes`는 패키지 그래프를 정의합니다.
+- 로컬 패키지 콘텐츠는 폴더 관례에 따라 암시적으로 발견되어야 합니다.
+- `includes`는 선택 사항이며 주로 외부 참조나 비표준 위치에 사용해야 합니다.
+- 포함 항목은 로컬 또는 외부 참조가 될 수 있습니다.
+- `COMPANY.md`는 에이전트, 팀, 프로젝트, 작업, 스킬을 직접 포함할 수 있습니다.
+- 회사 가져오기 도구는 `includes`를 트리/체크박스 가져오기 UI로 렌더링할 수 있습니다.
 
 ## 7. TEAM.md
 
-`TEAM.md` defines an org subtree.
+`TEAM.md`는 조직 하위 트리를 정의합니다.
 
-### Example
+### 예시
 
 ```yaml
 name: Engineering
@@ -173,18 +173,18 @@ tags:
   - engineering
 ```
 
-### Semantics
+### 의미론
 
-- a team package is a reusable subtree, not necessarily a runtime database table
-- `manager` identifies the root agent of the subtree
-- `includes` may contain child agents, child teams, or shared skills
-- a team package can be imported into an existing company and attached under a target manager
+- 팀 패키지는 재사용 가능한 하위 트리이며, 반드시 런타임 데이터베이스 테이블이 아닙니다.
+- `manager`는 하위 트리의 루트 에이전트를 식별합니다.
+- `includes`는 자식 에이전트, 자식 팀, 또는 공유 스킬을 포함할 수 있습니다.
+- 팀 패키지는 기존 회사로 가져와 대상 관리자 하위에 연결할 수 있습니다.
 
 ## 8. AGENTS.md
 
-`AGENTS.md` defines an agent.
+`AGENTS.md`는 에이전트를 정의합니다.
 
-### Example
+### 예시
 
 ```yaml
 name: CEO
@@ -195,39 +195,39 @@ skills:
   - review
 ```
 
-### Semantics
+### 의미론
 
-- body content is the canonical default instruction content for the agent
-- `docs` points to sibling markdown docs when present
-- `skills` references reusable `SKILL.md` packages by skill shortname or slug
-- a bare skill entry like `review` should resolve to `skills/review/SKILL.md` by convention
-- if a package references external skills, the agent should still refer to the skill by shortname; the skill package itself owns any source refs, pinning, or attribution details
-- tools may allow path or URL entries as an escape hatch, but exporters should prefer shortname-based skill references in `AGENTS.md`
-- vendor-specific adapter/runtime config should not live in the base package
-- local absolute paths, machine-specific cwd values, and secret values must not be exported as canonical package data
+- 본문 콘텐츠는 에이전트의 정식 기본 지시 내용입니다.
+- `docs`는 존재할 때 형제 마크다운 문서를 가리킵니다.
+- `skills`는 스킬 단축명 또는 슬러그로 재사용 가능한 `SKILL.md` 패키지를 참조합니다.
+- `review`와 같은 단순 스킬 항목은 관례적으로 `skills/review/SKILL.md`로 해석되어야 합니다.
+- 패키지가 외부 스킬을 참조하는 경우, 에이전트는 여전히 단축명으로 스킬을 참조해야 합니다. 스킬 패키지 자체가 소스 참조, 고정, 귀속 세부 사항을 소유합니다.
+- 도구는 경로 또는 URL 항목을 탈출구로 허용할 수 있지만, 내보내기 시 `AGENTS.md`에서는 단축명 기반 스킬 참조를 선호해야 합니다.
+- 벤더별 어댑터/런타임 설정은 기본 패키지에 없어야 합니다.
+- 로컬 절대 경로, 머신별 cwd 값, 시크릿 값은 정식 패키지 데이터로 내보내면 안 됩니다.
 
-### Skill Resolution
+### 스킬 해석
 
-The preferred association standard between agents and skills is by skill shortname.
+에이전트와 스킬 간의 선호 연결 표준은 스킬 단축명입니다.
 
-Suggested resolution order for an agent skill entry:
+에이전트 스킬 항목에 대한 권장 해석 순서:
 
-1. a local package skill at `skills/<shortname>/SKILL.md`
-2. a referenced or included skill package whose declared slug or shortname matches
-3. a tool-managed company skill library entry with the same shortname
+1. `skills/<단축명>/SKILL.md`의 로컬 패키지 스킬
+2. 선언된 슬러그 또는 단축명이 일치하는 참조 또는 포함된 스킬 패키지
+3. 동일한 단축명을 가진 도구 관리 회사 스킬 라이브러리 항목
 
-Rules:
+규칙:
 
-- exporters should emit shortnames in `AGENTS.md` whenever possible
-- importers should not require full file paths for ordinary skill references
-- the skill package itself should carry any complexity around external refs, vendoring, mirrors, or pinned upstream content
-- this keeps `AGENTS.md` readable and consistent with `skills.sh`-style sharing
+- 내보내기 시 가능하면 `AGENTS.md`에 단축명을 사용해야 합니다.
+- 가져오기 시 일반 스킬 참조에 전체 파일 경로가 필요하지 않아야 합니다.
+- 스킬 패키지 자체가 외부 참조, 벤더링, 미러, 고정된 업스트림 콘텐츠와 관련된 복잡성을 처리해야 합니다.
+- 이를 통해 `AGENTS.md`가 읽기 쉽고 `skills.sh` 방식의 공유와 일관성을 유지합니다.
 
 ## 9. PROJECT.md
 
-`PROJECT.md` defines a lightweight project package.
+`PROJECT.md`는 경량 프로젝트 패키지를 정의합니다.
 
-### Example
+### 예시
 
 ```yaml
 name: Q2 Launch
@@ -235,19 +235,19 @@ description: Ship the Q2 launch plan and supporting assets
 owner: cto
 ```
 
-### Semantics
+### 의미론
 
-- a project package groups related starter tasks and supporting markdown
-- `owner` should reference an agent slug when there is a clear project owner
-- a conventional `tasks/` subfolder should be discovered implicitly
-- `includes` may contain `TASK.md`, `SKILL.md`, or supporting docs when explicit wiring is needed
-- project packages are intended to seed planned work, not represent runtime task state
+- 프로젝트 패키지는 관련 시작 작업과 지원 마크다운을 그룹화합니다.
+- `owner`는 명확한 프로젝트 소유자가 있을 때 에이전트 슬러그를 참조해야 합니다.
+- 관례적인 `tasks/` 하위 폴더는 암시적으로 발견되어야 합니다.
+- `includes`는 명시적 연결이 필요할 때 `TASK.md`, `SKILL.md`, 또는 지원 문서를 포함할 수 있습니다.
+- 프로젝트 패키지는 계획된 작업을 시드하기 위한 것이며, 런타임 작업 상태를 나타내지 않습니다.
 
 ## 10. TASK.md
 
-`TASK.md` defines a lightweight starter task.
+`TASK.md`는 경량 시작 작업을 정의합니다.
 
-### Example
+### 예시
 
 ```yaml
 name: Monday Review
@@ -256,23 +256,23 @@ project: q2-launch
 recurring: true
 ```
 
-### Semantics
+### 의미론
 
-- body content is the canonical markdown task description
-- `assignee` should reference an agent slug inside the package
-- `project` should reference a project slug when the task belongs to a `PROJECT.md`
-- `recurring: true` marks the task as ongoing recurring work instead of a one-time starter task
-- tasks are intentionally basic seed work: title, markdown body, assignee, project linkage, and optional `recurring: true`
-- tools may also support optional fields like `priority`, `labels`, or `metadata`, but they should not require them in the base package
+- 본문 콘텐츠는 정식 마크다운 작업 설명입니다.
+- `assignee`는 패키지 내의 에이전트 슬러그를 참조해야 합니다.
+- `project`는 작업이 `PROJECT.md`에 속할 때 프로젝트 슬러그를 참조해야 합니다.
+- `recurring: true`는 작업을 일회성 시작 작업이 아닌 지속적인 반복 작업으로 표시합니다.
+- 작업은 의도적으로 기본적인 시드 작업입니다: 제목, 마크다운 본문, 담당자, 프로젝트 연결, 선택적 `recurring: true`.
+- 도구는 `priority`, `labels`, `metadata`와 같은 선택적 필드도 지원할 수 있지만, 기본 패키지에서는 필수로 요구하면 안 됩니다.
 
-### Recurring Tasks
+### 반복 작업
 
-- the base package only needs to say whether a task is recurring
-- vendors may attach the actual schedule / trigger / runtime fidelity in a vendor extension such as `.paperclip.yaml`
-- this keeps `TASK.md` portable while still allowing richer runtime systems to round-trip their own automation details
-- legacy packages may still use `schedule.recurrence` during transition, but exporters should prefer `recurring: true`
+- 기본 패키지는 작업이 반복적인지만 표시하면 됩니다.
+- 벤더는 `.paperclip.yaml`과 같은 벤더 확장에 실제 스케줄/트리거/런타임 충실도를 첨부할 수 있습니다.
+- 이를 통해 `TASK.md`의 이식성을 유지하면서도 더 풍부한 런타임 시스템이 자체 자동화 세부 사항을 왕복할 수 있습니다.
+- 레거시 패키지는 전환 기간 동안 여전히 `schedule.recurrence`를 사용할 수 있지만, 내보내기 시 `recurring: true`를 선호해야 합니다.
 
-Example Paperclip extension:
+Paperclip 확장 예시:
 
 ```yaml
 routines:
@@ -283,24 +283,24 @@ routines:
         timezone: America/Chicago
 ```
 
-- vendors should ignore unknown recurring-task extensions they do not understand
-- vendors importing legacy `schedule.recurrence` data may translate it into their own runtime trigger model, but new exports should prefer the simpler `recurring: true` base field
+- 벤더는 이해하지 못하는 반복 작업 확장을 무시해야 합니다.
+- 레거시 `schedule.recurrence` 데이터를 가져오는 벤더는 자체 런타임 트리거 모델로 변환할 수 있지만, 새 내보내기에서는 더 단순한 `recurring: true` 기본 필드를 선호해야 합니다.
 
-## 11. SKILL.md Compatibility
+## 11. SKILL.md 호환성
 
-A skill package must remain a valid Agent Skills package.
+스킬 패키지는 유효한 Agent Skills 패키지로 유지되어야 합니다.
 
-Rules:
+규칙:
 
-- `SKILL.md` should follow the Agent Skills spec
-- Paperclip must not require extra top-level fields for skill validity
-- Paperclip-specific extensions must live under `metadata.paperclip` or `metadata.sources`
-- a skill directory may include `scripts/`, `references/`, and `assets/` exactly as the Agent Skills ecosystem expects
-- tools implementing this spec should treat `skills.sh` compatibility as a first-class goal rather than inventing a parallel skill format
+- `SKILL.md`는 Agent Skills 명세를 따라야 합니다.
+- Paperclip은 스킬 유효성을 위해 추가 최상위 필드를 요구하면 안 됩니다.
+- Paperclip별 확장은 `metadata.paperclip` 또는 `metadata.sources` 아래에 있어야 합니다.
+- 스킬 디렉터리는 Agent Skills 에코시스템이 기대하는 대로 `scripts/`, `references/`, `assets/`를 포함할 수 있습니다.
+- 이 명세를 구현하는 도구는 병렬 스킬 형식을 발명하는 대신 `skills.sh` 호환성을 최우선 목표로 삼아야 합니다.
 
-In other words, this spec extends Agent Skills upward into company/team/agent composition. It does not redefine skill package semantics.
+즉, 이 명세는 Agent Skills를 회사/팀/에이전트 구성으로 위로 확장합니다. 스킬 패키지 의미론을 재정의하지 않습니다.
 
-### Example compatible extension
+### 호환 확장 예시
 
 ```yaml
 ---
@@ -325,11 +325,11 @@ metadata:
 ---
 ```
 
-## 12. Source References
+## 12. 소스 참조
 
-A package may point to upstream content instead of vendoring it.
+패키지는 콘텐츠를 벤더링하는 대신 업스트림 콘텐츠를 가리킬 수 있습니다.
 
-### Source object
+### 소스 객체
 
 ```yaml
 sources:
@@ -346,7 +346,7 @@ sources:
     usage: referenced
 ```
 
-### Supported kinds
+### 지원되는 종류
 
 - `local-file`
 - `local-dir`
@@ -354,47 +354,47 @@ sources:
 - `github-dir`
 - `url`
 
-### Usage modes
+### 사용 모드
 
-- `vendored`: bytes are included in the package
-- `referenced`: package points to upstream immutable content
-- `mirrored`: bytes are cached locally but upstream attribution remains canonical
+- `vendored`: 바이트가 패키지에 포함됨
+- `referenced`: 패키지가 업스트림 불변 콘텐츠를 가리킴
+- `mirrored`: 바이트가 로컬에 캐시되지만 업스트림 귀속이 정식으로 남음
 
-### Rules
+### 규칙
 
-- `commit` is required for `github-file` and `github-dir` in strict mode
-- `sha256` is strongly recommended and should be verified on fetch
-- branch-only refs may be allowed in development mode but must warn
-- exporters should default to `referenced` for third-party content unless redistribution is clearly allowed
+- `commit`은 엄격 모드에서 `github-file` 및 `github-dir`에 필수입니다.
+- `sha256`은 강력히 권장되며 가져올 때 검증해야 합니다.
+- 브랜치만 있는 참조는 개발 모드에서 허용될 수 있지만 경고를 표시해야 합니다.
+- 내보내기 시 재배포가 명확히 허용되지 않는 한 서드파티 콘텐츠에 대해 기본값으로 `referenced`를 사용해야 합니다.
 
-## 13. Resolution Rules
+## 13. 해석 규칙
 
-Given a package root, an importer resolves in this order:
+패키지 루트가 주어지면, 가져오기 도구는 다음 순서로 해석합니다.
 
-1. local relative paths
-2. local absolute paths if explicitly allowed by the importing tool
-3. pinned GitHub refs
-4. generic URLs
+1. 로컬 상대 경로
+2. 가져오기 도구에서 명시적으로 허용된 경우 로컬 절대 경로
+3. 고정된 GitHub 참조
+4. 일반 URL
 
-For pinned GitHub refs:
+고정된 GitHub 참조의 경우:
 
-1. resolve `repo + commit + path`
-2. fetch content
-3. verify `sha256` if present
-4. verify `blob` if present
-5. fail closed on mismatch
+1. `repo + commit + path` 해석
+2. 콘텐츠 가져오기
+3. 존재하면 `sha256` 검증
+4. 존재하면 `blob` 검증
+5. 불일치 시 폐쇄 실패
 
-An importer must surface:
+가져오기 도구는 다음을 표시해야 합니다.
 
-- missing files
-- hash mismatches
-- missing licenses
-- referenced upstream content that requires network fetch
-- executable content in skills or scripts
+- 누락된 파일
+- 해시 불일치
+- 누락된 라이선스
+- 네트워크 가져오기가 필요한 참조된 업스트림 콘텐츠
+- 스킬 또는 스크립트의 실행 가능한 콘텐츠
 
-## 14. Import Graph
+## 14. 가져오기 그래프
 
-A package importer should build a graph from:
+패키지 가져오기 도구는 다음으로부터 그래프를 구성해야 합니다.
 
 - `COMPANY.md`
 - `TEAM.md`
@@ -402,46 +402,46 @@ A package importer should build a graph from:
 - `PROJECT.md`
 - `TASK.md`
 - `SKILL.md`
-- local and external refs
+- 로컬 및 외부 참조
 
-Suggested import UI behavior:
+권장 가져오기 UI 동작:
 
-- render graph as a tree
-- checkbox at entity level, not raw file level
-- selecting an agent auto-selects required docs and referenced skills
-- selecting a team auto-selects its subtree
-- selecting a project auto-selects its included tasks
-- selecting a recurring task should make it clear that the import target is a routine / automation, not a one-time task
-- selecting referenced third-party content shows attribution, license, and fetch policy
+- 그래프를 트리로 렌더링
+- 파일 수준이 아닌 엔티티 수준의 체크박스
+- 에이전트 선택 시 필수 문서 및 참조된 스킬 자동 선택
+- 팀 선택 시 해당 하위 트리 자동 선택
+- 프로젝트 선택 시 포함된 작업 자동 선택
+- 반복 작업 선택 시 가져오기 대상이 루틴/자동화임을 명확히 표시 (일회성 작업이 아님)
+- 참조된 서드파티 콘텐츠 선택 시 귀속, 라이선스, 가져오기 정책 표시
 
-## 15. Vendor Extensions
+## 15. 벤더 확장
 
-Vendor-specific data should live outside the base package shape.
+벤더별 데이터는 기본 패키지 형태 외부에 있어야 합니다.
 
-For Paperclip, the preferred fidelity extension is:
+Paperclip의 경우 선호하는 충실도 확장은 다음과 같습니다.
 
 ```text
 .paperclip.yaml
 ```
 
-Example uses:
+사용 예시:
 
-- adapter type and adapter config
-- adapter env inputs and defaults
-- runtime settings
-- permissions
-- budgets
-- approval policies
-- project execution workspace policies
-- issue/task Paperclip-only metadata
+- 어댑터 타입 및 어댑터 설정
+- 어댑터 환경 입력 및 기본값
+- 런타임 설정
+- 권한
+- 예산
+- 승인 정책
+- 프로젝트 실행 워크스페이스 정책
+- 이슈/작업 Paperclip 전용 메타데이터
 
-Rules:
+규칙:
 
-- the base package must remain readable without the extension
-- tools that do not understand a vendor extension should ignore it
-- Paperclip tools may emit the vendor extension by default as a sidecar while keeping the base markdown clean
+- 기본 패키지는 확장 없이도 읽을 수 있어야 합니다.
+- 벤더 확장을 이해하지 못하는 도구는 무시해야 합니다.
+- Paperclip 도구는 기본 마크다운을 깔끔하게 유지하면서 벤더 확장을 사이드카로 기본 내보낼 수 있습니다.
 
-Suggested Paperclip shape:
+권장 Paperclip 형태:
 
 ```yaml
 schema: paperclip/v1
@@ -472,94 +472,94 @@ routines:
         timezone: America/Chicago
 ```
 
-Additional rules for Paperclip exporters:
+Paperclip 내보내기 도구에 대한 추가 규칙:
 
-- do not duplicate `promptTemplate` when `AGENTS.md` already contains the agent instructions
-- do not export provider-specific secret bindings such as `secretId`, `version`, or `type: secret_ref`
-- export env inputs as portable declarations with `required` or `optional` semantics and optional defaults
-- warn on system-dependent values such as absolute commands and absolute `PATH` overrides
-- omit empty and default-valued Paperclip fields when possible
+- `AGENTS.md`에 이미 에이전트 지시사항이 포함되어 있을 때 `promptTemplate`을 중복 내보내지 마세요.
+- `secretId`, `version`, `type: secret_ref`와 같은 프로바이더별 시크릿 바인딩을 내보내지 마세요.
+- 환경 입력을 `required` 또는 `optional` 의미론 및 선택적 기본값이 있는 이식 가능한 선언으로 내보내세요.
+- 절대 명령어 및 절대 `PATH` 재정의와 같은 시스템 의존 값에 대해 경고하세요.
+- 가능하면 비어 있는 기본값 Paperclip 필드를 생략하세요.
 
-## 16. Export Rules
+## 16. 내보내기 규칙
 
-A compliant exporter should:
+준수하는 내보내기 도구는 다음을 수행해야 합니다.
 
-- emit markdown roots and relative folder layout
-- omit machine-local ids and timestamps
-- omit secret values
-- omit machine-specific paths
-- preserve task descriptions and recurring-task declarations when exporting tasks
-- omit empty/default fields
-- default to the vendor-neutral base package
-- Paperclip exporters should emit `.paperclip.yaml` as a sidecar by default
-- preserve attribution and source references
-- prefer `referenced` over silent vendoring for third-party content
-- preserve `SKILL.md` as-is when exporting compatible skills
+- 마크다운 루트 및 상대 폴더 레이아웃 내보내기
+- 머신 로컬 ID 및 타임스탬프 제외
+- 시크릿 값 제외
+- 머신별 경로 제외
+- 작업 내보내기 시 작업 설명 및 반복 작업 선언 보존
+- 비어 있는/기본값 필드 제외
+- 벤더 중립 기본 패키지를 기본값으로 사용
+- Paperclip 내보내기 도구는 기본적으로 `.paperclip.yaml`을 사이드카로 내보내야 합니다.
+- 귀속 및 소스 참조 보존
+- 서드파티 콘텐츠에 대해 자동 벤더링보다 `referenced`를 선호
+- 호환 스킬 내보내기 시 `SKILL.md`를 그대로 보존
 
-## 17. Licensing And Attribution
+## 17. 라이선스 및 귀속
 
-A compliant tool must:
+준수하는 도구는 다음을 수행해야 합니다.
 
-- preserve `license` and `attribution` metadata when importing and exporting
-- distinguish vendored vs referenced content
-- not silently inline referenced third-party content during export
-- surface missing license metadata as a warning
-- surface restrictive or unknown licenses before install/import if content is vendored or mirrored
+- 가져오기 및 내보내기 시 `license` 및 `attribution` 메타데이터 보존
+- 벤더링된 콘텐츠와 참조된 콘텐츠 구분
+- 내보내기 시 참조된 서드파티 콘텐츠를 자동으로 인라인하지 않을 것
+- 누락된 라이선스 메타데이터를 경고로 표시
+- 콘텐츠가 벤더링되거나 미러링된 경우 설치/가져오기 전에 제한적이거나 알 수 없는 라이선스 표시
 
-## 18. Optional Lock File
+## 18. 선택적 잠금 파일
 
-Authoring does not require a lock file.
+작성에는 잠금 파일이 필요하지 않습니다.
 
-Tools may generate an optional lock file such as:
+도구는 다음과 같은 선택적 잠금 파일을 생성할 수 있습니다.
 
 ```text
 company-package.lock.json
 ```
 
-Purpose:
+목적:
 
-- cache resolved refs
-- record final hashes
-- support reproducible installs
+- 해석된 참조 캐시
+- 최종 해시 기록
+- 재현 가능한 설치 지원
 
-Rules:
+규칙:
 
-- lock files are optional
-- lock files are generated artifacts, not canonical authoring input
-- the markdown package remains the source of truth
+- 잠금 파일은 선택 사항입니다.
+- 잠금 파일은 생성된 아티팩트이며, 정식 작성 입력이 아닙니다.
+- 마크다운 패키지가 여전히 신뢰할 수 있는 유일한 소스입니다.
 
-## 19. Paperclip Mapping
+## 19. Paperclip 매핑
 
-Paperclip can map this spec to its runtime model like this:
+Paperclip은 이 명세를 런타임 모델에 다음과 같이 매핑할 수 있습니다.
 
-- base package:
-  - `COMPANY.md` -> company metadata
-  - `TEAM.md` -> importable org subtree
-  - `AGENTS.md` -> agent identity and instructions
-  - `PROJECT.md` -> starter project definition
-  - `TASK.md` -> starter issue/task definition, or recurring task template when `recurring: true`
-  - `SKILL.md` -> imported skill package
-  - `sources[]` -> provenance and pinned upstream refs
-- Paperclip extension:
-  - `.paperclip.yaml` -> adapter config, runtime config, env input declarations, permissions, budgets, routine triggers, and other Paperclip-specific fidelity
+- 기본 패키지:
+  - `COMPANY.md` -> 회사 메타데이터
+  - `TEAM.md` -> 가져올 수 있는 조직 하위 트리
+  - `AGENTS.md` -> 에이전트 정체성 및 지시사항
+  - `PROJECT.md` -> 시작 프로젝트 정의
+  - `TASK.md` -> 시작 이슈/작업 정의, 또는 `recurring: true`일 때 반복 작업 템플릿
+  - `SKILL.md` -> 가져온 스킬 패키지
+  - `sources[]` -> 출처 및 고정된 업스트림 참조
+- Paperclip 확장:
+  - `.paperclip.yaml` -> 어댑터 설정, 런타임 설정, 환경 입력 선언, 권한, 예산, 루틴 트리거, 기타 Paperclip별 충실도
 
-Inline Paperclip-only metadata that must live inside a shared markdown file should use:
+공유 마크다운 파일 내에 있어야 하는 Paperclip 전용 인라인 메타데이터는 다음을 사용해야 합니다.
 
 - `metadata.paperclip`
 
-That keeps the base format broader than Paperclip.
+이렇게 하면 기본 형식이 Paperclip보다 광범위하게 유지됩니다.
 
-This specification itself remains vendor-neutral and intended for any agent-company runtime, not only Paperclip.
+이 명세 자체는 벤더 중립적이며 Paperclip에만 국한되지 않고 모든 에이전트 회사 런타임을 위한 것입니다.
 
-## 20. Cutover
+## 20. 전환
 
-Paperclip should cut over to this markdown-first package model as the primary portability format.
+Paperclip은 이 마크다운 우선 패키지 모델을 기본 이식성 형식으로 채택해야 합니다.
 
-`paperclip.manifest.json` does not need to be preserved as a compatibility requirement for the future package system.
+`paperclip.manifest.json`은 향후 패키지 시스템의 호환성 요구 사항으로 보존할 필요가 없습니다.
 
-For Paperclip, this should be treated as a hard cutover in product direction rather than a long-lived dual-format strategy.
+Paperclip에 있어 이것은 장기적인 이중 형식 전략이 아닌 제품 방향의 단호한 전환으로 처리해야 합니다.
 
-## 21. Minimal Example
+## 21. 최소 예시
 
 ```text
 lean-dev-shop/
@@ -580,17 +580,17 @@ lean-dev-shop/
 └── skills/
     └── review/SKILL.md
 
-Optional:
+선택 사항:
 
 ```text
 .paperclip.yaml
 ```
 ```
 
-**Recommendation**
-This is the direction I would take:
+**권장 사항**
+다음 방향을 권장합니다.
 
-- make this the human-facing spec
-- define `SKILL.md` compatibility as non-negotiable
-- treat this spec as an extension of Agent Skills, not a parallel format
-- make `companies.sh` a discovery layer for repos implementing this spec, not a publishing authority
+- 이것을 사람 중심의 명세로 만들 것
+- `SKILL.md` 호환성을 협상 불가로 정의할 것
+- 이 명세를 병렬 형식이 아닌 Agent Skills의 확장으로 처리할 것
+- `companies.sh`를 이 명세를 구현하는 저장소를 위한 발견 레이어로 만들 것 (게시 권위 기관이 아닌)

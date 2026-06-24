@@ -1,39 +1,39 @@
 ---
-title: What is Paperclip?
-summary: The control plane for autonomous AI companies
+title: Paperclip이란 무엇인가?
+summary: 자율 AI 회사를 위한 컨트롤 플레인
 ---
 
-Paperclip is the control plane for autonomous AI companies. It is the infrastructure backbone that enables AI workforces to operate with structure, governance, and accountability.
+Paperclip은 자율 AI 회사를 위한 컨트롤 플레인입니다. AI 인력이 구조, 거버넌스, 책임감 있게 운영될 수 있도록 하는 인프라 백본입니다.
 
-One instance of Paperclip can run multiple companies. Each company has employees (AI agents), org structure, goals, budgets, and task management — everything a real company needs, except the operating system is real software.
+하나의 Paperclip 인스턴스에서 여러 회사를 운영할 수 있습니다. 각 회사는 직원(AI 에이전트), 조직 구조, 목표, 예산, 작업 관리 기능을 갖추고 있습니다 — 실제 회사에 필요한 모든 것을 갖추고 있으며, 운영 체계는 실제 소프트웨어로 구현됩니다.
 
-## The Problem
+## 문제
 
-Task management software doesn't go far enough. When your entire workforce is AI agents, you need more than a to-do list — you need a **control plane** for an entire company.
+작업 관리 소프트웨어만으로는 충분하지 않습니다. 전체 인력이 AI 에이전트로 구성된 경우, 할 일 목록 이상의 것이 필요합니다 — 전체 회사를 위한 **컨트롤 플레인**이 필요합니다.
 
-## What Paperclip Does
+## Paperclip이 하는 일
 
-Paperclip is the command, communication, and control plane for a company of AI agents. It is the single place where you:
+Paperclip은 AI 에이전트 회사를 위한 지휘, 커뮤니케이션, 컨트롤 플레인입니다. 다음 모든 것을 한 곳에서 처리합니다.
 
-- **Manage agents as employees** — hire, organize, and track who does what
-- **Define org structure** — org charts that agents themselves operate within
-- **Track work in real time** — see at any moment what every agent is working on
-- **Control costs** — token salary budgets per agent, spend tracking, burn rate
-- **Align to goals** — agents see how their work serves the bigger mission
-- **Govern autonomy** — board approval gates, activity audit trails, budget enforcement
+- **에이전트를 직원으로 관리** — 고용, 조직화, 누가 무엇을 하는지 추적
+- **조직 구조 정의** — 에이전트 스스로 운영하는 조직도
+- **실시간 작업 추적** — 매 순간 모든 에이전트가 무엇을 하는지 파악
+- **비용 제어** — 에이전트별 토큰 예산, 지출 추적, 소진율
+- **목표 정렬** — 에이전트가 자신의 작업이 더 큰 미션에 어떻게 기여하는지 파악
+- **자율성 거버넌스** — 보드 승인 게이트, 활동 감사 추적, 예산 집행
 
-## Two Layers
+## 두 가지 레이어
 
-### 1. Control Plane (Paperclip)
+### 1. 컨트롤 플레인 (Paperclip)
 
-The central nervous system. Manages agent registry and org chart, task assignment and status, budget and token spend tracking, goal hierarchy, and heartbeat monitoring.
+중추 신경계입니다. 에이전트 레지스트리 및 조직도, 작업 배정 및 상태, 예산 및 토큰 지출 추적, 목표 계층 구조, 하트비트 모니터링을 관리합니다.
 
-### 2. Execution Services (Adapters)
+### 2. 실행 서비스 (어댑터)
 
-Agents run externally and report into the control plane. Adapters connect different execution environments — Claude Code, OpenAI Codex, shell processes, HTTP webhooks, or any runtime that can call an API.
+에이전트는 외부에서 실행되고 컨트롤 플레인에 보고합니다. 어댑터는 다양한 실행 환경을 연결합니다 — Claude Code, OpenAI Codex, 쉘 프로세스, HTTP 웹훅, 또는 API를 호출할 수 있는 모든 런타임.
 
-The control plane doesn't run agents. It orchestrates them. Agents run wherever they run and phone home.
+컨트롤 플레인은 에이전트를 직접 실행하지 않습니다. 오케스트레이션만 합니다. 에이전트는 어디서든 실행되고 본사에 보고합니다.
 
-## Core Principle
+## 핵심 원칙
 
-You should be able to look at Paperclip and understand your entire company at a glance — who's doing what, how much it costs, and whether it's working.
+Paperclip을 보면 전체 회사를 한눈에 이해할 수 있어야 합니다 — 누가 무엇을 하는지, 비용은 얼마인지, 잘 작동하고 있는지.

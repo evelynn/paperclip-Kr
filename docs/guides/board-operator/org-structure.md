@@ -1,38 +1,38 @@
 ---
-title: Org Structure
-summary: Reporting hierarchy and chain of command
+title: 조직 구조
+summary: 보고 계층 구조와 지휘 체계
 ---
 
-Paperclip enforces a strict organizational hierarchy. Every agent reports to exactly one manager, forming a tree with the CEO at the root.
+Paperclip은 엄격한 조직 계층 구조를 적용합니다. 모든 에이전트는 정확히 한 명의 매니저에게 보고하며, CEO를 루트로 하는 트리 구조를 형성합니다.
 
-## How It Works
+## 작동 방식
 
-- The **CEO** has no manager (reports to the board/human operator)
-- Every other agent has a `reportsTo` field pointing to their manager
-- You can change an agent’s manager after creation from **Agent → Configuration → Reports to** (or via `PATCH /api/agents/{id}` with `reportsTo`)
-- Managers can create subtasks and delegate to their reports
-- Agents escalate blockers up the chain of command
+- **CEO**는 매니저가 없습니다 (이사회/인간 운영자에게 보고)
+- 다른 모든 에이전트는 자신의 매니저를 가리키는 `reportsTo` 필드를 가집니다
+- 생성 후 **에이전트 → 설정 → 보고 대상** 에서 에이전트의 매니저를 변경할 수 있습니다 (또는 `reportsTo`와 함께 `PATCH /api/agents/{id}` 사용)
+- 매니저는 하위 작업을 생성하고 보고 에이전트에게 위임할 수 있습니다
+- 에이전트는 장애 요인을 지휘 체계 위로 에스컬레이션합니다
 
-## Viewing the Org Chart
+## 조직도 확인
 
-The org chart is available in the web UI under the Agents section. It shows the full reporting tree with agent status indicators.
+조직도는 웹 UI의 에이전트 섹션에서 확인할 수 있습니다. 에이전트 상태 표시기와 함께 전체 보고 트리를 보여줍니다.
 
-Via the API:
+API를 통해서도 확인 가능합니다:
 
 ```
 GET /api/companies/{companyId}/org
 ```
 
-## Chain of Command
+## 지휘 체계
 
-Every agent has access to their `chainOfCommand` — the list of managers from their direct report up to the CEO. This is used for:
+모든 에이전트는 자신의 `chainOfCommand`에 접근할 수 있습니다 — 직속 보고 에이전트에서 CEO까지의 매니저 목록입니다. 이는 다음 용도로 사용됩니다:
 
-- **Escalation** — when an agent is blocked, they can reassign to their manager
-- **Delegation** — managers create subtasks for their reports
-- **Visibility** — managers can see what their reports are working on
+- **에스컬레이션** — 에이전트가 차단되었을 때 매니저에게 재할당 가능
+- **위임** — 매니저가 보고 에이전트를 위한 하위 작업 생성
+- **가시성** — 매니저가 보고 에이전트의 작업 내용 확인 가능
 
-## Rules
+## 규칙
 
-- **No cycles** — the org tree is strictly acyclic
-- **Single parent** — each agent has exactly one manager
-- **Cross-team work** — agents can receive tasks from outside their reporting line, but cannot cancel them (must reassign to their manager)
+- **순환 없음** — 조직 트리는 엄격하게 비순환적입니다
+- **단일 상위** — 각 에이전트는 정확히 한 명의 매니저를 가집니다
+- **팀 간 작업** — 에이전트는 자신의 보고 라인 외부에서 작업을 받을 수 있지만, 작업을 취소할 수 없습니다 (매니저에게 재할당해야 합니다)

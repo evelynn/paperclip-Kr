@@ -1,25 +1,25 @@
 ---
-title: Setup Commands
-summary: Onboard, run, doctor, and configure
+title: 설정 명령어
+summary: onboard, run, doctor, configure
 ---
 
-Instance setup and diagnostics commands.
+인스턴스 설정 및 진단 명령어입니다.
 
 ## `paperclipai run`
 
-One-command bootstrap and start:
+한 번의 명령으로 부트스트랩 및 시작:
 
 ```sh
 pnpm paperclipai run
 ```
 
-Does:
+수행 동작:
 
-1. Auto-onboards if config is missing
-2. Runs `paperclipai doctor` with repair enabled
-3. Starts the server when checks pass
+1. 설정이 없을 경우 자동 온보딩
+2. 수리 기능이 활성화된 `paperclipai doctor` 실행
+3. 검사 통과 시 서버 시작
 
-Choose a specific instance:
+특정 인스턴스 선택:
 
 ```sh
 pnpm paperclipai run --instance dev
@@ -27,54 +27,53 @@ pnpm paperclipai run --instance dev
 
 ## `paperclipai onboard`
 
-Interactive first-time setup:
+최초 설정 인터랙티브 마법사:
 
 ```sh
 pnpm paperclipai onboard
 ```
 
-If Paperclip is already configured, rerunning `onboard` keeps the existing config in place. Use `paperclipai configure` to change settings on an existing install.
+Paperclip이 이미 설정된 경우, `onboard`를 다시 실행해도 기존 설정이 유지됩니다. 기존 설치의 설정을 변경하려면 `paperclipai configure`를 사용하세요.
 
-First prompt:
+첫 번째 선택지:
 
-1. `Quickstart` (recommended): local defaults (embedded database, no LLM provider, local disk storage, default secrets)
-2. `Advanced setup`: full interactive configuration
+1. `빠른 시작` (권장): 로컬 기본값 (임베디드 데이터베이스, LLM 프로바이더 없음, 로컬 디스크 스토리지, 기본 시크릿)
+2. `고급 설정`: 전체 인터랙티브 설정
 
-Start immediately after onboarding:
+온보딩 후 즉시 시작:
 
 ```sh
 pnpm paperclipai onboard --run
 ```
 
-Non-interactive defaults + immediate start (opens browser on server listen):
+비인터랙티브 기본값 + 즉시 시작 (서버 리슨 시 브라우저 열기):
 
 ```sh
 pnpm paperclipai onboard --yes
 ```
 
-On an existing install, `--yes` now preserves the current config and just starts Paperclip with that setup.
+기존 설치에서 `--yes`는 현재 설정을 보존하고 해당 설정으로 Paperclip을 시작합니다.
 
 ## `paperclipai doctor`
 
-Health checks with optional auto-repair:
+선택적 자동 수리 기능이 있는 헬스 체크:
 
 ```sh
 pnpm paperclipai doctor
 pnpm paperclipai doctor --repair
 ```
 
-Validates:
+검증 항목:
 
-- Server configuration
-- Database connectivity
-- Secrets adapter configuration, including AWS Secrets Manager non-secret env
-  config when selected
-- Storage configuration
-- Missing key files
+- 서버 설정
+- 데이터베이스 연결
+- AWS Secrets Manager 선택 시 비시크릿 환경 설정을 포함한 시크릿 어댑터 설정
+- 스토리지 설정
+- 누락된 주요 파일
 
 ## `paperclipai configure`
 
-Update configuration sections:
+설정 섹션 업데이트:
 
 ```sh
 pnpm paperclipai configure --section server
@@ -82,48 +81,43 @@ pnpm paperclipai configure --section secrets
 pnpm paperclipai configure --section storage
 ```
 
-`--section secrets` updates the deployment-level provider used as the fallback
-for secrets that do not target a specific company vault. Per-company provider
-vaults (named instances, default vault selection, multiple vaults per provider,
-coming-soon GCP/Vault) live in the board UI under
-`Company Settings → Secrets → Provider vaults` and the
-`/api/companies/{companyId}/secret-provider-configs` API.
+`--section secrets`는 특정 회사 볼트를 대상으로 하지 않는 시크릿의 폴백으로 사용되는 배포 수준 프로바이더를 업데이트합니다. 회사별 프로바이더 볼트(명명된 인스턴스, 기본 볼트 선택, 프로바이더당 여러 볼트, 출시 예정 GCP/Vault)는 보드 UI의 `Company Settings → Secrets → Provider vaults` 및 `/api/companies/{companyId}/secret-provider-configs` API에서 관리합니다.
 
 ## `paperclipai env`
 
-Show resolved environment configuration:
+해석된 환경 설정 표시:
 
 ```sh
 pnpm paperclipai env
 ```
 
-This now includes bind-oriented deployment settings such as `PAPERCLIP_BIND` and `PAPERCLIP_BIND_HOST` when configured.
+설정된 경우 `PAPERCLIP_BIND` 및 `PAPERCLIP_BIND_HOST`와 같은 바인드 지향 배포 설정도 포함됩니다.
 
 ## `paperclipai allowed-hostname`
 
-Allow a private hostname for authenticated/private mode:
+인증/프라이빗 모드에서 사설 호스트명 허용:
 
 ```sh
 pnpm paperclipai allowed-hostname my-tailscale-host
 ```
 
-## Local Storage Paths
+## 로컬 스토리지 경로
 
-| Data | Default Path |
+| 데이터 | 기본 경로 |
 |------|-------------|
-| Config | `~/.paperclip/instances/default/config.json` |
-| Database | `~/.paperclip/instances/default/db` |
-| Logs | `~/.paperclip/instances/default/logs` |
-| Storage | `~/.paperclip/instances/default/data/storage` |
-| Secrets key | `~/.paperclip/instances/default/secrets/master.key` |
+| 설정 | `~/.paperclip/instances/default/config.json` |
+| 데이터베이스 | `~/.paperclip/instances/default/db` |
+| 로그 | `~/.paperclip/instances/default/logs` |
+| 스토리지 | `~/.paperclip/instances/default/data/storage` |
+| 시크릿 키 | `~/.paperclip/instances/default/secrets/master.key` |
 
-Override with:
+다음으로 재정의할 수 있습니다.
 
 ```sh
 PAPERCLIP_HOME=/custom/home PAPERCLIP_INSTANCE_ID=dev pnpm paperclipai run
 ```
 
-Or pass `--data-dir` directly on any command:
+또는 모든 명령어에서 `--data-dir`을 직접 지정합니다.
 
 ```sh
 pnpm paperclipai run --data-dir ./tmp/paperclip-dev

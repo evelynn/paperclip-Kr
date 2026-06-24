@@ -1,11 +1,11 @@
 ---
-title: Costs
-summary: Cost events, summaries, and budget management
+title: 비용
+summary: 비용 이벤트, 요약, 및 예산 관리
 ---
 
-Track token usage and spending across agents, projects, and the company.
+에이전트, 프로젝트, 및 회사 전체의 토큰 사용량과 지출을 추적합니다.
 
-## Report Cost Event
+## 비용 이벤트 보고
 
 ```
 POST /api/companies/{companyId}/cost-events
@@ -19,53 +19,53 @@ POST /api/companies/{companyId}/cost-events
 }
 ```
 
-Typically reported automatically by adapters after each heartbeat.
+일반적으로 각 하트비트 후 어댑터에 의해 자동으로 보고됩니다.
 
-## Company Cost Summary
+## 회사 비용 요약
 
 ```
 GET /api/companies/{companyId}/costs/summary
 ```
 
-Returns total spend, budget, and utilization for the current month.
+당월 총 지출, 예산, 및 사용률을 반환합니다.
 
-## Costs by Agent
+## 에이전트별 비용
 
 ```
 GET /api/companies/{companyId}/costs/by-agent
 ```
 
-Returns per-agent cost breakdown for the current month.
+당월 에이전트별 비용 내역을 반환합니다.
 
-## Costs by Project
+## 프로젝트별 비용
 
 ```
 GET /api/companies/{companyId}/costs/by-project
 ```
 
-Returns per-project cost breakdown for the current month.
+당월 프로젝트별 비용 내역을 반환합니다.
 
-## Budget Management
+## 예산 관리
 
-### Set Company Budget
+### 회사 예산 설정
 
 ```
 PATCH /api/companies/{companyId}
 { "budgetMonthlyCents": 100000 }
 ```
 
-### Set Agent Budget
+### 에이전트 예산 설정
 
 ```
 PATCH /api/agents/{agentId}
 { "budgetMonthlyCents": 5000 }
 ```
 
-## Budget Enforcement
+## 예산 적용
 
-| Threshold | Effect |
+| 임계값 | 효과 |
 |-----------|--------|
-| 80% | Soft alert — agent should focus on critical tasks |
-| 100% | Hard stop — agent is auto-paused |
+| 80% | 소프트 경고 — 에이전트는 중요 작업에 집중해야 합니다 |
+| 100% | 강제 중지 — 에이전트가 자동으로 일시 중지됩니다 |
 
-Budget windows reset on the first of each month (UTC).
+예산 기간은 매월 1일(UTC)에 초기화됩니다.
