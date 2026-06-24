@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageName": "@paperclipai/skills-catalog",
   "packageVersion": "0.3.1",
-  "generatedAt": "2026-06-04T19:57:14.020Z",
+  "generatedAt": "2026-06-24T11:12:19.529Z",
   "skills": [
     {
       "id": "paperclipai:bundled:docs:doc-maintenance",
@@ -317,6 +317,55 @@
         }
       ],
       "contentHash": "sha256:f22a9ed696e6614c6db2757a149f48b3295e81f78c27d065d9cb164cf4f8a9bd"
+    },
+    {
+      "id": "paperclipai:optional:product:annotated-screen-guide",
+      "key": "paperclipai/optional/product/annotated-screen-guide",
+      "kind": "optional",
+      "category": "product",
+      "slug": "annotated-screen-guide",
+      "name": "annotated-screen-guide",
+      "description": "Produce an annotated screen guide — numbered, percentage-positioned callout boxes over real screenshots with a step-by-step panel — packaged as a single self-contained HTML file and uploaded as a Paperclip artifact work product that renders inline in the app. Use to document a UI flow, write a click-by-click walkthrough, or create onboarding / how-to instructions.",
+      "path": "catalog/optional/product/annotated-screen-guide",
+      "entrypoint": "SKILL.md",
+      "trustLevel": "markdown_only",
+      "compatibility": "compatible",
+      "defaultInstall": false,
+      "recommendedForRoles": [
+        "product",
+        "designer",
+        "engineer",
+        "devrel"
+      ],
+      "requires": [],
+      "tags": [
+        "documentation",
+        "walkthrough",
+        "screenshots",
+        "guide",
+        "onboarding"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "kind": "skill",
+          "sizeBytes": 7301,
+          "sha256": "e1f713deef7e27a9fe011acb89fca6ce162ce450aacb930df9badfbc2ebd00e6"
+        },
+        {
+          "path": "references/guide-template.md",
+          "kind": "reference",
+          "sizeBytes": 5228,
+          "sha256": "85604cb7ff1c7dba1eaed363fcd4efd87513a5fdf12dbdf0365e7217c44d49c6"
+        },
+        {
+          "path": "references/web-capture.md",
+          "kind": "reference",
+          "sizeBytes": 3055,
+          "sha256": "04888938628b646d7d80e96109702dafe794c7ea23cab70d0f0c5f18bc52803d"
+        }
+      ],
+      "contentHash": "sha256:1cdcb85a919a07c70829f89f9613eff4fc598aac3b2d06f86fb4bd73e017db07"
     },
     {
       "id": "paperclipai:optional:product:design-critique",

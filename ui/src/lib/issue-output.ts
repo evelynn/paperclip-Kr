@@ -156,6 +156,10 @@ export function isOutputEligibleContentType(
 ): boolean {
   const type = normalizeOutputContentType(contentType);
   if (!type) return false;
+  // Self-contained HTML deliverables (e.g. annotated screen guides) are rendered
+  // inline in a sandboxed frame, so — unlike other document/source text types —
+  // they are promoted to first-class outputs.
+  if (isHtmlGuideContentType(type)) return true;
   if (isDocumentLikeOutputContentType(type)) return false;
   if (GENERIC_BINARY_CONTENT_TYPES.has(type) && hasDocumentLikeFilename(originalFilename)) return false;
   return (
@@ -203,6 +207,15 @@ export function isVideoContentType(contentType: string | null | undefined): bool
 
 export function isImageContentType(contentType: string | null | undefined): boolean {
   return normalizeOutputContentType(contentType).startsWith("image/");
+}
+
+/**
+ * Self-contained HTML deliverables (annotated screen guides, exported reports)
+ * are rendered inline in a sandboxed frame on the Output surface, so — unlike
+ * other document/source text types — they count as renderable outputs.
+ */
+export function isHtmlGuideContentType(contentType: string | null | undefined): boolean {
+  return normalizeOutputContentType(contentType) === "text/html";
 }
 
 /**

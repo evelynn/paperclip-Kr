@@ -5,12 +5,14 @@ import { useTranslation } from "@/i18n";
 import { cn, relativeTime } from "@/lib/utils";
 import {
   formatBytes,
+  isHtmlGuideContentType,
   isImageContentType,
   isVideoContentType,
   outputFilename,
   type IssueOutputItem,
 } from "@/lib/issue-output";
 import { OutputVideoPlayer } from "./OutputVideoPlayer";
+import { OutputHtmlGuideViewer } from "./OutputHtmlGuideViewer";
 import { OutputFileTile } from "./OutputFileTile";
 
 interface OutputPrimaryCardProps {
@@ -32,7 +34,9 @@ export function OutputPrimaryCard({ item, creatorName }: OutputPrimaryCardProps)
   return (
     <div className="overflow-hidden rounded-md border border-border bg-card">
       {/* Media region */}
-      {meta && isVideoContentType(contentType) ? (
+      {meta && isHtmlGuideContentType(contentType) ? (
+        <OutputHtmlGuideViewer src={meta.contentPath} title={filename} />
+      ) : meta && isVideoContentType(contentType) ? (
         <OutputVideoPlayer src={meta.contentPath} title={filename} />
       ) : meta && isImageContentType(contentType) ? (
         <a

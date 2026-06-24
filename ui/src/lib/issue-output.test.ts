@@ -6,6 +6,7 @@ import {
   getIssueOutputs,
   getOutputFileGlyph,
   getPromotedOutputAttachmentIds,
+  isHtmlGuideContentType,
   isOutputEligibleContentType,
 } from "./issue-output";
 
@@ -125,17 +126,32 @@ describe("isOutputEligibleContentType", () => {
     expect(isOutputEligibleContentType("application/octet-stream", "build.bin")).toBe(true);
   });
 
+  it("treats self-contained html (e.g. screen guides) as a renderable output", () => {
+    expect(isOutputEligibleContentType("text/html")).toBe(true);
+    expect(isOutputEligibleContentType("text/html; charset=utf-8")).toBe(true);
+  });
+
   it("filters document-like and source formats out of outputs", () => {
     expect(isOutputEligibleContentType("text/markdown")).toBe(false);
     expect(isOutputEligibleContentType("text/plain")).toBe(false);
     expect(isOutputEligibleContentType("application/json")).toBe(false);
     expect(isOutputEligibleContentType("application/vnd.api+json")).toBe(false);
-    expect(isOutputEligibleContentType("text/html")).toBe(false);
     expect(isOutputEligibleContentType("application/xml")).toBe(false);
     expect(isOutputEligibleContentType("text/csv")).toBe(false);
     expect(isOutputEligibleContentType("application/x-yaml")).toBe(false);
     expect(isOutputEligibleContentType("application/octet-stream", "report.md")).toBe(false);
     expect(isOutputEligibleContentType("application/octet-stream", "notes.txt")).toBe(false);
+  });
+});
+
+describe("isHtmlGuideContentType", () => {
+  it("matches text/html (with optional parameters) and nothing else", () => {
+    expect(isHtmlGuideContentType("text/html")).toBe(true);
+    expect(isHtmlGuideContentType("text/html; charset=utf-8")).toBe(true);
+    expect(isHtmlGuideContentType("TEXT/HTML")).toBe(true);
+    expect(isHtmlGuideContentType("text/plain")).toBe(false);
+    expect(isHtmlGuideContentType("application/xhtml+xml")).toBe(false);
+    expect(isHtmlGuideContentType(undefined)).toBe(false);
   });
 });
 
@@ -171,6 +187,15 @@ describe("getIssueOutputs", () => {
     ]);
     expect(result.count).toBe(0);
     expect(result.primary).toBeNull();
+  });
+
+  it("promotes a self-contained html guide artifact to an output", () => {
+    const result = getIssueOutputs([
+      makeWorkProduct({ id: "guide", metadata: artifactMetadata("text/html", "how-to-guide.html") }),
+    ]);
+    expect(result.count).toBe(1);
+    expect(result.primary?.id).toBe("guide");
+    expect(result.primary?.metadata?.contentType).toBe("text/html");
   });
 
   it("keeps video, image, pdf, zip, and binary artifact metadata as outputs", () => {
