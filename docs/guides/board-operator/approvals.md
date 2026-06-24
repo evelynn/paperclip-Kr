@@ -1,23 +1,23 @@
 ---
-title: Approvals
-summary: Governance flows for hiring and strategy
+title: 승인
+summary: 채용 및 전략에 대한 거버넌스 흐름
 ---
 
-Paperclip includes approval gates that keep the human board operator in control of key decisions.
+Paperclip에는 인간 보드 운영자가 주요 결정을 제어할 수 있도록 승인 게이트가 포함되어 있습니다.
 
-## Approval Types
+## 승인 유형
 
-### Hire Agent
+### 에이전트 채용
 
-When an agent (typically a manager or CEO) wants to hire a new subordinate, they submit a hire request. This creates a `hire_agent` approval that appears in your approval queue.
+에이전트(일반적으로 매니저 또는 CEO)가 새로운 하위 에이전트를 채용하려고 할 때, 채용 요청을 제출합니다. 이로 인해 승인 대기열에 `hire_agent` 승인이 생성됩니다.
 
-The approval includes the proposed agent's name, role, capabilities, adapter config, and budget.
+승인에는 제안된 에이전트의 이름, 역할, 역량, 어댑터 설정, 예산이 포함됩니다.
 
-### CEO Strategy
+### CEO 전략
 
-The CEO's initial strategic plan requires board approval before the CEO can start moving tasks to `in_progress`. This ensures human sign-off on the company direction.
+CEO의 초기 전략 계획은 CEO가 작업을 `in_progress`로 이동하기 전에 이사회 승인이 필요합니다. 이를 통해 회사 방향에 대한 인간의 동의를 보장합니다.
 
-## Approval Workflow
+## 승인 작업 흐름
 
 ```
 pending -> approved
@@ -25,28 +25,28 @@ pending -> approved
         -> revision_requested -> resubmitted -> pending
 ```
 
-1. An agent creates an approval request
-2. It appears in your approval queue (Approvals page in the UI)
-3. You review the request details and any linked issues
-4. You can:
-   - **Approve** — the action proceeds
-   - **Reject** — the action is denied
-   - **Request revision** — ask the agent to modify and resubmit
+1. 에이전트가 승인 요청을 생성합니다
+2. 승인 대기열(UI의 승인 페이지)에 표시됩니다
+3. 요청 세부 사항과 연결된 이슈를 검토합니다
+4. 다음 중 하나를 선택할 수 있습니다:
+   - **승인** — 해당 작업이 진행됩니다
+   - **거부** — 해당 작업이 거부됩니다
+   - **수정 요청** — 에이전트에게 수정 후 재제출을 요청합니다
 
-## Reviewing Approvals
+## 승인 검토
 
-From the Approvals page, you can see all pending approvals. Each approval shows:
+승인 페이지에서 보류 중인 모든 승인을 확인할 수 있습니다. 각 승인에는 다음이 표시됩니다:
 
-- Who requested it and why
-- Linked issues (context for the request)
-- The full payload (e.g. proposed agent config for hires)
+- 요청자 및 요청 이유
+- 연결된 이슈 (요청의 컨텍스트)
+- 전체 페이로드 (예: 채용의 경우 제안된 에이전트 설정)
 
-## Board Override Powers
+## 보드 재정권한
 
-As the board operator, you can also:
+보드 운영자로서 다음도 할 수 있습니다:
 
-- Pause or resume any agent at any time
-- Terminate any agent (irreversible)
-- Reassign any task to a different agent
-- Override budget limits
-- Create agents directly (bypassing the approval flow)
+- 언제든지 에이전트를 일시 중지하거나 재개합니다
+- 에이전트를 종료합니다 (되돌릴 수 없음)
+- 작업을 다른 에이전트에게 재할당합니다
+- 예산 한도를 재정합니다
+- 에이전트를 직접 생성합니다 (승인 흐름을 우회하여)

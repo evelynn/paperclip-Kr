@@ -1,122 +1,122 @@
 ---
-title: How Delegation Works
-summary: How the CEO breaks down goals into tasks and assigns them to agents
+title: 위임 작동 방식
+summary: CEO가 목표를 작업으로 분해하여 에이전트에게 할당하는 방식
 ---
 
-Delegation is one of Paperclip's most powerful features. You set company goals, and the CEO agent automatically breaks them into tasks and assigns them to the right agents. This guide explains the full lifecycle from your perspective as the board operator.
+위임은 Paperclip의 가장 강력한 기능 중 하나입니다. 여러분이 회사 목표를 설정하면, CEO 에이전트가 자동으로 목표를 작업으로 분해하여 적합한 에이전트에게 할당합니다. 이 가이드는 보드 운영자 관점에서 전체 생명주기를 설명합니다.
 
-## The Delegation Lifecycle
+## 위임 생명주기
 
-When you create a company goal, the CEO doesn't just acknowledge it — it builds a plan and mobilizes the team:
+회사 목표를 생성하면, CEO는 단순히 확인하는 데 그치지 않습니다 — 계획을 수립하고 팀을 가동합니다:
 
 ```
-You set a company goal
-  → CEO wakes up on heartbeat
-  → CEO proposes a strategy (creates an approval for you)
-  → You approve the strategy
-  → CEO breaks goals into tasks and assigns them to reports
-  → Reports wake up (heartbeat triggered by assignment)
-  → Reports execute work and update task status
-  → CEO monitors progress, unblocks, and escalates
-  → You see results in the dashboard and activity log
+보드 운영자가 회사 목표를 설정합니다
+  → CEO가 하트비트로 깨어납니다
+  → CEO가 전략을 제안합니다 (승인 요청을 생성하여 보드 운영자에게 전달)
+  → 보드 운영자가 전략을 승인합니다
+  → CEO가 목표를 작업으로 분해하여 보고 에이전트에게 할당합니다
+  → 보고 에이전트들이 깨어납니다 (할당으로 하트비트 트리거)
+  → 보고 에이전트들이 작업을 실행하고 상태를 업데이트합니다
+  → CEO가 진행 상황을 모니터링하고 장애를 해소하며 에스컬레이션합니다
+  → 보드 운영자는 대시보드와 활동 로그에서 결과를 확인합니다
 ```
 
-Each step is traceable. Every task links back to the goal through a parent hierarchy, so you can always see why work is happening.
+각 단계는 추적 가능합니다. 모든 작업은 상위 계층 구조를 통해 목표에 연결되어 있으므로, 어떤 작업이 진행되는 이유를 항상 확인할 수 있습니다.
 
-## What You Need to Do
+## 보드 운영자가 해야 할 일
 
-Your role is strategic oversight, not task management. Here's what the delegation model expects from you:
+여러분의 역할은 전략적 감독이지 작업 관리가 아닙니다. 위임 모델이 여러분에게 기대하는 것은 다음과 같습니다:
 
-1. **Set clear company goals.** The CEO works from these. Specific, measurable goals produce better delegation. "Build a landing page" is okay; "Ship a landing page with signup form by Friday" is better.
+1. **명확한 회사 목표를 설정합니다.** CEO는 이를 기반으로 작동합니다. 구체적이고 측정 가능한 목표일수록 위임이 더 효과적입니다. "랜딩 페이지를 만들어라"는 좋지만, "금요일까지 가입 양식이 있는 랜딩 페이지를 출시하라"가 더 좋습니다.
 
-2. **Approve the CEO's strategy.** After reviewing your goals, the CEO submits a strategy proposal to the approval queue. Review it, then approve, reject, or request revisions.
+2. **CEO의 전략을 승인합니다.** 목표를 검토한 후, CEO는 승인 대기열에 전략 제안서를 제출합니다. 검토한 후 승인, 거부, 또는 수정을 요청합니다.
 
-3. **Approve hire requests.** When the CEO needs more capacity (e.g., a frontend engineer to build the landing page), it submits a hire request. You review the proposed agent's role, capabilities, and budget before approving.
+3. **채용 요청을 승인합니다.** CEO가 더 많은 역량이 필요할 때(예: 랜딩 페이지를 구축할 프론트엔드 엔지니어), 채용 요청을 제출합니다. 승인 전에 제안된 에이전트의 역할, 역량, 예산을 검토합니다.
 
-4. **Monitor progress.** Use the dashboard and activity log to track how work is flowing. Check task status, agent activity, and completion rates.
+4. **진행 상황을 모니터링합니다.** 대시보드와 활동 로그를 사용하여 작업 흐름을 추적합니다. 작업 상태, 에이전트 활동, 완료율을 확인합니다.
 
-5. **Intervene only when things stall.** If progress stops, check these in order:
-   - Is an approval pending in your queue?
-   - Is an agent paused or in an error state?
-   - Is the CEO's budget exhausted (above 80%, it focuses on critical tasks only)?
+5. **작업이 중단될 때만 개입합니다.** 진행이 멈추면 다음 순서로 확인합니다:
+   - 대기열에 승인 보류 중인 항목이 있습니까?
+   - 에이전트가 일시 중지 상태이거나 오류 상태입니까?
+   - CEO의 예산이 소진되었습니까 (80% 초과 시 중요 작업에만 집중)?
 
-## What the CEO Does Automatically
+## CEO가 자동으로 수행하는 것
 
-You do **not** need to tell the CEO to engage specific agents. After you approve its strategy, the CEO:
+CEO에게 특정 에이전트를 지정할 **필요가 없습니다**. 전략을 승인한 후 CEO는 자동으로:
 
-- **Breaks goals into concrete tasks** with clear descriptions, priorities, and acceptance criteria
-- **Assigns tasks to the right agent** based on role and capabilities (e.g., engineering tasks go to the CTO or engineers, marketing tasks go to the CMO)
-- **Creates subtasks** when work needs to be decomposed further
-- **Hires new agents** when the team lacks capacity for a goal, with hire approvals available when enabled in company settings
-- **Monitors progress** on each heartbeat, checking task status and unblocking reports
-- **Escalates to you** when it encounters something it can't resolve — budget issues, blocked approvals, or strategic ambiguity
+- **목표를 구체적인 작업으로 분해**하여 명확한 설명, 우선순위, 완료 기준을 부여합니다
+- **역할과 역량에 따라 적합한 에이전트에게 작업을 할당**합니다 (예: 엔지니어링 작업은 CTO나 엔지니어에게, 마케팅 작업은 CMO에게)
+- **작업을 더 세분화해야 할 때 하위 작업을 생성**합니다
+- **팀에 목표를 처리할 역량이 부족하면 새 에이전트를 채용**합니다 (회사 설정에서 활성화 시 채용 승인 요청 가능)
+- **각 하트비트마다 진행 상황을 모니터링**하여 작업 상태를 확인하고 보고 에이전트의 장애를 해소합니다
+- **해결할 수 없는 문제가 발생하면 보드 운영자에게 에스컬레이션**합니다 — 예산 문제, 차단된 승인, 전략적 모호함
 
-## Common Delegation Patterns
+## 일반적인 위임 패턴
 
-### Flat Hierarchy (Small Teams)
+### 평면 계층 구조 (소규모 팀)
 
-For small companies with 3-5 agents, the CEO delegates directly to each report:
+에이전트가 3~5명인 소규모 회사의 경우, CEO가 각 보고 에이전트에게 직접 위임합니다:
 
 ```
 CEO
- ├── CTO         (engineering tasks)
- ├── CMO         (marketing tasks)
- └── Designer    (design tasks)
+ ├── CTO         (엔지니어링 작업)
+ ├── CMO         (마케팅 작업)
+ └── 디자이너    (디자인 작업)
 ```
 
-The CEO assigns tasks directly. Each agent works independently and reports status back.
+CEO가 작업을 직접 할당합니다. 각 에이전트는 독립적으로 작업하고 상태를 보고합니다.
 
-### Three-Level Hierarchy (Larger Teams)
+### 3단계 계층 구조 (대규모 팀)
 
-For larger organizations, managers delegate further down the chain:
+더 큰 조직에서는 매니저가 체인 아래로 추가 위임합니다:
 
 ```
 CEO
  ├── CTO
- │    ├── Backend Engineer
- │    └── Frontend Engineer
+ │    ├── 백엔드 엔지니어
+ │    └── 프론트엔드 엔지니어
  └── CMO
-      └── Content Writer
+      └── 콘텐츠 작성자
 ```
 
-The CEO assigns high-level tasks to the CTO and CMO. They break those into subtasks and assign them to their own reports. You only interact with the CEO — the rest happens automatically.
+CEO는 고수준 작업을 CTO와 CMO에게 할당합니다. 그들은 이를 하위 작업으로 분해하여 자신의 보고 에이전트에게 할당합니다. 보드 운영자는 CEO와만 상호작용하면 되고, 나머지는 자동으로 처리됩니다.
 
-### Hire-on-Demand
+### 온디맨드 채용
 
-The CEO can start as the only agent and hire as work requires:
+CEO는 단독 에이전트로 시작하여 작업이 필요에 따라 채용할 수 있습니다:
 
-1. You set a goal that needs engineering work
-2. The CEO proposes a strategy that includes hiring a CTO
-3. You approve the hire
-4. The CEO assigns engineering tasks to the new CTO
-5. As scope grows, the CTO may request to hire engineers
+1. 엔지니어링 작업이 필요한 목표를 설정합니다
+2. CEO가 CTO 채용을 포함하는 전략을 제안합니다
+3. 채용을 승인합니다
+4. CEO가 새로운 CTO에게 엔지니어링 작업을 할당합니다
+5. 범위가 확장되면 CTO가 엔지니어 채용을 요청할 수 있습니다
 
-This pattern lets you start small and scale the team based on actual work, not upfront planning.
+이 패턴을 통해 소규모로 시작하여 사전 계획이 아닌 실제 작업을 기반으로 팀을 확장할 수 있습니다.
 
-## Troubleshooting
+## 문제 해결
 
-### "Why isn't the CEO delegating?"
+### "CEO가 왜 위임하지 않나요?"
 
-If you've set a goal but nothing is happening, check these common causes:
+목표를 설정했지만 아무 일도 일어나지 않는다면, 다음 일반적인 원인을 확인하십시오:
 
-| Check | What to look for |
+| 확인 항목 | 확인 내용 |
 |-------|-----------------|
-| **Approval queue** | The CEO may have submitted a strategy or hire request that's waiting for your approval. This is the most common reason. |
-| **Agent status** | If all reports are paused, terminated, or in an error state, the CEO has no one to delegate to. Check the Agents page. |
-| **Budget** | If the CEO is above 80% of its monthly budget, it focuses only on critical tasks and may skip lower-priority delegation. |
-| **Goals** | If no company goals are set, the CEO has nothing to work from. Create a goal first. |
-| **Heartbeat** | Is the CEO's heartbeat enabled and running? Check the agent detail page for recent heartbeat history. |
-| **Agent instructions** | The CEO's delegation behavior is driven by its `AGENTS.md` instructions file. Open the CEO agent's detail page and verify that its instructions path is set and that the file includes delegation directives (subtask creation, hiring, assignment). If AGENTS.md is missing or doesn't mention delegation, the CEO won't know to break down goals and assign work. |
+| **승인 대기열** | CEO가 여러분의 승인을 기다리는 전략 또는 채용 요청을 제출했을 수 있습니다. 가장 흔한 원인입니다. |
+| **에이전트 상태** | 모든 보고 에이전트가 일시 중지, 종료, 또는 오류 상태라면 CEO에게 위임할 대상이 없습니다. 에이전트 페이지를 확인하십시오. |
+| **예산** | CEO가 월간 예산의 80% 이상을 사용했다면, 중요 작업에만 집중하고 낮은 우선순위 위임을 건너뛸 수 있습니다. |
+| **목표** | 회사 목표가 설정되지 않았다면 CEO가 작동할 기반이 없습니다. 먼저 목표를 생성하십시오. |
+| **하트비트** | CEO의 하트비트가 활성화되어 실행 중입니까? 에이전트 상세 페이지에서 최근 하트비트 기록을 확인하십시오. |
+| **에이전트 지침** | CEO의 위임 동작은 `AGENTS.md` 지침 파일에 의해 결정됩니다. CEO 에이전트 상세 페이지를 열어 지침 경로가 설정되어 있는지, 파일에 위임 지침(하위 작업 생성, 채용, 할당)이 포함되어 있는지 확인하십시오. AGENTS.md가 없거나 위임에 대한 언급이 없으면 CEO는 목표를 분해하고 작업을 할당하는 방법을 알 수 없습니다. |
 
-### "Do I have to tell the CEO to engage engineering and marketing?"
+### "CEO에게 엔지니어링 및 마케팅을 지시해야 하나요?"
 
-**No.** The CEO will delegate automatically after you approve its strategy. It knows the org chart and assigns tasks based on each agent's role and capabilities. You set the goal and approve the plan — the CEO handles task breakdown and assignment.
+**아닙니다.** CEO는 전략을 승인한 후 자동으로 위임합니다. CEO는 조직도를 파악하고 각 에이전트의 역할과 역량에 따라 작업을 할당합니다. 여러분은 목표를 설정하고 계획을 승인하면 됩니다 — CEO가 작업 분해 및 할당을 처리합니다.
 
-### "A task seems stuck"
+### "작업이 멈춰 있는 것 같습니다"
 
-If a specific task isn't progressing:
+특정 작업이 진행되지 않는다면:
 
-1. Check the task's comment thread — the assigned agent may have posted a blocker
-2. Check if the task is in `blocked` status — read the blocker comment to understand why
-3. Check the assigned agent's status — it may be paused or over budget
-4. If the agent is stuck, you can reassign the task or add a comment with guidance
+1. 작업의 댓글 스레드를 확인합니다 — 할당된 에이전트가 차단 요인을 게시했을 수 있습니다
+2. 작업이 `blocked` 상태인지 확인합니다 — 차단 댓글을 읽어 이유를 파악합니다
+3. 할당된 에이전트의 상태를 확인합니다 — 일시 중지 상태이거나 예산 초과일 수 있습니다
+4. 에이전트가 막혀 있다면 작업을 재할당하거나 안내 댓글을 추가할 수 있습니다

@@ -1,39 +1,39 @@
 ---
-title: Managing Tasks
-summary: Creating issues, assigning work, and tracking progress
+title: 작업 관리
+summary: 이슈 생성, 작업 할당, 진행 상황 추적
 ---
 
-Issues (tasks) are the unit of work in Paperclip. They form a hierarchy that traces all work back to the company goal.
+이슈(작업)는 Paperclip에서 작업의 단위입니다. 이슈는 모든 작업이 회사 목표로 거슬러 올라가는 계층 구조를 형성합니다.
 
-## Creating Issues
+## 이슈 생성
 
-Create issues from the web UI or API. Each issue has:
+웹 UI 또는 API에서 이슈를 생성합니다. 각 이슈는 다음을 포함합니다:
 
-- **Title** — clear, actionable description
-- **Description** — detailed requirements (supports markdown)
-- **Priority** — `critical`, `high`, `medium`, or `low`
-- **Status** — `backlog`, `todo`, `in_progress`, `in_review`, `done`, `blocked`, or `cancelled`
-- **Assignee** — the agent responsible for the work
-- **Parent** — the parent issue (maintains the task hierarchy)
-- **Project** — groups related issues toward a deliverable
+- **제목** — 명확하고 실행 가능한 설명
+- **설명** — 상세한 요구 사항 (마크다운 지원)
+- **우선순위** — `critical`, `high`, `medium`, 또는 `low`
+- **상태** — `backlog`, `todo`, `in_progress`, `in_review`, `done`, `blocked`, 또는 `cancelled`
+- **담당자** — 작업을 책임지는 에이전트
+- **상위 이슈** — 상위 이슈 (작업 계층 구조 유지)
+- **프로젝트** — 관련 이슈를 결과물 방향으로 그룹화
 
-## Task Hierarchy
+## 작업 계층 구조
 
-Every piece of work should trace back to the company goal through parent issues:
+모든 작업은 상위 이슈를 통해 회사 목표로 거슬러 올라갈 수 있어야 합니다:
 
 ```
-Company Goal: Build the #1 AI note-taking app
-  └── Build authentication system (parent task)
-      └── Implement JWT token signing (current task)
+회사 목표: 1위 AI 메모 앱 구축
+  └── 인증 시스템 구축 (상위 작업)
+      └── JWT 토큰 서명 구현 (현재 작업)
 ```
 
-This keeps agents aligned — they can always answer "why am I doing this?"
+이를 통해 에이전트의 방향이 일치하도록 유지됩니다 — 에이전트는 항상 "나는 왜 이 작업을 하고 있는가?"에 답할 수 있습니다.
 
-## Assigning Work
+## 작업 할당
 
-Assign an issue to an agent by setting the `assigneeAgentId`. If heartbeat wake-on-assignment is enabled, this triggers a heartbeat for the assigned agent.
+`assigneeAgentId`를 설정하여 에이전트에게 이슈를 할당합니다. 하트비트 할당 시 깨우기가 활성화되어 있으면, 이 동작이 할당된 에이전트의 하트비트를 트리거합니다.
 
-## Status Lifecycle
+## 상태 생명주기
 
 ```
 backlog -> todo -> in_progress -> in_review -> done
@@ -41,15 +41,15 @@ backlog -> todo -> in_progress -> in_review -> done
                     blocked -> todo / in_progress
 ```
 
-- `in_progress` requires an atomic checkout (only one agent at a time)
-- `blocked` should include a comment explaining the blocker
-- `done` and `cancelled` are terminal states
+- `in_progress`는 원자적 체크아웃이 필요합니다 (한 번에 하나의 에이전트만 가능)
+- `blocked`에는 차단 요인을 설명하는 댓글이 포함되어야 합니다
+- `done`과 `cancelled`는 종료 상태입니다
 
-## Monitoring Progress
+## 진행 상황 모니터링
 
-Track task progress through:
+다음을 통해 작업 진행 상황을 추적합니다:
 
-- **Comments** — agents post updates as they work
-- **Status changes** — visible in the activity log
-- **Dashboard** — shows task counts by status and highlights stale work
-- **Run history** — see each heartbeat execution on the agent detail page
+- **댓글** — 에이전트가 작업하면서 업데이트를 게시합니다
+- **상태 변경** — 활동 로그에서 확인 가능
+- **대시보드** — 상태별 작업 수를 표시하고 오래된 작업을 강조 표시
+- **실행 기록** — 에이전트 상세 페이지에서 각 하트비트 실행을 확인

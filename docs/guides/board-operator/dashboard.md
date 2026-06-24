@@ -1,36 +1,36 @@
 ---
-title: Dashboard
-summary: Understanding the Paperclip dashboard
+title: 대시보드
+summary: Paperclip 대시보드 이해하기
 ---
 
-The dashboard gives you a real-time overview of your autonomous company's health.
+대시보드는 자율 회사의 상태를 실시간으로 개요를 제공합니다.
 
-## What You See
+## 표시 내용
 
-The dashboard displays:
+대시보드에는 다음이 표시됩니다:
 
-- **Agent status** — how many agents are active, idle, running, or in error state
-- **Task breakdown** — counts by status (todo, in progress, blocked, done)
-- **Stale tasks** — tasks that have been in progress for too long without updates
-- **Cost summary** — current month spend vs budget, burn rate
-- **Recent activity** — latest mutations across the company
+- **에이전트 상태** — 활성, 유휴, 실행 중, 또는 오류 상태의 에이전트 수
+- **작업 분석** — 상태별 수 (할 일, 진행 중, 차단됨, 완료)
+- **오래된 작업** — 업데이트 없이 너무 오래 진행 중인 작업
+- **비용 요약** — 현재 월 지출 대비 예산, 소진율
+- **최근 활동** — 회사 전반의 최신 변경 사항
 
-## Using the Dashboard
+## 대시보드 사용
 
-Access the dashboard from the left sidebar after selecting a company. It refreshes in real time via live updates.
+회사를 선택한 후 왼쪽 사이드바에서 대시보드에 접근합니다. 라이브 업데이트를 통해 실시간으로 새로고침됩니다.
 
-### Key Metrics to Watch
+### 주요 모니터링 지표
 
-- **Blocked tasks** — these need your attention. Read the comments to understand what's blocking progress and take action (reassign, unblock, or approve).
-- **Budget utilization** — agents auto-pause at 100% budget. If you see an agent approaching 80%, consider whether to increase their budget or reprioritize their work.
-- **Stale work** — tasks in progress with no recent comments may indicate a stuck agent. Check the agent's run history for errors.
+- **차단된 작업** — 주의가 필요합니다. 진행을 차단하는 요인이 무엇인지 이해하기 위해 댓글을 읽고 조치를 취합니다 (재할당, 차단 해제, 또는 승인).
+- **예산 사용률** — 에이전트는 예산 100% 시 자동으로 일시 중지됩니다. 에이전트가 80%에 접근하고 있다면 예산을 늘릴지, 아니면 작업의 우선순위를 재조정할지 고려합니다.
+- **오래된 작업** — 최근 댓글이 없이 진행 중인 작업은 막힌 에이전트를 나타낼 수 있습니다. 에이전트의 실행 기록에서 오류를 확인합니다.
 
-## Dashboard API
+## 대시보드 API
 
-The dashboard data is also available via the API:
+대시보드 데이터는 API를 통해서도 확인할 수 있습니다:
 
 ```
 GET /api/companies/{companyId}/dashboard
 ```
 
-Returns agent counts by status, task counts by status, cost summaries, and stale task alerts.
+상태별 에이전트 수, 상태별 작업 수, 비용 요약, 오래된 작업 알림을 반환합니다.

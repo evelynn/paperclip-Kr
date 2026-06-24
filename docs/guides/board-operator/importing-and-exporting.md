@@ -1,19 +1,19 @@
 ---
-title: Importing & Exporting Companies
-summary: Export companies to portable packages and import them from local paths or GitHub
+title: 회사 가져오기 및 내보내기
+summary: 회사를 이식 가능한 패키지로 내보내고 로컬 경로 또는 GitHub에서 가져옵니다
 ---
 
-Paperclip companies can be exported to portable markdown packages and imported from local directories or GitHub repositories. This lets you share company configurations, duplicate setups, and version-control your agent teams.
+Paperclip 회사는 이식 가능한 마크다운 패키지로 내보내거나, 로컬 디렉토리 또는 GitHub 저장소에서 가져올 수 있습니다. 이를 통해 회사 설정을 공유하거나, 설정을 복제하거나, 에이전트 팀을 버전 관리할 수 있습니다.
 
-## Package Format
+## 패키지 형식
 
-Exported packages follow the [Agent Companies specification](/companies/companies-spec) and use a markdown-first structure:
+내보낸 패키지는 [에이전트 회사 명세](/companies/companies-spec)를 따르며, 마크다운 우선 구조를 사용합니다:
 
 ```text
 my-company/
-├── COMPANY.md          # Company metadata
+├── COMPANY.md          # 회사 메타데이터
 ├── agents/
-│   ├── ceo/AGENT.md    # Agent instructions + frontmatter
+│   ├── ceo/AGENT.md    # 에이전트 지침 + frontmatter
 │   └── cto/AGENT.md
 ├── projects/
 │   └── main/PROJECT.md
@@ -21,130 +21,130 @@ my-company/
 │   └── review/SKILL.md
 ├── tasks/
 │   └── onboarding/TASK.md
-└── .paperclip.yaml     # Adapter config, env inputs, routines
+└── .paperclip.yaml     # 어댑터 설정, 환경 변수 입력, 루틴
 ```
 
-- **COMPANY.md** defines company name, description, and metadata.
-- **AGENT.md** files contain agent identity, role, and instructions.
-- **SKILL.md** files are compatible with the Agent Skills ecosystem.
-- **.paperclip.yaml** holds Paperclip-specific config (adapter types, env inputs, budgets) as an optional sidecar.
+- **COMPANY.md** — 회사 이름, 설명, 메타데이터를 정의합니다.
+- **AGENT.md** 파일 — 에이전트의 신원, 역할, 지침을 포함합니다.
+- **SKILL.md** 파일 — 에이전트 스킬 생태계와 호환됩니다.
+- **.paperclip.yaml** — Paperclip 전용 설정(어댑터 유형, 환경 변수 입력, 예산)을 선택적 사이드카 파일로 보관합니다.
 
-## Exporting a Company
+## 회사 내보내기
 
-Export a company into a portable folder:
+회사를 이식 가능한 폴더로 내보냅니다:
 
 ```sh
 paperclipai company export <company-id> --out ./my-export
 ```
 
-### Options
+### 옵션
 
-| Option | Description | Default |
+| 옵션 | 설명 | 기본값 |
 |--------|-------------|---------|
-| `--out <path>` | Output directory (required) | — |
-| `--include <values>` | Comma-separated set: `company`, `agents`, `projects`, `issues`, `tasks`, `skills` | `company,agents` |
-| `--skills <values>` | Export only specific skill slugs | all |
-| `--projects <values>` | Export only specific project shortnames or IDs | all |
-| `--issues <values>` | Export specific issue identifiers or IDs | none |
-| `--project-issues <values>` | Export issues belonging to specific projects | none |
-| `--expand-referenced-skills` | Vendor skill file contents instead of keeping upstream references | `false` |
+| `--out <path>` | 출력 디렉토리 (필수) | — |
+| `--include <values>` | 쉼표로 구분된 항목: `company`, `agents`, `projects`, `issues`, `tasks`, `skills` | `company,agents` |
+| `--skills <values>` | 특정 스킬 슬러그만 내보내기 | 전체 |
+| `--projects <values>` | 특정 프로젝트 단축 이름 또는 ID만 내보내기 | 전체 |
+| `--issues <values>` | 특정 이슈 식별자 또는 ID 내보내기 | 없음 |
+| `--project-issues <values>` | 특정 프로젝트에 속한 이슈 내보내기 | 없음 |
+| `--expand-referenced-skills` | 업스트림 참조 대신 스킬 파일 내용을 직접 포함 | `false` |
 
-### Examples
+### 예시
 
 ```sh
-# Export company with agents and projects
+# 에이전트 및 프로젝트와 함께 회사 내보내기
 paperclipai company export abc123 --out ./backup --include company,agents,projects
 
-# Export everything including tasks and skills
+# 작업 및 스킬을 포함하여 전체 내보내기
 paperclipai company export abc123 --out ./full-export --include company,agents,projects,tasks,skills
 
-# Export only specific skills
+# 특정 스킬만 내보내기
 paperclipai company export abc123 --out ./skills-only --include skills --skills review,deploy
 ```
 
-### What Gets Exported
+### 내보내지는 항목
 
-- Company name, description, and metadata
-- Agent names, roles, reporting structure, and instructions
-- Project definitions and workspace config
-- Task/issue descriptions (when included)
-- Skill packages (as references or vendored content)
-- Adapter type and env input declarations in `.paperclip.yaml`
+- 회사 이름, 설명, 메타데이터
+- 에이전트 이름, 역할, 보고 구조, 지침
+- 프로젝트 정의 및 워크스페이스 설정
+- 작업/이슈 설명 (포함 시)
+- 스킬 패키지 (참조 또는 직접 포함 내용)
+- `.paperclip.yaml`의 어댑터 유형 및 환경 변수 입력 선언
 
-Secret values, machine-local paths, and database IDs are **never** exported.
+비밀 값, 머신 로컬 경로, 데이터베이스 ID는 **절대** 내보내지 않습니다.
 
-## Importing a Company
+## 회사 가져오기
 
-Import from a local directory, GitHub URL, or GitHub shorthand:
+로컬 디렉토리, GitHub URL, 또는 GitHub 단축 표기에서 가져옵니다:
 
 ```sh
-# From a local folder
+# 로컬 폴더에서 가져오기
 paperclipai company import ./my-export
 
-# From a GitHub URL
+# GitHub URL에서 가져오기
 paperclipai company import https://github.com/org/repo
 
-# From a GitHub subfolder
+# GitHub 하위 폴더에서 가져오기
 paperclipai company import https://github.com/org/repo/tree/main/companies/acme
 
-# From GitHub shorthand
+# GitHub 단축 표기로 가져오기
 paperclipai company import org/repo
 paperclipai company import org/repo/companies/acme
 ```
 
-### Options
+### 옵션
 
-| Option | Description | Default |
+| 옵션 | 설명 | 기본값 |
 |--------|-------------|---------|
-| `--target <mode>` | `new` (create a new company) or `existing` (merge into existing) | inferred from context |
-| `--company-id <id>` | Target company ID for `--target existing` | current context |
-| `--new-company-name <name>` | Override company name for `--target new` | from package |
-| `--include <values>` | Comma-separated set: `company`, `agents`, `projects`, `issues`, `tasks`, `skills` | auto-detected |
-| `--agents <list>` | Comma-separated agent slugs to import, or `all` | `all` |
-| `--collision <mode>` | How to handle name conflicts: `rename`, `skip`, or `replace` | `rename` |
-| `--ref <value>` | Git ref for GitHub imports (branch, tag, or commit) | default branch |
-| `--dry-run` | Preview what would be imported without applying | `false` |
-| `--yes` | Skip the interactive confirmation prompt | `false` |
-| `--json` | Output result as JSON | `false` |
+| `--target <mode>` | `new` (새 회사 생성) 또는 `existing` (기존 회사에 병합) | 컨텍스트에서 자동 추론 |
+| `--company-id <id>` | `--target existing`의 대상 회사 ID | 현재 컨텍스트 |
+| `--new-company-name <name>` | `--target new`의 회사 이름 재정의 | 패키지에서 가져옴 |
+| `--include <values>` | 쉼표로 구분된 항목: `company`, `agents`, `projects`, `issues`, `tasks`, `skills` | 자동 감지 |
+| `--agents <list>` | 가져올 에이전트 슬러그(쉼표 구분) 또는 `all` | `all` |
+| `--collision <mode>` | 이름 충돌 처리 방식: `rename`, `skip`, 또는 `replace` | `rename` |
+| `--ref <value>` | GitHub 가져오기용 Git ref (브랜치, 태그, 커밋) | 기본 브랜치 |
+| `--dry-run` | 실제 적용 없이 가져올 내용 미리보기 | `false` |
+| `--yes` | 대화형 확인 프롬프트 건너뜀 | `false` |
+| `--json` | 결과를 JSON으로 출력 | `false` |
 
-### Target Modes
+### 대상 모드
 
-- **`new`** — Creates a fresh company from the package. Good for duplicating a company template.
-- **`existing`** — Merges the package into an existing company. Use `--company-id` to specify the target.
+- **`new`** — 패키지에서 새 회사를 생성합니다. 회사 템플릿을 복제할 때 유용합니다.
+- **`existing`** — 패키지를 기존 회사에 병합합니다. `--company-id`로 대상을 지정합니다.
 
-If `--target` is not specified, Paperclip infers it: if a `--company-id` is provided (or one exists in context), it defaults to `existing`; otherwise `new`.
+`--target`을 지정하지 않으면 Paperclip이 자동으로 추론합니다: `--company-id`가 제공되거나 컨텍스트에 존재하면 `existing`이 기본값이고, 그렇지 않으면 `new`가 됩니다.
 
-### Collision Strategies
+### 충돌 전략
 
-When importing into an existing company, agent or project names may conflict with existing ones:
+기존 회사로 가져올 때 에이전트 또는 프로젝트 이름이 기존 항목과 충돌할 수 있습니다:
 
-- **`rename`** (default) — Appends a suffix to avoid conflicts (e.g., `ceo` becomes `ceo-2`).
-- **`skip`** — Skips entities that already exist.
-- **`replace`** — Overwrites existing entities. Only available for non-safe imports (not available through the CEO API).
+- **`rename`** (기본값) — 충돌을 피하기 위해 접미사를 추가합니다 (예: `ceo`가 `ceo-2`가 됨).
+- **`skip`** — 이미 존재하는 항목을 건너뜁니다.
+- **`replace`** — 기존 항목을 덮어씁니다. 비안전 가져오기에서만 사용 가능합니다 (CEO API를 통해서는 불가).
 
-### Interactive Selection
+### 대화형 선택
 
-When running interactively (no `--yes` or `--json` flags), the import command shows a selection picker before applying. You can choose exactly which agents, projects, skills, and tasks to import using a checkbox interface.
+대화형으로 실행할 때(`--yes` 또는 `--json` 플래그 없이), 가져오기 명령은 적용 전에 선택 화면을 표시합니다. 체크박스 인터페이스를 통해 가져올 에이전트, 프로젝트, 스킬, 작업을 정확히 선택할 수 있습니다.
 
-### Preview Before Applying
+### 적용 전 미리보기
 
-Always preview first with `--dry-run`:
+항상 `--dry-run`으로 먼저 미리보기를 확인하십시오:
 
 ```sh
 paperclipai company import org/repo --target existing --company-id abc123 --dry-run
 ```
 
-The preview shows:
-- **Package contents** — How many agents, projects, tasks, and skills are in the source
-- **Import plan** — What will be created, renamed, skipped, or replaced
-- **Env inputs** — Environment variables that may need values after import
-- **Warnings** — Potential issues like missing skills or unresolved references
+미리보기에서 표시되는 내용:
+- **패키지 내용** — 소스에 포함된 에이전트, 프로젝트, 작업, 스킬의 수
+- **가져오기 계획** — 생성, 이름 변경, 건너뜀, 또는 교체될 항목
+- **환경 변수 입력** — 가져오기 후 값이 필요한 환경 변수
+- **경고** — 누락된 스킬 또는 미해결 참조 등의 잠재적 문제
 
-Imported agents always land with timer heartbeats disabled. Assignment/on-demand wake behavior from the package is preserved, but scheduled runs stay off until a board operator re-enables them.
+가져온 에이전트는 항상 타이머 하트비트가 비활성화된 상태로 생성됩니다. 패키지의 할당/온디맨드 깨우기 동작은 유지되지만, 예약된 실행은 보드 운영자가 다시 활성화할 때까지 중단 상태를 유지합니다.
 
-### Common Workflows
+### 일반적인 작업 흐름
 
-**Clone a company template from GitHub:**
+**GitHub에서 회사 템플릿 복제하기:**
 
 ```sh
 paperclipai company import org/company-templates/engineering-team \
@@ -152,7 +152,7 @@ paperclipai company import org/company-templates/engineering-team \
   --new-company-name "My Engineering Team"
 ```
 
-**Add agents from a package into your existing company:**
+**패키지의 에이전트를 기존 회사에 추가하기:**
 
 ```sh
 paperclipai company import ./shared-agents \
@@ -162,13 +162,13 @@ paperclipai company import ./shared-agents \
   --collision rename
 ```
 
-**Import a specific branch or tag:**
+**특정 브랜치 또는 태그 가져오기:**
 
 ```sh
 paperclipai company import org/repo --ref v2.0.0 --dry-run
 ```
 
-**Non-interactive import (CI/scripts):**
+**비대화형 가져오기 (CI/스크립트용):**
 
 ```sh
 paperclipai company import ./package \
@@ -177,27 +177,27 @@ paperclipai company import ./package \
   --json
 ```
 
-## API Endpoints
+## API 엔드포인트
 
-The CLI commands use these API endpoints under the hood:
+CLI 명령은 내부적으로 다음 API 엔드포인트를 사용합니다:
 
-| Action | Endpoint |
+| 작업 | 엔드포인트 |
 |--------|----------|
-| Export company | `POST /api/companies/{companyId}/export` |
-| Preview import (existing company) | `POST /api/companies/{companyId}/imports/preview` |
-| Apply import (existing company) | `POST /api/companies/{companyId}/imports/apply` |
-| Preview import (new company) | `POST /api/companies/import/preview` |
-| Apply import (new company) | `POST /api/companies/import` |
+| 회사 내보내기 | `POST /api/companies/{companyId}/export` |
+| 가져오기 미리보기 (기존 회사) | `POST /api/companies/{companyId}/imports/preview` |
+| 가져오기 적용 (기존 회사) | `POST /api/companies/{companyId}/imports/apply` |
+| 가져오기 미리보기 (새 회사) | `POST /api/companies/import/preview` |
+| 가져오기 적용 (새 회사) | `POST /api/companies/import` |
 
-CEO agents can also use the safe import routes (`/imports/preview` and `/imports/apply`) which enforce non-destructive rules: `replace` is rejected, collisions resolve with `rename` or `skip`, and issues are always created as new.
+CEO 에이전트도 안전한 가져오기 경로(`/imports/preview` 및 `/imports/apply`)를 사용할 수 있으며, 비파괴적 규칙을 강제합니다: `replace`는 거부되고, 충돌은 `rename` 또는 `skip`으로 해결되며, 이슈는 항상 새로 생성됩니다.
 
-## GitHub Sources
+## GitHub 소스
 
-Paperclip supports several GitHub URL formats:
+Paperclip은 여러 가지 GitHub URL 형식을 지원합니다:
 
-- Full URL: `https://github.com/org/repo`
-- Subfolder URL: `https://github.com/org/repo/tree/main/path/to/company`
-- Shorthand: `org/repo`
-- Shorthand with path: `org/repo/path/to/company`
+- 전체 URL: `https://github.com/org/repo`
+- 하위 폴더 URL: `https://github.com/org/repo/tree/main/path/to/company`
+- 단축 표기: `org/repo`
+- 경로 포함 단축 표기: `org/repo/path/to/company`
 
-Use `--ref` to pin to a specific branch, tag, or commit hash when importing from GitHub.
+GitHub에서 가져올 때 특정 브랜치, 태그, 또는 커밋 해시에 고정하려면 `--ref`를 사용하십시오.
