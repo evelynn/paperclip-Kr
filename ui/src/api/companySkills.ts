@@ -2,6 +2,7 @@ import type {
   CatalogSkill,
   CatalogSkillFileDetail,
   CatalogSkillKind,
+  CatalogSkillRecommendation,
   CompanySkill,
   CompanySkillCategoryCount,
   CompanySkillComment,
@@ -154,4 +155,11 @@ export const companySkillsApi = {
       `/companies/${encodeURIComponent(companyId)}/skills/install-catalog`,
       payload,
     ),
+  catalogRecommended: (role: string, opts: { limit?: number; exclude?: string[] } = {}) => {
+    const params = new URLSearchParams();
+    params.set("role", role);
+    if (opts.limit != null) params.set("limit", String(opts.limit));
+    if (opts.exclude && opts.exclude.length > 0) params.set("exclude", opts.exclude.join(","));
+    return api.get<CatalogSkillRecommendation[]>(`/skills/catalog/recommended?${params.toString()}`);
+  },
 };

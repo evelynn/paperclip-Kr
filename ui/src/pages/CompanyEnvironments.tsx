@@ -23,6 +23,7 @@ import { JsonSchemaForm, getDefaultValues, validateJsonSchemaForm } from "@/comp
 import { useBreadcrumbs } from "@/context/BreadcrumbContext";
 import { useCompany } from "@/context/CompanyContext";
 import { useToast } from "@/context/ToastContext";
+import { useTranslation } from "@/i18n";
 import { queryKeys } from "@/lib/queryKeys";
 import {
   Field,
@@ -165,6 +166,7 @@ function summarizeSandboxConfig(config: Record<string, unknown>): string | null 
 }
 
 export function CompanyEnvironments() {
+  const { t } = useTranslation();
   const { selectedCompanyId } = useCompany();
   const { setBreadcrumbs } = useBreadcrumbs();
   const { pushToast } = useToast();
@@ -177,11 +179,11 @@ export function CompanyEnvironments() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Settings", href: "/company/settings" },
-      { label: "Instance settings", href: "/company/settings/instance/general" },
-      { label: "Environments" },
+      { label: t("companyAdmin.environments.breadcrumbs.settings"), href: "/company/settings" },
+      { label: t("companyAdmin.environments.breadcrumbs.instanceSettings"), href: "/company/settings/instance/general" },
+      { label: t("companyAdmin.environments.breadcrumbs.environments") },
     ]);
-  }, [setBreadcrumbs]);
+  }, [setBreadcrumbs, t]);
 
   const { data: instanceSettings } = useQuery({
     queryKey: queryKeys.instance.settings,
@@ -214,7 +216,7 @@ export function CompanyEnvironments() {
   });
   const createSecret = useMutation({
     mutationFn: (input: { name: string; value: string }) => {
-      if (!selectedCompanyId) throw new Error("Select a company to create secrets");
+      if (!selectedCompanyId) throw new Error(t("companyAdmin.environments.createSecretError"));
       return secretsApi.create(selectedCompanyId, input);
     },
     onSuccess: async () => {
@@ -244,15 +246,17 @@ export function CompanyEnvironments() {
       environmentMutation.reset();
       draftEnvironmentProbeMutation.reset();
       pushToast({
-        title: wasEditing ? "Environment updated" : "Environment created",
-        body: `${environment.name} is ready.`,
+        title: wasEditing
+          ? t("companyAdmin.environments.toast.environmentUpdated")
+          : t("companyAdmin.environments.toast.environmentCreated"),
+        body: t("companyAdmin.environments.toast.environmentReady", { name: environment.name }),
         tone: "success",
       });
     },
     onError: (error) => {
       pushToast({
-        title: "Failed to save environment",
-        body: error instanceof Error ? error.message : "Environment save failed.",
+        title: t("companyAdmin.environments.toast.saveFailed"),
+        body: error instanceof Error ? error.message : t("companyAdmin.environments.toast.saveFailedBody"),
         tone: "error",
       });
     },
@@ -264,15 +268,15 @@ export function CompanyEnvironments() {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: queryKeys.instance.settings });
       pushToast({
-        title: "Default environment updated",
-        body: "Agent inheritance now follows the updated instance default.",
+        title: t("companyAdmin.environments.toast.defaultUpdated"),
+        body: t("companyAdmin.environments.toast.defaultUpdatedBody"),
         tone: "success",
       });
     },
     onError: (error) => {
       pushToast({
-        title: "Failed to update default environment",
-        body: error instanceof Error ? error.message : "Default environment update failed.",
+        title: t("companyAdmin.environments.toast.defaultUpdateFailed"),
+        body: error instanceof Error ? error.message : t("companyAdmin.environments.toast.defaultUpdateFailedBody"),
         tone: "error",
       });
     },
@@ -292,7 +296,9 @@ export function CompanyEnvironments() {
         [environmentId]: probe,
       }));
       pushToast({
-        title: probe.ok ? "Environment probe passed" : "Environment probe failed",
+        title: probe.ok
+          ? t("companyAdmin.environments.toast.probePassed")
+          : t("companyAdmin.environments.toast.probeFailed"),
         body: probe.summary,
         tone: probe.ok ? "success" : "error",
       });
@@ -304,13 +310,13 @@ export function CompanyEnvironments() {
         [environmentId]: {
           ok: false,
           driver: failedEnvironment?.driver ?? "local",
-          summary: error instanceof Error ? error.message : "Environment probe failed.",
+          summary: error instanceof Error ? error.message : t("companyAdmin.environments.toast.probeFailedBody"),
           details: null,
         },
       }));
       pushToast({
-        title: "Environment probe failed",
-        body: error instanceof Error ? error.message : "Environment probe failed.",
+        title: t("companyAdmin.environments.toast.probeFailed"),
+        body: error instanceof Error ? error.message : t("companyAdmin.environments.toast.probeFailedBody"),
         tone: "error",
       });
     },
@@ -323,15 +329,17 @@ export function CompanyEnvironments() {
     },
     onSuccess: (probe) => {
       pushToast({
-        title: probe.ok ? "Draft probe passed" : "Draft probe failed",
+        title: probe.ok
+          ? t("companyAdmin.environments.toast.draftProbePassed")
+          : t("companyAdmin.environments.toast.draftProbeFailed"),
         body: probe.summary,
         tone: probe.ok ? "success" : "error",
       });
     },
     onError: (error) => {
       pushToast({
-        title: "Draft probe failed",
-        body: error instanceof Error ? error.message : "Environment probe failed.",
+        title: t("companyAdmin.environments.toast.draftProbeFailed"),
+        body: error instanceof Error ? error.message : t("companyAdmin.environments.toast.probeFailedBody"),
         tone: "error",
       });
     },
@@ -477,14 +485,14 @@ export function CompanyEnvironments() {
   );
 
   if (!selectedCompanyId) {
-    return <div className="text-sm text-muted-foreground">Select a company context to manage environment secrets and bindings.</div>;
+    return <div className="text-sm text-muted-foreground">{t("companyAdmin.environments.selectCompany")}</div>;
   }
 
   if (!environmentsEnabled) {
     return (
       <div className="max-w-3xl space-y-4">
         <div className="rounded-md border border-border px-4 py-4 text-sm text-muted-foreground">
-          Enable Environments in instance experimental settings to manage shared execution targets.
+          {t("companyAdmin.environments.disabled")}
         </div>
       </div>
     );
@@ -496,7 +504,7 @@ export function CompanyEnvironments() {
         <div className="rounded-md border border-border/60 bg-muted/20 px-3 py-3">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-1">
-              <div className="text-sm font-medium">Default</div>
+              <div className="text-sm font-medium">{t("companyAdmin.environments.default")}</div>
             </div>
             <div className="min-w-[18rem] flex-1">
               <select
@@ -506,7 +514,7 @@ export function CompanyEnvironments() {
                   defaultEnvironmentMutation.mutate(event.target.value || null)}
                 disabled={defaultEnvironmentMutation.isPending}
               >
-                <option value="">Local</option>
+                <option value="">{t("companyAdmin.environments.local")}</option>
                 {nonLocalEnvironments.map((environment) => (
                   <option key={environment.id} value={environment.id}>
                     {environment.name} · {environment.driver}
@@ -520,7 +528,7 @@ export function CompanyEnvironments() {
         <div className="space-y-3">
           <div className="flex justify-end">
             <Button size="sm" onClick={handleStartCreateEnvironment}>
-              Add environment
+              {t("companyAdmin.environments.addEnvironment")}
             </Button>
           </div>
           {savedEnvironments.map((environment) => {
@@ -541,22 +549,24 @@ export function CompanyEnvironments() {
                     ) : null}
                     {environment.driver === "ssh" ? (
                       <div className="text-xs text-muted-foreground">
-                        {typeof environment.config.host === "string" ? environment.config.host : "SSH host"} ·{" "}
-                        {typeof environment.config.username === "string" ? environment.config.username : "user"}
+                        {typeof environment.config.host === "string" ? environment.config.host : t("companyAdmin.environments.sshHost")} ·{" "}
+                        {typeof environment.config.username === "string" ? environment.config.username : t("companyAdmin.environments.sshUser")}
                       </div>
                     ) : environment.driver === "sandbox" ? (
                       <div className="text-xs text-muted-foreground">
                         {(() => {
                           const provider =
-                            typeof environment.config.provider === "string" ? environment.config.provider : "sandbox";
+                            typeof environment.config.provider === "string" ? environment.config.provider : t("companyAdmin.environments.sandbox");
                           const displayName =
                             environmentCapabilities?.sandboxProviders?.[provider]?.displayName ?? provider;
                           const summary = summarizeSandboxConfig(environment.config as Record<string, unknown>);
-                          return `${displayName} sandbox provider${summary ? ` · ${summary}` : ""}`;
+                          return summary
+                            ? t("companyAdmin.environments.sandboxProviderSummaryWithDetail", { name: displayName, summary })
+                            : t("companyAdmin.environments.sandboxProviderSummary", { name: displayName });
                         })()}
                       </div>
                     ) : (
-                      <div className="text-xs text-muted-foreground">Runs on this Paperclip host.</div>
+                      <div className="text-xs text-muted-foreground">{t("companyAdmin.environments.runsOnHost")}</div>
                     )}
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
@@ -568,10 +578,10 @@ export function CompanyEnvironments() {
                         disabled={testingEnvironmentId === environment.id}
                       >
                         {testingEnvironmentId === environment.id
-                          ? "Testing..."
+                          ? t("companyAdmin.environments.testing")
                           : environment.driver === "ssh"
-                            ? "Test connection"
-                            : "Test provider"}
+                            ? t("companyAdmin.environments.testConnection")
+                            : t("companyAdmin.environments.testProvider")}
                       </Button>
                     ) : null}
                     <Button
@@ -579,7 +589,7 @@ export function CompanyEnvironments() {
                       variant="ghost"
                       onClick={() => handleEditEnvironment(environment)}
                     >
-                      {isEditing ? "Editing" : "Edit"}
+                      {isEditing ? t("companyAdmin.environments.editing") : t("companyAdmin.environments.edit")}
                     </Button>
                   </div>
                 </div>
@@ -615,15 +625,15 @@ export function CompanyEnvironments() {
       >
         <DialogContent className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-4xl">
           <DialogHeader className="border-b border-border/60 px-6 pb-4 pr-12 pt-6">
-            <DialogTitle>{editingEnvironmentId ? "Edit environment" : "Add environment"}</DialogTitle>
+            <DialogTitle>{editingEnvironmentId ? t("companyAdmin.environments.dialog.editTitle") : t("companyAdmin.environments.dialog.addTitle")}</DialogTitle>
             <DialogDescription>
-              Configure a reusable execution target for your agents.
+              {t("companyAdmin.environments.dialog.description")}
             </DialogDescription>
           </DialogHeader>
 
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
             <div className="space-y-4">
-              <Field label="Name" hint="Operator-facing name for this execution target.">
+              <Field label={t("companyAdmin.environments.dialog.nameLabel")} hint={t("companyAdmin.environments.dialog.nameHint")}>
                 <input
                   className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                   type="text"
@@ -631,7 +641,7 @@ export function CompanyEnvironments() {
                   onChange={(e) => setEnvironmentForm((current) => ({ ...current, name: e.target.value }))}
                 />
               </Field>
-              <Field label="Description" hint="Optional note about what this machine is for.">
+              <Field label={t("companyAdmin.environments.dialog.descriptionLabel")} hint={t("companyAdmin.environments.dialog.descriptionHint")}>
                 <input
                   className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                   type="text"
@@ -639,7 +649,7 @@ export function CompanyEnvironments() {
                   onChange={(e) => setEnvironmentForm((current) => ({ ...current, description: e.target.value }))}
                 />
               </Field>
-              <Field label="Driver" hint="Sandbox stores plugin-backed provider config on the shared environment seam. SSH stores a remote machine target.">
+              <Field label={t("companyAdmin.environments.dialog.driverLabel")} hint={t("companyAdmin.environments.dialog.driverHint")}>
                 <select
                   className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                   value={environmentForm.driver}
@@ -664,18 +674,18 @@ export function CompanyEnvironments() {
                     }))}
                 >
                   {sandboxCreationEnabled || environmentForm.driver === "sandbox" ? (
-                    <option value="sandbox">Sandbox</option>
+                    <option value="sandbox">{t("companyAdmin.environments.dialog.driverSandbox")}</option>
                   ) : null}
-                  <option value="ssh">SSH</option>
+                  <option value="ssh">{t("companyAdmin.environments.dialog.driverSsh")}</option>
                   {environmentForm.driver === "local" ? (
-                    <option value="local">Local</option>
+                    <option value="local">{t("companyAdmin.environments.dialog.driverLocal")}</option>
                   ) : null}
                 </select>
               </Field>
 
               {environmentForm.driver === "ssh" ? (
                 <div className="grid gap-3 md:grid-cols-2">
-                  <Field label="Host" hint="DNS name or IP address for the remote machine.">
+                  <Field label={t("companyAdmin.environments.dialog.hostLabel")} hint={t("companyAdmin.environments.dialog.hostHint")}>
                     <input
                       className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                       type="text"
@@ -683,7 +693,7 @@ export function CompanyEnvironments() {
                       onChange={(e) => setEnvironmentForm((current) => ({ ...current, sshHost: e.target.value }))}
                     />
                   </Field>
-                  <Field label="Port" hint="Defaults to 22.">
+                  <Field label={t("companyAdmin.environments.dialog.portLabel")} hint={t("companyAdmin.environments.dialog.portHint")}>
                     <input
                       className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                       type="number"
@@ -693,7 +703,7 @@ export function CompanyEnvironments() {
                       onChange={(e) => setEnvironmentForm((current) => ({ ...current, sshPort: e.target.value }))}
                     />
                   </Field>
-                  <Field label="Username" hint="SSH login user.">
+                  <Field label={t("companyAdmin.environments.dialog.usernameLabel")} hint={t("companyAdmin.environments.dialog.usernameHint")}>
                     <input
                       className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                       type="text"
@@ -701,17 +711,17 @@ export function CompanyEnvironments() {
                       onChange={(e) => setEnvironmentForm((current) => ({ ...current, sshUsername: e.target.value }))}
                     />
                   </Field>
-                  <Field label="Remote workspace path" hint="Absolute path that Paperclip will verify during SSH connection tests.">
+                  <Field label={t("companyAdmin.environments.dialog.remoteWorkspaceLabel")} hint={t("companyAdmin.environments.dialog.remoteWorkspaceHint")}>
                     <input
                       className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                       type="text"
-                      placeholder="/Users/paperclip/workspace"
+                      placeholder={t("companyAdmin.environments.dialog.remoteWorkspacePlaceholder")}
                       value={environmentForm.sshRemoteWorkspacePath}
                       onChange={(e) =>
                         setEnvironmentForm((current) => ({ ...current, sshRemoteWorkspacePath: e.target.value }))}
                     />
                   </Field>
-                  <Field label="Private key" hint="Optional PEM private key. Leave blank to rely on the server's SSH agent or default keychain.">
+                  <Field label={t("companyAdmin.environments.dialog.privateKeyLabel")} hint={t("companyAdmin.environments.dialog.privateKeyHint")}>
                     <div className="space-y-2">
                       <select
                         className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
@@ -723,7 +733,7 @@ export function CompanyEnvironments() {
                             sshPrivateKey: e.target.value ? "" : current.sshPrivateKey,
                           }))}
                       >
-                        <option value="">No saved secret</option>
+                        <option value="">{t("companyAdmin.environments.dialog.noSavedSecret")}</option>
                         {(secrets ?? []).map((secret) => (
                           <option key={secret.id} value={secret.id}>{secret.name}</option>
                         ))}
@@ -736,7 +746,7 @@ export function CompanyEnvironments() {
                       />
                     </div>
                   </Field>
-                  <Field label="Known hosts" hint="Optional known_hosts block used when strict host key checking is enabled.">
+                  <Field label={t("companyAdmin.environments.dialog.knownHostsLabel")} hint={t("companyAdmin.environments.dialog.knownHostsHint")}>
                     <textarea
                       className="h-32 w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-xs font-mono outline-none"
                       value={environmentForm.sshKnownHosts}
@@ -745,8 +755,8 @@ export function CompanyEnvironments() {
                   </Field>
                   <div className="md:col-span-2">
                     <ToggleField
-                      label="Strict host key checking"
-                      hint="Keep this on unless you deliberately want probe-time host key acceptance disabled."
+                      label={t("companyAdmin.environments.dialog.strictHostKeyLabel")}
+                      hint={t("companyAdmin.environments.dialog.strictHostKeyHint")}
                       checked={environmentForm.sshStrictHostKeyChecking}
                       onChange={(checked) =>
                         setEnvironmentForm((current) => ({ ...current, sshStrictHostKeyChecking: checked }))}
@@ -757,7 +767,7 @@ export function CompanyEnvironments() {
 
               {environmentForm.driver === "sandbox" ? (
                 <div className="space-y-3">
-                  <Field label="Provider" hint="Installed run-capable sandbox provider plugins appear here.">
+                  <Field label={t("companyAdmin.environments.dialog.providerLabel")} hint={t("companyAdmin.environments.dialog.providerHint")}>
                     <select
                       className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-sm outline-none"
                       value={environmentForm.sandboxProvider}
@@ -798,15 +808,15 @@ export function CompanyEnvironments() {
                     />
                   ) : (
                     <div className="rounded-md border border-border/60 bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
-                      This provider does not declare additional configuration fields.
+                      {t("companyAdmin.environments.dialog.noConfigFields")}
                     </div>
                   )}
                 </div>
               ) : null}
 
               <Field
-                label="Environment variables"
-                hint="Injected into runs that resolve through this environment. Use plain values or company secrets."
+                label={t("companyAdmin.environments.dialog.envVarsLabel")}
+                hint={t("companyAdmin.environments.dialog.envVarsHint")}
               >
                 <EnvVarEditor
                   value={environmentForm.envVars}
@@ -821,7 +831,7 @@ export function CompanyEnvironments() {
                 <div className="text-xs text-destructive">
                   {environmentMutation.error instanceof Error
                     ? environmentMutation.error.message
-                    : "Failed to save environment"}
+                    : t("companyAdmin.environments.dialog.saveError")}
                 </div>
               ) : null}
               {draftEnvironmentProbeMutation.data ? (
@@ -838,7 +848,7 @@ export function CompanyEnvironments() {
               onClick={closeEnvironmentDialog}
               disabled={environmentMutation.isPending}
             >
-              Cancel
+              {t("companyAdmin.environments.dialog.cancel")}
             </Button>
             {environmentForm.driver !== "local" ? (
               <Button
@@ -846,7 +856,7 @@ export function CompanyEnvironments() {
                 onClick={() => draftEnvironmentProbeMutation.mutate(environmentForm)}
                 disabled={draftEnvironmentProbeMutation.isPending || !environmentFormValid}
               >
-                {draftEnvironmentProbeMutation.isPending ? "Testing..." : "Test"}
+                {draftEnvironmentProbeMutation.isPending ? t("companyAdmin.environments.dialog.testing") : t("companyAdmin.environments.dialog.test")}
               </Button>
             ) : null}
             <Button
@@ -855,11 +865,11 @@ export function CompanyEnvironments() {
             >
               {environmentMutation.isPending
                 ? editingEnvironmentId
-                  ? "Saving..."
-                  : "Creating..."
+                  ? t("companyAdmin.environments.dialog.saving")
+                  : t("companyAdmin.environments.dialog.creating")
                 : editingEnvironmentId
-                  ? "Save environment"
-                  : "Create environment"}
+                  ? t("companyAdmin.environments.dialog.saveEnvironment")
+                  : t("companyAdmin.environments.dialog.createEnvironment")}
             </Button>
           </DialogFooter>
         </DialogContent>

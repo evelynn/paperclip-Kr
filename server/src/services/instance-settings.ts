@@ -30,6 +30,8 @@ function normalizeGeneralSettings(raw: unknown): InstanceGeneralSettings {
       backupRetention: parsed.data.backupRetention ?? DEFAULT_BACKUP_RETENTION,
       // Absent => unrestricted; only carry through an explicit policy.
       ...(parsed.data.executionMode ? { executionMode: parsed.data.executionMode } : {}),
+      // Absent => English / natural default; only carry through an explicit choice.
+      ...(parsed.data.agentLanguage ? { agentLanguage: parsed.data.agentLanguage } : {}),
     };
   }
   return {

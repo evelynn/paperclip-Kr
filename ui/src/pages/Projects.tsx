@@ -18,6 +18,7 @@ import {
   useResourceMembershipMutation,
   useResourceMemberships,
 } from "../hooks/useResourceMemberships";
+import { useTranslation } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ArrowUpDown, Check, Hexagon, Plus } from "lucide-react";
@@ -25,12 +26,7 @@ import { ArrowUpDown, Check, Hexagon, Plus } from "lucide-react";
 type ProjectSortField = "name" | "updated" | "created" | "targetDate";
 type ProjectSortDir = "asc" | "desc";
 
-const PROJECT_SORT_OPTIONS: Array<{ field: ProjectSortField; label: string }> = [
-  { field: "name", label: "Name" },
-  { field: "updated", label: "Updated" },
-  { field: "created", label: "Created" },
-  { field: "targetDate", label: "Target date" },
-];
+const PROJECT_SORT_FIELDS: ProjectSortField[] = ["name", "updated", "created", "targetDate"];
 
 function compareProjectNames(left: Project, right: Project) {
   const nameDiff = left.name.localeCompare(right.name, undefined, { sensitivity: "base" });
@@ -74,15 +70,18 @@ function sortProjects(projects: Project[], sortField: ProjectSortField, sortDir:
 }
 
 export function Projects() {
+  const { t } = useTranslation();
   const { selectedCompanyId } = useCompany();
   const { openNewProject } = useDialogActions();
   const { setBreadcrumbs } = useBreadcrumbs();
   const [sortField, setSortField] = useState<ProjectSortField>("name");
   const [sortDir, setSortDir] = useState<ProjectSortDir>("asc");
 
+  const sortFieldLabel = (field: ProjectSortField) => t(`projects.sortFields.${field}`);
+
   useEffect(() => {
-    setBreadcrumbs([{ label: "Projects" }]);
-  }, [setBreadcrumbs]);
+    setBreadcrumbs([{ label: t("projects.breadcrumb") }]);
+  }, [setBreadcrumbs, t]);
 
   const { data: allProjects, isLoading, error } = useQuery({
     queryKey: queryKeys.projects.list(selectedCompanyId!),
@@ -113,10 +112,10 @@ export function Projects() {
 
     return groups;
   }, [membershipsQuery.data, sortedProjects]);
-  const sortLabel = PROJECT_SORT_OPTIONS.find((option) => option.field === sortField)?.label ?? "Name";
+  const sortLabel = sortFieldLabel(sortField);
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Hexagon} message="Select a company to view projects." />;
+    return <EmptyState icon={Hexagon} message={t("projects.selectCompany")} />;
   }
 
   if (isLoading) {
@@ -128,36 +127,36 @@ export function Projects() {
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="sm" className="w-fit text-xs" title="Sort">
+            <Button variant="ghost" size="sm" className="w-fit text-xs" title={t("projects.sort.label")}>
               <ArrowUpDown className="h-3.5 w-3.5 sm:h-3 sm:w-3 sm:mr-1" />
-              <span>Sort: {sortLabel}</span>
+              <span>{t("projects.sort.current", { label: sortLabel })}</span>
             </Button>
           </PopoverTrigger>
           <PopoverContent align="start" className="w-44 p-0">
             <div className="p-2 space-y-0.5">
-              {PROJECT_SORT_OPTIONS.map((option) => (
+              {PROJECT_SORT_FIELDS.map((field) => (
                 <button
-                  key={option.field}
+                  key={field}
                   type="button"
                   className={`flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm ${
-                    sortField === option.field
+                    sortField === field
                       ? "bg-accent/50 text-foreground"
                       : "text-muted-foreground hover:bg-accent/50"
                   }`}
                   onClick={() => {
-                    if (sortField === option.field) {
+                    if (sortField === field) {
                       setSortDir((current) => (current === "asc" ? "desc" : "asc"));
                       return;
                     }
-                    setSortField(option.field);
-                    setSortDir(option.field === "name" || option.field === "targetDate" ? "asc" : "desc");
+                    setSortField(field);
+                    setSortDir(field === "name" || field === "targetDate" ? "asc" : "desc");
                   }}
                 >
-                  <span>{option.label}</span>
-                  {sortField === option.field ? (
+                  <span>{sortFieldLabel(field)}</span>
+                  {sortField === field ? (
                     <span className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Check className="h-3 w-3" />
-                      {sortDir === "asc" ? "Asc" : "Desc"}
+                      {sortDir === "asc" ? t("projects.sort.asc") : t("projects.sort.desc")}
                     </span>
                   ) : null}
                 </button>
@@ -167,7 +166,7 @@ export function Projects() {
         </Popover>
         <Button size="sm" variant="outline" onClick={openNewProject}>
           <Plus className="h-4 w-4 mr-1" />
-          Add Project
+          {t("projects.addProject")}
         </Button>
       </div>
 
@@ -176,8 +175,8 @@ export function Projects() {
       {!isLoading && projects.length === 0 && (
         <EmptyState
           icon={Hexagon}
-          message="No projects yet."
-          action="Add Project"
+          message={t("projects.empty.message")}
+          action={t("projects.addProject")}
           onAction={openNewProject}
         />
       )}
@@ -185,17 +184,17 @@ export function Projects() {
       {projects.length > 0 && (
         <div className="space-y-6">
           {([
-            ["My Projects", groupedProjects.mine],
-            ["Other Projects", groupedProjects.other],
-          ] as const).map(([label, sectionProjects]) => {
+            ["mine", t("projects.sections.mine"), groupedProjects.mine],
+            ["other", t("projects.sections.other"), groupedProjects.other],
+          ] as const).map(([key, label, sectionProjects]) => {
             if (sectionProjects.length === 0) return null;
 
             return (
-              <section key={label} className="space-y-2">
+              <section key={key} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-medium">{label}</h2>
                   <span className="text-xs text-muted-foreground">
-                    {sectionProjects.length} project{sectionProjects.length === 1 ? "" : "s"}
+                    {t(sectionProjects.length === 1 ? "projects.projectCountOne" : "projects.projectCountOther", { count: sectionProjects.length })}
                   </span>
                 </div>
                 <div className="border border-border">
@@ -217,9 +216,9 @@ export function Projects() {
                           <div className="flex items-center gap-3">
                             <span
                               className="hidden text-xs text-muted-foreground tabular-nums sm:inline"
-                              title={`${formatNumber(project.taskCount ?? 0)} task${(project.taskCount ?? 0) === 1 ? "" : "s"}`}
+                              title={t((project.taskCount ?? 0) === 1 ? "projects.taskCountOne" : "projects.taskCountOther", { count: formatNumber(project.taskCount ?? 0) })}
                             >
-                              {formatNumber(project.taskCount ?? 0)} task{(project.taskCount ?? 0) === 1 ? "" : "s"}
+                              {t((project.taskCount ?? 0) === 1 ? "projects.taskCountOne" : "projects.taskCountOther", { count: formatNumber(project.taskCount ?? 0) })}
                             </span>
                             {project.budget && (
                               <span className="hidden text-xs text-muted-foreground tabular-nums sm:inline">

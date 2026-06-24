@@ -99,6 +99,7 @@ export {
   catalogSkillSourceSchema,
   catalogSkillSchema,
   catalogSkillListQuerySchema,
+  catalogSkillRecommendQuerySchema,
   catalogSkillFileDetailSchema,
   companySkillInstallCatalogSchema,
   companySkillInstallCatalogResultSchema,

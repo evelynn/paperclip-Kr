@@ -1,5 +1,12 @@
 import type { IssueWorkMode } from "@paperclipai/shared";
+import type { TFunction } from "i18next";
 import { ClipboardList, Hammer, MessageCircleQuestion, type LucideIcon } from "lucide-react";
+import { i18n } from "@/i18n";
+
+// Labels resolve through i18n. The `t` argument is optional and defaults to the
+// global `i18n.t`, so non-component callers (and the exact-English unit tests
+// under the default "en" locale) keep working; components that pass their own
+// `t` from useTranslation re-render reactively on a language switch.
 
 export type WorkModeTone = "neutral" | "ask" | "planning";
 
@@ -42,28 +49,31 @@ export function isIssueWorkMode(value: unknown): value is IssueWorkMode {
   return value === "standard" || value === "ask" || value === "planning";
 }
 
-export function workModeMetaList(conferenceRoomChat: boolean): WorkModeMeta[] {
+export function workModeMetaList(
+  conferenceRoomChat: boolean,
+  t: TFunction = i18n.t,
+): WorkModeMeta[] {
   return [
     {
       value: "standard",
-      label: conferenceRoomChat ? "Agent mode" : "Standard",
-      shortLabel: conferenceRoomChat ? "Agent" : "Standard",
+      label: t(conferenceRoomChat ? "workMode.standardCrc.label" : "workMode.standard.label"),
+      shortLabel: t(conferenceRoomChat ? "workMode.standardCrc.short" : "workMode.standard.short"),
       icon: Hammer,
       tone: "neutral",
       classes: STANDARD_CLASSES,
     },
     {
       value: "planning",
-      label: conferenceRoomChat ? "Plan mode" : "Planning",
-      shortLabel: conferenceRoomChat ? "Plan" : "Planning",
+      label: t(conferenceRoomChat ? "workMode.planningCrc.label" : "workMode.planning.label"),
+      shortLabel: t(conferenceRoomChat ? "workMode.planningCrc.short" : "workMode.planning.short"),
       icon: ClipboardList,
       tone: "planning",
       classes: PLANNING_CLASSES,
     },
     {
       value: "ask",
-      label: conferenceRoomChat ? "Ask mode" : "Ask",
-      shortLabel: "Ask",
+      label: t(conferenceRoomChat ? "workMode.askCrc.label" : "workMode.ask.label"),
+      shortLabel: t("workMode.ask.short"),
       icon: MessageCircleQuestion,
       tone: "ask",
       classes: ASK_CLASSES,
@@ -71,8 +81,12 @@ export function workModeMetaList(conferenceRoomChat: boolean): WorkModeMeta[] {
   ];
 }
 
-export function workModeMetaFor(mode: IssueWorkMode, conferenceRoomChat: boolean): WorkModeMeta {
-  const modes = workModeMetaList(conferenceRoomChat);
+export function workModeMetaFor(
+  mode: IssueWorkMode,
+  conferenceRoomChat: boolean,
+  t: TFunction = i18n.t,
+): WorkModeMeta {
+  const modes = workModeMetaList(conferenceRoomChat, t);
   return modes.find((meta) => meta.value === mode) ?? modes[0]!;
 }
 
@@ -82,12 +96,20 @@ export function nextWorkMode(mode: IssueWorkMode, conferenceRoomChat: boolean): 
   return modes[(index + 1) % modes.length]?.value ?? "standard";
 }
 
-export function titleForPendingWorkMode(mode: IssueWorkMode, conferenceRoomChat: boolean): string {
+export function titleForPendingWorkMode(
+  mode: IssueWorkMode,
+  conferenceRoomChat: boolean,
+  t: TFunction = i18n.t,
+): string {
   if (mode === "ask") {
-    return "Ask mode for this submission. Click to change. The assignee will answer in this thread; no implementation work.";
+    return t("workMode.title.ask");
   }
   if (mode === "planning") {
-    return `${conferenceRoomChat ? "Plan" : "Planning"} mode is on for this submission. Click to change.`;
+    return t("workMode.title.planning", {
+      mode: t(conferenceRoomChat ? "workMode.planningCrc.short" : "workMode.planning.short"),
+    });
   }
-  return `${conferenceRoomChat ? "Agent" : "Standard"} mode for this submission. Click to change.`;
+  return t("workMode.title.standard", {
+    mode: t(conferenceRoomChat ? "workMode.standardCrc.short" : "workMode.standard.short"),
+  });
 }

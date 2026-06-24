@@ -8541,7 +8541,14 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
       exposeLowTrustRaw,
     });
     if (paperclipWakePayload) {
-      context[PAPERCLIP_WAKE_PAYLOAD_KEY] = paperclipWakePayload;
+      // Instance-wide agent language (PAP-Kr): one selector drives both the UI
+      // and the agents. When set, ride the locale tag along on the wake payload
+      // so renderPaperclipWakePrompt injects a "respond in {language}" directive
+      // for every adapter. Absent => English / natural default (no directive).
+      const agentLanguage = (await instanceSettings.getGeneral()).agentLanguage;
+      context[PAPERCLIP_WAKE_PAYLOAD_KEY] = agentLanguage
+        ? { ...paperclipWakePayload, responseLanguage: agentLanguage }
+        : paperclipWakePayload;
     } else {
       delete context[PAPERCLIP_WAKE_PAYLOAD_KEY];
     }

@@ -61,6 +61,10 @@ function catalogSkill(slug: string, name = slug): CatalogSkill {
   };
 }
 
+function skillWith(slug: string, roles: string[], defaultInstall = false): CatalogSkill {
+  return { ...catalogSkill(slug, slug), recommendedForRoles: roles, defaultInstall };
+}
+
 function sha256(value: string | Buffer) {
   return createHash("sha256").update(value).digest("hex");
 }
@@ -231,5 +235,70 @@ describe("skills catalog service", () => {
       "skills catalog manifest unavailable; returning empty catalog",
     );
     expect(mockLoggerWarn).toHaveBeenCalledTimes(1);
+  });
+
+  it("recommends catalog skills for an agent role, bridging the role taxonomy", async () => {
+    manifestJson = manifest([
+      skillWith("eng-a", ["engineer"]),
+      skillWith("pm-a", ["product", "manager"]),
+      skillWith("design-a", ["designer", "product"]),
+      skillWith("default-a", ["writer"], true),
+    ]);
+    const service = await import("../services/skills-catalog.js");
+
+    // Direct role match.
+    const eng = service.recommendCatalogSkills({ role: "engineer" });
+    expect(eng.map((entry) => entry.skill.slug)).toContain("eng-a");
+    expect(eng.find((entry) => entry.skill.slug === "eng-a")?.reason).toBe("role");
+
+    // "pm" bridges to the catalog's "product"/"manager" vocabulary.
+    const pm = service.recommendCatalogSkills({ role: "pm" });
+    expect(pm.map((entry) => entry.skill.slug)).toEqual(
+      expect.arrayContaining(["pm-a", "design-a"]),
+    );
+    expect(pm.map((entry) => entry.skill.slug)).not.toContain("eng-a");
+
+    // A role with no overlaps still surfaces default-install picks (reason "default").
+    const general = service.recommendCatalogSkills({ role: "general" });
+    expect(general.map((entry) => entry.skill.slug)).toEqual(["default-a"]);
+    expect(general[0]?.reason).toBe("default");
+  });
+
+  it("ranks more-relevant matches first and respects exclude + limit", async () => {
+    manifestJson = manifest([
+      skillWith("one-role", ["product"]),
+      skillWith("two-role", ["product", "manager"]),
+      skillWith("default-x", ["writer"], true),
+    ]);
+    const service = await import("../services/skills-catalog.js");
+
+    // two-role (2 overlaps) > one-role (1) > default-x (default-install).
+    expect(service.recommendCatalogSkills({ role: "pm" }).map((entry) => entry.skill.slug)).toEqual([
+      "two-role",
+      "one-role",
+      "default-x",
+    ]);
+
+    const excluded = service.recommendCatalogSkills({
+      role: "pm",
+      excludeKeys: ["paperclipai/bundled/software-development/two-role"],
+    });
+    expect(excluded.map((entry) => entry.skill.slug)).not.toContain("two-role");
+
+    expect(
+      service.recommendCatalogSkills({ role: "pm", limit: 1 }).map((entry) => entry.skill.slug),
+    ).toEqual(["two-role"]);
+  });
+
+  it("returns empty recommendations when the catalog manifest is unavailable", async () => {
+    mockRequireResolve.mockImplementation(() => {
+      const error = new Error("not found") as Error & { code?: string };
+      error.code = "ERR_MODULE_NOT_FOUND";
+      throw error;
+    });
+    mockExistsSync.mockReturnValue(false);
+    const service = await import("../services/skills-catalog.js");
+
+    expect(service.recommendCatalogSkillsOrEmpty({ role: "engineer" })).toEqual([]);
   });
 });

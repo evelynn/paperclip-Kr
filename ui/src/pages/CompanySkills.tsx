@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type SVGProps } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "@/lib/router";
+import { t, useTranslation } from "@/i18n";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   AgentDesiredSkillEntry,
@@ -27,6 +28,7 @@ import { useBreadcrumbs } from "../context/BreadcrumbContext";
 import { useToastActions } from "../context/ToastContext";
 import { queryKeys } from "../lib/queryKeys";
 import { EmptyState } from "../components/EmptyState";
+import { SkillRecommendationRail } from "../components/SkillRecommendationRail";
 import { MarkdownBody } from "../components/MarkdownBody";
 import { MarkdownEditor } from "../components/MarkdownEditor";
 import { PageSkeleton } from "../components/PageSkeleton";
@@ -107,6 +109,7 @@ import {
   Save,
   Search,
   Settings,
+  ShieldAlert,
   ShieldCheck,
   Star,
   Trash2,
@@ -342,7 +345,7 @@ function SourceFilterMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel>Source</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("skillsStore.filters.source")}</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={value} onValueChange={(next) => onChange(next as SourceFilter)}>
           {filters.map((filter) => (
             <DropdownMenuRadioItem key={filter} value={filter}>
@@ -388,16 +391,16 @@ function CatalogFilterMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-h-[min(28rem,70vh)] w-56 overflow-y-auto">
-        <DropdownMenuLabel>Type</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("skillsStore.filters.type")}</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={kindFilter} onValueChange={(next) => onKindChange(next as "all" | "bundled" | "optional")}>
-          <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="bundled">Bundled</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="optional">Optional</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="all">{t("skillsStore.filters.all")}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="bundled">{t("skillsStore.filters.bundled")}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="optional">{t("skillsStore.filters.optional")}</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuLabel>Category</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("skillsStore.filters.category")}</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={categoryFilter || "__all__"} onValueChange={(next) => onCategoryChange(next === "__all__" ? "" : next)}>
-          <DropdownMenuRadioItem value="__all__">All categories</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="__all__">{t("skillsStore.filters.allCategories")}</DropdownMenuRadioItem>
           {categories.map((category) => (
             <DropdownMenuRadioItem key={category} value={category}>
               {category}
@@ -892,7 +895,7 @@ function CategoryNav({
           active == null ? "bg-accent/60 font-medium text-foreground" : "text-muted-foreground",
         )}
       >
-        <span>All</span>
+        <span>{t("skillsStore.filters.all")}</span>
         <span className="text-xs text-muted-foreground">{total}</span>
       </button>
       {categories.map((category) => (
@@ -960,6 +963,7 @@ export function DiscoveryGrid({
   scanPending: boolean;
   scanStatus: string | null;
 }) {
+  const { t } = useTranslation();
   // Source filter (github / skills.sh / local / …) lives in the grid so it
   // narrows whatever the parent already filtered by tab/category/search (PAP-10907 E).
   const [sourceBadgeFilter, setSourceBadgeFilter] = useState<string>("all");
@@ -988,11 +992,15 @@ export function DiscoveryGrid({
           this is present (handled in Layout). */}
       <aside className="hidden w-60 shrink-0 flex-col overflow-hidden border-r border-border md:flex">
         <div className="border-b border-border px-4 py-4">
-          <h2 className="text-sm font-semibold text-foreground">Skills Store</h2>
-          <p className="text-xs text-muted-foreground">Discover, install, fork, share</p>
+          <h2 className="text-sm font-semibold text-foreground">
+            {t("skillsStore.title", { defaultValue: "Skills Store" })}
+          </h2>
+          <p className="text-xs text-muted-foreground">
+            {t("skillsStore.subtitle", { defaultValue: "Discover, install, fork, share" })}
+          </p>
         </div>
         <div className="px-4 pb-1 pt-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-          Categories
+          {t("skillsStore.categories", { defaultValue: "Categories" })}
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto pb-4">
           <CategoryNav
@@ -1012,14 +1020,18 @@ export function DiscoveryGrid({
             <input
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Search skills, authors, categories…"
+              placeholder={t("skillsStore.searchPlaceholder", {
+                defaultValue: "Search skills, authors, categories…",
+              })}
               className="h-full w-full bg-transparent text-base outline-none placeholder:text-muted-foreground sm:text-sm"
             />
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
-                <span className="text-muted-foreground">Sort</span>
+                <span className="text-muted-foreground">
+                  {t("skillsStore.sort", { defaultValue: "Sort" })}
+                </span>
                 <span className="ml-1.5">{DISCOVERY_SORT_LABELS[sort]}</span>
                 <ChevronDown className="ml-1 h-3.5 w-3.5" />
               </Button>
@@ -1038,16 +1050,22 @@ export function DiscoveryGrid({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
-                  <span className="text-muted-foreground">Source</span>
+                  <span className="text-muted-foreground">
+                    {t("skillsStore.source", { defaultValue: "Source" })}
+                  </span>
                   <span className="ml-1.5 capitalize">
-                    {sourceBadgeFilter === "all" ? "All" : sourceMeta(sourceBadgeFilter as CompanySkillSourceBadge, null).label}
+                    {sourceBadgeFilter === "all"
+                      ? t("skillsStore.sourceAll", { defaultValue: "All" })
+                      : sourceMeta(sourceBadgeFilter as CompanySkillSourceBadge, null).label}
                   </span>
                   <ChevronDown className="ml-1 h-3.5 w-3.5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuRadioGroup value={sourceBadgeFilter} onValueChange={setSourceBadgeFilter}>
-                  <DropdownMenuRadioItem value="all">All sources</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="all">
+                    {t("skillsStore.allSources", { defaultValue: "All sources" })}
+                  </DropdownMenuRadioItem>
                   {availableSources.map((badge) => (
                     <DropdownMenuRadioItem key={badge} value={badge}>
                       {sourceMeta(badge as CompanySkillSourceBadge, null).label}
@@ -1062,7 +1080,7 @@ export function DiscoveryGrid({
             size="icon-sm"
             onClick={onScan}
             disabled={scanPending}
-            title="Scan project workspaces for skills"
+            title={t("skillsStore.scanTitle", { defaultValue: "Scan project workspaces for skills" })}
           >
             <RefreshCw className={cn("h-4 w-4", scanPending && "animate-spin")} />
           </Button>
@@ -1070,22 +1088,22 @@ export function DiscoveryGrid({
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="default">
                 <Plus className="mr-1 h-3.5 w-3.5" />
-                New
+                {t("skillsStore.new", { defaultValue: "New" })}
                 <ChevronDown className="ml-1 h-3.5 w-3.5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onSelect={onCreate}>
                 <Pencil className="mr-2 h-4 w-4" />
-                Create new skill
+                {t("skillsStore.createNew", { defaultValue: "Create new skill" })}
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={onBrowseCatalog}>
                 <Boxes className="mr-2 h-4 w-4" />
-                Browse catalog
+                {t("skillsStore.browseCatalog", { defaultValue: "Browse catalog" })}
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={onImport}>
                 <Globe className="mr-2 h-4 w-4" />
-                Import from path or URL
+                {t("skillsStore.importFromPathUrl", { defaultValue: "Import from path or URL" })}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -1097,7 +1115,9 @@ export function DiscoveryGrid({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="w-full justify-between">
-                  <span className="capitalize">{activeCategory ?? "All categories"}</span>
+                  <span className="capitalize">
+                    {activeCategory ?? t("skillsStore.allCategories", { defaultValue: "All categories" })}
+                  </span>
                   <ChevronDown className="h-3.5 w-3.5" />
                 </Button>
               </DropdownMenuTrigger>
@@ -1106,7 +1126,9 @@ export function DiscoveryGrid({
                   value={activeCategory ?? "__all__"}
                   onValueChange={(value) => onCategoryChange(value === "__all__" ? null : value)}
                 >
-                  <DropdownMenuRadioItem value="__all__">All ({categoryTotal})</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="__all__">
+                    {t("skillsStore.allWithCount", { count: categoryTotal, defaultValue: "All ({{count}})" })}
+                  </DropdownMenuRadioItem>
                   {categories.map((category) => (
                     <DropdownMenuRadioItem key={category.slug} value={category.slug} className="capitalize">
                       {category.slug} ({category.count})
@@ -1123,19 +1145,19 @@ export function DiscoveryGrid({
           <Tabs value={tab} onValueChange={(value) => onTabChange(value as DiscoveryTab)}>
             <TabsList variant="line" className="p-0">
               <TabsTrigger value="all" className="px-3">
-                <span>All</span>
+                <span>{t("skillsStore.tabs.all", { defaultValue: "All" })}</span>
                 <span className="ml-1.5 text-[11px] text-muted-foreground">{tabCounts.all}</span>
               </TabsTrigger>
               <TabsTrigger value="installed" className="px-3">
-                <span>Installed</span>
+                <span>{t("skillsStore.tabs.installed", { defaultValue: "Installed" })}</span>
                 <span className="ml-1.5 text-[11px] text-muted-foreground">{tabCounts.installed}</span>
               </TabsTrigger>
               <TabsTrigger value="catalog" className="px-3">
-                <span>Catalog</span>
+                <span>{t("skillsStore.tabs.catalog", { defaultValue: "Catalog" })}</span>
                 <span className="ml-1.5 text-[11px] text-muted-foreground">{tabCounts.catalog}</span>
               </TabsTrigger>
               <TabsTrigger value="bundled" className="px-3">
-                <span>Bundled</span>
+                <span>{t("skillsStore.tabs.bundled", { defaultValue: "Bundled" })}</span>
                 <span className="ml-1.5 text-[11px] text-muted-foreground">{tabCounts.bundled}</span>
               </TabsTrigger>
             </TabsList>
@@ -1155,19 +1177,22 @@ export function DiscoveryGrid({
                 icon={LayoutGrid}
                 message={
                   totalCount === 0
-                    ? "No skills yet. Create one or install from the catalog."
+                    ? t("skillsStore.empty.none", {
+                        defaultValue: "No skills yet. Create one or install from the catalog.",
+                      })
                     : search || activeCategory || sourceFilterActive
-                      ? "No skills match your filters."
-                      : "No skills in this tab yet."
+                      ? t("skillsStore.empty.noMatch", { defaultValue: "No skills match your filters." })
+                      : t("skillsStore.empty.noneInTab", { defaultValue: "No skills in this tab yet." })
                 }
               />
               {totalCount === 0 ? (
                 <div className="mt-3 flex flex-col items-center gap-2">
                   <Button size="sm" onClick={onBrowseCatalog}>
-                    <Boxes className="mr-1.5 h-3.5 w-3.5" /> Browse catalog
+                    <Boxes className="mr-1.5 h-3.5 w-3.5" />{" "}
+                    {t("skillsStore.browseCatalog", { defaultValue: "Browse catalog" })}
                   </Button>
                   <Button size="sm" variant="ghost" onClick={onCreate}>
-                    Create a skill
+                    {t("skillsStore.createSkill", { defaultValue: "Create a skill" })}
                   </Button>
                 </div>
               ) : (search || activeCategory || sourceFilterActive) ? (
@@ -1181,7 +1206,7 @@ export function DiscoveryGrid({
                       setSourceBadgeFilter("all");
                     }}
                   >
-                    Clear filters
+                    {t("skillsStore.clearFilters", { defaultValue: "Clear filters" })}
                   </Button>
                 </div>
               ) : null}
@@ -1338,7 +1363,7 @@ function NewSkillWizard({
                   : draft.markdown,
               });
             }}
-            placeholder="Skill name"
+            placeholder={t("skillsStore.create.namePlaceholder")}
             className="h-9"
           />
           <Input
@@ -1363,7 +1388,7 @@ function NewSkillWizard({
                   : draft.markdown,
               });
             }}
-            placeholder="One-line promise for the skill"
+            placeholder={t("skillsStore.create.promisePlaceholder")}
             className="min-h-20"
           />
         </div>
@@ -1761,7 +1786,7 @@ function CatalogDetailPane({
                   Update available
                 </span>
               </TooltipTrigger>
-              <TooltipContent>Catalog content hash has changed since this skill was installed.</TooltipContent>
+              <TooltipContent>{t("skillsStore.hashChangedTooltip")}</TooltipContent>
             </Tooltip>
           ) : null}
           {skill.requires.length > 0 ? (
@@ -1791,7 +1816,7 @@ function CatalogDetailPane({
             text={skill.contentHash}
             copiedLabel="Copied hash"
             ariaLabel="Copy content hash"
-            title="Copy content hash"
+            title={t("skillsStore.copyHashTitle")}
             className="inline-flex h-6 w-6 items-center justify-center rounded-sm border border-border text-muted-foreground hover:bg-accent hover:text-foreground"
           >
             <Copy className="h-3 w-3" />
@@ -2058,7 +2083,7 @@ function AttachAgentsPopover({
           <Input
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            placeholder="Filter agents"
+            placeholder={t("skillsStore.filterAgentsPlaceholder")}
             className="h-8"
           />
           {sortedVersions.length > 0 ? (
@@ -2069,7 +2094,7 @@ function AttachAgentsPopover({
                 onChange={(event) => setDraftVersionId(event.target.value === "__latest__" ? null : event.target.value)}
                 className="h-8 min-w-0 flex-1 rounded-md border border-border bg-background px-2 text-xs text-foreground"
               >
-                <option value="__latest__">Latest</option>
+                <option value="__latest__">{t("skillsStore.versionLatest")}</option>
                 {sortedVersions.map((version) => (
                   <option key={version.id} value={version.id}>
                     v{version.revisionNumber}{version.label ? ` · ${version.label}` : ""}
@@ -2472,7 +2497,7 @@ function SkillVersionDiffDialog({
                 onChange={(event) => onLeftVersionChange(event.target.value || null)}
                 className="h-8 w-44 rounded-md border border-border bg-background px-2 text-xs"
               >
-                <option value="">Initial</option>
+                <option value="">{t("skillsStore.versionInitial")}</option>
                 {sorted.map((version) => (
                   <option key={version.id} value={version.id}>{versionLabel(version)}</option>
                 ))}
@@ -2517,8 +2542,8 @@ function SkillVersionDiffDialog({
             ) : (
               <div className="font-mono text-[12px] leading-6">
                 <div className="grid grid-cols-[56px_56px_24px_minmax(0,1fr)] border-b border-border/60 bg-muted/30 px-3 py-2 text-[11px] uppercase tracking-wide text-muted-foreground">
-                  <span>Old</span>
-                  <span>New</span>
+                  <span>{t("skillsStore.diffOld")}</span>
+                  <span>{t("skillsStore.diffNew")}</span>
                   <span />
                   <span>{effectivePath}</span>
                 </div>
@@ -3036,7 +3061,7 @@ export function SkillDetailPage({
                     <span className="hidden sm:inline">{detail.attachedAgentCount === 1 ? "install" : "installs"}</span>
                   </span>
                 </TooltipTrigger>
-                <TooltipContent>Agents in this company that currently have this skill installed.</TooltipContent>
+                <TooltipContent>{t("skillsStore.installedAgentsTooltip")}</TooltipContent>
               </Tooltip>
               <button
                 type="button"
@@ -3053,7 +3078,7 @@ export function SkillDetailPage({
                 type="button"
                 onClick={onFork}
                 className="inline-flex items-center gap-1.5 border-l border-border px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent/40 hover:text-foreground"
-                title="Fork this skill"
+                title={t("skillsStore.forkTitle")}
               >
                 <GitFork className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">Fork</span>
@@ -3196,7 +3221,7 @@ export function SkillDetailPage({
                     <TooltipTrigger asChild>
                       <Pin className="h-3.5 w-3.5 shrink-0" aria-label="Pinned source revision" />
                     </TooltipTrigger>
-                    <TooltipContent>Pinned source revision</TooltipContent>
+                    <TooltipContent>{t("skillsStore.pinnedRevisionTooltip")}</TooltipContent>
                   </Tooltip>
                   <span className="truncate font-mono text-foreground">{currentPin ?? "untracked"}</span>
                 </div>
@@ -3257,7 +3282,7 @@ export function SkillDetailPage({
       <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Skill settings</DialogTitle>
+            <DialogTitle>{t("skillsStore.settingsDialogTitle")}</DialogTitle>
             <DialogDescription>Manage how {detail.name} is shared.</DialogDescription>
           </DialogHeader>
           <div className="space-y-5">
@@ -3351,6 +3376,7 @@ function SkillPane({
   onSubmitAttach: (ids: string[], versionId: string | null) => void;
   attachPending: boolean;
 }) {
+  const { t } = useTranslation();
   if (!detail) {
     if (loading) {
       return <PageSkeleton variant="detail" />;
@@ -3431,7 +3457,7 @@ function SkillPane({
                       text={detail.sourcePath}
                       copiedLabel="Copied path"
                       ariaLabel="Copy source path"
-                      title="Copy source path"
+                      title={t("skillsStore.copySourcePathTitle")}
                       className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                     >
                       <Copy className="h-3.5 w-3.5" />
@@ -3494,16 +3520,52 @@ function SkillPane({
                 <TooltipTrigger asChild>
                   <span className="inline-flex items-center gap-1 rounded-full border border-violet-500/40 bg-violet-500/10 px-2 py-0.5 text-[11px] text-violet-200">
                     <Pencil className="h-3 w-3" aria-hidden="true" />
-                    Locally modified
+                    {t("skillsStore.locallyModified")}
                   </span>
                 </TooltipTrigger>
-                <TooltipContent>You have edited this skill after installing. Updates from the catalog will overwrite your changes.</TooltipContent>
+                <TooltipContent>{t("skillsStore.locallyModifiedTooltip")}</TooltipContent>
               </Tooltip>
             ) : null}
             {(() => {
               const packageName = readonlyMetadataValue(detail.metadata, "originPackageName") ?? readonlyMetadataValue(detail.metadata, "catalogPackageName");
               const packageVersion = readonlyMetadataValue(detail.metadata, "originVersion") ?? readonlyMetadataValue(detail.metadata, "catalogPackageVersion");
               return <ProvenanceBadge packageName={packageName} packageVersion={packageVersion} />;
+            })()}
+            {(() => {
+              const verdict = updateStatus?.auditVerdict;
+              if (!verdict) return null;
+              const tone =
+                verdict === "fail"
+                  ? "border-red-500/40 bg-red-500/10 text-red-300"
+                  : verdict === "warning"
+                    ? "border-amber-500/40 bg-amber-500/10 text-amber-300"
+                    : "border-emerald-500/40 bg-emerald-500/10 text-emerald-300";
+              const Icon = verdict === "pass" ? ShieldCheck : ShieldAlert;
+              const codes = updateStatus?.auditCodes ?? [];
+              return (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className={cn("inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px]", tone)}>
+                      <Icon className="h-3 w-3" aria-hidden="true" />
+                      {t("skillsStore.contentAudit.label")}: {t(`skillsStore.contentAudit.${verdict}`)}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {codes.length > 0 ? (
+                      <div className="space-y-1">
+                        <div className="font-medium">{t("skillsStore.contentAudit.findingsLabel")}</div>
+                        <ul className="list-disc pl-4">
+                          {codes.map((code) => (
+                            <li key={code}>{t(`skillsStore.contentAudit.codes.${code}`, { defaultValue: code })}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : (
+                      t("skillsStore.contentAudit.passTooltip")
+                    )}
+                  </TooltipContent>
+                </Tooltip>
+              );
             })()}
           </div>
           <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
@@ -3613,6 +3675,7 @@ function SkillPane({
 }
 
 export function CompanySkills() {
+  const { t } = useTranslation();
   const { "*": routePath } = useParams<{ "*": string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -4203,6 +4266,24 @@ export function CompanySkills() {
     },
   });
 
+  // Default the recommendation rail to the company's most common agent role.
+  const dominantAgentRole = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const agent of agentsQuery.data ?? []) {
+      if (!agent.role || agent.role === "general") continue;
+      counts.set(agent.role, (counts.get(agent.role) ?? 0) + 1);
+    }
+    let best: string | undefined;
+    let bestCount = 0;
+    for (const [role, count] of counts) {
+      if (count > bestCount) {
+        best = role;
+        bestCount = count;
+      }
+    }
+    return best;
+  }, [agentsQuery.data]);
+
   const eligibleAgentsForAttach = useMemo(() => {
     const data = agentsQuery.data ?? [];
     return data.map((agent: Agent) => {
@@ -4374,7 +4455,7 @@ export function CompanySkills() {
       <Dialog open={deleteOpen} onOpenChange={closeDeleteDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Remove skill</DialogTitle>
+            <DialogTitle>{t("skillsStore.removeDialogTitle")}</DialogTitle>
             <DialogDescription>
               Remove this skill from the company library. If any agents still use it, removal will be blocked until it is detached.
             </DialogDescription>
@@ -4422,7 +4503,7 @@ export function CompanySkills() {
       <Dialog open={emptySourceHelpOpen} onOpenChange={setEmptySourceHelpOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Add a skill source</DialogTitle>
+            <DialogTitle>{t("skillsStore.addSourceDialogTitle")}</DialogTitle>
             <DialogDescription>
               Paste a local path, GitHub URL, or `skills.sh` command into the field first.
             </DialogDescription>
@@ -4506,7 +4587,7 @@ export function CompanySkills() {
       <Dialog open={importDialogOpen} onOpenChange={setImportDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Import a skill</DialogTitle>
+            <DialogTitle>{t("skillsStore.importDialogTitle")}</DialogTitle>
             <DialogDescription>
               Paste a local path, GitHub URL, or `skills.sh` command to import a skill into this company.
             </DialogDescription>
@@ -4516,7 +4597,7 @@ export function CompanySkills() {
               <Input
                 value={source}
                 onChange={(event) => setSource(event.target.value)}
-                placeholder="Paste path, GitHub URL, or skills.sh command"
+                placeholder={t("skillsStore.importPlaceholder")}
                 className="h-9 rounded-none border-0 px-0 shadow-none focus-visible:ring-0"
               />
               <Button size="sm" onClick={handleAddSkillSource} disabled={importSkill.isPending}>
@@ -4550,6 +4631,14 @@ export function CompanySkills() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {isDiscovery && discoveryTab === "catalog" && selectedCompanyId ? (
+        <SkillRecommendationRail
+          companyId={selectedCompanyId}
+          installedKeys={installedSkills.map((skill) => skill.key)}
+          defaultRole={dominantAgentRole}
+        />
+      ) : null}
 
       {isDiscovery ? (
         <DiscoveryGrid

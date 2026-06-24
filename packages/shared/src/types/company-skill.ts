@@ -376,6 +376,14 @@ export interface CatalogSkillListQuery {
   q?: string;
 }
 
+export interface CatalogSkillRecommendation {
+  skill: CatalogSkill;
+  /** Catalog roles on the skill that matched the requested agent role (after alias bridging). */
+  matchedRoles: string[];
+  /** Why the skill surfaced: a role/alias match, or a catalog default-install pick. */
+  reason: "role" | "default";
+}
+
 export interface CatalogSkillFileDetail {
   catalogSkillId: string;
   path: string;

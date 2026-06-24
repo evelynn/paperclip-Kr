@@ -9,6 +9,18 @@ import {
   type TrustAuthorizationPolicy,
   type TrustPreset,
 } from "@paperclipai/shared";
+import type { TFunction } from "i18next";
+import { i18n } from "@/i18n";
+
+// Localized preset label/description accessors. The maps below remain the
+// English source of truth (and any non-UI consumers); UI surfaces should call
+// these so the language switch is reactive.
+export function trustPresetLabel(preset: TrustPreset, t: TFunction = i18n.t): string {
+  return t(`trust.presetLabel.${preset}`);
+}
+export function trustPresetDescription(preset: TrustPreset, t: TFunction = i18n.t): string {
+  return t(`trust.presetDesc.${preset}`);
+}
 
 export type LowTrustBoundaryTarget =
   | { type: "project"; id: string }
@@ -157,21 +169,25 @@ export function clearSingleLowTrustBoundaryTarget(
 
 export function summarizeLowTrustBoundaryTarget(
   boundary: LowTrustBoundary | null | undefined,
+  t: TFunction = i18n.t,
 ) {
   const target = getSingleLowTrustBoundaryTarget(boundary);
-  if (target?.type === "project") return `Project ${target.id.slice(0, 8)}`;
-  if (target?.type === "root_issue") return `Root issue ${target.id.slice(0, 8)}`;
-  if (target?.type === "issue") return `Issue ${target.id.slice(0, 8)}`;
-  if (!boundary || countBoundaryTargets(boundary) === 0) return "No boundary selected";
-  return `${countBoundaryTargets(boundary)} boundaries`;
+  if (target?.type === "project") return t("trust.boundary.project", { id: target.id.slice(0, 8) });
+  if (target?.type === "root_issue") return t("trust.boundary.rootIssue", { id: target.id.slice(0, 8) });
+  if (target?.type === "issue") return t("trust.boundary.issue", { id: target.id.slice(0, 8) });
+  if (!boundary || countBoundaryTargets(boundary) === 0) return t("trust.boundary.none");
+  return t("trust.boundary.count", { n: countBoundaryTargets(boundary) });
 }
 
 export function lowTrustBoundaryHasScope(boundary: LowTrustBoundary | null | undefined) {
   return countBoundaryTargets(boundary) > 0;
 }
 
-export function sourceTrustLabel(sourceTrust: SourceTrustMetadata | null | undefined) {
+export function sourceTrustLabel(
+  sourceTrust: SourceTrustMetadata | null | undefined,
+  t: TFunction = i18n.t,
+) {
   if (!sourceTrust || sourceTrust.preset !== LOW_TRUST_REVIEW_PRESET) return null;
-  if (sourceTrust.disposition === "promoted") return "Promoted from low-trust";
-  return "Low-trust source";
+  if (sourceTrust.disposition === "promoted") return t("trust.source.promoted");
+  return t("trust.source.lowTrust");
 }

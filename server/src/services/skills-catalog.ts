@@ -4,11 +4,13 @@ import { promises as fs } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import type {
-  CatalogSkill,
-  CatalogSkillFileDetail,
-  CatalogSkillListQuery,
-  CatalogSkillSource,
+import {
+  AGENT_ROLE_SKILL_ALIASES,
+  type CatalogSkill,
+  type CatalogSkillFileDetail,
+  type CatalogSkillListQuery,
+  type CatalogSkillRecommendation,
+  type CatalogSkillSource,
 } from "@paperclipai/shared";
 import { HttpError, conflict, notFound, unprocessable } from "../errors.js";
 import { logger } from "../middleware/logger.js";
@@ -265,6 +267,75 @@ export function listCatalogSkills(query: CatalogSkillListQuery = {}): CatalogSki
     .filter((skill) => !query.category || skill.category === query.category)
     .filter((skill) => !normalizedQuery || searchText(skill).includes(normalizedQuery))
     .sort((left, right) => left.name.localeCompare(right.name) || left.key.localeCompare(right.key));
+}
+
+/**
+ * Recommend catalog skills for an agent role. Bridges the agent role taxonomy
+ * to the catalog's looser `recommendedForRoles` vocabulary via
+ * {@link AGENT_ROLE_SKILL_ALIASES} (the role itself is always matched too).
+ * Role matches rank ahead of catalog default-install picks; within a tier,
+ * more overlapping roles rank higher, then alphabetical. `excludeKeys` drops
+ * already-installed skills (matched by key or id, case-insensitive).
+ */
+export function recommendCatalogSkills(opts: {
+  role: string;
+  excludeKeys?: string[];
+  limit?: number;
+}): CatalogSkillRecommendation[] {
+  const role = opts.role.trim().toLowerCase();
+  const exclude = new Set(
+    (opts.excludeKeys ?? []).map((key) => key.trim().toLowerCase()).filter(Boolean),
+  );
+  const aliases = new Set<string>([role, ...(AGENT_ROLE_SKILL_ALIASES[role] ?? [])]);
+
+  const recommendations: CatalogSkillRecommendation[] = [];
+  for (const skill of getCatalogSkills()) {
+    if (exclude.has(skill.key.toLowerCase()) || exclude.has(skill.id.toLowerCase())) continue;
+    const matchedRoles = skill.recommendedForRoles.filter((entry) =>
+      aliases.has(entry.trim().toLowerCase()),
+    );
+    if (matchedRoles.length > 0) {
+      recommendations.push({ skill, matchedRoles, reason: "role" });
+    } else if (skill.defaultInstall) {
+      recommendations.push({ skill, matchedRoles: [], reason: "default" });
+    }
+  }
+
+  recommendations.sort((left, right) => {
+    if (left.reason !== right.reason) return left.reason === "role" ? -1 : 1;
+    if (right.matchedRoles.length !== left.matchedRoles.length) {
+      return right.matchedRoles.length - left.matchedRoles.length;
+    }
+    return (
+      left.skill.name.localeCompare(right.skill.name) ||
+      left.skill.key.localeCompare(right.skill.key)
+    );
+  });
+
+  return typeof opts.limit === "number"
+    ? recommendations.slice(0, Math.max(0, opts.limit))
+    : recommendations;
+}
+
+export function recommendCatalogSkillsOrEmpty(opts: {
+  role: string;
+  excludeKeys?: string[];
+  limit?: number;
+}): CatalogSkillRecommendation[] {
+  try {
+    const result = recommendCatalogSkills(opts);
+    loggedCatalogUnavailableWarning = false;
+    return result;
+  } catch (error) {
+    if (!isCatalogManifestUnavailableError(error)) {
+      throw error;
+    }
+    if (!loggedCatalogUnavailableWarning) {
+      logger.warn({ err: error }, "skills catalog manifest unavailable; returning empty recommendations");
+      loggedCatalogUnavailableWarning = true;
+    }
+    return [];
+  }
 }
 
 export function listCatalogSkillsOrEmpty(query: CatalogSkillListQuery = {}): CatalogSkill[] {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CompanySecret, EnvBinding, SecretVersionSelector } from "@paperclipai/shared";
 import { AlertCircle, KeyRound, X } from "lucide-react";
+import { useTranslation } from "@/i18n";
 import { cn } from "../lib/utils";
 import {
   Select,
@@ -105,6 +106,7 @@ export function EnvVarEditor({
    */
   recentlyUsedSecrets?: CompanySecret[];
 }) {
+  const { t } = useTranslation();
   const [rows, setRows] = useState<Row[]>(() => toRows(value));
   const [sealError, setSealError] = useState<string | null>(null);
   const valueRef = useRef(value);
@@ -206,8 +208,8 @@ export function EnvVarEditor({
     const plain = row.plainValue;
     if (!key || plain.length === 0) return;
 
-    const suggested = defaultSecretName(key) || "secret";
-    const name = window.prompt("Secret name", suggested)?.trim();
+    const suggested = defaultSecretName(key) || t("workspaceComp.envVarEditor.fallbackSecretName");
+    const name = window.prompt(t("workspaceComp.envVarEditor.promptSecretName"), suggested)?.trim();
     if (!name) return;
 
     try {
@@ -215,7 +217,7 @@ export function EnvVarEditor({
       const created = await onCreateSecret(name, plain);
       updateRow(index, { source: "secret", secretId: created.id });
     } catch (error) {
-      setSealError(error instanceof Error ? error.message : "Failed to create secret");
+      setSealError(error instanceof Error ? error.message : t("workspaceComp.envVarEditor.createSecretFailed"));
     }
   }
 
@@ -231,7 +233,7 @@ export function EnvVarEditor({
           <div key={index} className="flex items-center gap-1.5">
             <input
               className={cn(inputClass, "flex-[2]")}
-              placeholder="KEY"
+              placeholder={t("workspaceComp.envVarEditor.keyPlaceholder")}
               value={row.key}
               onChange={(event) => updateRow(index, { key: event.target.value })}
             />
@@ -244,12 +246,12 @@ export function EnvVarEditor({
                 })
               }
             >
-              <SelectTrigger className={cn(selectTriggerClass, "flex-[1]")} aria-label="Binding mode">
+              <SelectTrigger className={cn(selectTriggerClass, "flex-[1]")} aria-label={t("workspaceComp.envVarEditor.bindingModeLabel")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="plain">Plain</SelectItem>
-                <SelectItem value="secret">Secret</SelectItem>
+                <SelectItem value="plain">{t("workspaceComp.envVarEditor.plain")}</SelectItem>
+                <SelectItem value="secret">{t("workspaceComp.envVarEditor.secret")}</SelectItem>
               </SelectContent>
             </Select>
             {row.source === "secret" ? (
@@ -261,7 +263,7 @@ export function EnvVarEditor({
                   }
                 >
                   <SelectTrigger
-                    aria-label="Secret"
+                    aria-label={t("workspaceComp.envVarEditor.secretLabel")}
                     className={cn(
                       selectTriggerClass,
                       "flex-[3]",
@@ -270,12 +272,12 @@ export function EnvVarEditor({
                         "border-destructive text-destructive",
                     )}
                   >
-                    <SelectValue placeholder="Select secret..." />
+                    <SelectValue placeholder={t("workspaceComp.envVarEditor.selectSecretPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {row.secretId && !secrets.some((s) => s.id === row.secretId) ? (
                       <SelectItem value={row.secretId}>
-                        Missing ({row.secretId.slice(0, 8)}…)
+                        {t("workspaceComp.envVarEditor.missingSecret", { id: row.secretId.slice(0, 8) })}
                       </SelectItem>
                     ) : null}
                     {secrets.map((secret) => (
@@ -295,7 +297,7 @@ export function EnvVarEditor({
                   }
                   disabled={!row.secretId}
                 >
-                  <SelectTrigger className={cn(selectTriggerClass, "flex-[1]")} aria-label="Version">
+                  <SelectTrigger className={cn(selectTriggerClass, "flex-[1]")} aria-label={t("workspaceComp.envVarEditor.versionLabel")}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -320,16 +322,16 @@ export function EnvVarEditor({
                   className="inline-flex items-center rounded-md border border-border px-2 py-0.5 text-xs text-muted-foreground hover:bg-accent/50 transition-colors shrink-0"
                   onClick={() => sealRow(index)}
                   disabled={!row.key.trim() || !row.plainValue}
-                  title="Create secret from current plain value"
+                  title={t("workspaceComp.envVarEditor.newTitle")}
                 >
-                  New
+                  {t("workspaceComp.envVarEditor.newButton")}
                 </button>
               </>
             ) : (
               <>
                 <input
                   className={cn(inputClass, "flex-[3]")}
-                  placeholder="value"
+                  placeholder={t("workspaceComp.envVarEditor.valuePlaceholder")}
                   value={row.plainValue}
                   onChange={(event) => updateRow(index, { plainValue: event.target.value })}
                 />
@@ -338,9 +340,9 @@ export function EnvVarEditor({
                   className="inline-flex items-center rounded-md border border-border px-2 py-0.5 text-xs text-muted-foreground hover:bg-accent/50 transition-colors shrink-0"
                   onClick={() => sealRow(index)}
                   disabled={!row.key.trim() || !row.plainValue}
-                  title="Store value as secret and replace with reference"
+                  title={t("workspaceComp.envVarEditor.sealTitle")}
                 >
-                  Seal
+                  {t("workspaceComp.envVarEditor.sealButton")}
                 </button>
               </>
             )}
@@ -370,7 +372,7 @@ export function EnvVarEditor({
           <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
             <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground/70">
               <KeyRound className="h-3 w-3" />
-              Recently used:
+              {t("workspaceComp.envVarEditor.recentlyUsed")}
             </span>
             {quick.map((secret) => (
               <button
@@ -378,7 +380,7 @@ export function EnvVarEditor({
                 type="button"
                 onClick={() => bindRecentSecret(secret)}
                 className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 font-mono text-[11px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
-                title={`Bind ${secret.name}`}
+                title={t("workspaceComp.envVarEditor.bindSecret", { name: secret.name })}
               >
                 + {secret.name}
               </button>
@@ -393,7 +395,7 @@ export function EnvVarEditor({
           if (row.source !== "secret" || !row.secretId) continue;
           const secret = secrets.find((s) => s.id === row.secretId);
           if (!secret) {
-            issues.push({ key: row.key.trim() || row.secretId, reason: "missing" });
+            issues.push({ key: row.key.trim() || row.secretId, reason: t("workspaceComp.envVarEditor.reasonMissing") });
           } else if (secret.status !== "active") {
             issues.push({ key: row.key.trim() || secret.name, reason: secret.status });
           }
@@ -403,22 +405,26 @@ export function EnvVarEditor({
           <p className="text-[11px] text-amber-700 dark:text-amber-400 inline-flex items-start gap-1">
             <AlertCircle className="h-3 w-3 mt-0.5 shrink-0" />
             <span>
-              {issues.length} secret binding{issues.length === 1 ? "" : "s"} need attention:{" "}
+              {t(
+                issues.length === 1
+                  ? "workspaceComp.envVarEditor.bindingsNeedAttentionOne"
+                  : "workspaceComp.envVarEditor.bindingsNeedAttentionOther",
+                { count: issues.length },
+              )}
               {issues.map((issue, idx) => (
                 <span key={idx} className="font-mono">
                   {issue.key}
-                  <span className="text-muted-foreground"> ({issue.reason})</span>
+                  <span className="text-muted-foreground">{t("workspaceComp.envVarEditor.bindingIssueReason", { reason: issue.reason })}</span>
                   {idx < issues.length - 1 ? ", " : ""}
                 </span>
               ))}
-              . Runs will fail until you remap or re-enable.
+              {t("workspaceComp.envVarEditor.bindingsFailHint")}
             </span>
           </p>
         );
       })()}
       <p className="text-[11px] text-muted-foreground/60">
-        Set KEY to the env var name the process expects, for example GH_TOKEN. Choose Secret to resolve a stored
-        value at run start. PAPERCLIP_* variables are injected automatically.
+        {t("workspaceComp.envVarEditor.helpText")}
       </p>
     </div>
   );

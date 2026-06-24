@@ -103,6 +103,7 @@ export type {
   CatalogSkill,
   CatalogSkillListQuery,
   CatalogSkillFileDetail,
+  CatalogSkillRecommendation,
   CompanySkillInstallCatalogRequest,
   CompanySkillInstallCatalogResult,
 } from "./company-skill.js";

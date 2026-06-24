@@ -643,6 +643,28 @@ describe("renderPaperclipWakePrompt", () => {
     expect(prompt).toContain("named unblock owner/action");
   });
 
+  it("injects a response-language directive when responseLanguage is set (PAP-Kr)", () => {
+    const payload = {
+      reason: "issue_assigned",
+      issue: { id: "issue-1", identifier: "PAP-1580", title: "Update prompts", status: "in_progress" },
+      commentWindow: { requestedCount: 0, includedCount: 0, missingCount: 0 },
+      comments: [],
+      fallbackFetchNeeded: false,
+    };
+
+    const withLanguage = renderPaperclipWakePrompt({ ...payload, responseLanguage: "ko" });
+    expect(withLanguage).toContain("## Response Language");
+    expect(withLanguage).toContain("Respond to the user in Korean");
+    expect(withLanguage).toContain("Keep code, identifiers");
+    // The directive leads the prompt so it is the highest-priority instruction.
+    expect(withLanguage.indexOf("## Response Language")).toBeLessThan(
+      withLanguage.indexOf("## Paperclip Wake Payload"),
+    );
+
+    // Absent => no directive (backward compatible with English / natural default).
+    expect(renderPaperclipWakePrompt(payload)).not.toContain("## Response Language");
+  });
+
   it("preserves Chinese, Japanese, and Hindi issue and comment text in scoped wake prompts", () => {
     const title = "验证中文任务";
     const commentBody = [

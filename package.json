@@ -36,6 +36,8 @@
     "release:rollback": "./scripts/rollback-latest.sh",
     "release:bootstrap-package": "node scripts/bootstrap-npm-package.mjs",
     "check:tokens": "node scripts/check-forbidden-tokens.mjs",
+    "i18n:sync": "node scripts/i18n-sync-locales.mjs",
+    "i18n:check": "node scripts/i18n-sync-locales.mjs --check",
     "check:no-git-push": "node scripts/check-no-git-push.mjs",
     "test:check-no-git-push": "node --test scripts/check-no-git-push.test.mjs",
     "docs:dev": "cd docs && npx mintlify dev",

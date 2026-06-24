@@ -371,6 +371,13 @@ const PROJECT_ROOT_SKILL_SUBDIRECTORIES = [
 const SKILL_AUDIT_SCAN_VERSION = "skills-audit-v1";
 const MAX_CATALOG_FILE_BYTES = 1024 * 1024;
 
+// Hard-stop content patterns shared by the install-time audit and the runtime
+// materialization gate. A skill whose non-asset text content matches either of
+// these is treated as an "error" finding (audit verdict "fail") and is never
+// exposed to an agent runtime.
+const SKILL_REMOTE_EXEC_PATTERN = /\b(?:curl|wget)\b[\s\S]{0,160}\|\s*(?:sh|bash)|\b(?:bash|sh)\s+-c\b|\beval\b|\bpython\s+-c\b|\bnode\s+-e\b/i;
+const SKILL_SECRET_EXFIL_PATTERN = /\b(?:cat|printenv|env|grep)\b[\s\S]{0,160}(?:\.aws\/credentials|\.ssh\/|\.npmrc|id_rsa|OPENAI_API_KEY|ANTHROPIC_API_KEY|API_KEY|TOKEN|SECRET)[\s\S]{0,160}\b(?:curl|wget|nc|netcat|scp)\b/i;
+
 function asString(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
@@ -1858,8 +1865,6 @@ async function auditInstalledSkillBytes(skill: CompanySkill): Promise<CompanySki
     }
   }
 
-  const remoteExecPattern = /\b(?:curl|wget)\b[\s\S]{0,160}\|\s*(?:sh|bash)|\b(?:bash|sh)\s+-c\b|\beval\b|\bpython\s+-c\b|\bnode\s+-e\b/i;
-  const secretExfilPattern = /\b(?:cat|printenv|env|grep)\b[\s\S]{0,160}(?:\.aws\/credentials|\.ssh\/|\.npmrc|id_rsa|OPENAI_API_KEY|ANTHROPIC_API_KEY|API_KEY|TOKEN|SECRET)[\s\S]{0,160}\b(?:curl|wget|nc|netcat|scp)\b/i;
   const networkPattern = /\b(?:curl|wget|fetch|httpie|nc|netcat|scp|ssh)\b|https?:\/\//i;
   const secretReferencePattern = /\b(?:process\.env|printenv|\$[A-Z][A-Z0-9_]{2,}|API_KEY|TOKEN|SECRET|PASSWORD|\.env)\b/i;
 
@@ -1877,10 +1882,10 @@ async function auditInstalledSkillBytes(skill: CompanySkill): Promise<CompanySki
     if (file.kind === "asset") continue;
 
     const text = file.bytes.toString("utf8");
-    if (remoteExecPattern.test(text)) {
+    if (SKILL_REMOTE_EXEC_PATTERN.test(text)) {
       pushFinding(findings, "remote_fetch_exec", "error", "Remote-fetch or dynamic execution pattern is not allowed.", file.path);
     }
-    if (secretExfilPattern.test(text)) {
+    if (SKILL_SECRET_EXFIL_PATTERN.test(text)) {
       pushFinding(findings, "secret_exfiltration", "error", "Secret exfiltration pattern is not allowed.", file.path);
     }
     if (networkPattern.test(text)) {
@@ -3960,15 +3965,34 @@ export function companySkillService(db: Db) {
     await fs.mkdir(skillDir, { recursive: true });
 
     let wroteSkillFile = false;
+    const hardStopFindings: Array<{ path: string; code: string }> = [];
     for (const entry of skill.fileInventory) {
       const normalizedPath = normalizePortablePath(entry.path);
       const detail = await readFile(companyId, skill.id, normalizedPath).catch(() => null);
       const content = detail?.content ?? (normalizedPath === "SKILL.md" ? skill.markdown : null);
       if (content === null) continue;
+      // Defense-in-depth: skills reaching this materializer are the ones without a
+      // resolvable on-disk source (external imports: github/skills_sh/url), which
+      // bypass the install-time content audit. Apply the same hard-stop content
+      // checks here, at the only chokepoint before the bytes are exposed to an
+      // agent runtime, and refuse to materialize rather than write the content.
+      if (entry.kind !== "asset") {
+        if (SKILL_REMOTE_EXEC_PATTERN.test(content)) hardStopFindings.push({ path: normalizedPath, code: "remote_fetch_exec" });
+        if (SKILL_SECRET_EXFIL_PATTERN.test(content)) hardStopFindings.push({ path: normalizedPath, code: "secret_exfiltration" });
+        if (hardStopFindings.some((finding) => finding.path === normalizedPath)) continue;
+      }
       const targetPath = path.resolve(skillDir, entry.path);
       await fs.mkdir(path.dirname(targetPath), { recursive: true });
       await fs.writeFile(targetPath, content, "utf8");
       if (normalizedPath === "SKILL.md") wroteSkillFile = true;
+    }
+
+    if (hardStopFindings.length > 0) {
+      await fs.rm(skillDir, { recursive: true, force: true });
+      throw unprocessable("Company skill cannot be materialized because its content has hard-stop audit findings.", {
+        reason: "runtime_audit_hard_stop",
+        findings: hardStopFindings,
+      });
     }
 
     if (!wroteSkillFile) {

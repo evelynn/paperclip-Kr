@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { agentRoleLabel } from "@/lib/agent-role-labels";
 import { Link, useNavigate, useLocation } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
 import { agentsApi, type OrgNode } from "../api/agents";
@@ -20,6 +21,7 @@ import { Tabs } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Bot, Plus, List, GitBranch } from "lucide-react";
 import { AGENT_ROLE_LABELS, type Agent } from "@paperclipai/shared";
+import { useTranslation } from "@/i18n";
 import {
   resourceMembershipState,
   useResourceMembershipMutation,
@@ -77,6 +79,7 @@ function filterOrgTree(nodes: OrgNode[], tab: FilterTab): OrgNode[] {
 }
 
 export function Agents() {
+  const { t } = useTranslation();
   const { selectedCompanyId } = useCompany();
   const { openNewAgent } = useDialogActions();
   const { setBreadcrumbs } = useBreadcrumbs();
@@ -132,11 +135,11 @@ export function Agents() {
   }, [agents]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Agents" }]);
-  }, [setBreadcrumbs]);
+    setBreadcrumbs([{ label: t("agentsPage.list.breadcrumb") }]);
+  }, [setBreadcrumbs, t]);
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Bot} message="Select a company to view agents." />;
+    return <EmptyState icon={Bot} message={t("agentsPage.list.selectCompany")} />;
   }
 
   if (isLoading) {
@@ -152,10 +155,10 @@ export function Agents() {
         <Tabs value={tab} onValueChange={(v) => navigate(`/agents/${v}`)}>
           <PageTabBar
             items={[
-              { value: "all", label: "All" },
-              { value: "active", label: "Active" },
-              { value: "paused", label: "Paused" },
-              { value: "error", label: "Error" },
+              { value: "all", label: t("agentsPage.list.tabs.all") },
+              { value: "active", label: t("agentsPage.list.tabs.active") },
+              { value: "paused", label: t("agentsPage.list.tabs.paused") },
+              { value: "error", label: t("agentsPage.list.tabs.error") },
             ]}
             value={tab}
             onValueChange={(v) => navigate(`/agents/${v}`)}
@@ -187,13 +190,13 @@ export function Agents() {
           )}
           <Button size="sm" variant="outline" onClick={openNewAgent}>
             <Plus className="h-3.5 w-3.5 mr-1.5" />
-            New Agent
+            {t("agentsPage.common.newAgent")}
           </Button>
         </div>
       </div>
 
       {filtered.length > 0 && (
-        <p className="text-xs text-muted-foreground">{filtered.length} agent{filtered.length !== 1 ? "s" : ""}</p>
+        <p className="text-xs text-muted-foreground">{t(filtered.length === 1 ? "agentsPage.list.agentCountOne" : "agentsPage.list.agentCountOther", { count: filtered.length })}</p>
       )}
 
       {error && <p className="text-sm text-destructive">{error.message}</p>}
@@ -201,8 +204,8 @@ export function Agents() {
       {agents && agents.length === 0 && (
         <EmptyState
           icon={Bot}
-          message="Create your first agent to get started."
-          action="New Agent"
+          message={t("agentsPage.list.emptyCreate")}
+          action={t("agentsPage.common.newAgent")}
           onAction={openNewAgent}
         />
       )}
@@ -221,7 +224,7 @@ export function Agents() {
                 // columns line up vertically (PAP-86). Agent names vary in width, so
                 // a content-sized title (`min-w-[7rem]`) shifted meta's start per row.
                 titleClassName="w-56"
-                subtitle={`${roleLabels[agent.role] ?? agent.role}${agent.title ? ` - ${agent.title}` : ""}`}
+                subtitle={`${agentRoleLabel(agent.role)}${agent.title ? ` - ${agent.title}` : ""}`}
                 to={agentUrl(agent)}
                 className={cn(
                   "group",
@@ -229,7 +232,7 @@ export function Agents() {
                   resourceMembershipState(membershipsQuery.data, "agent", agent.id) === "left" ? "text-foreground/55" : "",
                 )}
                 leading={hasInvalidOrgChain ? (
-                  <AlertTriangle className="h-3.5 w-3.5 text-amber-500" aria-label="Invalid reporting chain" />
+                  <AlertTriangle className="h-3.5 w-3.5 text-amber-500" aria-label={t("agentsPage.common.invalidReportingChain")} />
                 ) : (
                   <AgentStatusCapsule status={agent.status} />
                 )}
@@ -274,7 +277,7 @@ export function Agents() {
                       <AgentActionButtons
                         agent={agent}
                         companyId={selectedCompanyId}
-                        runLabel="Run Heartbeat"
+                        runLabel={t("agentsPage.list.runHeartbeat")}
                         showStatus={false}
                       />
                     </div>
@@ -316,7 +319,7 @@ export function Agents() {
 
       {effectiveView === "list" && agents && agents.length > 0 && filtered.length === 0 && (
         <p className="text-sm text-muted-foreground text-center py-8">
-          No agents match the selected filter.
+          {t("agentsPage.list.noMatch")}
         </p>
       )}
 
@@ -340,13 +343,13 @@ export function Agents() {
 
       {effectiveView === "org" && orgTree && orgTree.length > 0 && filteredOrg.length === 0 && (
         <p className="text-sm text-muted-foreground text-center py-8">
-          No agents match the selected filter.
+          {t("agentsPage.list.noMatch")}
         </p>
       )}
 
       {effectiveView === "org" && orgTree && orgTree.length === 0 && (
         <p className="text-sm text-muted-foreground text-center py-8">
-          No organizational hierarchy defined.
+          {t("agentsPage.list.noHierarchy")}
         </p>
       )}
     </div>
@@ -370,6 +373,7 @@ function OrgTreeNode({
   memberships: ReturnType<typeof useResourceMemberships>["data"];
   membershipMutation: ReturnType<typeof useResourceMembershipMutation>;
 }) {
+  const { t } = useTranslation();
   const agent = agentMap.get(node.id);
   const hasInvalidOrgChain = Boolean(agent && agent.orgChainHealth?.status === "invalid_org_chain");
   const membershipState = resourceMembershipState(memberships, "agent", node.id);
@@ -388,14 +392,14 @@ function OrgTreeNode({
         )}
       >
         {hasInvalidOrgChain ? (
-          <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label="Invalid reporting chain" />
+          <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-label={t("agentsPage.common.invalidReportingChain")} />
         ) : (
           <AgentStatusCapsule status={node.status} />
         )}
         <div className="flex-1 min-w-[7rem]">
           <span className="text-sm font-medium">{node.name}</span>
           <span className="text-xs text-muted-foreground ml-2">
-            {roleLabels[node.role] ?? node.role}
+            {agentRoleLabel(node.role)}
             {agent?.title ? ` - ${agent.title}` : ""}
           </span>
         </div>
@@ -507,6 +511,7 @@ function LiveRunIndicator({
   runId: string;
   liveCount: number;
 }) {
+  const { t } = useTranslation();
   return (
     <Link
       to={`/agents/${agentRef}/runs/${runId}`}
@@ -518,7 +523,7 @@ function LiveRunIndicator({
         <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
       </span>
       <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">
-        Live{liveCount > 1 ? ` (${liveCount})` : ""}
+        {liveCount > 1 ? t("agentsPage.list.liveWithCount", { count: liveCount }) : t("agentsPage.list.live")}
       </span>
     </Link>
   );
