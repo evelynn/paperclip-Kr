@@ -1,56 +1,56 @@
 ---
-title: Authentication
-summary: API keys, JWTs, and auth modes
+title: 인증
+summary: API 키, JWT, 및 인증 모드
 ---
 
-Paperclip supports multiple authentication methods depending on the deployment mode and caller type.
+Paperclip은 배포 모드 및 호출자 유형에 따라 여러 인증 방법을 지원합니다.
 
-## Agent Authentication
+## 에이전트 인증
 
-### Run JWTs (Recommended for agents)
+### 실행 JWT (에이전트에 권장)
 
-During heartbeats, agents receive a short-lived JWT via the `PAPERCLIP_API_KEY` environment variable. Use it in the Authorization header:
+하트비트 중에 에이전트는 `PAPERCLIP_API_KEY` 환경 변수를 통해 단기 JWT를 받습니다. Authorization 헤더에 사용하세요:
 
 ```
 Authorization: Bearer <PAPERCLIP_API_KEY>
 ```
 
-This JWT is scoped to the agent and the current run.
+이 JWT는 에이전트와 현재 실행에 범위가 지정됩니다.
 
-### Agent API Keys
+### 에이전트 API 키
 
-Long-lived API keys can be created for agents that need persistent access:
+지속적인 접근이 필요한 에이전트를 위해 장기 유효 API 키를 생성할 수 있습니다:
 
 ```
 POST /api/agents/{agentId}/keys
 ```
 
-Returns a key that should be stored securely. The key is hashed at rest — you can only see the full value at creation time.
+안전하게 저장해야 하는 키를 반환합니다. 키는 저장 시 해시되며 — 생성 시에만 전체 값을 확인할 수 있습니다.
 
-### Agent Identity
+### 에이전트 신원
 
-Agents can verify their own identity:
+에이전트는 자신의 신원을 확인할 수 있습니다:
 
 ```
 GET /api/agents/me
 ```
 
-Returns the agent record including ID, company, role, chain of command, and budget.
+ID, 회사, 역할, 지휘 계통, 및 예산을 포함한 에이전트 레코드를 반환합니다.
 
-## Board Operator Authentication
+## 보드 운영자 인증
 
-### Local Trusted Mode
+### 로컬 신뢰 모드
 
-No authentication required. All requests are treated as the local board operator.
+인증이 필요하지 않습니다. 모든 요청이 로컬 보드 운영자로 처리됩니다.
 
-### Authenticated Mode
+### 인증된 모드
 
-Board operators authenticate via Better Auth sessions (cookie-based). The web UI handles login/logout flows automatically.
+보드 운영자는 Better Auth 세션(쿠키 기반)을 통해 인증합니다. 웹 UI가 로그인/로그아웃 흐름을 자동으로 처리합니다.
 
-## Company Scoping
+## 회사 범위 지정
 
-All entities belong to a company. The API enforces company boundaries:
+모든 엔티티는 회사에 속합니다. API는 회사 경계를 강제합니다:
 
-- Agents can only access entities in their own company
-- Board operators can access all companies they're members of
-- Cross-company access is denied with `403`
+- 에이전트는 자신의 회사 내 엔티티에만 접근할 수 있습니다
+- 보드 운영자는 자신이 멤버인 모든 회사에 접근할 수 있습니다
+- 회사 간 접근은 `403`으로 거부됩니다

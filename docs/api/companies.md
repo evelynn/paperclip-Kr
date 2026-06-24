@@ -1,27 +1,27 @@
 ---
-title: Companies
-summary: Company CRUD endpoints
+title: 회사
+summary: 회사 CRUD 엔드포인트
 ---
 
-Manage companies within your Paperclip instance.
+Paperclip 인스턴스 내의 회사를 관리합니다.
 
-## List Companies
+## 회사 목록 조회
 
 ```
 GET /api/companies
 ```
 
-Returns all companies the current user/agent has access to.
+현재 사용자/에이전트가 접근할 수 있는 모든 회사를 반환합니다.
 
-## Get Company
+## 회사 조회
 
 ```
 GET /api/companies/{companyId}
 ```
 
-Returns company details including name, description, budget, and status.
+이름, 설명, 예산, 및 상태를 포함한 회사 세부 정보를 반환합니다.
 
-## Create Company
+## 회사 생성
 
 ```
 POST /api/companies
@@ -31,7 +31,7 @@ POST /api/companies
 }
 ```
 
-## Update Company
+## 회사 업데이트
 
 ```
 PATCH /api/companies/{companyId}
@@ -43,16 +43,16 @@ PATCH /api/companies/{companyId}
 }
 ```
 
-## Upload Company Logo
+## 회사 로고 업로드
 
-Upload an image for a company icon and store it as that company’s logo.
+회사 아이콘으로 사용할 이미지를 업로드하고 해당 회사의 로고로 저장합니다.
 
 ```
 POST /api/companies/{companyId}/logo
 Content-Type: multipart/form-data
 ```
 
-Valid image content types:
+유효한 이미지 콘텐츠 유형:
 
 - `image/png`
 - `image/jpeg`
@@ -61,28 +61,28 @@ Valid image content types:
 - `image/gif`
 - `image/svg+xml`
 
-Company logo uploads use the normal Paperclip attachment size limit.
+회사 로고 업로드는 일반 Paperclip 첨부 파일 크기 제한을 사용합니다.
 
-Then set the company logo by PATCHing the returned `assetId` into `logoAssetId`.
+그런 다음 반환된 `assetId`를 `logoAssetId`에 PATCH하여 회사 로고를 설정합니다.
 
-## Archive Company
+## 회사 보관
 
 ```
 POST /api/companies/{companyId}/archive
 ```
 
-Archives a company. Archived companies are hidden from default listings.
+회사를 보관합니다. 보관된 회사는 기본 목록에서 숨겨집니다.
 
-## Company Fields
+## 회사 필드
 
-| Field | Type | Description |
+| 필드 | 유형 | 설명 |
 |-------|------|-------------|
-| `id` | string | Unique identifier |
-| `name` | string | Company name |
-| `description` | string | Company description |
+| `id` | string | 고유 식별자 |
+| `name` | string | 회사 이름 |
+| `description` | string | 회사 설명 |
 | `status` | string | `active`, `paused`, `archived` |
-| `logoAssetId` | string | Optional asset id for the stored logo image |
-| `logoUrl` | string | Optional Paperclip asset content path for the stored logo image |
-| `budgetMonthlyCents` | number | Monthly budget limit |
-| `createdAt` | string | ISO timestamp |
-| `updatedAt` | string | ISO timestamp |
+| `logoAssetId` | string | 저장된 로고 이미지의 선택적 에셋 ID |
+| `logoUrl` | string | 저장된 로고 이미지의 선택적 Paperclip 에셋 콘텐츠 경로 |
+| `budgetMonthlyCents` | number | 월별 예산 한도 |
+| `createdAt` | string | ISO 타임스탬프 |
+| `updatedAt` | string | ISO 타임스탬프 |
