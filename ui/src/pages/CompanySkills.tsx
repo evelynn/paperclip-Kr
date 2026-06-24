@@ -109,6 +109,7 @@ import {
   Save,
   Search,
   Settings,
+  ShieldAlert,
   ShieldCheck,
   Star,
   Trash2,
@@ -3529,6 +3530,42 @@ function SkillPane({
               const packageName = readonlyMetadataValue(detail.metadata, "originPackageName") ?? readonlyMetadataValue(detail.metadata, "catalogPackageName");
               const packageVersion = readonlyMetadataValue(detail.metadata, "originVersion") ?? readonlyMetadataValue(detail.metadata, "catalogPackageVersion");
               return <ProvenanceBadge packageName={packageName} packageVersion={packageVersion} />;
+            })()}
+            {(() => {
+              const verdict = updateStatus?.auditVerdict;
+              if (!verdict) return null;
+              const tone =
+                verdict === "fail"
+                  ? "border-red-500/40 bg-red-500/10 text-red-300"
+                  : verdict === "warning"
+                    ? "border-amber-500/40 bg-amber-500/10 text-amber-300"
+                    : "border-emerald-500/40 bg-emerald-500/10 text-emerald-300";
+              const Icon = verdict === "pass" ? ShieldCheck : ShieldAlert;
+              const codes = updateStatus?.auditCodes ?? [];
+              return (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className={cn("inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px]", tone)}>
+                      <Icon className="h-3 w-3" aria-hidden="true" />
+                      {t("skillsStore.contentAudit.label")}: {t(`skillsStore.contentAudit.${verdict}`)}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {codes.length > 0 ? (
+                      <div className="space-y-1">
+                        <div className="font-medium">{t("skillsStore.contentAudit.findingsLabel")}</div>
+                        <ul className="list-disc pl-4">
+                          {codes.map((code) => (
+                            <li key={code}>{t(`skillsStore.contentAudit.codes.${code}`, { defaultValue: code })}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : (
+                      t("skillsStore.contentAudit.passTooltip")
+                    )}
+                  </TooltipContent>
+                </Tooltip>
+              );
             })()}
           </div>
           <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
