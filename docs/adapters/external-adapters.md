@@ -1,36 +1,36 @@
 ---
-title: External Adapters
-summary: Build, package, and distribute adapters as plugins without modifying Paperclip source
+title: 외부 어댑터
+summary: Paperclip 소스를 수정하지 않고 어댑터를 플러그인으로 빌드, 패키징, 배포합니다.
 ---
 
-Paperclip supports external adapter plugins that can be installed from npm packages or local directories. External adapters work exactly like built-in adapters — they execute agents, parse output, and render transcripts — but they live in their own package and don't require changes to Paperclip's source code.
+Paperclip은 npm 패키지나 로컬 디렉터리에서 설치할 수 있는 외부 어댑터 플러그인을 지원합니다. 외부 어댑터는 내장 어댑터와 동일하게 작동합니다 — 에이전트를 실행하고, 출력을 파싱하며, 트랜스크립트를 렌더링합니다 — 하지만 자체 패키지에 존재하며 Paperclip의 소스 코드 변경이 필요 없습니다.
 
-## Built-in vs External
+## 내장 vs 외부
 
-| | Built-in | External |
+| | 내장 | 외부 |
 |---|---|---|
-| Source location | Inside `paperclip-fork/packages/adapters/` | Separate npm package or local directory |
-| Registration | Hardcoded in three registries | Loaded at startup via plugin system |
-| UI parser | Static import at build time | Dynamically loaded from API (see [UI Parser](/adapters/adapter-ui-parser)) |
-| Distribution | Ships with Paperclip | Published to npm or linked via `file:` |
-| Updates | Requires Paperclip release | Independent versioning |
+| 소스 위치 | `paperclip-fork/packages/adapters/` 내부 | 별도의 npm 패키지 또는 로컬 디렉터리 |
+| 등록 | 세 개의 레지스트리에 하드코딩 | 플러그인 시스템을 통해 시작 시 로드 |
+| UI 파서 | 빌드 타임에 정적 임포트 | API에서 동적 로드([UI 파서](/adapters/adapter-ui-parser) 참조) |
+| 배포 | Paperclip과 함께 제공 | npm에 배포하거나 `file:`로 링크 |
+| 업데이트 | Paperclip 릴리스 필요 | 독립적인 버전 관리 |
 
-## Quick Start
+## 빠른 시작
 
-### Minimal Package Structure
+### 최소 패키지 구조
 
 ```
 my-adapter/
   package.json
   tsconfig.json
   src/
-    index.ts            # Shared metadata (type, label, models)
+    index.ts            # 공유 메타데이터 (type, label, models)
     server/
-      index.ts          # createServerAdapter() factory
-      execute.ts        # Core execution logic
-      parse.ts          # Output parsing
-      test.ts           # Environment diagnostics
-    ui-parser.ts        # Self-contained UI transcript parser
+      index.ts          # createServerAdapter() 팩토리
+      execute.ts        # 핵심 실행 로직
+      parse.ts          # 출력 파싱
+      test.ts           # 환경 진단
+    ui-parser.ts        # 독립형 UI 트랜스크립트 파서
 ```
 
 ### package.json
@@ -64,14 +64,14 @@ my-adapter/
 }
 ```
 
-Key fields:
+주요 필드:
 
-| Field | Purpose |
+| 필드 | 목적 |
 |-------|---------|
-| `exports["."]` | Entry point — must export `createServerAdapter` |
-| `exports["./ui-parser"]` | Self-contained UI parser module (optional but recommended) |
-| `paperclip.adapterUiParser` | Contract version for the UI parser (`"1.0.0"`) |
-| `files` | Limits what gets published — only `dist/` |
+| `exports["."]` | 진입점 — `createServerAdapter`를 익스포트해야 합니다. |
+| `exports["./ui-parser"]` | 독립형 UI 파서 모듈(선택 사항이나 권장됨) |
+| `paperclip.adapterUiParser` | UI 파서의 계약 버전(`"1.0.0"`) |
+| `files` | 배포 대상 제한 — `dist/`만 해당 |
 
 ### tsconfig.json
 
@@ -92,14 +92,14 @@ Key fields:
 }
 ```
 
-## Server Module
+## 서버 모듈
 
-The plugin loader calls `createServerAdapter()` from your package root. This function must return a `ServerAdapterModule`.
+플러그인 로더는 패키지 루트에서 `createServerAdapter()`를 호출합니다. 이 함수는 `ServerAdapterModule`을 반환해야 합니다.
 
 ### src/index.ts
 
 ```ts
-export const type = "my_adapter";     // snake_case, globally unique
+export const type = "my_adapter";     // snake_case, 전역적으로 고유
 export const label = "My Agent (local)";
 
 export const models = [
@@ -111,7 +111,7 @@ Use when: ...
 Don't use when: ...
 `;
 
-// Required by plugin-loader convention
+// 플러그인 로더 규약에 필수
 export { createServerAdapter } from "./server/index.js";
 ```
 
@@ -136,7 +136,7 @@ export function createServerAdapter(): ServerAdapterModule {
 
 ### src/server/execute.ts
 
-The core execution function. Receives an `AdapterExecutionContext` and returns an `AdapterExecutionResult`.
+핵심 실행 함수입니다. `AdapterExecutionContext`를 받아 `AdapterExecutionResult`를 반환합니다.
 
 ```ts
 import type {
@@ -155,15 +155,15 @@ export async function execute(
 ): Promise<AdapterExecutionResult> {
   const { config, agent, runtime, context, onLog, onMeta } = ctx;
 
-  // 1. Read config with safe helpers
+  // 1. 안전한 헬퍼로 설정 읽기
   const cwd = String(config.cwd ?? "/tmp");
   const command = String(config.command ?? "my-agent");
   const timeoutSec = Number(config.timeoutSec ?? 300);
 
-  // 2. Build environment with Paperclip vars injected
+  // 2. Paperclip 변수를 주입하여 환경 구성
   const env = buildPaperclipEnv(agent);
 
-  // 3. Render prompt template
+  // 3. 프롬프트 템플릿 렌더링
   const prompt = config.promptTemplate
     ? renderTemplate(String(config.promptTemplate), {
         agentId: agent.id,
@@ -175,7 +175,7 @@ export async function execute(
       })
     : "Continue your work.";
 
-  // 4. Spawn process
+  // 4. 프로세스 생성
   const result = await runChildProcess(command, {
     args: [prompt],
     cwd,
@@ -186,28 +186,28 @@ export async function execute(
     onStderr: (chunk) => onLog("stderr", chunk),
   });
 
-  // 5. Return structured result
+  // 5. 구조화된 결과 반환
   return {
     exitCode: result.exitCode,
     timedOut: result.timedOut,
-    // Include session state for persistence
+    // 지속성을 위한 세션 상태 포함
     sessionParams: { /* ... */ },
   };
 }
 ```
 
-#### Available Helpers from `@paperclipai/adapter-utils`
+#### `@paperclipai/adapter-utils`의 사용 가능한 헬퍼
 
-| Helper | Purpose |
+| 헬퍼 | 목적 |
 |--------|---------|
-| `runChildProcess(command, opts)` | Spawn a child process with timeout, grace period, and streaming callbacks |
-| `buildPaperclipEnv(agent)` | Inject `PAPERCLIP_*` environment variables |
-| `renderTemplate(template, data)` | `{{variable}}` substitution in prompt templates |
-| `asString(v)`, `asNumber(v)`, `asBoolean(v)` | Safe config value extraction |
+| `runChildProcess(command, opts)` | 타임아웃, 유예 기간, 스트리밍 콜백과 함께 자식 프로세스 생성 |
+| `buildPaperclipEnv(agent)` | `PAPERCLIP_*` 환경 변수 주입 |
+| `renderTemplate(template, data)` | 프롬프트 템플릿의 `{{variable}}` 치환 |
+| `asString(v)`, `asNumber(v)`, `asBoolean(v)` | 안전한 설정 값 추출 |
 
 ### src/server/test.ts
 
-Validates the adapter configuration before running. Returns structured diagnostics.
+실행 전에 어댑터 설정을 검증합니다. 구조화된 진단을 반환합니다.
 
 ```ts
 import type {
@@ -220,14 +220,14 @@ export async function testEnvironment(
 ): Promise<AdapterEnvironmentTestResult> {
   const checks = [];
 
-  // Example: check CLI is installed
+  // 예시: CLI가 설치되어 있는지 확인
   checks.push({
     level: "info",
     message: "My Agent CLI v1.2.0 detected",
     code: "cli_detected",
   });
 
-  // Example: check working directory
+  // 예시: 작업 디렉터리 확인
   const cwd = String(ctx.config.cwd ?? "");
   if (!cwd.startsWith("/")) {
     checks.push({
@@ -247,30 +247,30 @@ export async function testEnvironment(
 }
 ```
 
-Check levels:
+확인 레벨:
 
-| Level | Meaning | Effect |
+| 레벨 | 의미 | 효과 |
 |-------|---------|--------|
-| `info` | Informational | Shown in test results |
-| `warn` | Non-blocking issue | Shown with yellow indicator |
-| `error` | Blocks execution | Prevents agent from running |
+| `info` | 정보 제공 | 테스트 결과에 표시됩니다. |
+| `warn` | 비차단 이슈 | 노란색 표시기와 함께 표시됩니다. |
+| `error` | 실행 차단 | 에이전트 실행을 막습니다. |
 
-## Installation
+## 설치
 
-### From npm
+### npm에서
 
 ```sh
-# Via the Paperclip UI
-# Settings → Adapters → Install from npm → "my-paperclip-adapter"
+# Paperclip UI를 통해
+# 설정 → 어댑터 → npm에서 설치 → "my-paperclip-adapter"
 
-# Or via API
+# 또는 API를 통해
 curl -X POST http://localhost:3102/api/adapters \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"packageName": "my-paperclip-adapter"}'
 ```
 
-### From local directory
+### 로컬 디렉터리에서
 
 ```sh
 curl -X POST http://localhost:3102/api/adapters \
@@ -279,11 +279,11 @@ curl -X POST http://localhost:3102/api/adapters \
   -d '{"localPath": "/home/user/my-adapter"}'
 ```
 
-Local adapters are symlinked into Paperclip's adapter directory. Changes to the source are picked up on server restart.
+로컬 어댑터는 Paperclip의 어댑터 디렉터리에 심볼릭 링크됩니다. 소스 변경은 서버 재시작 시 반영됩니다.
 
-### Via adapter-plugins.json
+### adapter-plugins.json을 통해
 
-For development, you can also edit `~/.paperclip/adapter-plugins.json` directly:
+개발 시에는 `~/.paperclip/adapter-plugins.json`을 직접 편집할 수도 있습니다.
 
 ```json
 [
@@ -296,9 +296,9 @@ For development, you can also edit `~/.paperclip/adapter-plugins.json` directly:
 ]
 ```
 
-## Optional: Session Persistence
+## 선택 사항: 세션 지속성
 
-If your agent runtime supports sessions (conversation continuity across heartbeats), implement a session codec:
+에이전트 런타임이 세션(하트비트 간 대화 연속성)을 지원하는 경우, 세션 코덱을 구현합니다.
 
 ```ts
 import type { AdapterSessionCodec } from "@paperclipai/adapter-utils";
@@ -318,15 +318,15 @@ export const sessionCodec: AdapterSessionCodec = {
 };
 ```
 
-Include it in `createServerAdapter()`:
+`createServerAdapter()`에 포함합니다.
 
 ```ts
 return { type, execute, testEnvironment, sessionCodec, /* ... */ };
 ```
 
-## Optional: Skills Sync
+## 선택 사항: 스킬 동기화
 
-If your agent runtime supports skills/plugins, implement `listSkills` and `syncSkills`:
+에이전트 런타임이 스킬/플러그인을 지원하는 경우, `listSkills`와 `syncSkills`를 구현합니다.
 
 ```ts
 return {
@@ -344,19 +344,19 @@ return {
     };
   },
   async syncSkills(ctx, desiredSkills) {
-    // Install desired skills into the runtime
-    return { /* same shape as listSkills */ };
+    // 원하는 스킬을 런타임에 설치
+    return { /* listSkills와 동일한 형태 */ };
   },
 };
 ```
 
-## Optional: Model Detection
+## 선택 사항: 모델 감지
 
-If your runtime has a local config file that specifies the default model:
+런타임에 기본 모델을 지정하는 로컬 설정 파일이 있는 경우:
 
 ```ts
 async function detectModel() {
-  // Read ~/.my-agent/config.yaml or similar
+  // ~/.my-agent/config.yaml 또는 유사한 파일 읽기
   return {
     model: "anthropic/claude-sonnet-4",
     provider: "anthropic",
@@ -368,25 +368,25 @@ async function detectModel() {
 return { type, execute, testEnvironment, detectModel: () => detectModel() };
 ```
 
-## Publishing
+## 배포
 
 ```sh
 npm run build
 npm publish
 ```
 
-Other Paperclip users can then install your adapter by package name from the UI or API.
+다른 Paperclip 사용자들이 UI나 API에서 패키지 이름으로 어댑터를 설치할 수 있습니다.
 
-## Security
+## 보안
 
-- Treat agent output as untrusted — parse defensively, never `eval()` agent output
-- Inject secrets via environment variables, not in prompts
-- Configure network access controls if the runtime supports them
-- Always enforce timeout and grace period — don't let agents run forever
-- The UI parser module runs in a browser sandbox — it must have zero runtime imports and no side effects
+- 에이전트 출력을 신뢰할 수 없는 것으로 취급하십시오 — 방어적으로 파싱하고, 절대 에이전트 출력을 `eval()`하지 마십시오.
+- 시크릿을 환경 변수를 통해 주입하고, 프롬프트에 넣지 마십시오.
+- 런타임이 지원하는 경우 네트워크 접근 제어를 설정하십시오.
+- 항상 타임아웃과 유예 기간을 적용하십시오 — 에이전트가 무한히 실행되도록 두지 마십시오.
+- UI 파서 모듈은 브라우저 샌드박스에서 실행됩니다 — 런타임 임포트 없음, 부작용 없음이어야 합니다.
 
-## Next Steps
+## 다음 단계
 
-- [UI Parser Contract](/adapters/adapter-ui-parser) — add a custom run-log parser so the UI renders your adapter's output correctly
-- [Creating an Adapter](/adapters/creating-an-adapter) — full walkthrough of adapter internals
-- [How Agents Work](/guides/agent-developer/how-agents-work) — understand the heartbeat lifecycle your adapter serves
+- [UI 파서 계약](/adapters/adapter-ui-parser) — UI가 어댑터 출력을 올바르게 렌더링하도록 커스텀 실행 로그 파서 추가
+- [어댑터 만들기](/adapters/creating-an-adapter) — 어댑터 내부 구조 전체 설명
+- [에이전트 동작 방식](/guides/agent-developer/how-agents-work) — 어댑터가 서비스하는 하트비트 생명주기 이해
