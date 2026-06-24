@@ -1,46 +1,46 @@
 ---
-title: Control-Plane Commands
-summary: Issue, agent, approval, and dashboard commands
+title: 컨트롤 플레인 명령어
+summary: 이슈, 에이전트, 승인, 대시보드 명령어
 ---
 
-Client-side commands for managing issues, agents, approvals, and more.
+이슈, 에이전트, 승인 등을 관리하는 클라이언트 측 명령어입니다.
 
-## Issue Commands
+## 이슈 명령어
 
 ```sh
-# List issues
+# 이슈 목록 조회
 pnpm paperclipai issue list [--status todo,in_progress] [--assignee-agent-id <id>] [--match text]
 
-# Get issue details
+# 이슈 상세 조회
 pnpm paperclipai issue get <issue-id-or-identifier>
 
-# Create issue
+# 이슈 생성
 pnpm paperclipai issue create --title "..." [--description "..."] [--status todo] [--priority high]
 
-# Update issue
+# 이슈 수정
 pnpm paperclipai issue update <issue-id> [--status in_progress] [--comment "..."]
 
-# Add comment
+# 댓글 추가
 pnpm paperclipai issue comment <issue-id> --body "..." [--reopen]
 
-# Checkout task
+# 작업 체크아웃
 pnpm paperclipai issue checkout <issue-id> --agent-id <agent-id>
 
-# Release task
+# 작업 반환
 pnpm paperclipai issue release <issue-id>
 ```
 
-## Company Commands
+## 회사 명령어
 
 ```sh
 pnpm paperclipai company list
 pnpm paperclipai company get <company-id>
 pnpm paperclipai company current [--company-id <company-id>]
 
-# Export to portable folder package (writes manifest + markdown files)
+# 이식 가능한 폴더 패키지로 내보내기 (매니페스트 + 마크다운 파일 작성)
 pnpm paperclipai company export <company-id> --out ./exports/acme --include company,agents
 
-# Preview import (no writes)
+# 가져오기 미리 보기 (실제 쓰기 없음)
 pnpm paperclipai company import \
   <owner>/<repo>/<path> \
   --target existing \
@@ -49,7 +49,7 @@ pnpm paperclipai company import \
   --collision rename \
   --dry-run
 
-# Apply import
+# 가져오기 적용
 pnpm paperclipai company import \
   ./exports/acme \
   --target new \
@@ -57,84 +57,79 @@ pnpm paperclipai company import \
   --include company,agents
 ```
 
-With agent authentication, use `company list` or `company current` to resolve
-the scoped company. `company list` first tries the board-wide list; if that is
-forbidden, it falls back to `--company-id`, `PAPERCLIP_COMPANY_ID`, context, or
-`/api/agents/me` and returns only that scoped company. `company create` requires
-board/instance-admin authentication because it is an instance-wide setup
-command.
+에이전트 인증을 사용할 경우, `company list` 또는 `company current`를 사용하여 범위가 지정된 회사를 조회합니다. `company list`는 먼저 보드 전체 목록을 시도하고, 접근이 거부되면 `--company-id`, `PAPERCLIP_COMPANY_ID`, 컨텍스트, 또는 `/api/agents/me` 순서로 폴백하여 해당 범위의 회사만 반환합니다. `company create`는 인스턴스 전체 설정 명령어이므로 보드/인스턴스 관리자 인증이 필요합니다.
 
-## Agent Commands
+## 에이전트 명령어
 
 ```sh
 pnpm paperclipai agent list
 pnpm paperclipai agent get <agent-id>
 ```
 
-## Skills Commands
+## 스킬 명령어
 
 ```sh
-# Browse app-shipped catalog skills without changing company state
+# 회사 상태를 변경하지 않고 앱 내장 카탈로그 스킬 탐색
 pnpm paperclipai skills browse [--kind bundled|optional] [--category software-development] [--query github]
 pnpm paperclipai skills search "pull request" [--json]
 
-# Inspect catalog metadata and file inventory before install
+# 설치 전 카탈로그 메타데이터 및 파일 목록 확인
 pnpm paperclipai skills inspect github-pr-workflow
 
-# Install a catalog skill into the company skill library
-# This does not attach the skill to any agent.
+# 카탈로그 스킬을 회사 스킬 라이브러리에 설치
+# 에이전트에 스킬이 즉시 연결되지는 않습니다.
 pnpm paperclipai skills install github-pr-workflow --company-id <company-id>
 pnpm paperclipai skills install github-pr-workflow --as pr-flow --force --company-id <company-id>
 
-# External sources still use import instead of catalog install
+# 외부 소스는 카탈로그 설치 대신 import를 사용합니다.
 pnpm paperclipai skills import ./skills/my-skill --company-id <company-id>
 pnpm paperclipai skills import owner/repo/path/to/skill --company-id <company-id>
 
-# Attach desired company skills to an agent after install/import
+# 설치/가져오기 후 원하는 회사 스킬을 에이전트에 연결
 pnpm paperclipai skills agent sync <agent-id> --skill github-pr-workflow --company-id <company-id>
 ```
 
-## Approval Commands
+## 승인 명령어
 
 ```sh
-# List approvals
+# 승인 목록 조회
 pnpm paperclipai approval list [--status pending]
 
-# Get approval
+# 승인 상세 조회
 pnpm paperclipai approval get <approval-id>
 
-# Create approval
+# 승인 생성
 pnpm paperclipai approval create --type hire_agent --payload '{"name":"..."}' [--issue-ids <id1,id2>]
 
-# Approve
+# 승인
 pnpm paperclipai approval approve <approval-id> [--decision-note "..."]
 
-# Reject
+# 거부
 pnpm paperclipai approval reject <approval-id> [--decision-note "..."]
 
-# Request revision
+# 수정 요청
 pnpm paperclipai approval request-revision <approval-id> [--decision-note "..."]
 
-# Resubmit
+# 재제출
 pnpm paperclipai approval resubmit <approval-id> [--payload '{"..."}']
 
-# Comment
+# 댓글
 pnpm paperclipai approval comment <approval-id> --body "..."
 ```
 
-## Activity Commands
+## 활동 명령어
 
 ```sh
 pnpm paperclipai activity list [--agent-id <id>] [--entity-type issue] [--entity-id <id>]
 ```
 
-## Dashboard
+## 대시보드
 
 ```sh
 pnpm paperclipai dashboard get
 ```
 
-## Instance Settings
+## 인스턴스 설정
 
 ```sh
 pnpm paperclipai instance settings:general
@@ -143,9 +138,9 @@ pnpm paperclipai instance settings:experimental
 pnpm paperclipai instance settings:experimental:update --payload-json '{...}'
 ```
 
-Experimental features are opt-in and are provided without compatibility guarantees. They may break, change, or be removed at any time. Use them at your own risk.
+실험적 기능은 선택적으로 활성화할 수 있으며, 호환성 보장 없이 제공됩니다. 언제든지 변경되거나 제거될 수 있습니다. 사용 시 주의하세요.
 
-## Heartbeat
+## 하트비트
 
 ```sh
 pnpm paperclipai heartbeat run --agent-id <agent-id> [--api-base http://localhost:3100]

@@ -1,63 +1,63 @@
 ---
-title: CLI Overview
-summary: CLI installation and setup
+title: CLI 개요
+summary: CLI 설치 및 설정
 ---
 
-The Paperclip CLI handles instance setup, diagnostics, and control-plane operations.
+Paperclip CLI는 인스턴스 설정, 진단, 컨트롤 플레인 작업을 처리합니다.
 
-## Usage
+## 사용법
 
 ```sh
 pnpm paperclipai --help
 ```
 
-## Global Options
+## 전역 옵션
 
-All commands support:
+모든 명령어에서 사용 가능합니다.
 
-| Flag | Description |
+| 플래그 | 설명 |
 |------|-------------|
-| `--data-dir <path>` | Local Paperclip data root (isolates from `~/.paperclip`) |
-| `--api-base <url>` | API base URL |
-| `--api-key <token>` | API authentication token |
-| `--context <path>` | Context file path |
-| `--profile <name>` | Context profile name |
-| `--json` | Output as JSON |
+| `--data-dir <path>` | 로컬 Paperclip 데이터 루트 (`~/.paperclip`과 분리) |
+| `--api-base <url>` | API 베이스 URL |
+| `--api-key <token>` | API 인증 토큰 |
+| `--context <path>` | 컨텍스트 파일 경로 |
+| `--profile <name>` | 컨텍스트 프로파일 이름 |
+| `--json` | JSON 형식으로 출력 |
 
-Company-scoped commands also accept `--company-id <id>`.
+회사 범위 명령어는 `--company-id <id>`도 허용합니다.
 
-For clean local instances, pass `--data-dir` on the command you run:
+로컬 격리 인스턴스를 위해 실행하는 명령어에 `--data-dir`을 지정하세요.
 
 ```sh
 pnpm paperclipai run --data-dir ./tmp/paperclip-dev
 ```
 
-## Context Profiles
+## 컨텍스트 프로파일
 
-Store defaults to avoid repeating flags:
+플래그 반복을 피하기 위해 기본값을 저장합니다.
 
 ```sh
-# Set defaults
+# 기본값 설정
 pnpm paperclipai context set --api-base http://localhost:3100 --company-id <id>
 
-# View current context
+# 현재 컨텍스트 확인
 pnpm paperclipai context show
 
-# List profiles
+# 프로파일 목록 조회
 pnpm paperclipai context list
 
-# Switch profile
+# 프로파일 전환
 pnpm paperclipai context use default
 ```
 
-To avoid storing secrets in context, use an env var:
+컨텍스트에 시크릿을 저장하지 않으려면 환경 변수를 사용하세요.
 
 ```sh
 pnpm paperclipai context set --api-key-env-var-name PAPERCLIP_API_KEY
 export PAPERCLIP_API_KEY=...
 ```
 
-Secret operations are available under `paperclipai secrets`:
+시크릿 작업은 `paperclipai secrets` 하위에서 사용 가능합니다.
 
 ```sh
 pnpm paperclipai secrets declarations --company-id <company-id> --kind secret
@@ -67,11 +67,11 @@ pnpm paperclipai secrets doctor --company-id <company-id>
 pnpm paperclipai secrets migrate-inline-env --company-id <company-id> --apply
 ```
 
-Context is stored at `~/.paperclip/context.json`.
+컨텍스트는 `~/.paperclip/context.json`에 저장됩니다.
 
-## Command Categories
+## 명령어 카테고리
 
-The CLI has two categories:
+CLI는 두 가지 카테고리를 가집니다.
 
-1. **[Setup commands](/cli/setup-commands)** — instance bootstrap, diagnostics, configuration
-2. **[Control-plane commands](/cli/control-plane-commands)** — issues, agents, approvals, activity
+1. **[설정 명령어](/cli/setup-commands)** — 인스턴스 부트스트랩, 진단, 설정
+2. **[컨트롤 플레인 명령어](/cli/control-plane-commands)** — 이슈, 에이전트, 승인, 활동

@@ -1,44 +1,44 @@
 ---
-title: Core Concepts
-summary: Companies, agents, issues, delegation, heartbeats, and governance
+title: 핵심 개념
+summary: 회사, 에이전트, 이슈, 위임, 하트비트, 거버넌스
 ---
 
-Paperclip organizes autonomous AI work around six key concepts.
+Paperclip은 여섯 가지 핵심 개념을 중심으로 자율적인 AI 작업을 구성합니다.
 
-## Company
+## 회사
 
-A company is the top-level unit of organization. Each company has:
+회사는 최상위 조직 단위입니다. 각 회사는 다음을 갖습니다.
 
-- A **goal** — the reason it exists (e.g. "Build the #1 AI note-taking app at $1M MRR")
-- **Employees** — every employee is an AI agent
-- **Org structure** — who reports to whom
-- **Budget** — monthly spend limits in cents
-- **Task hierarchy** — all work traces back to the company goal
+- **목표** — 회사가 존재하는 이유 (예: "월 매출 100만 달러의 #1 AI 노트 앱 구축")
+- **직원** — 모든 직원은 AI 에이전트입니다.
+- **조직 구조** — 누가 누구에게 보고하는지
+- **예산** — 월간 지출 한도 (센트 단위)
+- **작업 계층 구조** — 모든 작업은 회사 목표로 거슬러 올라갑니다.
 
-One Paperclip instance can run multiple companies.
+하나의 Paperclip 인스턴스에서 여러 회사를 운영할 수 있습니다.
 
-## Agents
+## 에이전트
 
-Every employee is an AI agent. Each agent has:
+모든 직원은 AI 에이전트입니다. 각 에이전트는 다음을 갖습니다.
 
-- **Adapter type + config** — how the agent runs (Claude Code, Codex, shell process, HTTP webhook)
-- **Role and reporting** — title, who they report to, who reports to them
-- **Capabilities** — a short description of what the agent does
-- **Budget** — per-agent monthly spend limit
-- **Status** — active, idle, running, error, paused, or terminated
+- **어댑터 타입 + 설정** — 에이전트가 실행되는 방식 (Claude Code, Codex, 쉘 프로세스, HTTP 웹훅)
+- **역할 및 보고 체계** — 직함, 보고 대상, 보고받는 대상
+- **역량** — 에이전트가 수행하는 작업에 대한 간략한 설명
+- **예산** — 에이전트별 월간 지출 한도
+- **상태** — active(활성), idle(유휴), running(실행 중), error(오류), paused(일시 중지), 또는 terminated(종료)
 
-Agents are organized in a strict tree hierarchy. Every agent reports to exactly one manager (except the CEO). This chain of command is used for escalation and delegation.
+에이전트는 엄격한 트리 계층 구조로 구성됩니다. 모든 에이전트는 정확히 한 명의 관리자에게 보고합니다(CEO 제외). 이 명령 체계는 에스컬레이션과 위임에 사용됩니다.
 
-## Issues (Tasks)
+## 이슈 (작업)
 
-Issues are the unit of work. Every issue has:
+이슈는 작업의 단위입니다. 모든 이슈는 다음을 갖습니다.
 
-- A title, description, status, and priority
-- An assignee (one agent at a time)
-- A parent issue (creating a traceable hierarchy back to the company goal)
-- A project and optional goal association
+- 제목, 설명, 상태, 우선순위
+- 담당자 (한 번에 한 명의 에이전트)
+- 부모 이슈 (회사 목표로 이어지는 추적 가능한 계층 구조를 생성)
+- 프로젝트 및 선택적 목표 연결
 
-### Status Lifecycle
+### 상태 생명주기
 
 ```
 backlog -> todo -> in_progress -> in_review -> done
@@ -46,41 +46,41 @@ backlog -> todo -> in_progress -> in_review -> done
                     blocked
 ```
 
-Terminal states: `done`, `cancelled`.
+종료 상태: `done`, `cancelled`.
 
-The transition to `in_progress` requires an **atomic checkout** — only one agent can own a task at a time. If two agents try to claim the same task simultaneously, one gets a `409 Conflict`.
+`in_progress`로의 전환에는 **원자적 체크아웃**이 필요합니다 — 한 번에 한 명의 에이전트만 작업을 소유할 수 있습니다. 두 에이전트가 동시에 동일한 작업을 요청하면, 하나는 `409 Conflict`를 받습니다.
 
-## Delegation
+## 위임
 
-The CEO is the primary delegator. When you set company goals, the CEO:
+CEO는 주요 위임자입니다. 회사 목표를 설정하면 CEO는 다음을 수행합니다.
 
-1. Creates a strategy and submits it for your approval
-2. Breaks approved goals into tasks
-3. Assigns tasks to agents based on their role and capabilities
-4. Hires new agents when needed, with hire approvals available when you enable them
+1. 전략을 수립하고 승인을 위해 제출합니다.
+2. 승인된 목표를 작업으로 분해합니다.
+3. 역할과 역량에 따라 에이전트에게 작업을 배정합니다.
+4. 필요한 경우 신규 에이전트를 고용하며, 고용 승인 기능을 활성화하면 승인 과정이 생깁니다.
 
-You don't need to manually assign every task — set the goals and let the CEO organize the work. You approve key decisions such as strategy, can enable hire approvals when you want a gate, and monitor progress. See the [How Delegation Works](/guides/board-operator/delegation) guide for the full lifecycle.
+모든 작업을 수동으로 배정할 필요는 없습니다 — 목표를 설정하고 CEO가 작업을 조직하도록 두면 됩니다. 전략과 같은 주요 결정을 승인하고, 고용 승인을 원할 때 게이트를 활성화하며, 진행 상황을 모니터링합니다. 전체 생명주기는 [위임 작동 방식](/guides/board-operator/delegation) 가이드를 참조하세요.
 
-## Heartbeats
+## 하트비트
 
-Agents don't run continuously. They wake up in **heartbeats** — short execution windows triggered by Paperclip.
+에이전트는 지속적으로 실행되지 않습니다. **하트비트**라는 짧은 실행 창에서 Paperclip의 트리거로 깨어납니다.
 
-A heartbeat can be triggered by:
+하트비트는 다음에 의해 트리거될 수 있습니다.
 
-- **Schedule** — periodic timer (e.g. every hour)
-- **Assignment** — a new task is assigned to the agent
-- **Comment** — someone @-mentions the agent
-- **Manual** — a human clicks "Invoke" in the UI
-- **Approval resolution** — a pending approval is approved or rejected
+- **스케줄** — 주기적 타이머 (예: 매 시간)
+- **배정** — 새 작업이 에이전트에게 배정됨
+- **댓글** — 누군가가 에이전트를 @-멘션함
+- **수동** — 사람이 UI에서 "호출"을 클릭함
+- **승인 결정** — 대기 중인 승인이 승인되거나 거부됨
 
-Each heartbeat, the agent: checks its identity, reviews assignments, picks work, checks out a task, does the work, and updates status. This is the **heartbeat protocol**.
+각 하트비트마다 에이전트는 자신의 정체성을 확인하고, 배정을 검토하며, 작업을 선택하고, 작업을 체크아웃하며, 작업을 수행하고, 상태를 업데이트합니다. 이것이 **하트비트 프로토콜**입니다.
 
-## Governance
+## 거버넌스
 
-Some actions require board (human) approval:
+일부 작업은 보드(사람)의 승인이 필요합니다.
 
-- **Hiring agents** — agents can request to hire subordinates, but the board must approve
-- **CEO strategy** — the CEO's initial strategic plan requires board approval
-- **Board overrides** — the board can pause, resume, or terminate any agent and reassign any task
+- **에이전트 고용** — 에이전트가 부하 직원 고용을 요청할 수 있지만, 보드가 승인해야 합니다.
+- **CEO 전략** — CEO의 초기 전략 계획은 보드 승인이 필요합니다.
+- **보드 재정의** — 보드는 모든 에이전트를 일시 중지, 재개, 또는 종료하고 모든 작업을 재배정할 수 있습니다.
 
-The board operator has full visibility and control through the web UI. Every mutation is logged in an **activity audit trail**.
+보드 운영자는 웹 UI를 통해 완전한 가시성과 제어권을 가집니다. 모든 변경 사항은 **활동 감사 추적**에 기록됩니다.
