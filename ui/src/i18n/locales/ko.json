@@ -5990,6 +5990,7 @@
       "emptyProduced": "팀의 결과물과 계획이 생성되는 대로 여기에 표시됩니다.",
       "emptyFilter": "이 필터와 일치하는 산출물이 없습니다.",
       "generating": "생성 중...",
+      "guideBadge": "가이드",
       "documentFallback": "문서",
       "loadingDocument": "문서를 불러오는 중...",
       "documentUnavailable": "아직 문서를 사용할 수 없습니다.",

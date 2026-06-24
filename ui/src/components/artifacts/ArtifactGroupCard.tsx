@@ -1,8 +1,9 @@
-import { Layers } from "lucide-react";
+import { BookOpen, Layers } from "lucide-react";
 import type { To } from "react-router-dom";
 import type { CompanyArtifactGroup } from "@/api/artifacts";
 import { Link } from "@/lib/router";
 import { ArtifactPreview } from "@/components/artifacts/ArtifactCard";
+import { isHtmlGuideContentType } from "@/lib/issue-output";
 import { formatDate } from "@/lib/utils";
 import { useTranslation } from "@/i18n";
 
@@ -22,6 +23,9 @@ export function ArtifactGroupCard({ group, to }: ArtifactGroupCardProps) {
   const { t } = useTranslation();
   const stacked = group.count > 1;
   const preview = group.previewArtifacts[0];
+  // Best-effort guide hint from the (capped) preview set — never a false positive,
+  // though it can miss guides that fall outside the first few preview artifacts.
+  const hasGuide = group.previewArtifacts.some((artifact) => isHtmlGuideContentType(artifact.contentType));
   const countLabel = t(
     group.count === 1 ? "feedComp.artifactGroup.countOne" : "feedComp.artifactGroup.countOther",
     { count: group.count },
@@ -65,6 +69,15 @@ export function ArtifactGroupCard({ group, to }: ArtifactGroupCardProps) {
             <Layers className="h-3 w-3" aria-hidden="true" />
             {group.count}
           </span>
+          {hasGuide ? (
+            <span
+              data-testid="artifact-group-guide-badge"
+              className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-background/85 px-2 py-0.5 text-[11px] font-medium text-foreground/90 shadow-sm backdrop-blur"
+            >
+              <BookOpen className="h-3 w-3" aria-hidden="true" />
+              {t("feedComp.artifactCard.guide")}
+            </span>
+          ) : null}
         </div>
 
         <div className="flex flex-1 flex-col gap-1 p-3">

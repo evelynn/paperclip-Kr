@@ -13,6 +13,7 @@ import {
   Globe,
   Server,
   Package,
+  BookOpen,
   Loader2,
   ArrowLeft,
   X,
@@ -21,6 +22,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { isHtmlGuideContentType } from "@/lib/issue-output";
 import { useTranslation } from "@/i18n";
 
 interface ArtifactsPanelProps {
@@ -63,6 +65,16 @@ function typeIcon(type: string) {
     case "artifact": return Package;
     default: return FileText;
   }
+}
+
+function workProductContentType(wp: IssueWorkProduct): string | null {
+  const meta = wp.metadata as unknown as { contentType?: unknown } | null;
+  return meta && typeof meta.contentType === "string" ? meta.contentType : null;
+}
+
+/** True for self-contained HTML guide artifacts (annotated screen guides). */
+export function isGuideWorkProduct(wp: IssueWorkProduct): boolean {
+  return wp.type === "artifact" && isHtmlGuideContentType(workProductContentType(wp));
 }
 
 function statusBadge(status: string): { labelKey: string | null; label?: string; className: string } {
@@ -172,7 +184,8 @@ export function ArtifactsPanel({ taskId, isAgentWorking, openDocKey, openDocTitl
         ) : (
           <div className="divide-y divide-border">
             {filtered.map((wp) => {
-              const Icon = typeIcon(wp.type);
+              const guide = isGuideWorkProduct(wp);
+              const Icon = guide ? BookOpen : typeIcon(wp.type);
               const badge = statusBadge(wp.status);
               const isDraft = wp.status === "draft" || wp.status === "active";
               const showGenerating = isDraft && isAgentWorking;
@@ -213,6 +226,11 @@ export function ArtifactsPanel({ taskId, isAgentWorking, openDocKey, openDocTitl
                         <span className="text-[10px] text-muted-foreground capitalize">
                           {wp.type.replace(/_/g, " ")}
                         </span>
+                        {guide && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-primary/10 text-primary">
+                            {t("feedComp.artifactsPanel.guideBadge")}
+                          </span>
+                        )}
                         {showGenerating ? (
                           <span className="inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
                             <Loader2 className="h-2.5 w-2.5 animate-spin" />

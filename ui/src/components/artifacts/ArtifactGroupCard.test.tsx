@@ -118,4 +118,27 @@ describe("ArtifactGroupCard", () => {
     const card = mounted.container.querySelector('[data-testid="artifact-group-card"]') as HTMLElement;
     expect(card).not.toBeNull();
   });
+
+  it("flags groups whose preview contains an html guide", () => {
+    mounted = render(
+      sampleGroup({
+        mediaKinds: ["text"],
+        previewArtifacts: [
+          sampleArtifact({
+            mediaKind: "text",
+            contentType: "text/html",
+            contentPath: "/api/attachments/guide-1/content",
+          }),
+        ],
+      }),
+    );
+    const badge = mounted.container.querySelector('[data-testid="artifact-group-guide-badge"]');
+    expect(badge).not.toBeNull();
+    expect(badge?.textContent).toContain("Guide");
+  });
+
+  it("does not flag groups without a guide preview", () => {
+    mounted = render(sampleGroup());
+    expect(mounted.container.querySelector('[data-testid="artifact-group-guide-badge"]')).toBeNull();
+  });
 });

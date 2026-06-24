@@ -5990,6 +5990,7 @@
       "emptyProduced": "Your team's deliverables and plans will appear here as they're produced.",
       "emptyFilter": "No artifacts match this filter.",
       "generating": "Generating...",
+      "guideBadge": "Guide",
       "documentFallback": "Document",
       "loadingDocument": "Loading document...",
       "documentUnavailable": "Document not available yet.",
