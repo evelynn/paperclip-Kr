@@ -1,8 +1,9 @@
 import { type SyntheticEvent, useEffect, useRef, useState } from "react";
-import { Download, ExternalLink, Paperclip, Play } from "lucide-react";
+import { BookOpen, Download, ExternalLink, Paperclip, Play } from "lucide-react";
 import type { CompanyArtifact } from "@/api/artifacts";
 import { Link } from "@/lib/router";
 import { cn, formatDate } from "@/lib/utils";
+import { isHtmlGuideContentType } from "@/lib/issue-output";
 import { t } from "@/i18n";
 
 interface ArtifactCardProps {
@@ -155,7 +156,31 @@ function TextPreview({ artifact }: { artifact: CompanyArtifact }) {
   );
 }
 
+/**
+ * Distinct tile for self-contained HTML guides (annotated screen guides). These
+ * arrive as `text/html`, which the server classifies as `mediaKind: "text"` — so
+ * without this branch they'd fall through to the text preview and leak raw HTML
+ * source. The guide label mirrors the IMAGE / FILE / DOCUMENT placeholder system.
+ */
+function GuidePreview() {
+  return (
+    <PreviewFrame className="flex items-center justify-center bg-accent/20">
+      <div className="flex flex-col items-center gap-1.5 text-muted-foreground/60">
+        <BookOpen className="h-7 w-7" aria-hidden="true" />
+        <span className="text-[11px] font-medium uppercase tracking-wide">
+          {t("feedComp.artifactCard.guide")}
+        </span>
+      </div>
+    </PreviewFrame>
+  );
+}
+
 export function ArtifactPreview({ artifact }: { artifact: CompanyArtifact }) {
+  // Guide HTML is rendered inline elsewhere; in the grid it gets a distinct tile
+  // rather than the generic text/file preview its mediaKind would otherwise pick.
+  if (isHtmlGuideContentType(artifact.contentType)) {
+    return <GuidePreview />;
+  }
   switch (artifact.mediaKind) {
     case "image":
       return <ImagePreview artifact={artifact} />;

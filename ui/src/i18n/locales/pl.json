@@ -5760,7 +5760,9 @@
       "openInNewTab": "Open in new tab",
       "download": "Download",
       "openAriaLabel": "Open {{filename}}",
-      "downloadAriaLabel": "Download {{filename}}"
+      "downloadAriaLabel": "Download {{filename}}",
+      "preview": "Show preview",
+      "hidePreview": "Hide preview"
     },
     "outputPrimaryCard": {
       "metadataUnavailable": "Output metadata is unavailable — this file can’t be played or downloaded here.",
@@ -6009,6 +6011,7 @@
       "document": "Document",
       "text": "Text",
       "file": "File",
+      "guide": "Guide",
       "openInNewTab": "Open file in new tab",
       "download": "Download file",
       "lastEdited": "Last edited {{date}}"

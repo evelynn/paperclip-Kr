@@ -5760,7 +5760,9 @@
       "openInNewTab": "새 탭에서 열기",
       "download": "다운로드",
       "openAriaLabel": "{{filename}} 열기",
-      "downloadAriaLabel": "{{filename}} 다운로드"
+      "downloadAriaLabel": "{{filename}} 다운로드",
+      "preview": "미리보기",
+      "hidePreview": "미리보기 숨기기"
     },
     "outputPrimaryCard": {
       "metadataUnavailable": "출력 메타데이터를 사용할 수 없습니다 — 이 파일은 여기에서 재생하거나 다운로드할 수 없습니다.",
@@ -6009,6 +6011,7 @@
       "document": "문서",
       "text": "텍스트",
       "file": "파일",
+      "guide": "가이드",
       "openInNewTab": "새 탭에서 파일 열기",
       "download": "파일 다운로드",
       "lastEdited": "마지막 편집 {{date}}"

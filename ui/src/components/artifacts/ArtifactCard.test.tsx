@@ -242,4 +242,25 @@ describe("ArtifactCard", () => {
     expect(markup).not.toContain('aria-label="Download file"');
     expect(markup).not.toContain('aria-label="Open file in new tab"');
   });
+
+  it("renders a distinct guide tile (not raw HTML source) for html guide artifacts", () => {
+    const markup = renderToStaticMarkup(
+      <ArtifactCard
+        artifact={makeArtifact({
+          source: "work_product",
+          // text/html is classified server-side as mediaKind "text"; the card must
+          // still show a guide tile rather than spilling the raw HTML preview.
+          mediaKind: "text",
+          contentType: "text/html",
+          contentPath: "/api/attachments/guide-1/content",
+          previewText: "<h1>raw guide source</h1>",
+          title: "Onboarding guide",
+        })}
+      />,
+    );
+
+    expect(markup).toContain("Guide");
+    expect(markup).toContain("lucide-book-open");
+    expect(markup).not.toContain("raw guide source");
+  });
 });
