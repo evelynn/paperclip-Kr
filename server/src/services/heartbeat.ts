@@ -3,7 +3,7 @@ import path from "node:path";
 import { execFile as execFileCallback } from "node:child_process";
 import { promisify } from "node:util";
 import { randomUUID } from "node:crypto";
-import { and, asc, desc, eq, getTableColumns, gt, gte, inArray, isNull, lt, lte, notInArray, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, getTableColumns, gt, gte, inArray, isNotNull, isNull, lt, lte, notInArray, or, sql } from "drizzle-orm";
 import type { Db } from "@paperclipai/db";
 import {
   AGENT_DEFAULT_MAX_CONCURRENT_RUNS,
@@ -1631,6 +1631,17 @@ function normalizeMaxConcurrentRuns(value: unknown) {
   const parsed = Math.floor(asNumber(value, HEARTBEAT_MAX_CONCURRENT_RUNS_DEFAULT));
   if (!Number.isFinite(parsed)) return HEARTBEAT_MAX_CONCURRENT_RUNS_DEFAULT;
   return Math.max(HEARTBEAT_MAX_CONCURRENT_RUNS_MIN, Math.min(HEARTBEAT_MAX_CONCURRENT_RUNS_MAX, parsed));
+}
+
+// Minimum seconds between consecutive heartbeat run starts for an agent
+// (runtimeConfig.heartbeat.cooldownSec, surfaced in the agent config UI).
+// Absent/blank/invalid means "no cooldown" (0) so existing agents keep their
+// current burst behavior until an operator opts in by setting a value.
+// Exported for unit testing.
+export function normalizeCooldownSec(value: unknown) {
+  if (value === null || value === undefined || value === "") return 0;
+  const parsed = Math.floor(asNumber(value, 0));
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
 }
 
 interface WakeupOptions {
@@ -7014,6 +7025,7 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
       intervalSec: Math.max(0, asNumber(heartbeat.intervalSec, 0)),
       wakeOnDemand: asBoolean(heartbeat.wakeOnDemand ?? heartbeat.wakeOnAssignment ?? heartbeat.wakeOnOnDemand ?? heartbeat.wakeOnAutomation, true),
       maxConcurrentRuns: normalizeMaxConcurrentRuns(heartbeat.maxConcurrentRuns),
+      cooldownSec: normalizeCooldownSec(heartbeat.cooldownSec),
       skipTimerWhenNoActionableWork: asBoolean(
         heartbeat.skipTimerWhenNoActionableWork ??
           heartbeat.requireActionableTimerWork ??
@@ -8189,6 +8201,24 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
         return [];
       }
       const policy = parseHeartbeatPolicy(agent);
+
+      // Heartbeat cooldown: enforce a minimum gap between consecutive run starts
+      // for this agent. When the most recent run started less than cooldownSec
+      // ago we defer: queued runs stay queued (not cancelled) and are retried by
+      // the periodic resumeQueuedRuns() drain once the cooldown window elapses.
+      if (policy.cooldownSec > 0) {
+        const [lastStarted] = await db
+          .select({ startedAt: heartbeatRuns.startedAt })
+          .from(heartbeatRuns)
+          .where(and(eq(heartbeatRuns.agentId, agentId), isNotNull(heartbeatRuns.startedAt)))
+          .orderBy(desc(heartbeatRuns.startedAt))
+          .limit(1);
+        if (lastStarted?.startedAt) {
+          const sinceLastStartMs = Date.now() - new Date(lastStarted.startedAt).getTime();
+          if (sinceLastStartMs < policy.cooldownSec * 1000) return [];
+        }
+      }
+
       const runningCount = await countRunningRunsForAgent(agentId);
       const availableSlots = Math.max(0, policy.maxConcurrentRuns - runningCount);
       if (availableSlots <= 0) return [];
