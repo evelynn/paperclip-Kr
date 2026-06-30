@@ -37,6 +37,9 @@ interface SpawnTarget {
   args: string[];
   cwd?: string;
   cleanup?: () => Promise<void>;
+  // When true, spawn with windowsVerbatimArguments so Node does not re-quote an
+  // already cmd.exe-quoted command line (set for the .cmd/.bat shim branch).
+  windowsVerbatimArguments?: boolean;
 }
 
 type RemoteExecutionSpec = SshRemoteExecutionSpec;
@@ -1534,9 +1537,18 @@ async function resolveSpawnTarget(
     // ComSpec to PowerShell, which breaks cmd-specific flags like /d /s /c.
     const shell = resolveWindowsCmdShell(env);
     const commandLine = [quoteForCmd(executable), ...args.map(quoteForCmd)].join(" ");
+    // Wrap the whole command in an outer pair of quotes. With `/s`, cmd.exe
+    // strips only the leading and trailing quote of the line, leaving the
+    // individually quoted exe path and args intact — the documented idiom for
+    // running a quoted path that contains spaces. Pair this with
+    // windowsVerbatimArguments below so Node passes the line through untouched;
+    // otherwise Node re-quotes/escapes it, the layers collide, and an executable
+    // path with spaces (e.g. user profile "mimi and cici") is mangled into
+    // `"C:\...\codex.CMD" is not recognized as an internal or external command`.
     return {
       command: shell,
-      args: ["/d", "/s", "/c", commandLine],
+      args: ["/d", "/s", "/c", `"${commandLine}"`],
+      windowsVerbatimArguments: true,
     };
   }
 
@@ -2375,6 +2387,7 @@ export async function runChildProcess(
           env: mergedEnv,
           detached: process.platform !== "win32",
           shell: false,
+          windowsVerbatimArguments: target.windowsVerbatimArguments ?? false,
           stdio: [opts.stdin != null ? "pipe" : "ignore", "pipe", "pipe"],
         }) as ChildProcessWithEvents;
         const startedAt = new Date().toISOString();

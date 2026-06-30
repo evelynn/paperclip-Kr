@@ -77,7 +77,12 @@ curl -sS "$PAPERCLIP_API_URL/llms/agent-icons.txt" \
 - icon (required in practice; pick from `/llms/agent-icons.txt`)
 - reporting line (`reportsTo`)
 - adapter type
-- `desiredSkills` from the company skill library when this role needs installed skills on day one
+- `desiredSkills` — give every hire the skills its role needs on day one. Do not leave a hire skill-less:
+  1. Fetch role recommendations: `GET /api/skills/catalog/recommended?role=<role>` (works for ceo, cto, cmo, designer, engineer, qa, product, manager, …). It returns catalog skills tagged for that role.
+  2. Pick the relevant ones (e.g. ceo/manager → `task-planning`, `issue-triage`; cto/engineer → `github-pr-workflow`, `qa-acceptance`; designer → `wireframe`, `design-critique`; cmo → `release-announcement`). Even a CEO should get the operations skills (`task-planning`, `issue-triage`) — leadership is in `AGENTS.md`, but installed skills give it concrete tools.
+  3. Pass their canonical keys in `desiredSkills`. The server installs each from the catalog (if not already in the company library) and assigns it to the agent. If a skill the role needs is not in the catalog yet, note it in the hire comment so the board can source it.
+- After hire, an agent can request more skills as it discovers gaps: call `GET /api/skills/catalog/recommended?role=<role>` to find candidates, then `POST /api/agents/<id>/skills/sync` with the desired keys (subject to the company's skill-approval policy).
+- **CEO and CTO own skill management by default.** When hiring a `ceo` or `cto`, always include `paperclip-manage-skills` in `desiredSkills` — these roles may install, author, import, and assign skills to any agent without agent-creation rights (the server grants skill mutation to ceo/cto by role). Give other roles `paperclip-manage-skills` only when they genuinely need to self-serve skills, and justify it.
 - if any `desiredSkills` or adapter settings expand browser access, external-system reach, filesystem scope, or secret-handling capability, justify each one in the hire comment
 - adapter and runtime config aligned to this environment
 - leave timer heartbeats off by default; only set `runtimeConfig.heartbeat.enabled=true` with an `intervalSec` when the role genuinely needs scheduled recurring work or the user explicitly asked for it

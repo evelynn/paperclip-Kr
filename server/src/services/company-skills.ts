@@ -1860,7 +1860,12 @@ async function auditInstalledSkillBytes(skill: CompanySkill): Promise<CompanySki
   if (skillFile) {
     const markdown = skillFile.bytes.toString("utf8");
     const parsed = parseFrontmatterMarkdown(markdown);
-    if (!markdown.startsWith("---\n") || !asString(parsed.frontmatter.name)) {
+    // Use the parser's own frontmatter detection, which normalizes CRLF→LF
+    // first. A raw `markdown.startsWith("---\n")` check would reject CRLF files
+    // (`---\r\n`), which is how skills are checked out on Windows
+    // (core.autocrlf=true) — that wrongly fails every catalog install with
+    // "invalid_frontmatter" even though the frontmatter is valid.
+    if (!parsed.hasFrontmatter || !asString(parsed.frontmatter.name)) {
       pushFinding(findings, "invalid_frontmatter", "error", "SKILL.md must contain valid frontmatter with a name.", "SKILL.md");
     }
   }
@@ -1882,11 +1887,19 @@ async function auditInstalledSkillBytes(skill: CompanySkill): Promise<CompanySki
     if (file.kind === "asset") continue;
 
     const text = file.bytes.toString("utf8");
+    // Hard-stop (install-blocking "error") fires only for files that actually
+    // execute or are executed as instructions: scripts and the SKILL.md the
+    // agent follows. The same pattern inside SUPPORTING documentation
+    // (references, extra markdown) is almost always prose — e.g. a security
+    // guide that says "never let strings reach eval" — so there it is recorded
+    // as a non-blocking warning rather than failing the whole skill install.
+    const contentExecSeverity =
+      file.kind === "script" || file.kind === "skill" ? "error" : "warning";
     if (SKILL_REMOTE_EXEC_PATTERN.test(text)) {
-      pushFinding(findings, "remote_fetch_exec", "error", "Remote-fetch or dynamic execution pattern is not allowed.", file.path);
+      pushFinding(findings, "remote_fetch_exec", contentExecSeverity, "Remote-fetch or dynamic execution pattern detected.", file.path);
     }
     if (SKILL_SECRET_EXFIL_PATTERN.test(text)) {
-      pushFinding(findings, "secret_exfiltration", "error", "Secret exfiltration pattern is not allowed.", file.path);
+      pushFinding(findings, "secret_exfiltration", contentExecSeverity, "Secret exfiltration pattern detected.", file.path);
     }
     if (networkPattern.test(text)) {
       pushFinding(findings, "network_reference", "warning", "Skill content references network-capable commands or URLs.", file.path);
@@ -3976,7 +3989,11 @@ export function companySkillService(db: Db) {
       // bypass the install-time content audit. Apply the same hard-stop content
       // checks here, at the only chokepoint before the bytes are exposed to an
       // agent runtime, and refuse to materialize rather than write the content.
-      if (entry.kind !== "asset") {
+      // Hard-stop only for files that execute or are executed as instructions:
+      // scripts and the SKILL.md the agent follows. Supporting documentation
+      // (references/extra markdown) that merely mentions these patterns in prose
+      // is written normally; only a script body or the SKILL.md is refused.
+      if (entry.kind === "script" || entry.kind === "skill") {
         if (SKILL_REMOTE_EXEC_PATTERN.test(content)) hardStopFindings.push({ path: normalizedPath, code: "remote_fetch_exec" });
         if (SKILL_SECRET_EXFIL_PATTERN.test(content)) hardStopFindings.push({ path: normalizedPath, code: "secret_exfiltration" });
         if (hardStopFindings.some((finding) => finding.path === normalizedPath)) continue;

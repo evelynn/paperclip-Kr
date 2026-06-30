@@ -91,6 +91,15 @@ export function companySkillRoutes(db: Db) {
     return { type: "system" as const };
   }
 
+  // CEO and CTO own the company's skills by default: they may install, author,
+  // import, and assign skills without needing agent-creation rights. This is a
+  // role-based default (other roles still need an explicit `agents:create`
+  // grant or the `canCreateAgents` flag); it does NOT grant agent creation.
+  const DEFAULT_SKILL_MANAGER_ROLES = new Set(["ceo", "cto"]);
+  function isDefaultSkillManagerRole(role: string | null | undefined): boolean {
+    return typeof role === "string" && DEFAULT_SKILL_MANAGER_ROLES.has(role.toLowerCase());
+  }
+
   async function assertCanMutateCompanySkills(req: Request, companyId: string) {
     assertCompanyAccess(req, companyId);
 
@@ -113,11 +122,11 @@ export function companySkillRoutes(db: Db) {
     }
 
     const allowedByGrant = await access.hasPermission(companyId, "agent", actorAgent.id, "agents:create");
-    if (allowedByGrant || canCreateAgents(actorAgent)) {
+    if (allowedByGrant || canCreateAgents(actorAgent) || isDefaultSkillManagerRole(actorAgent.role)) {
       return;
     }
 
-    throw forbidden("Missing permission: can create agents");
+    throw forbidden("Missing permission: manage company skills");
   }
 
   router.get("/skills/catalog", async (req, res) => {

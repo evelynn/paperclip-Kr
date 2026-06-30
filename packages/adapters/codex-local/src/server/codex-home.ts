@@ -131,12 +131,45 @@ async function isExpectedSymlink(target: string, source: string): Promise<boolea
   return path.resolve(path.dirname(target), linkedPath) === path.resolve(source);
 }
 
+async function isSameUnderlyingFile(a: string, b: string): Promise<boolean> {
+  try {
+    const [statA, statB] = await Promise.all([fs.stat(a), fs.stat(b)]);
+    // ino === 0 means the filesystem did not report a real index (seen on some
+    // Windows volumes); treat that as "unknown" rather than a false match.
+    return statA.ino !== 0 && statA.ino === statB.ino && statA.dev === statB.dev;
+  } catch {
+    return false;
+  }
+}
+
 async function createExpectedSymlink(target: string, source: string): Promise<void> {
   try {
     await fs.symlink(source, target);
+    return;
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
     if (code === "EEXIST" && await isExpectedSymlink(target, source)) return;
+    // Windows rejects symlink creation with EPERM/EACCES unless the process is
+    // elevated or Developer Mode is enabled. A hardlink needs no special
+    // privilege and shares the source inode, so live ChatGPT-subscription
+    // credentials and single-use refresh-token rotation still propagate back to
+    // the source — unlike a plain copy, which goes stale and trips
+    // refresh_token_reused (#5028). Cross-volume hardlinks fail with EXDEV; fall
+    // back to a copy there as a last resort.
+    if (code === "EPERM" || code === "EACCES") {
+      try {
+        await fs.link(source, target);
+        return;
+      } catch (linkError) {
+        const linkCode = (linkError as NodeJS.ErrnoException).code;
+        if (linkCode === "EEXIST" && await isSameUnderlyingFile(target, source)) return;
+        if (linkCode === "EXDEV") {
+          await fs.copyFile(source, target);
+          return;
+        }
+        throw linkError;
+      }
+    }
     throw error;
   }
 }
@@ -161,6 +194,13 @@ export async function ensureSymlink(target: string, source: string): Promise<voi
     // a Paperclip-written stale copy and warrants operator inspection rather
     // than silent removal.
     if (existing.isDirectory()) return;
+    // On Windows without symlink privileges, createExpectedSymlink falls back to
+    // a hardlink — a regular file that shares the source inode. That is already
+    // correct and live; re-creating it every run is wasteful and briefly unlinks
+    // an active credential file. Detect it by inode identity and leave it. Any
+    // other regular file is a stale copy from an older Paperclip version and
+    // must be replaced (#5028).
+    if (await isSameUnderlyingFile(target, source)) return;
     await fs.unlink(target);
     await createExpectedSymlink(target, source);
     return;
@@ -217,10 +257,19 @@ export async function seedManagedCodexHome(
   // run has no apiKey, remove it so the chatgpt-mode symlink can be restored.
   // Without this cleanup, ensureSymlink bails on a non-symlink and Codex keeps
   // authenticating with the stale key after it is removed from configuration.
+  // A hardlink to the shared source is NOT an apikey copy — it is the Windows
+  // fallback for the chatgpt-mode link (see createExpectedSymlink) and already
+  // points at the live source, so leave it in place; deleting and recreating it
+  // every run would needlessly churn a live credential file.
   if (!apiKey && seedFromShared) {
     const authPath = path.join(targetHome, "auth.json");
     const existing = await fs.lstat(authPath).catch(() => null);
-    if (existing && !existing.isSymbolicLink()) {
+    if (
+      existing &&
+      !existing.isSymbolicLink() &&
+      !existing.isDirectory() &&
+      !(await isSameUnderlyingFile(authPath, path.join(sourceHome, "auth.json")))
+    ) {
       await fs.rm(authPath, { force: true });
     }
   }
