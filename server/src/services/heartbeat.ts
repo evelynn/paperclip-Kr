@@ -7026,11 +7026,17 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
       wakeOnDemand: asBoolean(heartbeat.wakeOnDemand ?? heartbeat.wakeOnAssignment ?? heartbeat.wakeOnOnDemand ?? heartbeat.wakeOnAutomation, true),
       maxConcurrentRuns: normalizeMaxConcurrentRuns(heartbeat.maxConcurrentRuns),
       cooldownSec: normalizeCooldownSec(heartbeat.cooldownSec),
+      // Default ON: a timer heartbeat only fires when the agent has actionable
+      // work. Without this, every heartbeat-enabled agent runs a full (expensive)
+      // LLM turn every intervalSec even with nothing to do — the dominant source
+      // of runaway token spend once a company's finite work is complete. Agents
+      // are still woken on-demand by assignments and escalations. Set the flag
+      // explicitly to false to restore always-on polling for a specific agent.
       skipTimerWhenNoActionableWork: asBoolean(
         heartbeat.skipTimerWhenNoActionableWork ??
           heartbeat.requireActionableTimerWork ??
           heartbeat.issueOnlyTimer,
-        false,
+        true,
       ),
       maxDailyRuns: normalizeOptionalNonNegativeInteger(
         heartbeat.maxDailyRuns ?? heartbeat.dailyRunLimit ?? heartbeat.dailyRunCap ?? heartbeat.maxRunsPerDay,

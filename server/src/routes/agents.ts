@@ -3,7 +3,7 @@ import { generateKeyPairSync, randomUUID } from "node:crypto";
 import path from "node:path";
 import type { Db } from "@paperclipai/db";
 import { agents as agentsTable, companies, heartbeatRuns, issues as issuesTable, projects as projectsTable } from "@paperclipai/db";
-import { and, desc, eq, inArray, not, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, not, sql } from "drizzle-orm";
 import {
   agentSkillSyncSchema,
   agentMineInboxQuerySchema,
@@ -2194,6 +2194,23 @@ export function agentRoutes(
     );
     assertNoAgentAdapterConfigMutation(req, rawHireAdapterConfig);
     assertNoAgentRuntimeConfigAdapterConfigMutation(req, hireInput.runtimeConfig);
+    // Inherit the founding agent's model. The first agent created for this
+    // adapter type (the CEO you configure during onboarding) is the company's
+    // AI baseline: any hire that does not specify its own model adopts it, so
+    // setting the initial agent's model configures the whole company's AI rather
+    // than falling back to a hardcoded per-adapter default.
+    if (!asNonEmptyString(rawHireAdapterConfig.model)) {
+      const foundingRows = await db
+        .select({ adapterConfig: agentsTable.adapterConfig })
+        .from(agentsTable)
+        .where(and(eq(agentsTable.companyId, companyId), eq(agentsTable.adapterType, hireInput.adapterType)))
+        .orderBy(asc(agentsTable.createdAt))
+        .limit(1);
+      const foundingModel = asNonEmptyString(asRecord(foundingRows[0]?.adapterConfig)?.model);
+      if (foundingModel) {
+        rawHireAdapterConfig.model = foundingModel;
+      }
+    }
     const hiredAgentId = randomUUID();
     const requestedAdapterConfig = applyCodexLocalKeyIsolation(
       companyId,

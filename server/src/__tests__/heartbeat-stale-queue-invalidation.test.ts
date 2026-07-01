@@ -393,10 +393,14 @@ describeEmbeddedPostgres("heartbeat stale queued-run invalidation", () => {
     expect(countExecuteCallsForRun(run!.id)).toBe(1);
   });
 
-  it("runs generic timer wakes by default for proactive agents without assigned issue work", async () => {
+  it("runs generic timer wakes for proactive agents that opt out of the no-work skip", async () => {
+    // Idle timer heartbeats are skipped by default (skipTimerWhenNoActionableWork
+    // defaults to true) to avoid burning tokens with nothing to do. A genuinely
+    // proactive agent opts back in by setting the flag to false.
     const { agentId } = await seedCompanyAndAgent({
       heartbeatConfig: {
         enabled: true,
+        skipTimerWhenNoActionableWork: false,
       },
     });
 
@@ -409,6 +413,22 @@ describeEmbeddedPostgres("heartbeat stale queued-run invalidation", () => {
     await waitForCondition(async () => countExecuteCallsForRun(run!.id) > 0);
 
     expect(countExecuteCallsForRun(run!.id)).toBe(1);
+  });
+
+  it("skips generic timer wakes by default for agents without assigned issue work", async () => {
+    const { agentId } = await seedCompanyAndAgent({
+      heartbeatConfig: {
+        enabled: true,
+      },
+    });
+
+    const run = await heartbeat.wakeup(agentId, {
+      source: "timer",
+      triggerDetail: "schedule",
+    });
+
+    expect(run).toBeNull();
+    expect(mockAdapterExecute).not.toHaveBeenCalled();
   });
 
   it("skips wakes before queueing when per-agent daily run cap is reached", async () => {
